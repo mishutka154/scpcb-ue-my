@@ -5932,10 +5932,12 @@ Function UpdateGUI%()
 					If CanUseItem(True, True)
 						If I_427\Using
 							CreateMsg(GetLocalString("msg", "427.off"))
+							SelectedItem\InvImg = SelectedItem\ItemTemplate\InvImg
 							I_427\Using = False
 						Else
 							GiveAchievement("427")
 							CreateMsg(GetLocalString("msg", "427.on"))
+							SelectedItem\InvImg = SelectedItem\ItemTemplate\InvImg2
 							I_427\Using = True
 						EndIf
 						SelectedItem = Null
