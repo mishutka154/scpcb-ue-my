@@ -950,7 +950,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 				EndIf
 				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 				If n\Frame <= 813.0
-					AnimateNPC(n, 795.0, 813.0, 0.7, False)
+					AnimateNPC(n, 795.0, 813.0, 0.8, False)
 					If n\Frame > 812.9
 						If Rand(2) = 1
 							SetNPCFrame(n, 814.0)
@@ -962,14 +962,14 @@ Function UpdateNPCType049_2%(n.NPCs)
 					Local Attack%
 					
 					If n\Frame < 879.0
-						AnimateNPC(n, 814.0, 878.0, 0.4, False)
+						AnimateNPC(n, 814.0, 878.0, 0.5, False)
 						Attack = (n\Frame >= 839.0 And PrevFrame < 839.0)
 						If n\Frame > 877.9
 							SetNPCFrame(n, 705.0)
 							n\State = 2.0 + me\Terminated
 						EndIf
 					Else
-						AnimateNPC(n, 879.0, 943.0, 0.4, False)
+						AnimateNPC(n, 879.0, 943.0, 0.5, False)
 						Attack = (n\Frame >= 900.0 And PrevFrame < 900.0)
 						If n\Frame > 942.9
 							SetNPCFrame(n, 705.0)
