@@ -34,6 +34,7 @@
 		Tom Malinowski
 		Vladislav Borisevich ("Vane Brain")
 		GruppyJB
+		thethieme
 
 *Sound Effects and Music
 
