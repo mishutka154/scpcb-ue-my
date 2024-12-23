@@ -5308,6 +5308,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(20.0, 30.0)
 						me\StaminaEffect = 0.7
 						me\StaminaEffectTimer = Rand(20.0, 30.0)
+						me\Stamina = Min(me\Stamina + 25.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_1"))
 						
@@ -5320,6 +5321,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(30.0, 40.0)
 						me\StaminaEffect = 0.5
 						me\StaminaEffectTimer = Rnd(30.0, 40.0)
+						me\Stamina = Min(me\Stamina + 50.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_2"))
 						
@@ -5335,6 +5337,7 @@ Function UpdateGUI%()
 								me\HealTimer = 60.0
 								me\StaminaEffect = 0.1
 								me\StaminaEffectTimer = 60.0
+								me\Stamina = 100.0
 								CreateMsg(GetLocalString("msg", "syringe_3"))
 								;[End Block]
 							Case 2
@@ -5358,6 +5361,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(10.0, 20.0)
 						me\StaminaEffect = 0.8
 						me\StaminaEffectTimer = Rand(10.0, 20.0)
+						me\Stamina = Min(me\Stamina + 10.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_6"))
 						
