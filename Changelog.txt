@@ -15,9 +15,14 @@
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Updated SCP-008's label.
+- Added «pencil.b3d», «chessboard.b3d», «Plant.b3d», and «Plant2.b3d» props.
+- Improved «Keyboard.b3d» prop.
 
 [Items]
 - Added open SCP-427 icon.
+- Speed up equipping SCP-268 and ballistic helmet.
+- Speed up using cups slightly.
+- Syringes can restore some of the player's stamina.
 
 [NPCs]
 - Added SCP-999.

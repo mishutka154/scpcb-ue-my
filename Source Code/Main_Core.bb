@@ -4734,7 +4734,7 @@ Function UpdateGUI%()
 					If (Not PreventItemOverlapping(True, True, True, True, True))
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0], 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.8), 100.0)
 						
 						If SelectedItem\State = 100.0
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
@@ -4770,7 +4770,7 @@ Function UpdateGUI%()
 						End Select
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + fps\Factor[0], 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.8), 100.0)
 						
 						If SelectedItem\State = 100.0
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
@@ -5178,7 +5178,7 @@ Function UpdateGUI%()
 							If JsonIsNull(JsonGetValue(Drink, "refuse_message"))
 								me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
 								
-								SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 0.8), 100.0)
+								SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 0.7), 100.0)
 								
 								If SelectedItem\State3 = 100.0
 									Temp = JsonGetValue(Drink, "drink_message")
@@ -5308,6 +5308,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(20.0, 30.0)
 						me\StaminaEffect = 0.7
 						me\StaminaEffectTimer = Rand(20.0, 30.0)
+						me\Stamina = Min(me\Stamina + 25.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_1"))
 						
@@ -5320,6 +5321,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(30.0, 40.0)
 						me\StaminaEffect = 0.5
 						me\StaminaEffectTimer = Rnd(30.0, 40.0)
+						me\Stamina = Min(me\Stamina + 50.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_2"))
 						
@@ -5335,6 +5337,7 @@ Function UpdateGUI%()
 								me\HealTimer = 60.0
 								me\StaminaEffect = 0.1
 								me\StaminaEffectTimer = 60.0
+								me\Stamina = 100.0
 								CreateMsg(GetLocalString("msg", "syringe_3"))
 								;[End Block]
 							Case 2
@@ -5358,6 +5361,7 @@ Function UpdateGUI%()
 						me\HealTimer = Rnd(10.0, 20.0)
 						me\StaminaEffect = 0.8
 						me\StaminaEffectTimer = Rand(10.0, 20.0)
+						me\Stamina = Min(me\Stamina + 10.0, 100.0)
 						
 						CreateMsg(GetLocalString("msg", "syringe_6"))
 						
@@ -9292,7 +9296,7 @@ Function Update268%()
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
     Else
-        I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
+		If SelectedItem\ItemTemplate\ID <> it_scp268 And SelectedItem\ItemTemplate\ID <> it_fine268 Then I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
 		I_268\InvisibilityOn = False
     EndIf
 End Function 
