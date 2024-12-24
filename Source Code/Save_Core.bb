@@ -413,6 +413,7 @@ Function SaveGame%(File$)
 		WriteFloat(f, EntityRoll(de\OBJ, True))
 		
 		WriteFloat(f, de\Size)
+		WriteFloat(f, de\MaxSize)
 		WriteFloat(f, de\Alpha)
 		WriteByte(f, de\FX)
 		WriteByte(f, de\BlendMode)
@@ -1156,6 +1157,7 @@ Function LoadGame%(File$)
 		de.Decals = CreateDecal(ID, x, y, z, Pitch, Yaw, Roll)
 		
 		Local Size# = ReadFloat(f)
+		Local MaxSize# = ReadFloat(f)
 		Local Alpha# = ReadFloat(f)
 		Local FX% = ReadByte(f)
 		Local BlendMode% = ReadByte(f)
@@ -1169,6 +1171,7 @@ Function LoadGame%(File$)
 		For de.Decals = Each Decals
 			If EntityX(de\OBJ, True) = x And EntityY(de\OBJ, True) = y And EntityZ(de\OBJ, True) = z
 				de\Size = Size
+				de\MaxSize = MaxSize
 				de\Alpha = Alpha
 				de\FX = FX
 				de\BlendMode = BlendMode
@@ -1989,6 +1992,7 @@ Function LoadGameQuick%(File$)
 		de.Decals = CreateDecal(ID, x, y, z, Pitch, Yaw, Roll)
 		
 		Local Size# = ReadFloat(f)
+		Local MaxSize# = ReadFloat(f)
 		Local Alpha# = ReadFloat(f)
 		Local FX% = ReadByte(f)
 		Local BlendMode% = ReadByte(f)
@@ -2002,6 +2006,7 @@ Function LoadGameQuick%(File$)
 		For de.Decals = Each Decals
 			If EntityX(de\OBJ, True) = x And EntityY(de\OBJ, True) = y And EntityZ(de\OBJ, True) = z
 				de\Size = Size
+				de\MaxSize = MaxSize
 				de\Alpha = Alpha
 				de\FX = FX
 				de\BlendMode = BlendMode

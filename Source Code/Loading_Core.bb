@@ -75,7 +75,7 @@ Function LoadDecals%()
 	If S2IMapContains(UnlockedAchievements, "apollyon") Then de_I\DecalTextureID[DECAL_APOLLYON] = LoadTexture_Strict("GFX\Menu\Achievements\AchvApollyon.png", 1 + 2, DeleteAllTextures, False)
 End Function
 
-Const MaxParticleTextureIDAmount% = 9
+Const MaxParticleTextureIDAmount% = 10
 
 Function RemoveDecalInstances%()
 	Local i%
@@ -110,6 +110,7 @@ Const PARTICLE_BLOOD% = 6
 Const PARTICLE_SPARK% = 7
 
 Const PARTICLE_WATER_DROP% = 8
+Const PARTICLE_WATER_RING% = 9
 ;[End Block]
 
 Function LoadParticles%()
@@ -131,6 +132,7 @@ Function LoadParticles%()
 	p_I\ParticleTextureID[PARTICLE_SPARK] = LoadTexture_Strict("GFX\Particles\spark.png", 1 + 2, DeleteAllTextures, False)
 	
 	p_I\ParticleTextureID[PARTICLE_WATER_DROP] = LoadTexture_Strict("GFX\Particles\water_drop.png", 1 + 2, DeleteAllTextures, False)
+	p_I\ParticleTextureID[PARTICLE_WATER_RING] = LoadTexture_Strict("GFX\Particles\water_ring.png", 1 + 2, DeleteAllTextures, False)
 	
 	; ~ Black smoke in "room2c_gw_lcz"/"room2_6_hcz"/"cont1_035"
 	ParticleEffect[0] = CreateTemplate()
@@ -396,6 +398,32 @@ Function LoadParticles%()
 	SetTemplateOffset(ParticleEffect[21], -0.2, 0.2, 0.1, 0.1, -0.2, 0.2)
 	SetTemplateSize(ParticleEffect[21], 0.2, 0.2, 1.0, 1.2)
 	SetTemplateAlphaVel(ParticleEffect[21], True)
+	
+	; ~ Water drop particle in "room2_js"
+	ParticleEffect[22] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[22], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[22], -1)
+	SetTemplateInterval(ParticleEffect[22], 15)
+	SetTemplateParticleLifeTime(ParticleEffect[22], 140, 140)
+	SetTemplateTexture(ParticleEffect[22], PARTICLE_WATER_DROP)
+	SetTemplateOffset(ParticleEffect[22], -0.3, 0.3, 0.0, 0.0, -0.3, 0.3)
+	SetTemplateVelocity(ParticleEffect[22], 0.0, 0.0, -0.042, -0.04, 0.0, 0.0)
+	SetTemplateSize(ParticleEffect[22], 0.01, 0.01, 1.0, 1.5)
+	SetTemplateAlphaVel(ParticleEffect[22], True)
+	SetTemplateFloor(ParticleEffect[22], 0.01, 0.0, 0)
+	
+	; ~ Water ring in "room2_js"
+	ParticleEffect[23] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[23], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[23], -1)
+	SetTemplateInterval(ParticleEffect[23], 15)
+	SetTemplateParticleLifeTime(ParticleEffect[23], 30, 40)
+	SetTemplateTexture(ParticleEffect[23], PARTICLE_WATER_RING)
+	SetTemplateOffset(ParticleEffect[23], -0.3, 0.3, 0.0, 0.0, -0.3, 0.3)
+	SetTemplateSize(ParticleEffect[23], 0.005, 0.005, 1.0, 1.0)
+	SetTemplateSizeVel(ParticleEffect[23], 0.001, 1.001)
+	SetTemplateFixAngles(ParticleEffect[23], 90, 0)
+	SetTemplateAlphaVel(ParticleEffect[23], True)
 End Function
 
 Function RemoveParticleInstances%()

@@ -19,6 +19,8 @@
 - Added «pencil.b3d», «chessboard.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Improved «Keyboard.b3d» prop.
 
+- Design improvements for some rooms...
+
 [Items]
 - Added open SCP-427 icon.
 - Speed up equipping SCP-268 and ballistic helmet.

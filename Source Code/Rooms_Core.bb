@@ -854,8 +854,16 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 1646.0 * RoomScale, r\y + 435.0 * RoomScale, r\z + 193.0 * RoomScale, 20.0)
 			sc\Angle = 30.0 : sc\Turn = 30.0
 			
-			de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 0.005, r\z + 161.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.8, 1.0), 1.0)
+			de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 0.005, r\z + 161.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			de\SizeChange = 0.00005 : de\MaxSize = 5.5
 			EntityParent(de\OBJ, r\OBJ)
+			
+			de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			de\SizeChange = 0.00005 : de\MaxSize = 5.5
+			EntityParent(de\OBJ, r\OBJ)
+			
+			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 161.0 * RoomScale, 22)
+			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 0.01, r\z + 161.0 * RoomScale, 23)
 			
 			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 1715.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 718.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
