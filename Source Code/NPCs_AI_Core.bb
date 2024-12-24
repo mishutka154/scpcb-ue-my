@@ -3479,19 +3479,10 @@ Function UpdateNPCType1048_A%(n.NPCs)
 	If n\HP =< 0
 		PlaySoundEx(LoadTempSound("SFX\SCP\1048A\Explode.ogg"), Camera, n\Collider, 8.0)
 		
-		Local p.Particles = CreateParticle(PARTICLE_BLOOD, EntityX(n\Collider), EntityY(n\Collider) + 0.2, EntityZ(n\Collider), 0.25, 0.0)
-		
-		EntityColor(p\OBJ, 100.0, 100.0, 100.0)
-		RotateEntity(p\Pvt, 0.0, 0.0, Rnd(360.0))
-		p\AlphaChange = -Rnd(0.02, 0.03)
-		
 		Local i%
 		
 		For i = 0 To 1
-			p.Particles = CreateParticle(PARTICLE_BLOOD, EntityX(n\Collider) + Rnd(-0.2, 0.2), EntityY(n\Collider) + 0.25, EntityZ(n\Collider) + Rnd(-0.2, 0.2), 0.15, 0.0)
-			EntityColor(p\OBJ, 100.0, 100.0, 100.0)
-			RotateEntity(p\Pvt, 0.0, 0.0, Rnd(360.0))
-			p\AlphaChange = -Rnd(0.02, 0.03)
+			SetEmitter(Null, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider), 21)
 		Next
 		
 		Local Pvt% = CreatePivot()
