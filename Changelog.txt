@@ -6,7 +6,8 @@
 - Removed buttons glowing.
 - SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
 - Partially reverted SCP-079 increased chances to hack monitors with SCP-895.
-- Increase range to interact with ducks.
+- Increased range to interact with ducks.
+- Increased map size from 18 to 20.
 - Updated SCP-895's overlay textures.
 - Better subtitles.
 
