@@ -178,16 +178,23 @@
 		rus_hunter
 		Vladislav Safonov ("Onmane")
 		Nero
-
-*DgVoodoo2 Creators 
-
-		Dgvoodoo2 made by Dege and Diosg.
-		thanks a lot to them for the right to use their software in our game!
 		
 *Blitz3D Engine Creator
 
 		Blitz3D Engine made by Mark Sibly.
 		Thank you for creating an engine that became SCP CB's engine of use. Rest well.
+
+*CBRE-EX/CBRE/Sledge Creators
+
+		LogicAndTrick - The original creator of Sledge, the software CBRE (and thus, CBRE-EX) are based on.
+		juanjp600 - Creator of CBRE, originally known as SledgeCB.
+		Stefan Koch ("Salvage") - Helped with CBRE development.
+		VirtualBrightPlayz - Creator of another CBRE fork, he wrote the model baking code.
+
+*DgVoodoo2 Creators 
+
+		Dgvoodoo2 made by Dege and Diosg.
+		Thanks a lot to them for the right to use their software in our game!
 
 *Some Materials Taken from or Idealized by:
 
@@ -333,6 +340,9 @@ by "Trasknari"
 
 		The Anomalous Ducks are based on "Log of Anomalous Ducks",
 by "Skara Brae"
+
+		The Anomalous Items are based on "Log of Anomalous Items",
+by ""
 
 /
 	A big thank you to everyone who's supported the project during these years
