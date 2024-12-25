@@ -410,9 +410,9 @@ Function LoadParticles%()
 	SetTemplateVelocity(ParticleEffect[22], 0.0, 0.0, -0.042, -0.04, 0.0, 0.0)
 	SetTemplateSize(ParticleEffect[22], 0.01, 0.01, 1.0, 1.5)
 	SetTemplateAlphaVel(ParticleEffect[22], True)
-	SetTemplateFloor(ParticleEffect[22], 0.01, 0.0, 0)
+	SetTemplateFloor(ParticleEffect[22], 0.0, 0.0, 0)
 	
-	; ~ Water ring in "room2_js"
+	; ~ Water rings in "room2_js"
 	ParticleEffect[23] = CreateTemplate()
 	SetTemplateEmitterBlend(ParticleEffect[23], 1)
 	SetTemplateEmitterLifeTime(ParticleEffect[23], -1)
