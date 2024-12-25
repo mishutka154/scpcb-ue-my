@@ -16,6 +16,8 @@ Requirements:
 
 -	[BlitzPlus](https://www.blitzcoder.org/forum/downloads.php) v1.47 for Map Creator
 
+-	[CBRE-EX](https://github.com/AnalogFeelings/cbre-ex/releases) v.2.1.0 for rooms
+
 Beware - the source code is perhaps more horrifying than the game itself!
 
 Our Discord server: https://discord.gg/n7KdW4u
