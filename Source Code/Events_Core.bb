@@ -6657,7 +6657,7 @@ Function UpdateEvents%()
 							e\EventState2 = 0.0
 						EndIf
 					Else
-						If e\EventState < 70.0 * 7.0
+						If e\EventState < 70.0 * 9.0
 							e\EventState = e\EventState + fps\Factor[0]
 							If e\room\RoomDoors[0]\Locked = 0 Then e\room\RoomDoors[0]\Open = False
 							If e\room\RoomDoors[1]\Locked = 0 Then e\room\RoomDoors[1]\Open = False
@@ -6665,7 +6665,7 @@ Function UpdateEvents%()
 								If BrokenDoor
 									If e\room\RoomEmitters[2] = Null Then e\room\RoomEmitters[2] = SetEmitter(e\room, EntityX(e\room\Objects[1], True), EntityY(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True), 16)
 								EndIf
-							ElseIf e\EventState > 70.0 * 3.0 And e\EventState < 70.0 * 6.0
+							ElseIf e\EventState > 70.0 * 3.0 And e\EventState < 70.0 * 7.0
 								If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 4.0
 									If wi\GasMask = 0 And wi\HazmatSuit = 0 Then me\EyeIrritation = Max(70.0, me\EyeIrritation)
 								EndIf
