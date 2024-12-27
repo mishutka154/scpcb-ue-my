@@ -18,6 +18,7 @@
 - Updated SCP-008's label.
 - Added «pencil.b3d», «chessboard.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Improved «Keyboard.b3d» prop.
+- The decontamination rooms trap the player for longer.
 
 - Design improvements for some rooms...
 
