@@ -9296,7 +9296,9 @@ Function Update268%()
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
     Else
-		If SelectedItem\ItemTemplate\ID <> it_scp268 And SelectedItem\ItemTemplate\ID <> it_fine268 Then I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
+		If SelectedItem <> Null
+			If SelectedItem\ItemTemplate\ID <> it_scp268 And SelectedItem\ItemTemplate\ID <> it_fine268 Then I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
+		EndIf
 		I_268\InvisibilityOn = False
     EndIf
 End Function 
