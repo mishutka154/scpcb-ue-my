@@ -3109,6 +3109,8 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[0], r\x + 720.0 * RoomScale, r\y, r\z + 1744.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
 			
+			r\Objects[1] = CreateButton(BUTTON_KEYCARD, r\x - 1063.0 * RoomScale, r\y + 490.0 * RoomScale, r\z + 204.0 * RoomScale, 0.0, 90, 0.0, r\OBJ, True)
+			
 			CreateCustomCenter(r, r\x, r\z - 720.0 * RoomScale)
 			;[End Block]
 		Case r_gate_b

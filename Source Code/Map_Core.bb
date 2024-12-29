@@ -25,67 +25,6 @@ Type TempProps
 	Field RoomTemplate.RoomTemplates
 End Type
 
-Function CheckForPropModel%(File$)
-	Select StripPath(File)
-		Case "door01.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorModelID[DOOR_DEFAULT_MODEL]))
-			;[End Block]
-		Case "contdoorleft.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorModelID[DOOR_BIG_MODEL_1]))
-			;[End Block]
-		Case "contdoorright.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorModelID[DOOR_BIG_MODEL_2]))
-			;[End Block]
-		Case "officedoor.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorModelID[DOOR_OFFICE_MODEL]))
-			;[End Block]
-		Case "doorframe.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorFrameModelID[DOOR_DEFAULT_FRAME_MODEL]))
-			;[End Block]
-		Case "contdoorframe.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorFrameModelID[DOOR_BIG_FRAME_MODEL]))
-			;[End Block]
-		Case "officedoorframe.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\DoorFrameModelID[DOOR_OFFICE_FRAME_MODEL]))
-			;[End Block]
-		Case "button.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\ButtonModelID[BUTTON_DEFAULT]))
-			;[End Block]
-		Case "buttonkeycard.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\ButtonModelID[BUTTON_KEYCARD]))
-			;[End Block]
-		Case "elevator_panel.b3d"
-			;[Block]
-			Return(CopyEntity(d_I\ElevatorPanelModel))
-			;[End Block]
-		Case "leverbase.b3d"
-			;[Block]
-			Return(CopyEntity(lvr_I\LeverModelID[LEVER_BASE_MODEL]))
-			;[End Block]
-		Case "leverhandle.b3d"
-			;[Block]
-			Return(CopyEntity(lvr_I\LeverModelID[LEVER_HANDLE_MODEL]))
-			;[End Block]
-		Case "monitor2.b3d"
-			;[Block]
-			Return(CopyEntity(mon_I\MonitorModelID[MONITOR_DEFAULT_MODEL]))
-			;[End Block]
-		Default
-			;[Block]
-			Return(LoadMesh_Strict(File))
-			;[End Block]
-	End Select
-End Function
-
 Function CreateProp.Props(room.Rooms, Name$, x#, y#, z#, Pitch#, Yaw#, Roll#, ScaleX#, ScaleY#, ScaleZ#, HasCollision%, FX%, TexturePath$)
 	Local p.Props, p2.Props
 	
@@ -102,12 +41,12 @@ Function CreateProp.Props(room.Rooms, Name$, x#, y#, z#, Pitch#, Yaw#, Roll#, Sc
 	p\TexPath = TexturePath
 	p\IsCooler = (Name = "GFX\Map\Props\water_cooler.b3d")
 	
-	If p\OBJ = 0 Then p\OBJ = CheckForPropModel(Name) ; ~ A hacky optimization (just copy models that loaded as variable). Also fixes models folder if the CBRE was used
+	If p\OBJ = 0 Then p\OBJ = LoadMesh_Strict(Name)
 	PositionEntity(p\OBJ, x, y, z)
 	RotateEntity(p\OBJ, Pitch, Yaw, Roll)
 	If room <> Null Then EntityParent(p\OBJ, room\OBJ)
 	ScaleEntity(p\OBJ, ScaleX, ScaleY, ScaleZ)
-	EntityType(p\OBJ, HasCollision) ; ~ DO NOT FORGET THAT Const HIT_MAP% = 1
+	EntityType(p\OBJ, HasCollision) ; ~ NOTICE: Const HIT_MAP% = 1
 	EntityFX(p\OBJ, FX)
 	EntityPickMode(p\OBJ, 2)
 	
@@ -599,7 +538,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 			AddMesh(ChildMesh, Opaque)
 			EntityParent(ChildMesh, CollisionMeshes)
 			EntityAlpha(ChildMesh, 0.0)
-			EntityType(ChildMesh, HasCollision) ; ~ DO NOT FORGET THAT Const HIT_MAP% = 1
+			EntityType(ChildMesh, HasCollision) ; ~ NOTICE: Const HIT_MAP% = 1
 			EntityPickMode(ChildMesh, 2)
 			
 			; ~ Make collision double-sided
@@ -815,7 +754,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	EntityFX(Opaque, 3)
 	
 	EntityAlpha(HiddenMesh, 0.0)
-	EntityType(HiddenMesh, HasCollision) ; ~ DO NOT FORGET THAT Const HIT_MAP% = 1
+	EntityType(HiddenMesh, HasCollision) ; ~ NOTICE: Const HIT_MAP% = 1
 	EntityAlpha(Opaque, 1.0)
 	
 	Local OBJ% = CreatePivot()
@@ -2299,8 +2238,8 @@ Function PlaceMapCreatorMT%(r.Rooms)
 						;[Block]
 						AddLight(r, r\x + (x * 2.0), r\y + MTGridY + (409.0 * RoomScale), r\z + (y * 2.0), 2, 0.25, 255, 200, 200)
 						AddLight(r, r\x + (x * 2.0) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (469.0 * RoomScale), r\z + (y * 2.0) + (SinValue * 560.0 * RoomScale), 2, 0.25, 255, 200, 200)
-						CreateProp(r, "GFX\Map\Props\lamp3_b.b3d", r\x + (x * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, 90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
-						CreateProp(r, "GFX\Map\Props\lamp3_b.b3d", r\x + (x * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, -90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
+						CreateProp(r, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, 90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
+						CreateProp(r, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, -90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
 						
 						d.Doors = CreateDoor(Null, r\x + (x * 2.0) + (CosValue * 256.0 * RoomScale), r\y + MTGridY, r\z + (y * 2.0) + (SinValue * 256.0 * RoomScale), EntityYaw(Tile_Entity, True) - 90.0, False, ELEVATOR_DOOR)
 						PositionEntity(d\ElevatorPanel[1], EntityX(d\ElevatorPanel[1], True) + (CosValue * 0.05), EntityY(d\ElevatorPanel[1], True) + 0.1, EntityZ(d\ElevatorPanel[1], True) + (SinValue * (-0.28)), True)
