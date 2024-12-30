@@ -16,7 +16,7 @@
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Updated SCP-008's label.
-- Added «pencil.b3d», «chessboard.b3d», «Plant.b3d», and «Plant2.b3d» props.
+- Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Improved «Keyboard.b3d» prop.
 - The decontamination rooms trap the player for longer.
 
