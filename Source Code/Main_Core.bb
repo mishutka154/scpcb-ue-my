@@ -4734,7 +4734,7 @@ Function UpdateGUI%()
 					If (Not PreventItemOverlapping(True, True, True, True, True))
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.8), 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.7), 100.0)
 						
 						If SelectedItem\State = 100.0
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
@@ -4770,7 +4770,7 @@ Function UpdateGUI%()
 						End Select
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 						
-						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.8), 100.0)
+						SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / 0.7), 100.0)
 						
 						If SelectedItem\State = 100.0
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
@@ -5178,7 +5178,7 @@ Function UpdateGUI%()
 							If JsonIsNull(JsonGetValue(Drink, "refuse_message"))
 								me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
 								
-								SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 0.7), 100.0)
+								SelectedItem\State3 = Min(SelectedItem\State3 + (fps\Factor[0] / 0.6), 100.0)
 								
 								If SelectedItem\State3 = 100.0
 									Temp = JsonGetValue(Drink, "drink_message")
@@ -9278,6 +9278,7 @@ Type SCP268
 	Field Using%
 	Field Timer#
 	Field InvisibilityOn%
+	Field PauseCharge#
 End Type
 
 Global I_268.SCP268
@@ -9286,7 +9287,8 @@ Function Update268%()
     If I_268\Using > 1
 		I_268\InvisibilityOn = (I_268\Timer > 0.0)
 		
-		Local Factor268# 
+		Local Factor268#
+		I_268\PauseCharge = 140.0
 		
 		If I_268\Using = 3 
 			Factor268 = (fps\Factor[0] / 2.0) * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
@@ -9296,8 +9298,10 @@ Function Update268%()
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
     Else
-		If SelectedItem <> Null
-			If SelectedItem\ItemTemplate\ID <> it_scp268 And SelectedItem\ItemTemplate\ID <> it_fine268 Then I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
+		If I_268\PauseCharge =< 0.0
+			I_268\Timer = Min(I_268\Timer + fps\Factor[0], 700.0)
+		Else
+			I_268\PauseCharge = I_268\PauseCharge - fps\Factor[0]
 		EndIf
 		I_268\InvisibilityOn = False
     EndIf
