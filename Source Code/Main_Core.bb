@@ -2992,9 +2992,9 @@ Function UpdateMoving%()
 	If me\HealTimer > 0.0
 		Local FPSFactorEx# = fps\Factor[0] / 70.0
 		
-		me\HealTimer = Max(me\HealTimer - FPSFactorEx, 0.0)
 		me\Bloodloss = Min(me\Bloodloss + FPSFactorEx / 3.0, 100.0)
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 30.0, 0.0)
+		me\HealTimer = Max(me\HealTimer - FPSFactorEx, 0.0)
 	EndIf
 	
 	If me\HeartBeatVolume > 0.0
