@@ -8855,7 +8855,7 @@ Function UpdateIntro%()
 									e\room\NPC[3]\State = 9.0
 									If DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[2]\FrameOBJ, True), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[2]\FrameOBJ, True)) < 20.25
 										; ~ Remove D-9341 texture
-										DeleteSingleTextureEntryFromCache(n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE]) : n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE] = 0
+										DeleteSingleTextureEntryFromCache(n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE], DeleteAllTextures) : n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE] = 0
 										
 										RemoveNPC(e\room\NPC[5])
 										RemoveNPC(e\room\NPC[7])

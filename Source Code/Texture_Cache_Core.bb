@@ -18,7 +18,7 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	Local tic.TextureInCache
 	
 	For tic.TextureInCache = Each TextureInCache
-		If tic\TexName <> "CreateTexture"
+		If tic\TexName <> "CTUCS"
 			If StripPath(TexName) = tic\TexName
 				If tic\TexDeleteType < DeleteType Then tic\TexDeleteType = DeleteType
 				Return(tic\Tex)
@@ -43,7 +43,7 @@ Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Heig
 	Local tic.TextureInCache
 	
 	For tic.TextureInCache = Each TextureInCache
-		If tic\TexName <> "CreateTexture"
+		If tic\TexName <> "CTUCS"
 			If StripPath(TexName) = tic\TexName
 				If tic\TexDeleteType < DeleteType Then tic\TexDeleteType = DeleteType
 				Return(tic\Tex)
@@ -76,11 +76,11 @@ Function DeleteTextureEntriesFromCache%(DeleteType%)
 	Next
 End Function
 
-Function DeleteSingleTextureEntryFromCache%(Texture%)
+Function DeleteSingleTextureEntryFromCache%(Texture%, DeleteType% = DeleteMapTextures)
 	Local tic.TextureInCache
 	
 	For tic.TextureInCache = Each TextureInCache
-		If tic\Tex = Texture
+		If tic\Tex = Texture And tic\TexDeleteType <= DeleteType
 			If tic\Tex <> 0 Then FreeTexture(tic\Tex) : tic\Tex = 0
 			Delete(tic)
 		EndIf
@@ -91,7 +91,7 @@ Function CreateTextureUsingCacheSystem%(Width%, Height%, TexFlags% = 1, Frames% 
 	Local tic.TextureInCache
 	
 	tic.TextureInCache = New TextureInCache
-	tic\TexName = "CreateTexture"
+	tic\TexName = "CTUCS"
 	tic\TexDeleteType = DeleteType
 	tic\Tex = CreateTexture(Width, Height, TexFlags, Frames)
 	Return(tic\Tex)

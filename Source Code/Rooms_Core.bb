@@ -434,12 +434,6 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[4], r\OBJ)
 			HideEntity(r\Objects[4])
 			
-			r\Objects[5] = CreateButton(BUTTON_DEFAULT, r\x - 5448.0 * RoomScale, r\y - 912.0 * RoomScale, r\z - 3870.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
-			
-			r\Objects[6] = CreateButton(BUTTON_DEFAULT, r\x - 6470.0 * RoomScale, r\y - 912.0 * RoomScale, r\z - 1964.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
-			
-			r\Objects[7] = CreateButton(BUTTON_DEFAULT, r\x - 4090.0 * RoomScale, r\y - 912.0 * RoomScale, r\z - 2300.0 * RoomScale, 0.0, 270.0, 0.0, r\OBJ, True)
-			
 			For i = 0 To 4
 				Select i
 					Case 0
@@ -805,8 +799,6 @@ Function FillRoom%(r.Rooms)
 			
 			If r\RoomTemplate\RoomID = r_room2_gw_2
 				r\Objects[0] = CreateButton(BUTTON_KEYCARD, r\x - 473.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 135.0 * RoomScale, 0.0, 270.0, 25.0, r\OBJ, True)
-				
-				r\Objects[1] = CreateButton(BUTTON_KEYCARD, r\x - 443.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 135.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
 				
 				emit.Emitter = SetEmitter(r, r\x + 262.0 * RoomScale, r\y + 328.0 * RoomScale, r\z - 413.0 * RoomScale, 1)
 				emit\State = 2
@@ -1185,8 +1177,6 @@ Function FillRoom%(r.Rooms)
 			TurnEntity(r\Objects[2], 0.0, 180.0, 0.0)
 			EntityParent(r\Objects[2], r\OBJ)
 			HideEntity(r\Objects[2])
-			
-			r\Objects[3] = CreateButton(BUTTON_KEYCARD, r\x - 994.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 456.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
 			
 			it.Items = CreateItem("S-NAV Navigator", it_nav, r\x - 460.0 * RoomScale, r\y + 210.0 * RoomScale, r\z - 108.0 * RoomScale)
 			it\State = Rnd(100.0)
@@ -1572,8 +1562,6 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.165, True)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
-			
-			r\Objects[0] = CreateButton(BUTTON_KEYCARD, r\x - 230.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 834.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
 			;[End Block]
 		Case r_room2c_gw_lcz
 			;[Block]
@@ -1847,10 +1835,6 @@ Function FillRoom%(r.Rooms)
 			de.Decals = CreateDecal(DECAL_BLOOD_6, r\x + 1083.0 * RoomScale, r\y - 5632.0 * RoomScale + 0.005, r\z + 890.0 * RoomScale, 90.0, 180.0, 0.0, 0.5)
 			EntityParent(de\OBJ, r\OBJ)
 			;[End Block]
-		Case r_room3_lcz
-			;[Block]
-			r\Objects[0] = CreateButton(BUTTON_KEYCARD, r\x - 230.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 834.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
-			;[End Block]
 		Case r_room4_ic
 			;[Block]
 			; ~ Information Center door
@@ -1913,10 +1897,6 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[1], r\x, r\y + 384.0 * RoomScale, r\z - 256.0 * RoomScale, True)
 			ScaleEntity(r\Objects[1], 2.0, 2.0, 2.0)
 			RotateEntity(r\Objects[1], 0.0, 0.0, 0.0)
-			
-			r\Objects[2] = CreateButton(BUTTON_KEYCARD, r\x + 1160.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 646.0 * RoomScale, 0.0, 0.0, 0.0, r\OBJ, True)
-			
-			r\Objects[3] = CreateButton(BUTTON_KEYCARD, r\x + 1160.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 645.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
 			
 			sc.SecurityCams = CreateSecurityCam(r, r\x - 192.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 960.0 * RoomScale, 20.0)
 			sc\Angle = 225.0 : sc\Turn = 0.0
@@ -2708,18 +2688,6 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
-			r\Objects[0] = CreateButton(BUTTON_KEYCARD, r\x - 1399.0 * RoomScale, r\y - 432.0 * RoomScale, r\z + 596.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
-			
-			r\Objects[1] = CreateButton(BUTTON_KEYCARD, r\x - 1089.0 * RoomScale, r\y - 432.0 * RoomScale, r\z + 544.0 * RoomScale, 0.0, 0.0, 0.0, r\OBJ, True)
-			
-			r\Objects[2] = CreateButton(BUTTON_KEYCARD, r\x - 247.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 608.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
-			
-			r\Objects[3] = CreateButton(BUTTON_KEYCARD, r\x - 297.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 928.0 * RoomScale, 0.0, 270.0, 0.0, r\OBJ, True)
-			
-			r\Objects[4] = CreateButton(BUTTON_KEYCARD, r\x - 707.0 * RoomScale, r\y - 432.0 * RoomScale, r\z + 1117.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
-			
-			r\Objects[5] = CreateButton(BUTTON_KEYCARD, r\x - 757.0 * RoomScale, r\y - 432.0 * RoomScale, r\z + 797.0 * RoomScale, 0.0, 270.0, 0.0, r\OBJ, True)
-			
 			de.Decals = CreateDecal(DECAL_BLOOD_1, r\x - 1212.0 * RoomScale, r\y - 604.0 * RoomScale + 0.005, r\z + 846.0 * RoomScale, 90.0, Rnd(360.0), 0.0, 0.8, 0.8)
 			EntityParent(de\OBJ, r\OBJ)
 			
@@ -2957,10 +2925,6 @@ Function FillRoom%(r.Rooms)
 			ScaleEntity(r\Objects[1], 2.0, 2.0, 2.0)
 			RotateEntity(r\Objects[1], 0.0, 0.0, 0.0)
 			
-			r\Objects[2] = CreateButton(BUTTON_KEYCARD, r\x + 1160.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 645.0 * RoomScale, 0.0, 0.0, 0.0, r\OBJ, True)
-			
-			r\Objects[3] = CreateButton(BUTTON_KEYCARD, r\x + 1160.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 646.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
-			
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 192.0 * RoomScale, r\y + 704.0 * RoomScale, r\z - 960.0 * RoomScale, 20.0)
 			sc\Angle = 45.0 : sc\Turn = 0.0
 			
@@ -3112,8 +3076,6 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[0], r\x + 720.0 * RoomScale, r\y, r\z + 1744.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
 			
-			r\Objects[1] = CreateButton(BUTTON_KEYCARD, r\x - 1063.0 * RoomScale, r\y + 490.0 * RoomScale, r\z + 204.0 * RoomScale, 0.0, 90, 0.0, r\OBJ, True)
-			
 			CreateCustomCenter(r, r\x, r\z - 720.0 * RoomScale)
 			;[End Block]
 		Case r_gate_b
@@ -3189,16 +3151,6 @@ Function FillRoom%(r.Rooms)
 			r\Objects[11] = CreatePivot()
 			PositionEntity(r\Objects[11], r\x - 5424.0 * RoomScale, r\y, r\z - 1068.0 * RoomScale)
 			EntityParent(r\Objects[11], r\OBJ)
-			
-			r\Objects[12] = CreateButton(BUTTON_DEFAULT, r\x - 5678.0 * RoomScale, r\y - 368.0 * RoomScale, r\z - 3986.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
-			
-			r\Objects[13] = CreateButton(BUTTON_DEFAULT, r\x + 1707.0 * RoomScale, r\y + 182.0 * RoomScale, r\z - 4226.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
-			
-			r\Objects[14] = CreateButton(BUTTON_DEFAULT, r\x + 3226.0 * RoomScale, r\y + 182.0 * RoomScale, r\z - 5447.0 * RoomScale, 0.0, 90.0, 0.0, r\OBJ, True)
-			
-			r\Objects[15] = CreateButton(BUTTON_DEFAULT, r\x + 3974.0 * RoomScale, r\y - 144.0 * RoomScale, r\z + 5643.0 * RoomScale, 0.0, 270.0, 0.0, r\OBJ, True)
-			
-			r\Objects[16] = CreateButton(BUTTON_DEFAULT, r\x + 4039.0 * RoomScale, r\y - 753.0 * RoomScale, r\z + 6488.0 * RoomScale, 0.0, 270.0, 0.0, r\OBJ, True)
 			
 			CreateCustomCenter(r, r\x - 5424.0 * RoomScale, r\z - 1700.0 * RoomScale)
 			;[End Block]
@@ -4142,7 +4094,7 @@ Function FillRoom%(r.Rooms)
 			
 			r\Objects[17] = CreateSprite()
 			r\ScriptedObject[17] = True
-			Tex = LoadTexture_Strict("GFX\NPCs\scp_106_eyes.png", 1, DeleteAllTextures, False)
+			Tex = LoadTexture_Strict("GFX\NPCs\scp_106_eyes.png", 1, DeleteMapTextures, False)
 			EntityTexture(r\Objects[17], Tex)
 			DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 			PositionEntity(r\Objects[17], EntityX(r\Objects[8], True), r\y + 1376.0 * RoomScale, EntityZ(r\Objects[8], True) - 2848.0 * RoomScale)

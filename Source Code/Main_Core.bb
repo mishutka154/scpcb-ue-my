@@ -1682,13 +1682,13 @@ Function UpdateConsole%()
 					If n_I\IsHalloween
 						n_I\IsNewYear = False
 						n_I\IsAprilFools = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_H.png", 1)
+						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_H.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
 						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 						CreateConsoleMsg(GetLocalString("console", "halloween.on"))
 					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
 						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
@@ -1701,13 +1701,13 @@ Function UpdateConsole%()
 					If n_I\IsNewYear
 						n_I\IsHalloween = False
 						n_I\IsAprilFools = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_NY.png", 1)
+						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_NY.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
 						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 						CreateConsoleMsg(GetLocalString("console", "newyear.on"))
 					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
 						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
@@ -1720,13 +1720,13 @@ Function UpdateConsole%()
 					If n_I\IsAprilFools
 						n_I\IsHalloween = False
 						n_I\IsNewYear = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_J.png", 1)
+						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_J.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex)
 						EntityTexture(n_I\Curr173\OBJ2, Tex)
 						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 						CreateConsoleMsg(GetLocalString("console", "aprilfools.on"))
 					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png", 1)
+						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
 						EntityTexture(n_I\Curr173\OBJ, Tex2)
 						EntityTexture(n_I\Curr173\OBJ2, Tex2)
 						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
