@@ -743,7 +743,10 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 184.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 952.0 * RoomScale, 20.0)
 			sc\Angle = 130.0 : sc\Turn = 40.0
 			
-			it.Items = CreateItem("Gas Mask", it_gasmask, r\x + 736.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 544.0 * RoomScale)
+			it.Items = CreateItem("Level 0 Key Card", it_key0, r\x + 736.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 752.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("ReVision Eyedrops", it_eyedrops, r\x + 736.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 544.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateRandomBattery(r\x + 736.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 448.0 * RoomScale)
@@ -759,6 +762,12 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
+			it.Items = CreateItem("Incident Report SCP-1048-A", it_paper, r\x + 736.0 * RoomScale, r\y + 224.0 * RoomScale, r\z - 480.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Gas Mask", it_gasmask, r\x - 896.0 * RoomScale, r\y - 248.0 * RoomScale, r\z + 898.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			If KEY2_SPAWNRATE = 3
 				If Rand(2)
 					it.Items = CreateItem("White Key", it_key_white, r\x - 625.0 * RoomScale, r\y - 276.0 * RoomScale, r\z - 332.0 * RoomScale)
@@ -767,12 +776,6 @@ Function FillRoom%(r.Rooms)
 				EndIf
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
-			
-			it.Items = CreateItem("Level 0 Key Card", it_key0, r\x + 736.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 752.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Incident Report SCP-1048-A", it_paper, r\x + 736.0 * RoomScale, r\y + 224.0 * RoomScale, r\z - 480.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case r_room2_elevator
 			;[Block]
