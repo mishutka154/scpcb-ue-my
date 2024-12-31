@@ -71,12 +71,8 @@ Function FillRoom%(r.Rooms)
 			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[0] = it2
 			HideEntity(it2\Collider)
 			
-			it2.Items = CreateItem("Document SCP-914", it_paper, 0.0, 0.0, 0.0)
-			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[1] = it2
-			HideEntity(it2\Collider)
-			
 			it2.Items = CreateItem("Document SCP-1025", it_paper, 0.0, 0.0, 0.0)
-			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[2] = it2
+			it2\Picked = True : it2\Dropped = -1 : it\SecondInv[1] = it2
 			HideEntity(it2\Collider)
 			
 			CreateCustomCenter(r, r\x, r\z - 768.0 * RoomScale)
@@ -1441,6 +1437,12 @@ Function FillRoom%(r.Rooms)
 				sc\Angle = 220.0 - (i * 40.0)
 				sc\Turn = 30.0
 			Next
+			
+			it.Items = CreateItem("Syringe", it_syringe, r\x - 729.0 * RoomScale, r\y + 136.0 * RoomScale, r\z + 748.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Document SCP-914", it_paper, 0.0, 0.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-1499", it_scp1499, r\x + 616.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 234.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
