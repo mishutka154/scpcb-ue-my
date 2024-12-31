@@ -1412,6 +1412,12 @@ Function FillRoom%(r.Rooms)
 			; ~ SCP-1499 door
 			CreateDoor(r, r\x + 556.0 * RoomScale, r\y, r\z + 288.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_4)
 			
+			; ~ Misc. door
+			d.Doors = CreateDoor(r, r\x - 1024.0 * RoomScale, r\y, r\z - 400.0 * RoomScale, 270.0, False, DEFAULT_DOOR, KEY_CARD_2)
+			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
+			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
+			
 			r\Objects[0] = CreatePivot()
 			PositionEntity(r\Objects[0], r\x + 576.0 * RoomScale, r\y + 160.0 * RoomScale, r\z + 632.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
