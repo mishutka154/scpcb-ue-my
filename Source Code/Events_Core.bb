@@ -703,7 +703,7 @@ Function UpdateEvents%()
 							TFormPoint(4712.0, 435.8, 4026.0, e\room\OBJ, 0)
 							e\room\NPC[4] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 							e\room\NPC[4]\State3 = -1.0 : e\room\NPC[4]\IsDead = True
-							SetNPCFrame(e\room\NPC[4], 711.0)
+							SetNPCFrame(e\room\NPC[4], 677.0)
 							RotateEntity(e\room\NPC[4]\Collider, 0.0, e\room\Angle + 270.0, 0.0, True)
 							
 							TFormPoint(4340.0, 435.8, 3680.0, e\room\OBJ, 0)
@@ -8380,7 +8380,7 @@ Function UpdateIntro%()
 					TFormPoint(208.0, 200.0, 480.0, e\room\OBJ, 0)
 					y = TFormedY()
 					e\room\NPC[1] = CreateNPC(NPCTypeD, TFormedX(), y, TFormedZ())
-					e\room\NPC[1]\State3 = 4.0
+					e\room\NPC[1]\State3 = 3.0
 					PointEntity(e\room\NPC[1]\Collider, e\room\Objects[2])
 					HideEntity(e\room\NPC[1]\OBJ)
 					
