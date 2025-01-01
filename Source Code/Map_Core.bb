@@ -5092,7 +5092,7 @@ Function PreventRoomOverlap%(r.Rooms)
 	Return(False)
 End Function
 
-Const MapGridSize% = 20
+Const MapGridSize% = 21
 Const RoomSpacing# = 8.0
 
 Type MapGrid
