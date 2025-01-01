@@ -4,8 +4,6 @@ Type Mouse
 	Field DoubleClick%, DoubleClickSlot%
 	Field LastMouseHit1%
 	Field MouseUp1%
-	Field Mouse_Left_Limit%, Mouse_Right_Limit%
-	Field Mouse_Top_Limit%, Mouse_Bottom_Limit%
 	Field Mouse_X_Speed_1#, Mouse_Y_Speed_1#
 	Field Viewport_Center_X%, Viewport_Center_Y%
 End Type

@@ -97,11 +97,6 @@ Function ResetInput%()
 	Input_ResetTime = 10.0
 End Function
 
-mo\Mouse_Left_Limit = 250 * MenuScale
-mo\Mouse_Right_Limit = opt\GraphicWidth - mo\Mouse_Left_Limit
-mo\Mouse_Top_Limit = 150 * MenuScale
-mo\Mouse_Bottom_Limit = opt\GraphicHeight - mo\Mouse_Top_Limit ; ~ As above
-
 ; ~ Viewport
 mo\Viewport_Center_X = opt\GraphicWidth / 2
 mo\Viewport_Center_Y = opt\GraphicHeight / 2
@@ -3122,7 +3117,7 @@ Function UpdateMouseLook%()
 	
 	; ~ Limit the mouse's movement. Using this method produces smoother mouselook movement than centering the mouse each loop
 	If (Not (MenuOpen Lor InvOpen Lor ConsoleOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null))
-		If (MousePosX > mo\Mouse_Right_Limit) Lor (MousePosX < mo\Mouse_Left_Limit) Lor (MousePosY > mo\Mouse_Bottom_Limit) Lor (MousePosY < mo\Mouse_Top_Limit) Then MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
+		MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 	EndIf
 	
 	If wi\GasMask > 0 Lor wi\HazmatSuit > 0 Lor I_1499\Using > 0
