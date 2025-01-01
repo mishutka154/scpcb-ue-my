@@ -218,6 +218,9 @@
 
 		The Box of Horrors mod for "SCP - Containment Breach":
 		https://undertowgames.com/forum/viewtopic.php?t=3404
+		
+		Project Resurrection mod for "SCP - Containment Breach":
+		https://www.moddb.com/mods/scpcb-project-resurrection-mod
 
 		Field Of View (FOV) mod for "SCP - Containment Breach":
 		https://www.moddb.com/mods/scp-containment-breach-field-of-view-fov-addon
