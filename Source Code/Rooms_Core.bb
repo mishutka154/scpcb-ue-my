@@ -1441,7 +1441,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Syringe", it_syringe, r\x - 729.0 * RoomScale, r\y + 136.0 * RoomScale, r\z + 748.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-914", it_paper, 0.0, 0.0, 0.0)
+			it.Items = CreateItem("Document SCP-914", it_paper, r\x - 670.0 * RoomScale, r\y + 136.0 * RoomScale, r\z - 742.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-1499", it_scp1499, r\x + 616.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 234.0 * RoomScale)
