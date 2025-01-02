@@ -1705,8 +1705,6 @@ Function UpdateNPCType106%(n.NPCs)
 					
 					SetNPCFrame(n, 110.0)
 					
-					GiveAchievement("106")
-					
 					PlaySound_Strict(snd_I\DecaySFX[0])
 					
 					n\State2 = 0.0
@@ -1720,6 +1718,7 @@ Function UpdateNPCType106%(n.NPCs)
 						EndIf
 						AnimateNPC(n, 111.0, 259.0, 0.15, False)
 					Else
+						GiveAchievement("106")
 						n\State = 3.0
 						n\State3 = Rnd(3000.0, 3500.0)
 					EndIf
