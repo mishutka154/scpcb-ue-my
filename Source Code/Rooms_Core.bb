@@ -15,7 +15,7 @@ Function FillRoom%(r.Rooms)
 		Case r_room1_storage
 			;[Block]
 			; ~ Storage Room 6H door
-			CreateDoor(r, r\x, r\y, r\z - 512.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_2)
+			CreateDoor(r, r\x, r\y, r\z - 512.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_1)
 			
 			sc.SecurityCams = CreateSecurityCam(r, r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, 20.0)
 			sc\Angle = 180.0 : sc\Turn = 45.0
