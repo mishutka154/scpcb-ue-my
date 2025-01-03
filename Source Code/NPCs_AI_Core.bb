@@ -3986,6 +3986,84 @@ Function UpdateNPCTypeApache%(n.NPCs)
 	RotateEntity(n\OBJ, EntityPitch(n\Collider), EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 End Function
 
+Function UpdateNPCTypeD_Clerk%(n.NPCs)
+	If (Not n\IsDead)
+		Local PrevFrame# = n\Frame
+		
+		RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
+		Select n\State
+			Case -1.0 ; ~ Script
+				;[Block]
+				;[End Block]
+			Case 0.0 ; ~ Idles
+				;[Block]
+				n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 5.0)
+				AnimateNPC(n, 210.0, 235.0, 0.1)
+				;[End Block]
+			Case 1.0 ; ~ Walking
+				;[Block]
+				n\CurrSpeed = CurveValue(n\Speed * 0.7, n\CurrSpeed, 20.0)
+				AnimateNPC(n, 236.0, 260.0, n\CurrSpeed * 18.0)
+				
+				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+				
+				If n\CurrSpeed > 0.005
+					If (PrevFrame < 244.0 And n\Frame >= 244.0) Lor (PrevFrame < 254.0 And n\Frame >= 254.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
+				ElseIf n\CurrSpeed < -0.005
+					If (PrevFrame >= 254.0 And n\Frame < 254.0) Lor (PrevFrame >= 244.0 And n\Frame < 244.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
+				EndIf
+				;[End Block]
+			Case 2.0 ; ~ Running
+				;[Block]
+				n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 5.0)
+				AnimateNPC(n, 301.0, 319.0, n\CurrSpeed * 18.0)
+				
+				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+				
+				If n\CurrSpeed > 0.005
+					If (PrevFrame < 309.0 And n\Frame >= 309.0) Lor (PrevFrame <= 319.0 And n\Frame <= 301.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 1, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
+				EndIf
+				;[End Block]
+		End Select
+		If n\HP =< 0 And n\NPCType = NPCTypeClerk
+			SetNPCFrame(n, 41.0)
+			n\IsDead = True ; ~ Only for Clerk because of Tesla Gate event
+		EndIf
+	Else
+		Select n\State3
+			Case -1.0 ; ~ Script
+				;[Block]
+				;[End Block]
+			Case 0.0 ; ~ Fall backward
+				;[Block]
+				AnimateNPC(n, 1.0, 40.0, 0.5, False)
+				;[End Block]
+			Case 1.0 ; ~ Fall forward
+				;[Block]
+				AnimateNPC(n, 41.0, 60.0, 0.5, False)
+				;[End Block]
+			Case 2.0 ; ~ Snap #1
+				;[Block]
+				AnimateNPC(n, 555.0, 629.0, 0.5, False)
+				;[End Block]
+			Case 3.0 ; ~ Snap #2
+				;[Block]
+				AnimateNPC(n, 630.0, 677.0, 0.5, False)
+				;[End Block]
+			Case 4.0 ; ~ Snap #3
+				;[Block]
+				AnimateNPC(n, 678.0, 711.0, 0.5, False)
+				;[End Block]
+			Case 5.0 ; ~ Snap #4
+				;[Block]
+				AnimateNPC(n, 712.0, 779.0, 0.5, False)
+				;[End Block]
+		End Select
+	EndIf
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+	RotateEntity(n\OBJ, EntityPitch(n\Collider), EntityYaw(n\Collider) - 180.0, 0.0)
+End Function
+
 Function UpdateNPCTypeGuard%(n.NPCs)
 	Local PrevFrame# = n\Frame
 	Local wayPointCloseToPlayer.WayPoints, w.WayPoints
@@ -6003,83 +6081,5 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 End Function
 
-Function UpdateNPCTypeD_Clerk%(n.NPCs)
-	If (Not n\IsDead)
-		Local PrevFrame# = n\Frame
-		
-		RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
-		Select n\State
-			Case -1.0 ; ~ Script
-				;[Block]
-				;[End Block]
-			Case 0.0 ; ~ Idles
-				;[Block]
-				n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 5.0)
-				AnimateNPC(n, 210.0, 235.0, 0.1)
-				;[End Block]
-			Case 1.0 ; ~ Walking
-				;[Block]
-				n\CurrSpeed = CurveValue(n\Speed * 0.7, n\CurrSpeed, 20.0)
-				AnimateNPC(n, 236.0, 260.0, n\CurrSpeed * 18.0)
-				
-				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
-				
-				If n\CurrSpeed > 0.005
-					If (PrevFrame < 244.0 And n\Frame >= 244.0) Lor (PrevFrame < 254.0 And n\Frame >= 254.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
-				ElseIf n\CurrSpeed < -0.005
-					If (PrevFrame >= 254.0 And n\Frame < 254.0) Lor (PrevFrame >= 244.0 And n\Frame < 244.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
-				EndIf
-				;[End Block]
-			Case 2.0 ; ~ Running
-				;[Block]
-				n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 5.0)
-				AnimateNPC(n, 301.0, 319.0, n\CurrSpeed * 18.0)
-				
-				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
-				
-				If n\CurrSpeed > 0.005
-					If (PrevFrame < 309.0 And n\Frame >= 309.0) Lor (PrevFrame <= 319.0 And n\Frame <= 301.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 1, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
-				EndIf
-				;[End Block]
-		End Select
-		If n\HP =< 0 And n\NPCType = NPCTypeClerk
-			SetNPCFrame(n, 41.0)
-			n\IsDead = True ; ~ Only for Clerk because of Tesla Gate event
-		EndIf
-	Else
-		Select n\State3
-			Case -1.0 ; ~ Script
-				;[Block]
-				;[End Block]
-			Case 0.0 ; ~ Fall backward
-				;[Block]
-				AnimateNPC(n, 1.0, 40.0, 0.5, False)
-				;[End Block]
-			Case 1.0 ; ~ Fall forward
-				;[Block]
-				AnimateNPC(n, 41.0, 60.0, 0.5, False)
-				;[End Block]
-			Case 2.0 ; ~ Snap #1
-				;[Block]
-				AnimateNPC(n, 555.0, 629.0, 0.5, False)
-				;[End Block]
-			Case 3.0 ; ~ Snap #2
-				;[Block]
-				AnimateNPC(n, 630.0, 677.0, 0.5, False)
-				;[End Block]
-			Case 4.0 ; ~ Snap #3
-				;[Block]
-				AnimateNPC(n, 678.0, 711.0, 0.5, False)
-				;[End Block]
-			Case 5.0 ; ~ Snap #4
-				;[Block]
-				AnimateNPC(n, 712.0, 779.0, 0.5, False)
-				;[End Block]
-		End Select
-	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
-	RotateEntity(n\OBJ, EntityPitch(n\Collider), EntityYaw(n\Collider) - 180.0, 0.0)
-End Function
-
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS

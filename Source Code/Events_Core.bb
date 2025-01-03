@@ -19,73 +19,74 @@ Global scribe_event.Events
 ;[Block]
 ; ~ LCZ
 Const e_room1_dead_end_106% = 0
-Const e_cont1_005% = 1
-Const e_cont1_173% = 2, e_cont1_173_intro% = 3
-Const e_cont1_205% = 4
-Const e_cont1_914% = 5
-Const e_room2_2_lcz_fan% = 6
-Const e_room2_closets% = 7
-Const e_room2_elevator% = 8
-Const e_room2_gw_2% = 9
-Const e_room2_storage% = 10
-Const e_room2_sl% = 11
-Const e_room2_test_lcz_173% = 12
-Const e_cont2_012% = 13
-Const e_cont2_500_1499% = 14
-Const e_cont2_1123% = 15
-Const e_cont2c_066_1162_arc% = 16
-Const e_room3_storage% = 17
-Const e_cont3_372% = 18
-Const e_room4_ic% = 19
+Const e_room1_storage% = 1
+Const e_cont1_005% = 2
+Const e_cont1_173% = 3, e_cont1_173_intro% = 4
+Const e_cont1_205% = 5
+Const e_cont1_914% = 6
+Const e_room2_2_lcz_fan% = 7
+Const e_room2_closets% = 8
+Const e_room2_elevator% = 9
+Const e_room2_gw_2% = 10
+Const e_room2_storage% = 11
+Const e_room2_sl% = 12
+Const e_room2_test_lcz_173% = 13
+Const e_cont2_012% = 14
+Const e_cont2_500_1499% = 15
+Const e_cont2_1123% = 16
+Const e_cont2c_066_1162_arc% = 17
+Const e_room3_storage% = 18
+Const e_cont3_372% = 19
+Const e_room4_ic% = 20
 ; ~ HCZ
-Const e_cont1_035% = 20
-Const e_cont1_079% = 21
-Const e_cont1_106% = 22
-Const e_cont1_895% = 23
-Const e_room2_2_hcz_106% = 24
-Const e_room2_4_hcz_106% = 25
-Const e_room2_5_hcz_106% = 26
-Const e_room2_6_hcz_smoke% = 27, e_room2_6_hcz_173% = 28
-Const e_room2_mt% = 29
-Const e_room2_nuke% = 30
-Const e_room2_servers_hcz% = 31
-Const e_room2_shaft% = 32
-Const e_room2_test_hcz% = 33
-Const e_cont2_008% = 34
-Const e_cont2_049% = 35
-Const e_cont2_409% = 36
-Const e_room3_hcz_duck% = 37, e_room3_hcz_1048% = 38
-Const e_room3_2_hcz_guard% = 39
-Const e_cont3_966% = 40
-Const e_room4_2_hcz_d% = 41
+Const e_cont1_035% = 21
+Const e_cont1_079% = 22
+Const e_cont1_106% = 23
+Const e_cont1_895% = 24
+Const e_room2_2_hcz_106% = 25
+Const e_room2_4_hcz_106% = 26
+Const e_room2_5_hcz_106% = 27
+Const e_room2_6_hcz_smoke% = 28, e_room2_6_hcz_173% = 29
+Const e_room2_mt% = 30
+Const e_room2_nuke% = 31
+Const e_room2_servers_hcz% = 32
+Const e_room2_shaft% = 33
+Const e_room2_test_hcz% = 34
+Const e_cont2_008% = 35
+Const e_cont2_049% = 36
+Const e_cont2_409% = 37
+Const e_room3_hcz_duck% = 38, e_room3_hcz_1048% = 39
+Const e_room3_2_hcz_guard% = 40
+Const e_cont3_966% = 41
+Const e_room4_2_hcz_d% = 42
 ; ~ EZ
-Const e_gate_b_entrance% = 42, e_gate_b% = 43
-Const e_gate_a_entrance% = 44, e_gate_a% = 45
-Const e_room1_dead_end_guard% = 46
-Const e_room2_ez_035% = 47
-Const e_room2_2_ez_duck% = 48
-Const e_room2_6_ez_789_j% = 49, e_room2_6_ez_guard% = 50
-Const e_room2_cafeteria% = 51
-Const e_room2_ic% = 52
-Const e_room2_medibay% = 53
-Const e_room2_scientists_2% = 54
-Const e_cont2_860_1% = 55
-Const e_room2c_ec% = 56
-Const e_room3_2_ez_duck% = 57
+Const e_gate_b_entrance% = 43, e_gate_b% = 44
+Const e_gate_a_entrance% = 45, e_gate_a% = 46
+Const e_room1_dead_end_guard% = 47
+Const e_room2_ez_035% = 48
+Const e_room2_2_ez_duck% = 49
+Const e_room2_6_ez_789_j% = 50, e_room2_6_ez_guard% = 51
+Const e_room2_office% = 52
+Const e_room2_cafeteria% = 53
+Const e_room2_ic% = 54
+Const e_room2_medibay% = 55
+Const e_room2_scientists_2% = 56
+Const e_cont2_860_1% = 57
+Const e_room2c_ec% = 58
+Const e_room3_2_ez_duck% = 59
 ; ~ OTHERS
-Const e_096_spawn% = 58
-Const e_106_victim% = 59
-Const e_106_sinkhole% = 60
-Const e_173_appearing% = 61
-Const e_682_roar% = 62
-Const e_1048_a% = 63
-Const e_checkpoint% = 64
-Const e_door_closing% = 65
-Const e_gateway% = 66
-Const e_tesla% = 67
-Const e_trick% = 68, e_trick_item% = 69
-Const e_dimension_106% = 70, e_dimension_1499% = 71
-Const e_room1_storage% = 72, e_room2_office% = 73
+Const e_096_spawn% = 60
+Const e_106_victim% = 61
+Const e_106_sinkhole% = 62
+Const e_173_appearing% = 63
+Const e_682_roar% = 64
+Const e_1048_a% = 65
+Const e_checkpoint% = 66
+Const e_door_closing% = 67
+Const e_gateway% = 68
+Const e_tesla% = 69
+Const e_trick% = 70, e_trick_item% = 71
+Const e_dimension_106% = 72, e_dimension_1499% = 73
 ;[End Block]
 
 ; ~ For Map Creator
@@ -94,6 +95,10 @@ Function FindEventID%(EventName$)
 		Case "room1_dead_end_106"
 			;[Block]
 			Return(e_room1_dead_end_106)
+			;[End Block]
+		Case "room1_storage"
+			;[Block]
+			Return(e_room1_storage)
 			;[End Block]
 		Case "cont1_005"
 			;[Block]
@@ -287,6 +292,10 @@ Function FindEventID%(EventName$)
 			;[Block]
 			Return(e_room2_6_ez_guard)
 			;[End Block]
+		Case "room2_office"
+			;[Block]
+			Return(e_room2_office)
+			;[End Block]
 		Case "room2_cafeteria"
 			;[Block]
 			Return(e_room2_cafeteria)
@@ -378,14 +387,6 @@ Function FindEventID%(EventName$)
 		Case "dimension_1499"
 			;[Block]
 			Return(e_dimension_1499)
-			;[End Block]
-		Case "room1_storage"
-			;[Block]
-			Return(e_room1_storage)
-			;[End Block]
-		Case "room2_office"
-			;[Block]
-			Return(e_room2_office)
 			;[End Block]
 		Default
 			;[Block]

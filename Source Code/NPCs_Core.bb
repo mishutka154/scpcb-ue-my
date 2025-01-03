@@ -454,6 +454,28 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			Next
 			ScaleEntity(n\OBJ, 0.7, 0.7, 0.7)
 			;[End Block]
+		Case NPCTypeD, NPCTypeClerk
+			;[Block]
+			Local Name$ = "Class D"
+			Local ModelID% = NPC_CLASS_D_MODEL
+			
+			If n\NPCType = NPCTypeClerk
+				Name = "Clerk"
+				ModelID = NPC_CLERK_MODEL
+			EndIf
+			
+			n\NVGName = GetLocalString("npc", "human")
+			n\Speed = IniGetFloat(NPCsFile, Name, "Speed") / 100.0
+			
+			n\Collider = CreatePivot()
+			EntityRadius(n\Collider, n\CollRadius)
+			EntityType(n\Collider, HIT_PLAYER)
+			
+			n\OBJ = CopyEntity(n_I\NPCModelID[ModelID])
+			Temp = IniGetFloat(NPCsFile, Name, "Scale") / MeshWidth(n\OBJ)
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
+			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
+			;[End Block]
 		Case NPCTypeGuard
 			;[Block]
 			n\NVGName = GetLocalString("npc", "human")
@@ -486,28 +508,6 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			
 			If NPCSound[SOUND_NPC_MTF_BEEP] = 0 Then NPCSound[SOUND_NPC_MTF_BEEP] = LoadSound_Strict("SFX\Character\MTF\Beep.ogg")
 			If NPCSound[SOUND_NPC_MTF_BREATH] = 0 Then NPCSound[SOUND_NPC_MTF_BREATH] = LoadSound_Strict("SFX\Character\MTF\Breath.ogg")
-			;[End Block]
-		Case NPCTypeD, NPCTypeClerk
-			;[Block]
-			Local Name$ = "Class D"
-			Local ModelID% = NPC_CLASS_D_MODEL
-			
-			If n\NPCType = NPCTypeClerk
-				Name = "Clerk"
-				ModelID = NPC_CLERK_MODEL
-			EndIf
-			
-			n\NVGName = GetLocalString("npc", "human")
-			n\Speed = IniGetFloat(NPCsFile, Name, "Speed") / 100.0
-			
-			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
-			EntityType(n\Collider, HIT_PLAYER)
-			
-			n\OBJ = CopyEntity(n_I\NPCModelID[ModelID])
-			Temp = IniGetFloat(NPCsFile, Name, "Scale") / MeshWidth(n\OBJ)
-			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
 			;[End Block]
 	End Select
 	
@@ -1373,6 +1373,11 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 			n\State = 1.0
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "008"))
 			;[End Block]
+		Case "tentacle", "035tentacle", "scp035tentacle", "scp-035tentacle", "scp-035-tentacle", "scp035-tentacle"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType035_Tentacle, EntityX(me\Collider), EntityY(me\Collider) - 0.12, EntityZ(me\Collider))
+			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "tentacle"))
+			;[End Block]
 		Case "049", "scp049", "scp-049", "plaguedoctor"
 			;[Block]
 			n.NPCs = CreateNPC(NPCType049, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
@@ -1459,10 +1464,20 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 			n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), "SCP-1499-1")
 			;[End Block]
+		Case "apache", "helicopter"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeApache, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "apache"))
+			;[End Block]
 		Case "class-d", "classd", "d"
 			;[Block]
 			n.NPCs = CreateNPC(NPCTypeD, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "dclass"))
+			;[End Block]
+		Case "clerk", "woman"
+			;[Block]
+			n.NPCs = CreateNPC(NPCTypeClerk, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "clerk"))
 			;[End Block]
 		Case "guard"
 			;[Block]
@@ -1474,21 +1489,6 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 			n.NPCs = CreateNPC(NPCTypeMTF, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			n_I\MTFLeader = n
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "mtf"))
-			;[End Block]
-		Case "apache", "helicopter"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeApache, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "apache"))
-			;[End Block]
-		Case "tentacle", "035tentacle", "scp035tentacle", "scp-035tentacle", "scp-035-tentacle", "scp035-tentacle"
-			;[Block]
-			n.NPCs = CreateNPC(NPCType035_Tentacle, EntityX(me\Collider), EntityY(me\Collider) - 0.12, EntityZ(me\Collider))
-			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "tentacle"))
-			;[End Block]
-		Case "clerk", "woman"
-			;[Block]
-			n.NPCs = CreateNPC(NPCTypeClerk, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "clerk"))
 			;[End Block]
 		Default 
 			;[Block]
