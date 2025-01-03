@@ -7,12 +7,13 @@
 - SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
 - Partially reverted SCP-079 increased chances to hack monitors with SCP-895.
 - Increased range to interact with ducks.
-- Increased map size from 18 to 20.
+- Increased map size from 18 to 21.
 - Updated SCP-895's overlay textures.
 - Better subtitles.
 
 [Rooms]
 - Added penny in «room1_storage».
+- Lowered clearance access of «room1_storage» to level 1.
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Updated SCP-008's label.
