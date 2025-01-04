@@ -234,8 +234,11 @@ Function CreateItemTemplate.ItemTemplates(DisplayName$, Name$, ID%, OBJPath$, In
 	; ~ If another item shares the same inv icon, copy it
 	InvImgPath = ItemINVIconPath + InvImgPath
 	For it2.ItemTemplates = Each ItemTemplates
-		If it2\InvImgPath = InvImgPath And it2\InvImg <> 0
-			it\InvImg = it2\InvImg
+		If it2\InvImgPath = InvImgPath
+			If it2\InvImg <> 0
+				it\InvImg = it2\InvImg
+				it\InvImgPath = it2\InvImgPath
+			EndIf
 			If it2\InvImg2 <> 0 Then it\InvImg2 = it2\InvImg2
 			Exit
 		EndIf
