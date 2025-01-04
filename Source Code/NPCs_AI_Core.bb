@@ -3317,6 +3317,7 @@ Function UpdateNPCType999%(n.NPCs) ; Will need a lot more stuff later down the l
 	If me\Zone = 2 And PlayerRoom\RoomTemplate\RoomID <> r_gate_a_entrance And PlayerRoom\RoomTemplate\RoomID <> r_gate_b_entrance And n_I\Curr106\State < 2.0
 		If Dist < PowTwo(me\CameraFogDist * LightVolume)
 			If EntityVisible(n\Collider, me\Collider)
+				GiveAchievement("999")
 				PointEntity(n\Collider, me\Collider)
 				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 				n\State = 105.0

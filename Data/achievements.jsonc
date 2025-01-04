@@ -150,6 +150,11 @@
 			"scp": true
 		},
 		{
+			"id": "999",
+			"image": "Achv999.png",
+			"scp": true
+		},
+		{
 			"id": "1025",
 			"image": "Achv1025.png",
 			"scp": true
@@ -307,6 +312,10 @@
 		"970": {
 			"name": "Recursive Spatial Phenomenon",
 			"description": "Enter a Recursive Room."
+		},
+		"999": {
+			"name": "I would like to hug you, but I don't have hands ",
+			"description": "Play with Tickle Monster."
 		},
 		"1025": {
 			"name": "\"Potential Bioweapon\"",
