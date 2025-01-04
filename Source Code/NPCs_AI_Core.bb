@@ -3312,41 +3312,151 @@ Function UpdateNPCType966%(n.NPCs)
 	EndIf
 End Function
 
-Function UpdateNPCType999%(n.NPCs) ; Will need a lot more stuff later down the line
+Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the line
 	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
-	If me\Zone = 2 And PlayerRoom\RoomTemplate\RoomID <> r_gate_a_entrance And PlayerRoom\RoomTemplate\RoomID <> r_gate_b_entrance And n_I\Curr106\State < 2.0
-		If Dist < PowTwo(me\CameraFogDist * LightVolume)
-			If EntityVisible(n\Collider, me\Collider)
-				GiveAchievement("999")
-				PointEntity(n\Collider, me\Collider)
-				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-				n\State = 105.0
-				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
+	Local de.Decals
+	
+	If Dist < PowTwo(me\CameraFogDist * LightVolume * 1.2)
+		Local ImScared% = (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
+		Local Pvt%, Visible%
+		
+		If ImScared
+			If n\State <> 3.0
+				CreateHintMsg(GetLocalString("msg", "999_follow"))
+				n\State = 3.0
 			EndIf
-				n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
-				n\State = Max(n\State - fps\Factor[0], 0.0)
-				If n\State > 0.0
+		Else
+			Visible = EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+			If Visible Then n\State = 2.0
+		EndIf
+		Select n\State
+			Case 0.0 ; ~ Idle
+				;[Block]
+				n\CurrSpeed = 0.0
+				AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
+				If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+				
+				If Rand(50) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
+				If Rand(100) = 1 Then n\State = 1.0
+				;[End Block]
+			Case 1.0 ; ~ Wandering around
+				;[Block]
+				Local Temp% = False
+				
+				If MilliSecs() > n\State3
+					HideEntity(n\Collider) 
+					EntityPick(n\Collider, 1.5)
+					If PickedEntity() <> 0 Then Temp = True
+					ShowEntity(n\Collider)
+					
+					If Rand(5) = 1 Then n\State = 0.0
+					n\State3 = MilliSecs() + 1000
+				EndIf
+				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True) + (Temp * Rnd(80.0, 110.0)), 0.0, True)
+				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
+				n\CurrSpeed = CurveValue(n\Speed * 0.7, n\CurrSpeed, 10.0)
+				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+				If n\Frame < 10.0 Then AnimateNPC(n, 1.0, 10.0, 0.3, False)
+				;[End Block]
+			Case 2.0 ; ~ Following the player
+				;[Block]
+				If Visible
+					GiveAchievement("999")
+					PointEntity(n\Collider, me\Collider)
+					RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
+					n\State3 = 70.0 * 1.5
+					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
+				EndIf
+				n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
+				
+				If n\State3 > 0.0
+					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
 					If Dist < 0.64
 						MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
 					ElseIf Dist > 1.0
-						If n\Frame < 10.0 AnimateNPC(n, 1.0, 10.0, 0.3, False)
+						If n\Frame < 10.0 Then AnimateNPC(n, 1.0, 10.0, 0.3, False)
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+					Else
+						n\CurrSpeed = 0.0
+						;me\HealTimer = 1.0 ; ~ TODO: Make another heal buff
 					EndIf
+					If n\CurrSpeed =< 0.001
+						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
+					Else
+						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+					EndIf
+				Else
+					n\State = 0.0
 				EndIf
-			n\State2 = 1.0
+				;[End Block]
+			Case 3.0 ; ~ Return to the playing room
+				;[Block]
+				; ~ TODO: Find the way to switch state to 0.0 after reaching the playing room
+				If n\PathTimer <= 0.0
+					Local r.Rooms
+					Local x# = 0.0, y# = 0.0, z# = 0.0
+					
+					For r.Rooms = Each Rooms
+						If r\RoomTemplate\RoomID = r_room2_office
+							x = EntityX(r\OBJ)
+							y = 0.2
+							z = EntityZ(r\OBJ)
+							Exit
+						EndIf
+					Next
+					n\PathStatus = FindPath(n, x, y, z)
+					n\PathTimer = 70.0 * 10.0
+				Else
+					If n\PathStatus = PATH_STATUS_FOUND
+						If n\Path[n\PathLocation] = Null
+							If n\PathLocation > MaxPathLocations - 1
+								n\PathLocation = 0 : n\PathStatus = PATH_STATUS_NO_SEARCH
+							Else
+								n\PathLocation = n\PathLocation + 1
+							EndIf
+						Else
+							PointEntity(n\Collider, n\Path[n\PathLocation]\OBJ)
+							RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
+							n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
+							TranslateEntity(n\Collider, Cos(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], 0.0, Sin(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], True)
+							AnimateNPC(n, 488.0, 522.0, n\CurrSpeed * 26.0)
+							
+							UseDoorNPC(n, True, True)
+						EndIf
+						n\PathTimer = n\PathTimer - fps\Factor[0] ; ~ Timer goes down slow
+					Else
+						n\CurrSpeed = 0.0
+						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
+						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+						
+						If Rand(50) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
+						n\PathTimer = n\PathTimer - fps\Factor[0] * 2.0 ; ~ Timer goes down fast
+					EndIf
+					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
+				EndIf
+				;[End Block]
+		End Select
+		If Rand(100) = 1
+			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 6.0, 0.5)
 		EndIf
-	ElseIf n\Frame > 9.0
-		AnimateNPC(n, 11.0, 74.0, 0.3)
-		If n\State2 = 1.0
-			CreateHintMsg("SCP-999 is unable to follow anymore.")
-			n\State2 = 0.0
+		If MilliSecs() > n\State2
+			Pvt = CreatePivot()
+			PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
+			TurnEntity(Pvt, 90.0, 0.0, 0.0)
+			If EntityPick(Pvt, 0.6)
+				de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4)
+				de\AlphaChange = -0.0003
+				EntityParent(de\OBJ, PlayerRoom\OBJ)
+			EndIf
+			FreeEntity(Pvt) : Pvt = 0
+			
+			n\State2 = MilliSecs() + 1000
 		EndIf
-		If n\Frame => 74.0 Then SetNPCFrame(n, 0.0)
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
-	RotateEntity(n\OBJ, 0.0, n\Angle + 90.0, 0.0, True)
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+	RotateEntity(n\OBJ, 0.0, n\Angle + 90.0, 0.0)
 End Function
-
 
 Function UpdateNPCType1048%(n.NPCs)
 	Local Visible% = (EntityDistanceSquared(me\Collider, n\Collider) < 4.0 And EntityInView(n\OBJ, Camera))
@@ -6095,4 +6205,4 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

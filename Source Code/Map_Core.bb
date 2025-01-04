@@ -3839,7 +3839,7 @@ Function UpdateDecals%()
 				ScaleEntity(de\OBJ, de\Size, de\Size, 1.0, True)
 				
 				Select de\ID
-					Case 0
+					Case DECAL_CORROSIVE_1
 						;[Block]
 						If de\Timer <= 0.0
 							Local Angle# = Rnd(360.0)
@@ -3873,7 +3873,7 @@ Function UpdateDecals%()
 			
 			If (Dist < ActualSize) And (Int(EntityPitch(de\OBJ, True)) = 90.0) And IsEqual(EntityY(me\Collider) - 0.3, DecalPosY, 0.05)
 				Select de\ID
-					Case 0
+					Case DECAL_CORROSIVE_1
 						;[Block]
 						If de\FX <> 1
 							DecalStep = 1
@@ -3883,7 +3883,7 @@ Function UpdateDecals%()
 							DustParticleChance = 1
 						EndIf
 						;[End Block]
-					Case 2, 3, 4, 5, 6, 7, 16, 17, 18, 20
+					Case DECAL_BLOOD_1, DECAL_BLOOD_2, DECAL_BLOOD_3, DECAL_BLOOD_4, DECAL_BLOOD_5, DECAL_BLOOD_6, DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2, DECAL_427, DECAL_999, DECAL_WATER
 						;[Block]
 						DecalStep = 2
 						;[End Block]

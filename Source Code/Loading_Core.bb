@@ -1,4 +1,4 @@
-Const MaxDecalTextureIDAmount% = 23
+Const MaxDecalTextureIDAmount% = 24
 
 Type DecalInstance
 	Field DecalTextureID%[MaxDecalTextureIDAmount]
@@ -33,11 +33,13 @@ Const DECAL_BLOOD_DROP_2% = 17
 
 Const DECAL_427% = 18
 Const DECAL_409% = 19
+Const DECAL_999% = 20
 
-Const DECAL_WATER% = 20
+Const DECAL_WATER% = 21
 
-Const DECAL_KETER% = 21
-Const DECAL_APOLLYON% = 22
+Const DECAL_KETER% = 22
+Const DECAL_APOLLYON% = 23
+
 ;[End Block]
 
 Function LoadDecals%()
@@ -68,6 +70,8 @@ Function LoadDecals%()
 	de_I\DecalTextureID[DECAL_409] = LoadTexture_Strict("GFX\Decals\scp_409_decal.png", 1 + 2, DeleteAllTextures, False)
 	
 	de_I\DecalTextureID[DECAL_427] = LoadTexture_Strict("GFX\Decals\scp_427_decal.png", 1 + 2, DeleteAllTextures, False)
+	
+	de_I\DecalTextureID[DECAL_999] = LoadTexture_Strict("GFX\Decals\scp_999_decal.png", 1 + 2, DeleteAllTextures, False)
 	
 	de_I\DecalTextureID[DECAL_WATER] = LoadTexture_Strict("GFX\Decals\water_decal.png", 1 + 2, DeleteAllTextures, False)
 	
@@ -1973,7 +1977,7 @@ Function LoadEvents%()
 	
 	CreateEvent(e_room2_medibay, r_room2_medibay, 0)
 	
-	;CreateEvent(e_room2_office, r_room2_office, 0)
+	CreateEvent(e_room2_office, r_room2_office, 0)
 	
 	CreateEvent(e_room2_shaft, r_room2_shaft, 0)
 	
