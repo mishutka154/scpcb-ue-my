@@ -49,7 +49,6 @@ Type NPCs
 	Field HasAsset% = False
 	Field HasAnim%
 	Field Contained% = False
-	Field IsOpt% = False
 	Field TargetUpdateTimer#
 End Type
 
@@ -341,7 +340,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 				EndIf
 			Next
 			n\NVGName = "SCP-966-" + i
-			n\Speed = (IniGetFloat(NPCsFile, "SCP-966", "Speed") / 100.0)
+			n\Speed = IniGetFloat(NPCsFile, "SCP-966", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, n\CollRadius)
@@ -355,7 +354,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 		Case NPCType999
 			;[Block]
 			n\NVGName = "SCP-999"
-			n\Speed = (IniGetFloat(NPCsFile, "SCP-999", "Speed") / 100.0)
+			n\Speed = IniGetFloat(NPCsFile, "SCP-999", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
 			n\CollRadius = 0.15
@@ -711,18 +710,6 @@ Function UpdateNPCs%()
 		End Select
 		
 		Local GravityDist# = DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider))
-		
-		If GravityDist < PowTwo(HideDistance) Lor n\NPCType = NPCType1499_1
-			If (Not n\IsOpt)
-				EntityAlpha(n\OBJ, 1.0)
-				n\IsOpt = True
-			EndIf
-		Else
-			If n\IsOpt
-				EntityAlpha(n\OBJ, 0.0)
-				n\IsOpt = False
-			EndIf
-		EndIf
 		
 		If n\IsDead
 			If n\GravityMult = 1.0
