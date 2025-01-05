@@ -4148,6 +4148,10 @@ Function UpdateEvents%()
 												GiveAchievement("tesla")
 												n\State = 4.0
 												;[End Block]
+											Case NPCType173
+												;[Block]
+												If (Not (n_I\IsAprilFools Lor n_I\IsHalloween Lor n_I\IsNewYear)) Then ChangeNPCTextureID(n, NPC_173_TESLA_TEXTURE)
+												;[End Block]
 											Case NPCType966
 												;[Block]
 												ShowEntity(n\OBJ)
@@ -4156,6 +4160,10 @@ Function UpdateEvents%()
 												;[Block]
 												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
 												n\State = 3.0
+												;[End Block]
+											Case NPCTypeClerk
+												;[Block]
+												ChangeNPCTextureID(n, NPC_CLERK_TESLA_TEXTURE)
 												;[End Block]
 										End Select
 										If e\room\Dist < 6.0 And (EntityInView(n\Collider, Camera) And EntityVisible(me\Collider, n\Collider)) Then me\LightFlash = 0.3

@@ -1760,6 +1760,7 @@ Function ChangeNPCTextureID%(n.NPCs, TextureID%)
 	
 	n\TextureID = TextureID + 1
 	EntityTexture(n\OBJ, n_I\NPCTextureID[TextureID])
+	If n\NPCType = NPCType173 Then EntityTexture(n\OBJ2, n_I\NPCTextureID[TextureID])
 End Function
 
 ;~IDEal Editor Parameters:
