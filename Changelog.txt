@@ -20,6 +20,7 @@
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Improved «Keyboard.b3d» prop.
 - The decontamination rooms trap the player for longer.
+- Reduced spawn chance of «room2_tesla_lcz».
 
 - Design improvements for some rooms...
 
