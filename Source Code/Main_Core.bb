@@ -2982,6 +2982,8 @@ Function UpdateMoving%()
 				me\HeartBeatVolume = Max(me\HeartBeatVolume, (me\Bloodloss - 35.0) / 60.0)
 			EndIf
 		EndIf
+	ElseIf me\Bloodloss > 60.0
+		me\Bloodloss = Max(60.0, me\Bloodloss - fps\Factor[0] / (490.0 * (1.0 + me\Injuries)))
 	EndIf
 	
 	If me\HealTimer > 0.0
