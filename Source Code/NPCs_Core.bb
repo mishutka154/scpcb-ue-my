@@ -358,6 +358,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = (IniGetFloat(NPCsFile, "SCP-999", "Speed") / 100.0)
 			
 			n\Collider = CreatePivot()
+			n\CollRadius = 0.15
 			EntityRadius(n\Collider, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
@@ -1447,7 +1448,7 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 		Case "999", "scp999", "scp-999", "ticklemonster"
 			;[Block]
 			n.NPCs = CreateNPC(NPCType999, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "999"))
+			ConsoleMsg = Format(GetLocalString("console", "spawn"), "SCP-999")
 			;[End Block]
 		Case "1048a", "1048-a", "scp1048-a", "scp-1048-a", "scp1048a", "scp-1048a", "earbear"
 			;[Block]

@@ -3316,22 +3316,26 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
 	Local de.Decals
 	
-	If Dist < PowTwo(me\CameraFogDist * LightVolume * 1.2)
-		Local ImScared% = (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
+	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
 		
-		If ImScared
-			If n\State <> 3.0
-				CreateHintMsg(GetLocalString("msg", "999_follow"))
+		n\LastSeen = 0
+		If n\State < 3.0
+			If (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
 				n\State = 3.0
+				Return
 			EndIf
-		Else
+			n\PrevState = 0
 			Visible = EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
-			If Visible Then n\State = 2.0
 		EndIf
 		Select n\State
 			Case 0.0 ; ~ Idle
 				;[Block]
+				If Visible
+					n\State = 2.0
+					Return
+				EndIf
+				
 				n\CurrSpeed = 0.0
 				AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
 				If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
@@ -3342,6 +3346,11 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				;[End Block]
 			Case 1.0 ; ~ Wandering around
 				;[Block]
+				If Visible
+					n\State = 2.0
+					Return
+				EndIf
+				
 				Local Temp% = False
 				
 				If MilliSecs() > n\State3
@@ -3393,6 +3402,11 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Case 3.0 ; ~ Return to the playing room
 				;[Block]
 				; ~ TODO: Find the way to switch state to 0.0 after reaching the playing room
+				If n\PrevState = 0
+					CreateHintMsg(GetLocalString("msg", "999_follow"))
+					n\PrevState = 1
+				EndIf
+				
 				If n\PathTimer <= 0.0
 					Local r.Rooms
 					Local x# = 0.0, y# = 0.0, z# = 0.0
@@ -3431,7 +3445,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
 						
 						If Rand(50) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
-						n\PathTimer = n\PathTimer - fps\Factor[0] * 2.0 ; ~ Timer goes down fast
+						n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast
 					EndIf
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 				EndIf
@@ -3440,21 +3454,35 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 		If Rand(100) = 1
 			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 6.0, 0.5)
 		EndIf
-		If MilliSecs() > n\State2
-			Pvt = CreatePivot()
-			PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
-			TurnEntity(Pvt, 90.0, 0.0, 0.0)
-			If EntityPick(Pvt, 0.6)
-				de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4)
-				de\AlphaChange = -0.0003
-				EntityParent(de\OBJ, PlayerRoom\OBJ)
+		If n\CurrSpeed > 0.0
+			If MilliSecs() > n\State2
+				Pvt = CreatePivot()
+				PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
+				TurnEntity(Pvt, 90.0, 0.0, 0.0)
+				If EntityPick(Pvt, 0.6)
+					de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4)
+					de\AlphaChange = -0.0003
+					EntityParent(de\OBJ, PlayerRoom\OBJ)
+				EndIf
+				FreeEntity(Pvt) : Pvt = 0
+				
+				n\State2 = MilliSecs() + 1000
 			EndIf
-			FreeEntity(Pvt) : Pvt = 0
-			
-			n\State2 = MilliSecs() + 1000
+		EndIf
+	Else
+		If n\LastSeen = 0
+			For r.Rooms = Each Rooms
+				If r\RoomTemplate\RoomID = r_room2_office
+					TFormPoint(820.0, -256.0, 0.0, r\OBJ, 0)
+					Exit
+				EndIf
+			Next
+			TeleportEntity(n\Collider, TFormedX(), TFormedY(), TFormedZ())
+			n\LastSeen = 1
+			n\State = 0.0
 		EndIf
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.15, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, 0.0, n\Angle + 90.0, 0.0)
 End Function
 

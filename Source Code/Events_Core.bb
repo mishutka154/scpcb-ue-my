@@ -4152,6 +4152,11 @@ Function UpdateEvents%()
 												;[Block]
 												ShowEntity(n\OBJ)
 												;[End Block]
+											Case NPCType999
+												;[Block]
+												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
+												n\State = 3.0
+												;[End Block]
 										End Select
 										If e\room\Dist < 6.0 And (EntityInView(n\Collider, Camera) And EntityVisible(me\Collider, n\Collider)) Then me\LightFlash = 0.3
 									EndIf
