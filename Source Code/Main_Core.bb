@@ -3411,7 +3411,11 @@ Function UpdateNVG%()
 	EndIf
 	
 	If wi\NVGPower > 0
-		If wi\NightVision = 2
+		If wi\SCRAMBLE = 2
+			n_I\Curr173\NVGX = EntityX(n_I\Curr173\Collider, True)
+			n_I\Curr173\NVGY = EntityY(n_I\Curr173\Collider, True)
+			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\Collider, True)
+		ElseIf wi\NightVision = 2
 			If wi\NVGTimer <= 0.0
 				For np.NPCs = Each NPCs
 					np\NVGX = EntityX(np\Collider, True)
@@ -6499,7 +6503,26 @@ Function RenderNVG%()
 	Local i%, k%, l%
 	
 	If wi\NVGPower > 0 And (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0)
-		If wi\NightVision = 2 ; ~ Show a HUD
+		Local Dist#, ProjX#, ProjY#
+		
+		If wi\SCRAMBLE = 2 ; ~ Show a HUD
+			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			If Dist < 100.0 ; ~ Don't draw text if SCP-173 is too far away
+				CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+				
+				ProjX = ProjectedX() : ProjY = ProjectedY()
+				
+				Color(100, 100, 100)
+				
+				Local MaxRectWidth% = 30 * MenuScale
+				Local MaxRectHeight% = 80 * MenuScale
+				Local ScaleFactor# = 10.0 / Sqr(Dist)
+				Local RectWidth% = MaxRectWidth * ScaleFactor
+				Local RectHeight% = MaxRectHeight * ScaleFactor
+				
+				Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+			EndIf
+		ElseIf wi\NightVision = 2 ; ~ Show a HUD
 			Color(100, 100, 255)
 			
 			SetFontEx(fo\FontID[Font_Digital])
@@ -6517,16 +6540,15 @@ Function RenderNVG%()
 			
 			For np.NPCs = Each NPCs
 				If np\NVGName <> "" And (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
-					Local Dist# = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
-					
+					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
 					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
 						If (Not wi\IsNVGBlinking)
 							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
 							
-							Local ProjX# = ProjectedX(), ProjY# = ProjectedY()
+							ProjX = ProjectedX() : ProjY = ProjectedY()
 							
 							TextEx(ProjX, ProjY, np\NVGName, True, True)
-							TextEx(ProjX, ProjY - 25.0, FloatToString(Sqr(Dist), 1) + " m", True, True)
+							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
 						EndIf
 					EndIf
 				EndIf
