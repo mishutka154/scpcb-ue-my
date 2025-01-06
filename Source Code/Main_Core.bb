@@ -7205,7 +7205,7 @@ Function RenderGUI%()
 								
 								SetFontEx(fo\FontID[Font_Digital])
 								Color(30, 30, 30)
-								TextEx(x + (60 * MenuScale), y, GetLocalString("radio", "chn"))
+								TextEx(x + (50 * MenuScale), y, GetLocalString("radio", "chn"))
 								
 								If SelectedItem\ItemTemplate\ID = it_veryfineradio
 									StrTemp = ""
