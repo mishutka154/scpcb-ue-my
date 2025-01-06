@@ -6507,7 +6507,7 @@ Function RenderNVG%()
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
 			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
-			If Dist < 100.0 ; ~ Don't draw text if SCP-173 is too far away
+			If Dist < 256.0 ; ~ Don't draw text if SCP-173 is too far away
 				CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
 				
 				ProjX = ProjectedX() : ProjY = ProjectedY()
@@ -6516,7 +6516,7 @@ Function RenderNVG%()
 				
 				Local MaxRectWidth% = 30 * MenuScale
 				Local MaxRectHeight% = 80 * MenuScale
-				Local ScaleFactor# = 10.0 / Sqr(Dist)
+				Local ScaleFactor# = 16.0 / Sqr(Dist)
 				Local RectWidth% = MaxRectWidth * ScaleFactor
 				Local RectHeight% = MaxRectHeight * ScaleFactor
 				
