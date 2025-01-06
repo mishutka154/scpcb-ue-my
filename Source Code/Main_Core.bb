@@ -5730,7 +5730,7 @@ Function UpdateGUI%()
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
 					If Temp
-						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.0035 + (0.0035 * (SelectedItem\ItemTemplate\ID = it_nav))))
+						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.0025 + (0.0025 * (SelectedItem\ItemTemplate\ID = it_nav))))
 						If SelectedItem\State > 0.0
 							SelectedItem\State3 = 0.0
 							If SelectedItem\State < 20.0
@@ -7296,8 +7296,7 @@ Function RenderGUI%()
 								Local SCPs_Found% = 0, Dist#
 								
 								If SelectedItem\ItemTemplate\ID = it_navulti
-									Local np.NPCs
-									Local r.Rooms
+									Local np.NPCs, r.Rooms
 									Local RoomAmount% = 0, RoomsFound% = 0
 									
 									For r.Rooms = Each Rooms
