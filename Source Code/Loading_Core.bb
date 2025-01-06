@@ -1248,19 +1248,22 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "scramble"), "SCRAMBLE Gear", it_scramble, "SCRAMBLE_gear.b3d", "INV_SCRAMBLE_gear.png", "", 0.02, 2)
 	CreateItemTemplate(GetLocalString("items", "scramble"), "Fine SCRAMBLE Gear", it_finescramble, "SCRAMBLE_gear.b3d", "INV_SCRAMBLE_gear.png", "", 0.02, 2)
 	
-	CreateItemTemplate(GetLocalString("items", "radio"), "Radio Transceiver", it_radio, "radio.b3d", "INV_radio.png", "radio.png", 0.9, 1)
-	CreateItemTemplate(GetLocalString("items", "radio"), "18V Radio Transceiver", it_18vradio, "radio.b3d", "INV_radio.png", "radio.png", 0.92, 1)
-	CreateItemTemplate(GetLocalString("items", "radio"), "Fine Radio Transceiver", it_fineradio, "radio.b3d", "INV_radio.png", "radio.png", 0.9, 1)
-	CreateItemTemplate(GetLocalString("items", "radio"), "Very Fine Radio Transceiver", it_veryfineradio, "radio.b3d", "INV_radio.png", "radio.png", 0.9, 1)
+	; ~ HUD texture is defined in "UpdateGUI"
+	;[Block]
+	CreateItemTemplate(GetLocalString("items", "radio"), "Radio Transceiver", it_radio, "radio.b3d", "INV_radio.png", "", 0.9, 1)
+	CreateItemTemplate(GetLocalString("items", "radio"), "18V Radio Transceiver", it_18vradio, "radio.b3d", "INV_radio.png", "", 0.92, 1)
+	CreateItemTemplate(GetLocalString("items", "radio"), "Fine Radio Transceiver", it_fineradio, "radio.b3d", "INV_radio.png", "", 0.9, 1)
+	CreateItemTemplate(GetLocalString("items", "radio"), "Very Fine Radio Transceiver", it_veryfineradio, "radio.b3d", "INV_radio.png", "", 0.9, 1)
 	
-	CreateItemTemplate(GetLocalString("items", "nav"), "S-NAV Navigator", it_nav, "navigator.b3d", "INV_navigator.png", "navigator.png", 0.00072, 1)
-	CreateItemTemplate(GetLocalString("items", "nav300"), "S-NAV 300 Navigator", it_nav300, "navigator.b3d", "INV_navigator.png", "navigator.png", 0.00072, 1)
-	CreateItemTemplate(GetLocalString("items", "nav310"), "S-NAV 310 Navigator", it_nav310, "navigator.b3d", "INV_navigator.png", "navigator.png", 0.00072, 1)
-	CreateItemTemplate(GetLocalString("items", "navulti"), "S-NAV Navigator Ultimate", it_navulti, "navigator.b3d", "INV_navigator.png", "navigator.png", 0.00072, 1)
+	CreateItemTemplate(GetLocalString("items", "nav"), "S-NAV Navigator", it_nav, "navigator.b3d", "INV_navigator.png", "", 0.00072, 1)
+	CreateItemTemplate(GetLocalString("items", "nav300"), "S-NAV 300 Navigator", it_nav300, "navigator.b3d", "INV_navigator.png", "", 0.00074, 1)
+	CreateItemTemplate(GetLocalString("items", "nav310"), "S-NAV 310 Navigator", it_nav310, "navigator.b3d", "INV_navigator.png", "", 0.00072, 1)
+	CreateItemTemplate(GetLocalString("items", "navulti"), "S-NAV Navigator Ultimate", it_navulti, "navigator.b3d", "INV_navigator.png", "", 0.00072, 1)
 	
-	CreateItemTemplate(GetLocalString("items", "e.reader"), "E-Reader", it_e_reader, "e_reader.b3d", "INV_e_reader.png", "e_reader.png", 0.0012, 1)
-	CreateItemTemplate(GetLocalString("items", "e.reader20"), "E-Reader 20", it_e_reader20, "e_reader.b3d", "INV_e_reader.png", "e_reader.png", 0.0012, 1)
-	CreateItemTemplate(GetLocalString("items", "e.reader30"), "E-Reader 30", it_e_reader30, "e_reader.b3d", "INV_e_reader.png", "e_reader.png", 0.0012, 1)
+	CreateItemTemplate(GetLocalString("items", "e.reader"), "E-Reader", it_e_reader, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
+	CreateItemTemplate(GetLocalString("items", "e.reader20"), "E-Reader 20", it_e_reader20, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
+	CreateItemTemplate(GetLocalString("items", "e.reader30"), "E-Reader 30", it_e_reader30, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
+	;[End Block]
 	
 	CreateItemTemplate(GetLocalString("items", "bat"), "9V Battery", it_bat, "battery.b3d", "INV_battery_9v.png", "", 0.0065, 1)
 	CreateItemTemplate(GetLocalString("items", "45bat"), "4.5V Battery", it_coarsebat, "battery.b3d", "INV_battery_4.5v.png", "", 0.0065, 1, "battery_4.5V.png")

@@ -5370,7 +5370,17 @@ Function UpdateGUI%()
 					;[End Block]
 				Case it_radio, it_18vradio, it_fineradio, it_veryfineradio
 					;[Block]
+					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
+					
+					; ~ RadioState[6] = A timer for the "code channel"
+					
+					; ~ RadioState[7] = Another timer for the "code channel"
+					
+					Temp = (SelectedItem\ItemTemplate\ID = it_fineradio Lor SelectedItem\ItemTemplate\ID = it_veryfineradio)
 					If SelectedItem\ItemTemplate\Img = 0
+						StrTemp = "_off"
+						If SelectedItem\State > 0.0 Lor Temp Then StrTemp = "_on"
+						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio" + StrTemp + ".png"
 						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img)
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img)
@@ -5378,34 +5388,9 @@ Function UpdateGUI%()
 						CreateHintMsg(GetLocalString("msg", "radio"), 6.0, True)
 					EndIf
 					
-					Local RadioType%
-					
-					Select SelectedItem\ItemTemplate\ID
-						Case it_18vradio
-							;[Block]
-							RadioType = 1
-							SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.002)
-							;[End Block]
-						Case it_fineradio
-							;[Block]
-							RadioType = 2
-							;[End Block]
-						Case it_veryfineradio
-							;[Block]
-							RadioType = 3
-							;[End Block]
-						Default
-							;[Block]
-							RadioType = 0
-							SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.004)
-							;[End Block]
-					End Select
-					
-					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
-					; ~ RadioState[6] = A timer for the "code channel"
-					; ~ RadioState[7] = Another timer for the "code channel"
-					
-					If SelectedItem\State > 0.0 Lor RadioType > 1
+					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.002 + (0.002 * (SelectedItem\ItemTemplate\ID = it_radio))))
+					If SelectedItem\State > 0.0 Lor Temp
+						SelectedItem\State3 = 0.0
 						IsUsingRadio = True
 						If RadioState[5] = 0.0
 							RadioState[5] = 1.0
@@ -5425,257 +5410,8 @@ Function UpdateGUI%()
 							
 							If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic895)
 						Else
-							Select Int(SelectedItem\State2)
-								Case 0
-									;[Block]
-									If opt\UserTrackMode = 0
-										If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-									ElseIf UserTrackMusicAmount < 1
-										If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-									Else
-										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-										
-										If (Not ChannelPlaying(RadioCHN[0]))
-											If (Not UserTrackFlag)
-												If opt\UserTrackMode = 1
-													If RadioState[0] < (UserTrackMusicAmount - 1)
-														RadioState[0] = RadioState[0] + 1.0
-													Else
-														RadioState[0] = 0.0
-													EndIf
-													UserTrackFlag = True
-												ElseIf opt\UserTrackMode = 2
-													RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
-												EndIf
-											EndIf
-											If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
-											CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
-											RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
-										Else
-											UserTrackFlag = False
-										EndIf
-										
-										If KeyHit(2)
-											PlaySound_Strict(snd_I\RadioSquelch)
-											If (Not UserTrackFlag)
-												If opt\UserTrackMode = 1
-													If RadioState[0] < (UserTrackMusicAmount - 1)
-														RadioState[0] = RadioState[0] + 1.0
-													Else
-														RadioState[0] = 0.0
-													EndIf
-													UserTrackFlag = True
-												ElseIf opt\UserTrackMode = 2
-													RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
-												EndIf
-											EndIf
-											If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
-											CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
-											RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
-										EndIf
-									EndIf
-									;[End Block]
-								Case 1
-									;[Block]
-									If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-									
-									If (Not ChannelPlaying(RadioCHN[1]))
-										If RadioState[1] >= 5.0
-											RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 1))
-											RadioState[1] = 0.0
-										Else
-											RadioState[1] = RadioState[1] + 1.0
-											RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 0))
-										EndIf
-									EndIf
-									;[End Block]
-								Case 2
-									;[Block]
-									If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-									
-									If (Not ChannelPlaying(RadioCHN[2]))
-										RadioState[2] = RadioState[2] + 1.0
-										If RadioState[2] = 17.0 Then RadioState[2] = 1.0
-										If Floor(RadioState[2] / 2.0) = Ceil(RadioState[2] / 2.0)
-											RadioCHN[2] = PlaySound_Strict(RadioSFX(1, Int(RadioState[2] / 2.0)))
-										Else
-											RadioCHN[2] = PlaySound_Strict(RadioSFX(1, 0))
-										EndIf
-									EndIf
-									;[End Block]
-								Case 3
-									;[Block]
-									If (Not ChannelPlaying(RadioCHN[6])) And (Not ChannelPlaying(RadioCHN[3])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-									
-									If MTFTimer > 0.0
-										If (Not RadioState2[6]) Then RadioState[3] = RadioState[3] + Max(Rand(-10, 1), 0)
-										Select RadioState[3]
-											Case 40
-												;[Block]
-												If (Not RadioState2[0])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random0.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[0] = True
-												EndIf
-												;[End Block]
-											Case 400
-												;[Block]
-												If (Not RadioState2[1])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[1] = True
-												EndIf
-												;[End Block]
-											Case 800
-												;[Block]
-												If (Not RadioState2[2])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[2] = True
-												EndIf
-												;[End Block]
-											Case 1200
-												;[Block]
-												If (Not RadioState2[3])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[3] = True
-												EndIf
-												;[End Block]
-											Case 1600
-												;[Block]
-												If (Not RadioState2[4])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[4] = True
-												EndIf
-												;[End Block]
-											Case 2000
-												;[Block]
-												If (Not RadioState2[5])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[5] = True
-												EndIf
-												;[End Block]
-											Case 2400
-												;[Block]
-												If (Not RadioState2[6])
-													RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"), True)
-													RadioState[3] = RadioState[3] + 1.0
-													RadioState2[6] = True
-												EndIf
-												;[End Block]
-										End Select
-									EndIf
-									;[End Block]
-								Case 4
-									;[Block]
-									If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-									
-									If (Not ChannelPlaying(RadioCHN[4]))
-										If (Not RemoteDoorOn) And RadioState[8] = 0
-											RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
-											RadioState[8] = 1
-										Else
-											RadioState[4] = RadioState[4] + Max(Rand(-10, 1), 0)
-											
-											Select RadioState[4]
-												Case 10
-													;[Block]
-													If (Not n_I\Curr106\Contained)
-														If (Not RadioState3[0])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[0] = True
-														EndIf
-													EndIf
-													;[End Block]
-												Case 100
-													;[Block]
-													If (Not RadioState3[1])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[1] = True
-													EndIf
-													;[End Block]
-												Case 158
-													;[Block]
-													If MTFTimer = 0.0 And (Not RadioState3[2])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin0.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState[2] = True
-													EndIf
-													;[End Block]
-												Case 200
-													;[Block]
-													If (Not RadioState3[3])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[3] = True
-													EndIf
-													;[End Block]
-												Case 260
-													;[Block]
-													If (Not RadioState3[4])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help0.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[4] = True
-													EndIf
-													;[End Block]
-												Case 300
-													;[Block]
-													If (Not RadioState3[5])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter0.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[5] = True
-													EndIf
-													;[End Block]
-												Case 350
-													;[Block]
-													If (Not RadioState3[6])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[6] = True
-													EndIf
-													;[End Block]
-												Case 400
-													;[Block]
-													If (Not RadioState3[7])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help1.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[7] = True
-													EndIf
-													;[End Block]
-												Case 450
-													;[Block]
-													If (Not RadioState3[8])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[8] = True
-													EndIf
-													;[End Block]
-												Case 600
-													;[Block]
-													If (Not RadioState3[9])
-														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"), True)
-														RadioState[4] = RadioState[4] + 1.0
-														RadioState3[9] = True
-													EndIf
-													;[End Block]
-											End Select
-										EndIf
-									EndIf
-									;[End Block]
-								Case 5
-									;[Block]
-									If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-									If (Not ChannelPlaying(RadioCHN[5])) Then RadioCHN[5] = PlaySound_Strict(snd_I\RadioStatic)
-									;[End Block]
-							End Select
-							
-							If RadioType = 3
-								SelectedItem\State2 = -1
+							If SelectedItem\ItemTemplate\ID = it_veryfineradio
+								SelectedItem\State2 = -1.0
 								If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
 								RadioState[6] = RadioState[6] + fps\Factor[0]
 								Temp = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
@@ -5690,21 +5426,272 @@ Function UpdateGUI%()
 									EndIf
 								EndIf
 							Else
-								For i = 2 To 6
-									If KeyHit(i)
-										If SelectedItem\State2 <> i - 2
-											PlaySound_Strict(snd_I\RadioSquelch)
-											PauseChannel(RadioCHN[Int(SelectedItem\State2)])
+								Select Int(SelectedItem\State2)
+									Case 0
+										;[Block]
+										If opt\UserTrackMode = 0
+											If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+										ElseIf UserTrackMusicAmount < 1
+											If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+										Else
+											If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+											
+											If (Not ChannelPlaying(RadioCHN[0]))
+												If (Not UserTrackFlag)
+													If opt\UserTrackMode = 1
+														If RadioState[0] < (UserTrackMusicAmount - 1)
+															RadioState[0] = RadioState[0] + 1.0
+														Else
+															RadioState[0] = 0.0
+														EndIf
+														UserTrackFlag = True
+													ElseIf opt\UserTrackMode = 2
+														RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
+													EndIf
+												EndIf
+												If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+												CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
+												RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
+											Else
+												UserTrackFlag = False
+											EndIf
+											
+											If KeyHit(2)
+												PlaySound_Strict(snd_I\RadioSquelch)
+												If (Not UserTrackFlag)
+													If opt\UserTrackMode = 1
+														If RadioState[0] < (UserTrackMusicAmount - 1)
+															RadioState[0] = RadioState[0] + 1.0
+														Else
+															RadioState[0] = 0.0
+														EndIf
+														UserTrackFlag = True
+													ElseIf opt\UserTrackMode = 2
+														RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
+													EndIf
+												EndIf
+												If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+												CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
+												RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
+											EndIf
 										EndIf
-										SelectedItem\State2 = i - 2
-										StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-									EndIf
-								Next
-								If (Not ChannelPlaying(RadioCHN[SelectedItem\State2])) Then ResumeChannel(RadioCHN[SelectedItem\State2])
+										;[End Block]
+									Case 1
+										;[Block]
+										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+										
+										If (Not ChannelPlaying(RadioCHN[1]))
+											If RadioState[1] >= 5.0
+												RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 1))
+												RadioState[1] = 0.0
+											Else
+												RadioState[1] = RadioState[1] + 1.0
+												RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 0))
+											EndIf
+										EndIf
+										;[End Block]
+									Case 2
+										;[Block]
+										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+										
+										If (Not ChannelPlaying(RadioCHN[2]))
+											RadioState[2] = RadioState[2] + 1.0
+											If RadioState[2] = 17.0 Then RadioState[2] = 1.0
+											If Floor(RadioState[2] / 2.0) = Ceil(RadioState[2] / 2.0)
+												RadioCHN[2] = PlaySound_Strict(RadioSFX(1, Int(RadioState[2] / 2.0)))
+											Else
+												RadioCHN[2] = PlaySound_Strict(RadioSFX(1, 0))
+											EndIf
+										EndIf
+										;[End Block]
+									Case 3
+										;[Block]
+										If (Not ChannelPlaying(RadioCHN[6])) And (Not ChannelPlaying(RadioCHN[3])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+										
+										If MTFTimer > 0.0
+											If (Not RadioState2[6]) Then RadioState[3] = RadioState[3] + Max(Rand(-10, 1), 0)
+											Select RadioState[3]
+												Case 40
+													;[Block]
+													If (Not RadioState2[0])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random0.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[0] = True
+													EndIf
+													;[End Block]
+												Case 400
+													;[Block]
+													If (Not RadioState2[1])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[1] = True
+													EndIf
+													;[End Block]
+												Case 800
+													;[Block]
+													If (Not RadioState2[2])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[2] = True
+													EndIf
+													;[End Block]
+												Case 1200
+													;[Block]
+													If (Not RadioState2[3])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[3] = True
+													EndIf
+													;[End Block]
+												Case 1600
+													;[Block]
+													If (Not RadioState2[4])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[4] = True
+													EndIf
+													;[End Block]
+												Case 2000
+													;[Block]
+													If (Not RadioState2[5])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[5] = True
+													EndIf
+													;[End Block]
+												Case 2400
+													;[Block]
+													If (Not RadioState2[6])
+														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"), True)
+														RadioState[3] = RadioState[3] + 1.0
+														RadioState2[6] = True
+													EndIf
+													;[End Block]
+											End Select
+										EndIf
+										;[End Block]
+									Case 4
+										;[Block]
+										If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+										
+										If (Not ChannelPlaying(RadioCHN[4]))
+											If (Not RemoteDoorOn) And RadioState[8] = 0
+												RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
+												RadioState[8] = 1
+											Else
+												RadioState[4] = RadioState[4] + Max(Rand(-10, 1), 0)
+												
+												Select RadioState[4]
+													Case 10
+														;[Block]
+														If (Not n_I\Curr106\Contained)
+															If (Not RadioState3[0])
+																RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"), True)
+																RadioState[4] = RadioState[4] + 1.0
+																RadioState3[0] = True
+															EndIf
+														EndIf
+														;[End Block]
+													Case 100
+														;[Block]
+														If (Not RadioState3[1])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[1] = True
+														EndIf
+														;[End Block]
+													Case 158
+														;[Block]
+														If MTFTimer = 0.0 And (Not RadioState3[2])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin0.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState[2] = True
+														EndIf
+														;[End Block]
+													Case 200
+														;[Block]
+														If (Not RadioState3[3])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[3] = True
+														EndIf
+														;[End Block]
+													Case 260
+														;[Block]
+														If (Not RadioState3[4])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help0.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[4] = True
+														EndIf
+														;[End Block]
+													Case 300
+														;[Block]
+														If (Not RadioState3[5])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter0.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[5] = True
+														EndIf
+														;[End Block]
+													Case 350
+														;[Block]
+														If (Not RadioState3[6])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[6] = True
+														EndIf
+														;[End Block]
+													Case 400
+														;[Block]
+														If (Not RadioState3[7])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help1.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[7] = True
+														EndIf
+														;[End Block]
+													Case 450
+														;[Block]
+														If (Not RadioState3[8])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[8] = True
+														EndIf
+														;[End Block]
+													Case 600
+														;[Block]
+														If (Not RadioState3[9])
+															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"), True)
+															RadioState[4] = RadioState[4] + 1.0
+															RadioState3[9] = True
+														EndIf
+														;[End Block]
+												End Select
+											EndIf
+										EndIf
+										;[End Block]
+									Case 5
+										;[Block]
+										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+										If (Not ChannelPlaying(RadioCHN[5])) Then RadioCHN[5] = PlaySound_Strict(snd_I\RadioStatic)
+										;[End Block]
+								End Select
+								
+								If (Not MenuOpen) And (Not ConsoleOpen)
+									For i = 2 To 6
+										If KeyHit(i)
+											If SelectedItem\State2 <> i - 2
+												PlaySound_Strict(snd_I\RadioSquelch)
+												PauseChannel(RadioCHN[Int(SelectedItem\State2)])
+											EndIf
+											SelectedItem\State2 = i - 2
+											ResumeChannel(RadioCHN[SelectedItem\State2])
+											Exit
+										EndIf
+									Next
+								EndIf
 							EndIf
 						EndIf
 						
-						If RadioType < 2
+						If (Not Temp)
 							If SelectedItem\State < 40.0
 								If BatMsgTimer >= 70.0
 									If (Not ChannelPlaying(LowBatteryCHN[0]))
@@ -5714,23 +5701,38 @@ Function UpdateGUI%()
 								EndIf
 							EndIf
 						EndIf
-					ElseIf SelectedItem\State = 0.0
+					Else
+						; ~ Instantly reload the image 
+						If SelectedItem\State3 = 0.0
+							FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
+							SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio_off.png"
+							SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+							MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+							
+							For i = 0 To 6
+								If ChannelPlaying(RadioCHN[i]) Then StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
+							Next
+							SelectedItem\State3 = 1.0
+						EndIf
 						CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
 					EndIf
 					;[End Block]
 				Case it_nav, it_nav310, it_navulti, it_nav300
 					;[Block]
+					Temp = (SelectedItem\ItemTemplate\ID = it_nav310 Lor SelectedItem\ItemTemplate\ID = it_nav)
 					If SelectedItem\ItemTemplate\Img = 0
+						StrTemp = "_off"
+						If SelectedItem\State > 0.0 Lor (Not Temp) Then StrTemp = "_on"
+						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator" + StrTemp + ".png"
 						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
 					EndIf
-					
-					If SelectedItem\ItemTemplate\ID = it_nav Lor SelectedItem\ItemTemplate\ID = it_nav310
-						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.0025 + (0.0025 * (SelectedItem\ItemTemplate\ID = it_nav)))
-						
+					If Temp
+						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.0035 + (0.0035 * (SelectedItem\ItemTemplate\ID = it_nav))))
 						If SelectedItem\State > 0.0
+							SelectedItem\State3 = 0.0
 							If SelectedItem\State < 20.0
 								If BatMsgTimer >= 70.0
 									If (Not ChannelPlaying(LowBatteryCHN[0]))
@@ -5740,6 +5742,14 @@ Function UpdateGUI%()
 								EndIf
 							EndIf
 						Else
+							; ~ Instantly reload the image 
+							If SelectedItem\State3 = 0.0
+								FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
+								SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator_off.png"
+								SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+								MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+								SelectedItem\State3 = 1.0
+							EndIf
 							CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
 						EndIf
 					EndIf
@@ -5993,7 +6003,11 @@ Function UpdateGUI%()
 					;[End Block]
 				Case it_e_reader, it_e_reader20, it_e_reader30
 					;[Block]
+					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_reader30)
 					If SelectedItem\ItemTemplate\Img = 0
+						StrTemp = "_off"
+						If SelectedItem\State > 0.0 Lor Temp Then StrTemp = "_on"
+						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader" + StrTemp + ".png"
 						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
@@ -6003,7 +6017,6 @@ Function UpdateGUI%()
 					
 					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
 					
-					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_reader30)
 					i = GetKey()
 					Select i
 						Case 49 ; ~ 1
@@ -6026,6 +6039,7 @@ Function UpdateGUI%()
 							;[End Block]
 					End Select
 					If Temp
+						SelectedItem\State3 = 0.0
 						StrTemp = GetEReaderDocument(SelectedItem\State2)
 						If SelectedItem\ItemTemplate\Img2 = 0 And StrTemp <> ""
 							Local itt.ItemTemplates
@@ -6051,6 +6065,14 @@ Function UpdateGUI%()
 							EndIf
 						EndIf
 					Else
+						; ~ Instantly reload the image 
+						If SelectedItem\State3 = 0.0
+							FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
+							SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader_off.png"
+							SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+							MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
+							SelectedItem\State3 = 1.0
+						EndIf
 						CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
 					EndIf
 					;[End Block]
@@ -6093,6 +6115,7 @@ Function UpdateGUI%()
 						opt\ScreenGamma = opt\PrevScreenGamma
 						opt\PrevScreenGamma = 1.0
 					EndIf
+					SelectedItem\ItemTemplate\ImgWidth = 0 : SelectedItem\ItemTemplate\ImgHeight = 0
 					FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
 				EndIf
 				If SelectedItem\ItemTemplate\Img2 <> 0
@@ -6100,6 +6123,7 @@ Function UpdateGUI%()
 						opt\ScreenGamma = opt\PrevScreenGamma
 						opt\PrevScreenGamma = 1.0
 					EndIf
+					SelectedItem\ItemTemplate\Img2Width = 0 : SelectedItem\ItemTemplate\Img2Height = 0
 					FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 				EndIf
 				For i = 0 To 6
@@ -7273,6 +7297,7 @@ Function RenderGUI%()
 								
 								If SelectedItem\ItemTemplate\ID = it_navulti
 									Local np.NPCs
+									Local r.Rooms
 									Local RoomAmount% = 0, RoomsFound% = 0
 									
 									For r.Rooms = Each Rooms
