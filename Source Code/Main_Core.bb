@@ -7197,7 +7197,7 @@ Function RenderGUI%()
 								; ~ Battery
 								If SelectedItem\ItemTemplate\ID = it_radio Lor SelectedItem\ItemTemplate\ID = it_18vradio
 									n = Ceil(SelectedItem\State / 20.0)
-									Color(70 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
+									Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
 									For i = 0 To 4
 										Rect(x, y + ((8 * i) * MenuScale), (43 * MenuScale) - ((i * 6) * MenuScale), 4 * MenuScale, n > (4 - i))
 									Next
@@ -7279,7 +7279,7 @@ Function RenderGUI%()
 											If CurrMapGrid\Grid[x2 + (z2 * MapGridSize)] > MapGrid_NoTile And (CurrMapGrid\Found[x2 + (z2 * MapGridSize)] > MapGrid_NoTile Lor (Not Offline))
 												Local DrawX% = x + (PlayerX - x2) * RectSize, DrawY% = y - (PlayerZ - z2) * RectSize
 												
-												Color(30 + (70 * (SelectedItem\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile Lor CurrMapGrid\Found[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile))), 30, 30)
+												Color(30 + (170 * (SelectedItem\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile Lor CurrMapGrid\Found[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile))), 30, 30)
 												If CurrMapGrid\Grid[(x2 + 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
 												If CurrMapGrid\Grid[(x2 - 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX + RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
 												
@@ -7295,13 +7295,13 @@ Function RenderGUI%()
 									SelectedItem\State2 = Max(0.0, SelectedItem\State2 - fps\Factor[0])
 								EndIf
 								DrawBlockRect(t\ImageID[7], xx + (80 * MenuScale), yy + (70 * MenuScale), xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale)
-								Color(70 * Offline + 30, 30 * Offline, 30 * Offline)
+								Color(170 * Offline + 30, 30 * Offline, 30 * Offline)
 								Rect(xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale, False)
 								
 								x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
 								y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
 								
-								Color(70 * Offline + 30, 30 * Offline, 30 * Offline)
+								Color(170 * Offline + 30, 30 * Offline, 30 * Offline)
 								If (MilliSec Mod 800) < 200
 									If Offline Then TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), GetLocalString("msg", "nav.data"))
 									
@@ -7332,7 +7332,7 @@ Function RenderGUI%()
 									
 									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomAmount)
 									If (MilliSec Mod 600) < 400
-										Color(100, 0, 0)
+										Color(200, 0, 0)
 										For np.NPCs = Each NPCs
 											If np\NPCType = NPCType173 Lor np\NPCType = NPCType106 Lor np\NPCType = NPCType096 Lor np\NPCType = NPCType049 Lor np\NPCType = NPCType066
 												If (Not np\HideFromNVG)
@@ -7362,7 +7362,7 @@ Function RenderGUI%()
 									
 									; ~ Battery
 									n = Min(Ceil(SelectedItem\State / 10.0), 10)
-									Color(70 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
+									Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
 									Rect(xTemp, yTemp, 80 * MenuScale, 20 * MenuScale, False)
 									For i = 1 To n
 										Rect(xTemp + ((i * 8) * MenuScale) - (6 * MenuScale), yTemp + (4 * MenuScale), 4 * MenuScale, 12 * MenuScale)
@@ -7392,7 +7392,7 @@ Function RenderGUI%()
 							; ~ Battery
 							If Temp
 								n = Min(Ceil(SelectedItem\State / 10.0), 10)
-								Color(70 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
+								Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
 								Rect(x + (406 * MenuScale), y + (90 * MenuScale), 80 * MenuScale, 20 * MenuScale, False)
 								For i = 1 To n
 									Rect(x + ((i * 8) * MenuScale) + (400 * MenuScale), y + (94 * MenuScale), 4 * MenuScale, 12 * MenuScale)
@@ -7408,7 +7408,7 @@ Function RenderGUI%()
 								EndIf
 							Else
 								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + Str(TotalSCPDocumentsAmount))
-								If SelectedItem\ItemTemplate\Img2 <> 0 Then DrawBlock(SelectedItem\ItemTemplate\Img2, mo\Viewport_Center_X - SelectedItem\ItemTemplate\Img2Width, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\Img2Height - 13 * MenuScale)
+								If SelectedItem\ItemTemplate\Img2 <> 0 Then DrawBlock(SelectedItem\ItemTemplate\Img2, mo\Viewport_Center_X - SelectedItem\ItemTemplate\Img2Width, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\Img2Height - 12 * MenuScale)
 							EndIf
 						EndIf
 					EndIf
