@@ -7271,28 +7271,41 @@ Function RenderGUI%()
 								
 								Local SCPs_Found% = 0, Dist#
 								
-								If SelectedItem\ItemTemplate\ID = it_navulti And (MilliSec Mod 600) < 400
+								If SelectedItem\ItemTemplate\ID = it_navulti
 									Local np.NPCs
+									Local RoomAmount% = 0, RoomsFound% = 0
 									
-									Color(100, 0, 0)
-									For np.NPCs = Each NPCs
-										If np\NPCType = NPCType173 Lor np\NPCType = NPCType106 Lor np\NPCType = NPCType096 Lor np\NPCType = NPCType049 Lor np\NPCType = NPCType066
-											If (Not np\HideFromNVG)
-												Dist = EntityDistanceSquared(Camera, np\Collider)
-												If Dist < 900.0
-													SqrValue = Sqr(Dist)
-													Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
-													TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
-													SCPs_Found = SCPs_Found + 1
-												EndIf
-											EndIf
+									For r.Rooms = Each Rooms
+										Local RID% = r\RoomTemplate\RoomID
+										
+										If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
+											RoomAmount = RoomAmount + 1
+											RoomsFound = RoomsFound + r\Found
 										EndIf
 									Next
-									If PlayerRoom\RoomTemplate\RoomID = r_cont1_895
-										If CoffinDistance < 8.0
-											Dist = Rnd(4.0, 8.0)
-											Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-											TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
+									
+									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomAmount)
+									If (MilliSec Mod 600) < 400
+										Color(100, 0, 0)
+										For np.NPCs = Each NPCs
+											If np\NPCType = NPCType173 Lor np\NPCType = NPCType106 Lor np\NPCType = NPCType096 Lor np\NPCType = NPCType049 Lor np\NPCType = NPCType066
+												If (Not np\HideFromNVG)
+													Dist = EntityDistanceSquared(Camera, np\Collider)
+													If Dist < 900.0
+														SqrValue = Sqr(Dist)
+														Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
+														TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
+														SCPs_Found = SCPs_Found + 1
+													EndIf
+												EndIf
+											EndIf
+										Next
+										If PlayerRoom\RoomTemplate\RoomID = r_cont1_895
+											If CoffinDistance < 8.0
+												Dist = Rnd(4.0, 8.0)
+												Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
+												TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
+											EndIf
 										EndIf
 									EndIf
 								EndIf
