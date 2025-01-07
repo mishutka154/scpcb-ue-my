@@ -85,6 +85,7 @@
 - Room event sounds for «cont2_500_1499» And «cont1_035» are now based on adjacent rooms instead of distance.
 - Can now open the door of SCP-205's chamber early.
 - Buttons now glow through the fog.
+- «room1_storage» contains various anomalies now.
 
 - Improved some models...
 
