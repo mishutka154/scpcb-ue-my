@@ -11,6 +11,7 @@
 - Updated SCP-895's overlay textures.
 - Better subtitles.
 - Player now regenerates blood when no longer bleeding, recovery rate depends on injury and caps at 60% bloodloss before stopping.
+- Slightly increase stamina regeneration when standing still.
 
 [Rooms]
 - Added penny in «room1_storage».
