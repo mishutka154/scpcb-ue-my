@@ -880,8 +880,8 @@ Function UpdateConsole%()
 			ConsoleHeight = ConsoleHeight + CoordEx
 		Next
 		ScrollBarHeight = (Float(Height) / Float(ConsoleHeight)) * Height
-		If ScrollBarHeight > Height Then ScrollBarHeight = Height
-		If ConsoleHeight < Height Then ConsoleHeight = Height
+		ScrollBarHeight = Min(ScrollBarHeight, Height)
+		ConsoleHeight = Max(ConsoleHeight, Height)
 		
 		ConsoleInBar = MouseOn(x + Width - (26 * MenuScale), y, 26 * MenuScale, Height)
 		ConsoleInBox = MouseOn(x + Width - (23 * MenuScale), y + Height - ScrollBarHeight + (ConsoleScroll * ScrollBarHeight / Height), 20 * MenuScale, ScrollBarHeight)
