@@ -2381,6 +2381,10 @@ Function UpdateNPCType513_1%(n.NPCs)
 				If Dist < 36.0 And Rand(5) = 1
 					If EntityInView(n\Collider, Camera) And EntityVisible(me\Collider, n\Collider)
 						n\LastSeen = 1
+						me\Sanity = Min(-450.0, me\Sanity)
+						me\CameraShake = 0.7
+						me\HeartBeatVolume = 0.7
+						me\HeartBeatRate = 150
 						PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(0, 2) + ".ogg"))
 					EndIf
 				EndIf
@@ -2423,6 +2427,10 @@ Function UpdateNPCType513_1%(n.NPCs)
 								If n\LastSeen = 0
 									If EntityInView(n\Collider, Camera) And EntityVisible(me\Collider, n\Collider)
 										n\LastSeen = 1
+										me\Sanity = Min(-450.0, me\Sanity)
+										me\CameraShake = 0.7
+										me\HeartBeatVolume = 0.7
+										me\HeartBeatRate = 150
 										PlaySound_Strict(LoadTempSound("SFX\SCP\513_1\Bell" + Rand(0, 2) + ".ogg"))
 									EndIf
 								EndIf
