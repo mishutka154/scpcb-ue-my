@@ -6514,8 +6514,8 @@ Function RenderNVG%()
 				
 				Color(100, 100, 100)
 				
-				Local MaxRectWidth% = 30 * MenuScale
-				Local MaxRectHeight% = 80 * MenuScale
+				Local MaxRectWidth% = 15 * MenuScale
+				Local MaxRectHeight% = 50 * MenuScale
 				Local ScaleFactor# = 16.0 / Sqr(Dist)
 				Local RectWidth% = MaxRectWidth * ScaleFactor
 				Local RectHeight% = MaxRectHeight * ScaleFactor
