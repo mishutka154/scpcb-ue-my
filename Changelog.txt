@@ -10,6 +10,7 @@
 - Increased map size from 18 to 21.
 - Updated SCP-895's overlay textures.
 - Better subtitles.
+- Player now regenerates blood when no longer bleeding, recovery rate depends on injury and caps at 60% bloodloss before stopping.
 
 [Rooms]
 - Added penny in «room1_storage».
@@ -22,6 +23,8 @@
 - Improved «Keyboard.b3d» prop.
 - The decontamination rooms trap the player for longer.
 - Reduced spawn chance of «room2_tesla_lcz».
+- Added Revision Eyedrops in «room2_closets».
+- Moved Gas Mask to the lower floor of «room2_closets».
 
 - Design improvements for some rooms...
 
@@ -32,6 +35,7 @@
 - Speed up using cups slightly.
 - Syringes can restore some of the player's stamina.
 - Fine SCRAMBLE GEAR shows SCP-173's position.
+- S-NAV Navigator Ultimate tells the player how many rooms they've visted.
 
 [NPCs]
 - Added SCP-999.
