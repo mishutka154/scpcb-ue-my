@@ -54,6 +54,7 @@
 - Fixed «Ctrl+V» combination crashing the game.
 - Fixed vehicle textures.
 - Fixed SCP-173's spawnpoint positions in «room3_2_ez» and «room3_3_ez».
+- Fixed «RLS» drink free spawning.
 
 [Known issues]
 - Rooms can overlap and block the way.
