@@ -5737,8 +5737,8 @@ Function UpdateEvents%()
 					If (Not EntityHidden(e\room\Objects[2])) Then HideEntity(e\room\Objects[2])
 				EndIf
 				
-				If e\EventState >= 26.0
-					If EntityDistanceSquared(me\Collider, e\room\OBJ) < 64.0
+				If e\EventState > 25.0
+					If e\room\Dist < 8.0
 						If e\Sound = 0 Then e\Sound = LoadSound_Strict("SFX\SCP\970\Corpse.ogg")
 						e\SoundCHN = LoopSoundEx(e\Sound, e\SoundCHN, Camera, e\room\NPC[0]\OBJ)
 						If e\EventState > 60.0
