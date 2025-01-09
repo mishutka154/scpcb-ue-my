@@ -3469,7 +3469,7 @@
 		"name": ["Rain Land Society", "Falushie", "Kishi", "Precipitator", "RLS"],
 		"color": [0, 15, 255],
 		"alpha": 0.8,
-		"dispense_sound": "SFX\\SCP\\513\\Bell1.ogg",
+		"dispense_sound": "SFX\\SCP\\513_1\\Bell1.ogg",
 		"drink_sound": "SFX\\Radio\\SCPRadio6.ogg",
 		"drink_message": "\"Rain, Clouds, Sky...\"",
 		"blur": 3.0,
