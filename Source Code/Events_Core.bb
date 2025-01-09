@@ -3675,12 +3675,12 @@ Function UpdateEvents%()
 				;[End Block]
 			Case e_173_appearing
 				;[Block]
-				If e\room\Dist < 6.0 And PlayerRoom <> e\room
+				If e\room\Dist < 6.0
 					If n_I\Curr173\Idle > 1
 						RemoveEvent(e)
 					Else
 						If n_I\Curr173\Idle = 0
-							If (Not PlayerSees173(n_I\Curr173)) And EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 36.0
+							If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 36.0 And (Not PlayerSees173(n_I\Curr173))
 								Select e\room\RoomTemplate\RoomID
 									Case r_room2_4_lcz, r_room2_4_hcz
 										;[Block]
@@ -3699,15 +3699,15 @@ Function UpdateEvents%()
 										Select Rand(3)
 											Case 1
 												;[Block]
-												TFormPoint(736.0, -512.0, -400.0, e\room\OBJ, 0)
+												TFormPoint(576.0, -512.0, 256.0, e\room\OBJ, 0)
 												;[End Block]
 											Case 2
 												;[Block]
-												TFormPoint(-552.0, -512.0, -528.0, e\room\OBJ, 0)
+												TFormPoint(-512.0, -512.0, 256.0, e\room\OBJ, 0)
 												;[End Block]
 											Case 3
 												;[Block]
-												TFormPoint(736.0, -512.0, 272.0, e\room\OBJ, 0)
+												TFormPoint(-920.0, -512.0, 480.0, e\room\OBJ, 0)
 												;[End Block]
 										End Select
 										;[End Block]
