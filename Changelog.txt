@@ -42,6 +42,7 @@
 - Added SCP-999.
 
 - Better texture for guards and SCP-049-2.
+- SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.
 
 [Bug Fixes]
