@@ -5646,13 +5646,11 @@ Function UpdateEvents%()
 								EntityType(it\Collider, HIT_ITEM)
 								PickItem(it, False)
 								;[End Block]
-							Case 35.0
+							Case 33.0, 34.0, 35.0
 								;[Block]
-								For i = 0 To 3
-									de.Decals = CreateDecal(DECAL_BLOOD_6, e\room\x + Rnd(-2.0, 2.0), e\room\y + 700.0 * RoomScale, e\room\z + Rnd(-2.0, 2.0), 270.0, Rnd(360.0), 0.0, 0.05)
-									de\SizeChange = 0.0005
-									EntityParent(de\OBJ, e\room\OBJ)
-								Next
+								de.Decals = CreateDecal(DECAL_BLOOD_6, e\room\x + Rnd(-2.0, 2.0), e\room\y + 700.0 * RoomScale, e\room\z + Rnd(-2.0, 2.0), 270.0, Rnd(360.0), 0.0, 0.05)
+								de\SizeChange = 0.0005
+								EntityParent(de\OBJ, e\room\OBJ)
 								;[End Block]
 							Case 40.0
 								;[Block]
@@ -10196,4 +10194,4 @@ Function Update035Label%(OBJ%)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS
