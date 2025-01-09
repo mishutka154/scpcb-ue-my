@@ -3638,14 +3638,16 @@ Function UpdateNPCType1048_A%(n.NPCs)
 		PlaySoundEx(LoadTempSound("SFX\SCP\1048A\Explode.ogg"), Camera, n\Collider, 8.0)
 		
 		Local i%
+		Local x# = EntityX(n\Collider), y# = EntityY(n\Collider), z# = EntityZ(n\Collider)
 		
 		For i = 0 To 1
-			SetEmitter(Null, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider), 21)
+			SetEmitter(Null, x, y, z, 15)
+			SetEmitter(Null, x, y, z, 21)
 		Next
 		
 		Local Pvt% = CreatePivot()
 		
-		PositionEntity(Pvt, EntityX(n\Collider) + Rnd(-0.05, 0.05), EntityY(n\Collider) - 0.05, EntityZ(n\Collider) + Rnd(-0.05, 0.05))
+		PositionEntity(Pvt, x + Rnd(-0.05, 0.05), y - 0.05, z + Rnd(-0.05, 0.05))
 		TurnEntity(Pvt, 90.0, 0.0, 0.0)
 		If EntityPick(Pvt, 0.3)
 			Local de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.5))
