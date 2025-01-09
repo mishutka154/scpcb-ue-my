@@ -3353,9 +3353,7 @@ Function UpdateZoneColor%()
 		End Select
 	EndIf
 	
-	CreateMsg(fog\AmbientR + ", " + fog\AmbientG + ", " + fog\AmbientB)
 	If (Not IsEqual(fog\AmbientR, fog\TargetAmbientR, 0.01)) Lor (Not IsEqual(fog\AmbientG, fog\TargetAmbientG, 0.01)) Lor (Not IsEqual(fog\AmbientB, fog\TargetAmbientB, 0.01))
-		CreateHintMsg("DO", 1)
 		; ~ Save the current backbuffer
         Local OldBuffer% = BackBuffer()
 		
