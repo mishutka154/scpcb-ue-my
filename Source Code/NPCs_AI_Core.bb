@@ -1215,7 +1215,7 @@ Function UpdateNPCType096%(n.NPCs)
 	
 	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
 	Local Angle# = WrapAngle(DeltaYaw(n\Collider, me\Collider))
-	Local IsLooking% = Dist < PowTwo(me\CameraFogDist * LightVolume) And (Angle < 135.0 Lor Angle > 225.0) And EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)
+	Local IsLooking% = Dist < PowTwo(fog\FarDist * LightVolume) And (Angle < 135.0 Lor Angle > 225.0) And EntityVisible(Camera, n\OBJ2) And EntityInView(n\OBJ2, Camera)
 	Local i%
 	
 	If wi\SCRAMBLE > 0 And IsLooking
@@ -1937,11 +1937,11 @@ Function UpdateNPCType106%(n.NPCs)
 				
 				UpdateSoundOrigin(n\SoundCHN2, Camera, n\Collider)
 				
-				If Dist < PowTwo(me\CameraFogDist * LightVolume * 0.6)
+				If Dist < PowTwo(fog\FarDist * LightVolume * 0.6)
 					If (Not EntityHidden(n\OBJ2)) Then HideEntity(n\OBJ2)
 				Else
 					If EntityHidden(n\OBJ2) Then ShowEntity(n\OBJ2)
-					EntityAlpha(n\OBJ2, Min(Sqr(Dist) - me\CameraFogDist * LightVolume * 0.6, 1.0))
+					EntityAlpha(n\OBJ2, Min(Sqr(Dist) - fog\FarDist * LightVolume * 0.6, 1.0))
 				EndIf
 				PositionEntity(n\OBJ2, EntityX(n\OBJ), EntityY(n\OBJ), EntityZ(n\OBJ))
 				RotateEntity(n\OBJ2, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
@@ -6099,7 +6099,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 							PositionEntity(Pvt, EntityX(n\OBJ), EntityY(n\OBJ), EntityZ(n\OBJ))
 							MoveEntity(Pvt, 0.0622, 0.83925, 0.5351)
 							
-							If EntityDistanceSquared(me\Collider, n\Collider) < PowTwo(me\CameraFogDist) Then LightVolume = TempLightVolume * 1.2
+							If EntityDistanceSquared(me\Collider, n\Collider) < PowTwo(fog\FarDist) Then LightVolume = TempLightVolume * 1.2
 							
 							emit.Emitter = SetEmitter(Null, EntityX(Pvt), EntityY(Pvt), EntityZ(Pvt), 13)
 							EntityParent(emit\Owner, n\Collider)

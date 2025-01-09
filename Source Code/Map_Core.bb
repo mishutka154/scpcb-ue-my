@@ -181,7 +181,7 @@ Function UpdateLights%(Cam%)
 								
 								LightOBJHidden = EntityHidden(l\OBJ)
 								If Dist < LightRenderDistance * LightVolume
-									EntityAutoFade(l\Sprite, 0.1 * LightVolume, me\CameraFogDist * LightVolume)
+									EntityAutoFade(l\Sprite, 0.1 * LightVolume, fog\FarDist * LightVolume)
 									
 									Local LightVisible% = EntityVisible(Cam, l\OBJ)
 									Local LightInView% = EntityInView(l\OBJ, Cam)
@@ -205,7 +205,7 @@ Function UpdateLights%(Cam%)
 											Alpha = 1.0 - Clamp((Sqr(Dist) + 0.5) / 7.5, 0.0, 1.0)
 											If Alpha > 0.0
 												If LightAdvancedSpriteHidden Then ShowEntity(l\AdvancedSprite)
-												EntityAlpha(l\AdvancedSprite, Max(3.0 * (((CurrAmbientColorR + CurrAmbientColorG + CurrAmbientColorB) / 3) / 255.0) * (l\Intensity / 2.0), 1.0) * Alpha)
+												EntityAlpha(l\AdvancedSprite, Max(3.0 * (((fog\AmbientR + fog\AmbientG + fog\AmbientB) / 3) / 255.0) * (l\Intensity / 2.0), 1.0) * Alpha)
 												
 												Random = Rnd(0.36, 0.4)
 												ScaleSprite(l\AdvancedSprite, Random, Random)
@@ -272,23 +272,6 @@ Function RemoveLight%(l.Lights)
 	EndIf
 	FreeEntity(l\OBJ) : l\OBJ = 0
 	Delete(l)
-End Function
-
-Global AmbientLightRoomTex%
-
-Function AmbientLightRooms%(R%, G%, B%)
-	; ~ Save the current backbuffer
-	Local OldBuffer% = BackBuffer() ; ~ Probably shouldn't make assumptions here but who cares, why wouldn't it use the BackBuffer()
-	
-	; ~ Change draw target to AmbientLightRoomTex
-	SetBuffer(TextureBuffer(AmbientLightRoomTex))
-	; ~ Clear color to provided values (R, G, B)
-	ClsColor(R, G, B)
-	Cls()
-	; ~ Reset clear color to black (default)
-	ClsColor(0, 0, 0)
-	; ~ Restore the previous buffer
-	SetBuffer(OldBuffer)
 End Function
 
 Const RoomScale# = 8.0 / 2048.0
@@ -2169,7 +2152,7 @@ Function UpdateMT%(mt.MTGrid)
 	For tX = 0 To MTGridSize - 1
 		For tY = 0 To MTGridSize - 1
 			If mt\Entities[tX + (tY * MTGridSize)] <> 0
-				If DistanceSquared(EntityX(me\Collider, True), EntityX(mt\Entities[tX + (tY * MTGridSize)], True), EntityZ(me\Collider, True), EntityZ(mt\Entities[tX + (tY * MTGridSize)], True)) < PowTwo(me\CameraFogDist * LightVolume * 1.3)
+				If DistanceSquared(EntityX(me\Collider, True), EntityX(mt\Entities[tX + (tY * MTGridSize)], True), EntityZ(me\Collider, True), EntityZ(mt\Entities[tX + (tY * MTGridSize)], True)) < PowTwo(fog\FarDist * LightVolume * 1.3)
 					If EntityHidden(mt\Entities[tX + (tY * MTGridSize)]) Then ShowEntity(mt\Entities[tX + (tY * MTGridSize)])
 				Else
 					If (Not EntityHidden(mt\Entities[tX + (tY * MTGridSize)])) Then HideEntity(mt\Entities[tX + (tY * MTGridSize)])
@@ -4076,7 +4059,7 @@ Function UpdateSecurityCams%()
 				EndIf
 				
 				sc\InSight = False
-				If EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(me\CameraFogDist * LightVolume * 1.2) And SecondaryLightOn > 0.3
+				If EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(fog\FarDist * LightVolume * 1.2) And SecondaryLightOn > 0.3
 					sc\InSight = (EntityInView(sc\MonitorOBJ, Camera) And EntityVisible(Camera, sc\ScrOBJ))
 					
 					If (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0) And sc\InSight
@@ -4089,8 +4072,8 @@ Function UpdateSecurityCams%()
 							sc\CoffinEffect = 0
 							Temp = True
 						Else
-							CameraFogColor(sc\Cam, CurrFogColorR, CurrFogColorG, CurrFogColorB)
-							CameraClsColor(sc\Cam, CurrFogColorR, CurrFogColorG, CurrFogColorB)
+							CameraFogColor(sc\Cam, fog\R, fog\G, fog\B)
+							CameraClsColor(sc\Cam, fog\R, fog\G, fog\B)
 						EndIf
 						
 						If sc\State < sc\RenderInterval
@@ -4185,7 +4168,7 @@ Function RenderSecurityCams%()
 		
 		If Close
 			If sc\Screen
-				If (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0) And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(me\CameraFogDist * LightVolume * 1.2) And sc\InSight And SecondaryLightOn > 0.3
+				If (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0) And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(fog\FarDist * LightVolume * 1.2) And sc\InSight And SecondaryLightOn > 0.3
 					If sc\room\RoomTemplate\RoomID <> r_cont1_205
 						If EntityHidden(sc\ScrOBJ) Then ShowEntity(sc\ScrOBJ)
 						If EntityHidden(sc\ScrOverlay) Then ShowEntity(sc\ScrOverlay)

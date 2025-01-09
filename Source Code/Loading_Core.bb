@@ -2189,7 +2189,6 @@ Type Player
 	Field BlurVolume#, BlurTimer#
 	Field LightBlink#, LightFlash#
 	Field CurrCameraZoom#
-	Field CameraFogDist#
 	Field RefinedItems%
 	Field Deaf%, DeafTimer#
 	Field Zombie%
@@ -2258,6 +2257,7 @@ Function LoadData%()
 	chs.Cheats = New Cheats
 	me.Player = New Player
 	wi.WearableItems = New WearableItems
+	fog.FogAmbient = New FogAmbient
 	
 	I_005.SCP005 = New SCP005
 	I_008.SCP008 = New SCP008
@@ -2334,9 +2334,9 @@ Function LoadEntities%()
 	Camera = CreateCamera()
 	CameraViewport(Camera, 0, 0, opt\GraphicWidth, opt\GraphicHeight)
 	CameraFogMode(Camera, 1)
-	CameraFogRange(Camera, 0.1, me\CameraFogDist)
+	CameraFogRange(Camera, 0.1, fog\FarDist)
 	CameraFogColor(Camera, 30.0, 30.0, 30.0)
-	CameraRange(Camera, 0.01, me\CameraFogDist)
+	CameraRange(Camera, 0.01, fog\FarDist)
 	CameraClsColor(Camera, 30.0, 30.0, 30.0)
 	AmbientLight(30.0, 30.0, 30.0)
 	
@@ -2660,7 +2660,7 @@ Function InitNewGame%()
 	LoadEntities()
 	LoadSounds()
 	
-	me\CameraFogDist = 6.0
+	fog\FarDist = 6.0
 	
 	IsBlackOut = False : PrevIsBlackOut = False
 	RemoteDoorOn = True
@@ -3064,10 +3064,6 @@ Function NullGame%(PlayButtonSFX% = True)
 	
 	TempLightVolume = 0.0
 	LightVolume = 0.0
-	CurrFogColorR = 0.0 : CurrFogColorG = 0.0 : CurrFogColorB = 0.0
-	CurrFogColor = ""
-	CurrAmbientColorR = 0.0 : CurrAmbientColorG = 0.0 : CurrAmbientColorB = 0.0
-	CurrAmbientColor = ""
 	
 	GrabbedEntity = 0
 	CameraPitch = 0.0
@@ -3106,6 +3102,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	FreeEntity(me\Head) : me\Head = 0
 	Delete(me) : me = Null
 	Delete(wi) : wi = Null
+	Delete(fog) : fog = Null
 	
 	Delete(I_005) : I_005 = Null
 	Delete(I_008) : I_008 = Null

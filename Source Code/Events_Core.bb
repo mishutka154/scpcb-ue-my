@@ -2297,7 +2297,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If e\EventState >= 70.0
-								If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+								If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 								If x2
 									ShouldPlay = 8
 									IsBlackOut = False
@@ -2380,8 +2380,8 @@ Function UpdateEvents%()
 										ShowEntity(me\Collider)
 										
 										I_268\Using = 0 : wi\GasMask = 0 : wi\BallisticHelmet = 0
-										If wi\NightVision > 0 Then me\CameraFogDist = 6.0 : wi\NightVision = 0
-										If wi\SCRAMBLE > 0 Then me\CameraFogDist = 6.0 : wi\SCRAMBLE = 0
+										If wi\NightVision > 0 Then fog\FarDist = 6.0 : wi\NightVision = 0
+										If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 : wi\SCRAMBLE = 0
 										
 										me\Zombie = True
 										
@@ -2611,14 +2611,14 @@ Function UpdateEvents%()
 							
 							IsBlackOut = PrevIsBlackOut
 							If wi\NightVision > 0
-								me\CameraFogDist = 15.0
+								fog\FarDist = 15.0
 							ElseIf wi\SCRAMBLE > 0
-								me\CameraFogDist = 9.0
+								fog\FarDist = 9.0
 							Else
-								me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 							EndIf
 							
-							CurrFogColorR = 0.0 : CurrFogColorG = 0.0 : CurrFogColorB = 0.0
+							ClearFogColor()
 							
 							e\EventState = 0.0
 							e\EventState3 = 0.0
@@ -3655,7 +3655,7 @@ Function UpdateEvents%()
 					e\EventState2 = UpdateLever(e\room\RoomLevers[1]\OBJ)
 					If PrevState2 <> e\EventState2 And e\EventState > 0.0 Then PlaySoundEx(snd_I\LightOffSFX, Camera, e\room\RoomLevers[1]\OBJ)
 					IsBlackOut = (e\EventState2 = 0.0)
-					If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+					If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 					
 					If e\EventState = 0.0
 						If Rand(200) = 1 Lor EntityY(me\Collider, True) > 2.0
@@ -6729,7 +6729,7 @@ Function UpdateEvents%()
 						If e\EventState2 = (-70.0) * 5.0
 							For sc.SecurityCams = Each SecurityCams
 								If sc\room = e\room
-									If sc\InSight And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(me\CameraFogDist * LightVolume * 1.2) Then e\EventState2 = Min(e\EventState2 + fps\Factor[0], 0.0)
+									If sc\InSight And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(fog\FarDist * LightVolume * 1.2) Then e\EventState2 = Min(e\EventState2 + fps\Factor[0], 0.0)
 									Exit
 								EndIf
 							Next
@@ -7308,7 +7308,7 @@ Function UpdateDimension106%()
 					
 					me\Injuries = me\Injuries + (fps\Factor[0] * 0.00005 * (1.0 + (wi\NightVision > 0 Lor wi\SCRAMBLE > 0)))
 					
-					me\CameraFogDist = 6.0
+					fog\FarDist = 6.0
 					
 					e\EventState = e\EventState + fps\Factor[0]
 					
@@ -7491,7 +7491,7 @@ Function UpdateDimension106%()
 						ShouldPlay = 14
 						
 						DecalStep = 1
-						me\CameraFogDist = 8.0
+						fog\FarDist = 8.0
 						CameraFogRange(Camera, 0.1, 8.0)
 						
 						For i = 17 To 20
@@ -7640,11 +7640,11 @@ Function UpdateDimension106%()
 											Next
 											
 											If wi\NightVision > 0
-												me\CameraFogDist = 15.0
+												fog\FarDist = 15.0
 											ElseIf wi\SCRAMBLE > 0
-												me\CameraFogDist = 9.0
+												fog\FarDist = 9.0
 											Else
-												me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+												fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 											EndIf
 											
 											me\Playable = True
@@ -7770,7 +7770,7 @@ Function UpdateDimension106%()
 						;[End Block]
 					Case PD_Labyrinth
 						;[Block]
-						me\CameraFogDist = 4.0
+						fog\FarDist = 4.0
 						
 						UpdateDoors()
 						
@@ -7920,11 +7920,11 @@ Function UpdateDimension106%()
 									EndIf
 									
 									If wi\NightVision > 0
-										me\CameraFogDist = 15.0
+										fog\FarDist = 15.0
 									ElseIf wi\SCRAMBLE > 0
-										me\CameraFogDist = 9.0
+										fog\FarDist = 9.0
 									Else
-										me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+										fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 									EndIf
 									
 									If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
@@ -8020,11 +8020,11 @@ Function UpdateDimension106%()
 										Next
 										
 										If wi\NightVision > 0
-											me\CameraFogDist = 15.0
+											fog\FarDist = 15.0
 										ElseIf wi\SCRAMBLE > 0
-											me\CameraFogDist = 9.0
+											fog\FarDist = 9.0
 										Else
-											me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+											fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 										EndIf
 										
 										me\Playable = True
@@ -9226,7 +9226,7 @@ Function UpdateIntro%()
 													TeleportEntity(me\Collider, x + (EntityX(me\Collider) - e\room\x - 288.0 * RoomScale), y + (EntityY(me\Collider) - e\room\y + 0.4), z + (EntityZ(me\Collider) - e\room\z + 32.0 * RoomScale))
 													TeleportToRoom(r)
 													
-													me\CameraFogDist = 6.0
+													fog\FarDist = 6.0
 													
 													For i = 0 To 2
 														PositionEntity(e\room\NPC[i]\Collider, x + (EntityX(e\room\NPC[i]\Collider) - e\room\x - 288.0 * RoomScale), y + EntityY(e\room\NPC[i]\Collider) - e\room\y, z + (EntityZ(e\room\NPC[i]\Collider) - e\room\z + 32.0 * RoomScale))
@@ -9272,7 +9272,7 @@ Function UpdateIntro%()
 													
 													ClearConsole()
 													
-													CurrFogColorR = 0.0 : CurrFogColorG = 0.0 : CurrFogColorB = 0.0
+													ClearFogColor()
 													InitializeIntroMovie = False
 													
 													RemoveEvent(e)
@@ -10194,4 +10194,4 @@ Function Update035Label%(OBJ%)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

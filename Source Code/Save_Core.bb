@@ -1381,11 +1381,11 @@ Function LoadGame%(File$)
 	CloseFile(f)
 	
 	If wi\NightVision > 0
-		me\CameraFogDist = 15.0
+		fog\FarDist = 15.0
 	ElseIf wi\SCRAMBLE > 0
-		me\CameraFogDist = 9.0
+		fog\FarDist = 9.0
 	Else
-		me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+		fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 	EndIf
 	
 	For i = 0 To 1
@@ -2261,7 +2261,7 @@ Function LoadGameQuick%(File$)
 	
 	CloseFile(f)
 	
-	CurrFogColorR = 0.0 : CurrFogColorG = 0.0 : CurrFogColorB = 0.0
+	ClearFogColor()
 	
 	UpdateLightsTimer = 0.0
 	
@@ -2271,11 +2271,11 @@ Function LoadGameQuick%(File$)
 	If wi\HazmatSuit = 0 Then HideEntity(t\OverlayID[2])
 	
 	If wi\NightVision > 0
-		me\CameraFogDist = 15.0
+		fog\FarDist = 15.0
 	ElseIf wi\SCRAMBLE > 0
-		me\CameraFogDist = 9.0
+		fog\FarDist = 9.0
 	Else
-		me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+		fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 	EndIf
 	
 	; ~ Free some entities that could potentially cause memory leaks (for the endings)

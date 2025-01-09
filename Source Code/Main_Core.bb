@@ -1898,11 +1898,11 @@ Function UpdateConsole%()
 					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 					
 					If opt\DebugMode = 1 ; ~ Allow using infinite value for debugging
-						me\CameraFogDist = StrTemp
+						fog\FarDist = StrTemp
 					Else
-						me\CameraFogDist = Clamp(StrTemp, 6.0, 17.0)
+						fog\FarDist = Clamp(StrTemp, 6.0, 17.0)
 					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "fog"), me\CameraFogDist, "{0}"))
+					CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
 					;[End Block]
 				Case "spawn", "s"
 					;[Block]
@@ -2101,7 +2101,7 @@ Function UpdateConsole%()
 					chs\GodMode = True
 					chs\InfiniteStamina = True
 					
-					me\CameraFogDist = 17.0
+					fog\FarDist = 17.0
 					
 					KillSounds()
 					
@@ -3207,9 +3207,6 @@ Const FogColorForestRed$ = "045020020"
 Const FogColorForestChase$ = "032044054"
 ;[End Block]
 
-Global CurrFogColor$
-Global CurrFogColorR#, CurrFogColorG#, CurrFogColorB#
-
 ; ~ Ambient Color Constants
 ;[Block]
 Const AmbientColorLCZ$ = "030030030"
@@ -3217,42 +3214,56 @@ Const AmbientColorHCZ$ = "030023023"
 Const AmbientColorEZ$ = "023023030"
 ;[End Block]
 
-Global CurrAmbientColor$
-Global CurrAmbientColorR#, CurrAmbientColorG#, CurrAmbientColorB#
-
 Const ZoneColorChangeSpeed# = 50.0
 
+Global AmbientLightRoomTex%
+
 Function SetZoneColor%(FogColor$, AmbientColor$ = AmbientColorLCZ)
-	CurrFogColor = FogColor
-	CurrAmbientColor = AmbientColor
+	fog\CurrName = FogColor
+	fog\CurrAmbientName = AmbientColor
+End Function
+
+Type FogAmbient
+	Field FarDist#
+	Field CurrName$, CurrAmbientName$
+	Field R#, G#, B#
+	Field TargetAmbientR%, TargetAmbientG%, TargetAmbientB%
+	Field AmbientR#, AmbientG#, AmbientB#
+End Type
+
+Global fog.FogAmbient
+
+Function ClearFogColor%()
+	fog\R = 0.0 : fog\G = 0.0 : fog\B = 0.0
+	fog\AmbientR = 0.0 : fog\AmbientG = 0.0 : fog\AmbientB = 0.0
 End Function
 
 Function UpdateZoneColor%()
 	Local e.Events
 	Local IsOutSide% = (IsPlayerOutsideFacility() Lor PlayerRoom\RoomTemplate\RoomID = r_cont1_173_intro)
 	
-	CurrFogColor = ""
-	CurrAmbientColor = ""
+	fog\CurrName = ""
+	fog\CurrAmbientName = ""
 	
 	CameraFogMode(Camera, 1)
-	CameraFogRange(Camera, 0.1 * LightVolume, me\CameraFogDist * LightVolume)
+	CameraFogRange(Camera, 0.1 * LightVolume, fog\FarDist * LightVolume)
 	; ~ Allow to use big range for debugging
-	CameraRange(Camera, 0.01, 100.0 * opt\DebugMode + (Not opt\DebugMode) * me\CameraFogDist * LightVolume * 1.3)
+	CameraRange(Camera, 0.01, 100.0 * opt\DebugMode + (Not opt\DebugMode) * fog\FarDist * LightVolume * 1.3)
 	; ~ Handle room-specific settings
 	If PlayerRoom\RoomTemplate\RoomID = r_room3_storage And InFacility = LowerFloor
 		SetZoneColor(FogColorStorageTunnels)
 	ElseIf IsOutSide
 		SetZoneColor(FogColorOutside)
-		me\CameraFogDist = 60.0
+		fog\FarDist = 60.0
 		LightVolume = 1.0
-		CameraFogRange(Camera, 5.0, me\CameraFogDist)
-		CameraRange(Camera, 0.01, 72.0) ; ~ me\CameraFogDist * 1.2
+		CameraFogRange(Camera, 5.0, fog\FarDist)
+		CameraRange(Camera, 0.01, 72.0) ; ~ fog\FarDist * 1.2
 	ElseIf PlayerRoom\RoomTemplate\RoomID = r_dimension_1499
 		SetZoneColor(FogColorDimension_1499)
-		me\CameraFogDist = 80.0
+		fog\FarDist = 80.0
 		LightVolume = 1.0
-		CameraFogRange(Camera, 40.0, me\CameraFogDist)
-		CameraRange(Camera, 0.01, 96.0) ; ~ me\CameraFogDist * 1.2
+		CameraFogRange(Camera, 40.0, fog\FarDist)
+		CameraRange(Camera, 0.01, 96.0) ; ~ fog\FarDist * 1.2
 	ElseIf PD_event <> Null And PD_event\room = PlayerRoom
 		LightVolume = 1.0
 		If PD_event\EventState2 = PD_TrenchesRoom Lor PD_event\EventState2 = PD_TowerRoom
@@ -3266,23 +3277,23 @@ Function UpdateZoneColor%()
 		If forest_event\EventState = 1.0
 			If forest_event\EventState4 = 0.0
 				SetZoneColor(FogColorForest)
-				me\CameraFogDist = 8.0
+				fog\FarDist = 8.0
 				LightVolume = 1.0
 			Else
 				SetZoneColor(FogColorForestRed)
-				me\CameraFogDist = 5.0
+				fog\FarDist = 5.0
 				LightVolume = 0.8
 			EndIf
 			If forest_event\room\NPC[0] <> Null
 				If forest_event\room\NPC[0]\State >= 2.0 Then SetZoneColor(FogColorForestChase)
 			EndIf
-			CameraFogRange(Camera, 0.1, me\CameraFogDist)
-			CameraRange(Camera, 0.01, me\CameraFogDist * 1.2)
+			CameraFogRange(Camera, 0.1, fog\FarDist)
+			CameraRange(Camera, 0.01, fog\FarDist * 1.2)
 		EndIf
 	EndIf
 	
 	; ~ If unset, use standard settings based on zone
-	If CurrFogColor = ""
+	If fog\CurrName = ""
 		Select me\Zone
 			Case 0
 				;[Block]
@@ -3300,25 +3311,22 @@ Function UpdateZoneColor%()
 	EndIf
 	
 	; ~ Calculate the current fog color
-	CurrFogColorR = CurveValue(Left(CurrFogColor, 3), CurrFogColorR, ZoneColorChangeSpeed)
-	CurrFogColorG = CurveValue(Mid(CurrFogColor, 4, 3), CurrFogColorG, ZoneColorChangeSpeed)
-	CurrFogColorB = CurveValue(Right(CurrFogColor, 3), CurrFogColorB, ZoneColorChangeSpeed)
+	fog\R = CurveValue(Left(fog\CurrName, 3), fog\R, ZoneColorChangeSpeed)
+	fog\G = CurveValue(Mid(fog\CurrName, 4, 3), fog\G, ZoneColorChangeSpeed)
+	fog\B = CurveValue(Right(fog\CurrName, 3), fog\B, ZoneColorChangeSpeed)
 	
 	; ~ Set the camera fog color
-	CameraFogColor(Camera, CurrFogColorR, CurrFogColorG, CurrFogColorB)
-	If IsOutSide
-		; ~ Keep it black. That will reduce white artifacts
-		CameraClsColor(Camera, 0, 0, 0)
-	Else
-		CameraClsColor(Camera, CurrFogColorR, CurrFogColorG, CurrFogColorB)
-	EndIf
+	CameraFogColor(Camera, fog\R, fog\G, fog\B)
+	CameraClsColor(Camera, (Not IsOutSide) * fog\R, (Not IsOutSide) * fog\G, (Not IsOutSide) * fog\B)
 	
 	; ~ Calculate the current ambient color which affects the lighting of props/objects/NPCs/items
-	CurrAmbientColorR = CurveValue(Left(CurrAmbientColor, 3), CurrAmbientColorR, ZoneColorChangeSpeed)
-	CurrAmbientColorG = CurveValue(Mid(CurrAmbientColor, 4, 3), CurrAmbientColorG, ZoneColorChangeSpeed)
-	CurrAmbientColorB = CurveValue(Right(CurrAmbientColor, 3), CurrAmbientColorB, ZoneColorChangeSpeed)
+	fog\TargetAmbientR = Left(fog\CurrAmbientName, 3) : fog\TargetAmbientG = Mid(fog\CurrAmbientName, 4, 3) : fog\TargetAmbientB = Right(fog\CurrAmbientName, 3)
 	
-	Local CurrR# = CurrAmbientColorR, CurrG# = CurrAmbientColorG, CurrB# = CurrAmbientColorB
+	fog\AmbientR = CurveValue(fog\TargetAmbientR, fog\AmbientR, ZoneColorChangeSpeed)
+	fog\AmbientG = CurveValue(fog\TargetAmbientG, fog\AmbientG, ZoneColorChangeSpeed)
+	fog\AmbientB = CurveValue(fog\TargetAmbientB, fog\AmbientB, ZoneColorChangeSpeed)
+	
+	Local CurrR# = fog\AmbientR, CurrG# = fog\AmbientG, CurrB# = fog\AmbientB
 	
 	If wi\SCRAMBLE > 0
 		CurrR = CurrR * 2.0 : CurrG = CurrG * 2.0 : CurrB = CurrB * 2.0
@@ -3344,8 +3352,25 @@ Function UpdateZoneColor%()
 				;[End Block]
 		End Select
 	EndIf
-	AmbientLightRooms(CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
-	AmbientLight(CurrR, CurrG, CurrB)
+	
+	CreateMsg(fog\AmbientR + ", " + fog\AmbientG + ", " + fog\AmbientB)
+	If (Not IsEqual(fog\AmbientR, fog\TargetAmbientR, 0.01)) Lor (Not IsEqual(fog\AmbientG, fog\TargetAmbientG, 0.01)) Lor (Not IsEqual(fog\AmbientB, fog\TargetAmbientB, 0.01))
+		CreateHintMsg("DO", 1)
+		; ~ Save the current backbuffer
+        Local OldBuffer% = BackBuffer()
+		
+        ; ~ Change draw target to AmbientLightRoomTex
+		SetBuffer(TextureBuffer(AmbientLightRoomTex))
+		; ~ Clear color to provided values (CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
+        ClsColor(CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
+        Cls()
+		; ~ Reset clear color to black (default)
+        ClsColor(0, 0, 0)
+		; ~ Restore the previous buffer
+        SetBuffer(OldBuffer)
+		
+        AmbientLight(CurrR, CurrG, CurrB)
+    EndIf
 End Function
 
 Function ResetSelectedStuff%()
@@ -4659,12 +4684,12 @@ Function UpdateGUI%()
 							
 							If wi\NightVision > 0
 								CreateMsg(GetLocalString("msg", "nvg.off"))
-								me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 								wi\NightVision = 0
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(snd_I\NVGSFX[1])
 							Else
 								CreateMsg(GetLocalString("msg", "nvg.on"))
-								me\CameraFogDist = 15.0
+								fog\FarDist = 15.0
 								Select SelectedItem\ItemTemplate\ID
 									Case it_nvg
 										;[Block]
@@ -4709,11 +4734,11 @@ Function UpdateGUI%()
 							
 							If wi\SCRAMBLE > 0
 								CreateMsg(GetLocalString("msg", "gear.off"))
-								me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
+								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
 								wi\SCRAMBLE = 0
 							Else
 								CreateMsg(GetLocalString("msg", "gear.on"))
-								me\CameraFogDist = 9.0
+								fog\FarDist = 9.0
 								Select SelectedItem\ItemTemplate\ID
 									Case it_scramble
 										;[Block]
@@ -4847,8 +4872,8 @@ Function UpdateGUI%()
 							DropItem(SelectedItem)
 						Else
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							If wi\NightVision > 0 Then me\CameraFogDist = 6.0 - (2.0 * IsBlackOut) : wi\NightVision = 0
-							If wi\SCRAMBLE > 0 Then me\CameraFogDist = 6.0 - (2.0 * IsBlackOut): wi\SCRAMBLE = 0
+							If wi\NightVision > 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut) : wi\NightVision = 0
+							If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut): wi\SCRAMBLE = 0
 							wi\GasMask = 0 : wi\BallisticHelmet = False
 							I_427\Using = False : I_1499\Using = 0
 							I_268\Using = 0
@@ -10087,8 +10112,8 @@ Function UpdateLeave1499%()
 					EndIf
 				Next
 				r1499 = Null
-				me\CameraFogDist = 6.0 - (2.0 * IsBlackOut)
-				CurrFogColorR = 0.0 : CurrFogColorG = 0.0 : CurrFogColorB = 0.0
+				fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+				ClearFogColor()
 				PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Exit.ogg"))
 				I_1499\PrevX = 0.0
 				I_1499\PrevY = 0.0
