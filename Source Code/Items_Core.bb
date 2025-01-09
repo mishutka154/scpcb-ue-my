@@ -2168,17 +2168,17 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					Local RoomAmount% = 0, RoomsFound% = 0
+					Local RoomsAmount% = 0, RoomsFound% = 0
 					
 					For r.Rooms = Each Rooms
 						Local RID% = r\RoomTemplate\RoomID
 						
 						If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
-							RoomAmount = RoomAmount + 1
+							RoomsAmount = RoomsAmount + 1
 							RoomsFound = RoomsFound + r\Found
 						EndIf
 					Next
-					If Rand(Max((RoomAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1)) = 1
+					If Rand(Max((RoomsAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1)) = 1
 						it2.Items = CreateItem("S-NAV Navigator Ultimate", it_navulti, x, y, z)
 					Else
 						it2.Items = CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)

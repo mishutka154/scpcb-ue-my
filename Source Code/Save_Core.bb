@@ -2566,7 +2566,7 @@ Function LoadMap%(File$)
 	
 	Local r.Rooms, rt.RoomTemplates, e.Events
 	Local f%, x%, y%, Name$, ID%, Angle%, Prob#
-	Local RoomAmount%, ForestPieceAmount%, MTPieceAmount%, i%
+	Local RoomsAmount%, ForestPieceAmount%, MTPieceAmount%, i%
 	
 	f = ReadFile_Strict(File)
 	
@@ -2578,7 +2578,7 @@ Function LoadMap%(File$)
 		ReadLine(f)
 		I_Zone\Transition[0] = ReadByte(f)
 		I_Zone\Transition[1] = ReadByte(f)
-		RoomAmount = ReadInt(f)
+		RoomsAmount = ReadInt(f)
 		ForestPieceAmount = ReadInt(f)
 		MTPieceAmount = ReadInt(f)
 		
@@ -2587,7 +2587,7 @@ Function LoadMap%(File$)
 		I_Zone\HasCustomMT = (MTPieceAmount > 0)
 		
 		; ~ Facility rooms
-		For i = 0 To RoomAmount - 1
+		For i = 0 To RoomsAmount - 1
 			x = ReadByte(f)
 			y = ReadByte(f)
 			Name = Lower(ReadString(f))

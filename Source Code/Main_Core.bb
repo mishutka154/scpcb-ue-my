@@ -861,9 +861,7 @@ Function UpdateConsole%()
 	EndIf
 	
 	If ConsoleOpen
-		Local ev.Events, e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, cm.ConsoleMsg, itt.ItemTemplates, rt.RoomTemplates
-		Local Tex%, Tex2%, Temp%, i%
-		Local Args$, StrTemp$, StrTemp2$, StrTemp3$, StrTemp4$
+		Local cm.ConsoleMsg, itt.ItemTemplates, rt.RoomTemplates
 		Local CoordEx% = 15 * MenuScale
 		
 		ConsoleR = 255 : ConsoleG = 255 : ConsoleB = 255
@@ -999,1284 +997,7 @@ Function UpdateConsole%()
 			ConsoleReissue = Null
 			ConsoleScroll = 0
 			CreateConsoleMsg(ConsoleInput, 255, 255, 0, True)
-			If Instr(ConsoleInput, " ") <> 0
-				StrTemp = Lower(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
-			Else
-				StrTemp = Lower(ConsoleInput)
-			EndIf
-			
-			Select Lower(StrTemp)
-				Case "help"
-					;[Block]
-					If Instr(ConsoleInput, " ") <> 0
-						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Else
-						StrTemp = ""
-					EndIf
-					ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 255
-					
-					Select StrTemp
-						Case "1", ""
-							;[Block]
-							CreateConsoleMsg(GetLocalString("console", "help_1.1"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("- teleport [room name]")
-							CreateConsoleMsg("- roomlist")
-							CreateConsoleMsg("- spawnitem [item name / ID]")
-							CreateConsoleMsg("- spawndrink [drink name]")
-							CreateConsoleMsg("- itemlist")
-							CreateConsoleMsg("- ending")
-							CreateConsoleMsg("- notarget")
-							CreateConsoleMsg("- godmode")
-							CreateConsoleMsg("- noclip")
-							CreateConsoleMsg("- noclipspeed")
-							CreateConsoleMsg("- infinitestamina")
-							CreateConsoleMsg("- noblink")
-							CreateConsoleMsg("- asd")
-							CreateConsoleMsg("- revive")
-							CreateConsoleMsg("- heal")
-							CreateConsoleMsg("- money")
-							CreateConsoleMsg("- debughud [category]")
-							CreateConsoleMsg("- codes")
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg(GetLocalString("console", "help_1.2"))
-							CreateConsoleMsg(GetLocalString("console", "help.command"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "2"
-							;[Block]
-							CreateConsoleMsg(GetLocalString("console", "help_2.1"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("- reset096")
-							CreateConsoleMsg("- reset372")
-							CreateConsoleMsg("- 106retreat")
-							CreateConsoleMsg("- disable173")
-							CreateConsoleMsg("- enable173")
-							CreateConsoleMsg("- disable106")
-							CreateConsoleMsg("- enable106")
-							CreateConsoleMsg("- disable049")
-							CreateConsoleMsg("- enable049")
-							CreateConsoleMsg("- disable096")
-							CreateConsoleMsg("- enable096")
-							CreateConsoleMsg("- disable066")
-							CreateConsoleMsg("- enable066")
-							CreateConsoleMsg("- disable966")
-							CreateConsoleMsg("- enable966")
-							CreateConsoleMsg("- doorcontrol")
-							CreateConsoleMsg("- unlockcheckpoints")
-							CreateConsoleMsg("- unlockexits")
-							CreateConsoleMsg("- disablenuke")
-							CreateConsoleMsg("- resetfunds")
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg(GetLocalString("console", "help_2.2"))
-							CreateConsoleMsg(GetLocalString("console", "help.command"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "3"
-							;[Block]
-							CreateConsoleMsg(GetLocalString("console", "help_3.1"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg("- camerafog [x]")
-							CreateConsoleMsg("- spawn [npc type] [state]")
-							CreateConsoleMsg("- injure [value]")
-							CreateConsoleMsg("- infect [value]")
-							CreateConsoleMsg("- crystal [value]")
-							CreateConsoleMsg("- giveachievement [ID / All]")
-							CreateConsoleMsg("- wireframe")
-							CreateConsoleMsg("- halloween")
-							CreateConsoleMsg("- newyear")
-							CreateConsoleMsg("- sanic")
-							CreateConsoleMsg("- weed")
-							CreateConsoleMsg("******************************")
-							CreateConsoleMsg(GetLocalString("console", "help.command"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "camerafog"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "camerafog"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.camerafog"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "noclip", "fly"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "noclip"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.noclip"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "noblink", "nb"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "noblink"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.noblink"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "godmode", "god"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "god"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.god"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "infinitestamina", "is"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "infinitestamina"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.is"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "notarget", "nt"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "notarget"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.nt"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "wireframe", "wf"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "wireframe"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.wf"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "spawnitem", "si", "giveitem"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawnitem"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.si"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "spawncup", "givecup", "spawndrink", "givedrink"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawndrink"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.sd"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "spawn", "s"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawn"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.s"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "reset372" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "reset372"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.r372"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "106retreat" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "106retreat"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.106r"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable106"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable106"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-106"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable106"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable106"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-106"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable173"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable173"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-173"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable173"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable173"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-173"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable066"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable066"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-066"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable066"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable066"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-066"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable096"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable096"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-096"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable096"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable096"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-096"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "reset096" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "reset096"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.r096"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "doorcontrol" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "doorcontrol"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.dc"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "asd"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "asd"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.asd"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "unlockcheckpoints" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "unlockcheckpoints"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.uc"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable049"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable049"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-049"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable049"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable049"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-049"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "disable966"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable966"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-966"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "enable966"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable966"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-966"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "revive", "undead", "resurrect"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "revive"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.revive"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "teleport"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "teleport"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.teleport"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "stopsound", "stfu"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "stopsound"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.stfu"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "weed", "scp-420-j", "420j", "scp420-j", "scp-420j", "420"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "weed"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.weed"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "infect"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "infect"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.infect"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "crystal" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "crystal"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.crystal"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "resetfunds"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "resetfunds"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.rf"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "giveachievement"
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "giveachievement"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.ac"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Case "codes" 
-							;[Block]
-							CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "codes"))
-							CreateConsoleMsg("******************************")
-							CreateConsoleMultiMsg(GetLocalString("console", "help.codes"))
-							CreateConsoleMsg("******************************")
-							;[End Block]
-						Default
-							;[Block]
-							CreateConsoleMsg(GetLocalString("console", "help.no"), 255, 150, 0)
-							;[End Block]
-					End Select
-					;[End Block]
-				Case "ending"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "A"
-							;[Block]
-							me\SelectedEnding = Rand(Ending_A1, Ending_A2)
-							;[End Block]
-						Case "B"
-							;[Block]
-							me\SelectedEnding = Rand(Ending_B1, Ending_B2)
-							;[End Block]
-						Default
-							;[Block]
-							me\SelectedEnding = Rand(Ending_A1, Ending_B2)
-							;[End Block]
-					End Select
-					
-					me\Terminated = True
-					;[End Block]
-				Case "noclipspeed"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					chs\NoClipSpeed = Float(StrTemp)
-					
-					CreateConsoleMsg(Format(GetLocalString("console", "fly.speed"), StrTemp))
-					;[End Block]
-				Case "injure"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					me\Injuries = Float(StrTemp)
-					
-					CreateConsoleMsg(Format(GetLocalString("console", "inj"), StrTemp))
-					;[End Block]
-				Case "cls", "clear"
-					;[Block]
-					ClearConsole()
-					;[End Block]
-				Case "infect"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					I_008\Timer = Float(StrTemp)
-					
-					CreateConsoleMsg(Format(GetLocalString("console", "008"), StrTemp))
-					;[End Block]
-				Case "crystal"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					I_409\Timer = Float(StrTemp)
-					
-					CreateConsoleMsg(Format(GetLocalString("console", "409"), StrTemp))
-					;[End Block]
-				Case "heal"
-					;[Block]
-					ResetNegativeStats()
-					CreateConsoleMsg(GetLocalString("console", "heal"))
-					;[End Block]
-				Case "teleport", "tp"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Temp = False
-					i = FindRoomID(StrTemp)
-					
-					For r.Rooms = Each Rooms
-						If r\RoomTemplate\RoomID = i Lor Str(r\RoomTemplate\RoomID) = StrTemp
-							Temp = True
-							If r\RoomCenter <> 0
-								TeleportEntity(me\Collider, EntityX(r\RoomCenter, True), EntityY(r\OBJ) + 0.5, EntityZ(r\RoomCenter, True), 0.3, True)
-							Else
-								TeleportEntity(me\Collider, EntityX(r\OBJ), EntityY(r\OBJ) + 0.5, EntityZ(r\OBJ))
-							EndIf
-							TeleportToRoom(r)
-							CreateConsoleMsg(Format(GetLocalString("console", "tp.success"), StrTemp))
-							Exit
-						EndIf
-					Next
-					
-					If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "tp.failed"), 255, 0, 0)
-					;[End Block]
-				Case "roomlist", "roomslist", "rooms", "room list"
-					;[Block]
-					For rt.RoomTemplates = Each RoomTemplates
-						CreateConsoleMsg("ID: " + rt\RoomID + "; Name: " + rt\Name)
-					Next
-					;[End Block]
-				Case "spawnitem", "si", "giveitem", "gi"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Temp = False 
-					For itt.ItemTemplates = Each ItemTemplates
-						If Lower(itt\Name) = StrTemp Lor Lower(itt\DisplayName) = StrTemp Lor Str(itt\ID) = StrTemp
-							it.Items = CreateItem(itt\Name, itt\ID, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider))
-							EntityType(it\Collider, HIT_ITEM)
-							CreateConsoleMsg(Format(GetLocalString("console", "si.success"), itt\DisplayName))
-							Temp = True
-							Exit
-						EndIf
-					Next
-					
-					If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "si.failed"), 255, 0, 0)
-					;[End Block]
-				Case "spawncup", "givecup", "spawndrink", "givedrink"
-					;[Block]
-					StrTemp = Upper(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Temp = False
-					
-					If S2IMapContains(I_294\DrinksMap, StrTemp)
-						Local Drink% = JsonGetArrayValue(I_294\Drinks, S2IMapGet(I_294\DrinksMap, StrTemp))
-						Local Temp2% = 0
-						
-						Temp2 = JsonGetValue(Drink, "explosion")
-						If (Not JsonIsNull(Temp2))
-							If JsonGetBool(Temp2)
-								me\ExplosionTimer = 135.0
-								Temp2 = JsonGetValue(Drink, "death_message")
-								If (Not JsonIsNull(Temp2)) Then msg\DeathMsg = JsonGetString(Temp2)
-							EndIf
-						EndIf
-						
-						Local DrinkColor% = JsonGetArray(JsonGetValue(Drink, "color"))
-						Local Alpha# = JsonGetFloat(JsonGetValue(Drink, "alpha"))
-						
-						Temp2 = JsonGetValue(Drink, "glow")
-						If (Not JsonIsNull(Temp2))
-							If JsonGetBool(Temp2) Then Alpha = -Alpha
-						EndIf
-						
-						it.Items = CreateItem("Cup", it_cup, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider), JsonGetInt(JsonGetArrayValue(DrinkColor, 0)), JsonGetInt(JsonGetArrayValue(DrinkColor, 1)), JsonGetInt(JsonGetArrayValue(DrinkColor, 2)), Alpha)
-						it\Name = StrTemp
-						it\DisplayName = Format(GetLocalString("items", "cupof"), StrTemp)
-						EntityType(it\Collider, HIT_ITEM)
-						CreateConsoleMsg(Format(GetLocalString("console", "si.success"), it\DisplayName))
-						Temp = True
-					EndIf
-					If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "si.failed"), 255, 0, 0)
-					;[End Block]
-				Case "itemlist", "itemslist", "items", "item list"
-					;[Block]
-					For itt.ItemTemplates = Each ItemTemplates
-						CreateConsoleMsg(Format(Format(Format(GetLocalString("console", "itemlist"), itt\ID, "{0}"), itt\Name, "{1}"), itt\DisplayName, "{2}"), 255, 150, 0)
-					Next
-					;[End Block]
-				Case "wireframe", "wf"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							WireFrameState = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							WireFrameState = False
-							;[End Block]
-						Default
-							;[Block]
-							WireFrameState = (Not WireFrameState)
-							;[End Block]
-					End Select
-					
-					If WireFrameState
-						CreateConsoleMsg(GetLocalString("console", "wf.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "wf.off"))
-					EndIf
-					
-					WireFrame(WireFrameState)
-					;[End Block]
-				Case "reset096", "r096"
-					;[Block]
-					If n_I\Curr096 <> Null
-						n_I\Curr096\State = 0.0
-						StopStream_Strict(n_I\Curr096\SoundCHN) : n_I\Curr096\SoundCHN = 0 : n_I\Curr096\SoundCHN_IsStream = False
-						If n_I\Curr096\SoundCHN2 <> 0 Then StopStream_Strict(n_I\Curr096\SoundCHN2) : n_I\Curr096\SoundCHN2 = 0 : n_I\Curr096\SoundCHN2_IsStream = False
-						GiveAchievement("096", False)
-					EndIf
-					CreateConsoleMsg(GetLocalString("console", "r096"))
-					;[End Block]
-				Case "reset372", "r372"
-					;[Block]
-					For n.NPCs = Each NPCs
-						If n\NPCType = NPCType372
-							RemoveNPC(n)
-							CreateEvent(e_cont3_372, r_cont3_372, 0, 0.0)
-							Exit
-						EndIf
-					Next
-					CreateConsoleMsg(GetLocalString("console", "r372"))
-					;[End Block]
-				Case "disable173", "dis173"
-					;[Block]
-					n_I\Curr173\Idle = 3 ; ~ This phenominal comment is brought to you by PolyFox. His absolute wisdom in this fatigue of knowledge brought about a new era of SCP-173 state checks.
-					HideEntity(n_I\Curr173\OBJ)
-					HideEntity(n_I\Curr173\OBJ2)
-					HideEntity(n_I\Curr173\Collider)
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-173"))
-					;[End Block]
-				Case "enable173", "en173"
-					;[Block]
-					n_I\Curr173\Idle = 0
-					ShowEntity(n_I\Curr173\OBJ)
-					ShowEntity(n_I\Curr173\OBJ2)
-					ShowEntity(n_I\Curr173\Collider)
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-173"))
-					;[End Block]
-				Case "disable106", "dis106"
-					;[Block]
-					n_I\Curr106\State = 0.0
-					n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
-					n_I\Curr106\Contained = True
-					HideEntity(n_I\Curr106\Collider)
-					HideEntity(n_I\Curr106\OBJ)
-					HideEntity(n_I\Curr106\OBJ2)
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-106"))
-					;[End Block]
-				Case "enable106", "en106"
-					;[Block]
-					n_I\Curr106\Idle = 0
-					n_I\Curr106\Contained = False
-					ShowEntity(n_I\Curr106\Collider)
-					ShowEntity(n_I\Curr106\OBJ)
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-106"))
-					;[End Block]
-				Case "disable966", "dis966"
-					;[Block]
-					For n.NPCs = Each NPCs
-						If n\NPCType = NPCType966
-							n\State = -1.0
-							HideEntity(n\Collider)
-							HideEntity(n\OBJ)
-						EndIf
-					Next
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-966"))
-					;[End Block]
-				Case "enable966", "en966"
-					;[Block]
-					For n.NPCs = Each NPCs
-						If n\NPCType = NPCType966
-							n\State = 0.0
-							ShowEntity(n\Collider)
-							If wi\NightVision > 0 Then ShowEntity(n\OBJ)
-						EndIf
-					Next
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-966"))
-					;[End Block]
-				Case "disable049", "dis049"
-					;[Block]
-					If n_I\Curr049 <> Null
-						n_I\Curr049\Idle = 1
-						HideEntity(n_I\Curr049\Collider)
-						HideEntity(n_I\Curr049\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-049"))
-					;[End Block]
-				Case "enable049", "en049"
-					;[Block]
-					If n_I\Curr049 <> Null
-						n_I\Curr049\Idle = 0
-						ShowEntity(n_I\Curr049\Collider)
-						ShowEntity(n_I\Curr049\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-049"))
-					;[End Block]
-				Case "disable066", "dis066"
-					;[Block]
-					If n_I\Curr066 <> Null
-						n_I\Curr066\Idle = 1
-						HideEntity(n_I\Curr066\Collider)
-						HideEntity(n_I\Curr066\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-066"))
-					;[End Block]
-				Case "enable066", "en066"
-					;[Block]
-					If n_I\Curr066 <> Null
-						n_I\Curr066\Idle = 0
-						ShowEntity(n_I\Curr066\Collider)
-						ShowEntity(n_I\Curr066\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-066"))
-					;[End Block]
-				Case "disable096", "dis096"
-					;[Block]
-					If n_I\Curr096 <> Null
-						n_I\Curr096\Idle = 1
-						HideEntity(n_I\Curr096\Collider)
-						HideEntity(n_I\Curr096\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-096"))
-					;[End Block]
-				Case "enable096", "en096"
-					;[Block]
-					If n_I\Curr096 <> Null
-						n_I\Curr096\Idle = 0
-						ShowEntity(n_I\Curr096\Collider)
-						ShowEntity(n_I\Curr096\OBJ)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-096"))
-					;[End Block]
-				Case "106retreat", "106r"
-					;[Block]
-					If n_I\Curr106\State > 1.0
-						n_I\Curr106\State = 0.0
-						n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
-						CreateConsoleMsg(GetLocalString("console", "106r"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "106r.failed"), 255, 150, 0)
-					EndIf
-					;[End Block]
-				Case "halloween"
-					;[Block]
-					n_I\IsHalloween = (Not n_I\IsHalloween)
-					If n_I\IsHalloween
-						n_I\IsNewYear = False
-						n_I\IsAprilFools = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_H.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex)
-						EntityTexture(n_I\Curr173\OBJ2, Tex)
-						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-						CreateConsoleMsg(GetLocalString("console", "halloween.on"))
-					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex2)
-						EntityTexture(n_I\Curr173\OBJ2, Tex2)
-						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
-						CreateConsoleMsg(GetLocalString("console", "halloween.off"))
-					EndIf
-					;[End Block]
-				Case "newyear" 
-					;[Block]
-					n_I\IsNewYear = (Not n_I\IsNewYear)
-					If n_I\IsNewYear
-						n_I\IsHalloween = False
-						n_I\IsAprilFools = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_NY.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex)
-						EntityTexture(n_I\Curr173\OBJ2, Tex)
-						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-						CreateConsoleMsg(GetLocalString("console", "newyear.on"))
-					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex2)
-						EntityTexture(n_I\Curr173\OBJ2, Tex2)
-						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
-						CreateConsoleMsg(GetLocalString("console", "newyear.off"))
-					EndIf
-					;[End Block]
-				Case "joke" 
-					;[Block]
-					n_I\IsAprilFools = (Not n_I\IsAprilFools)
-					If n_I\IsAprilFools
-						n_I\IsHalloween = False
-						n_I\IsNewYear = False
-						Tex = LoadTexture_Strict("GFX\NPCs\scp_173_J.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex)
-						EntityTexture(n_I\Curr173\OBJ2, Tex)
-						DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-						CreateConsoleMsg(GetLocalString("console", "aprilfools.on"))
-					Else
-						Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
-						EntityTexture(n_I\Curr173\OBJ, Tex2)
-						EntityTexture(n_I\Curr173\OBJ2, Tex2)
-						DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
-						CreateConsoleMsg(GetLocalString("console", "aprilfools.off"))
-					EndIf
-					;[End Block]
-				Case "sanic"
-					;[Block]
-					chs\SuperMan = (Not chs\SuperMan)
-					If chs\SuperMan
-						CreateConsoleMsg(GetLocalString("console", "sanic.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "sanic.off"))
-					EndIf
-					;[End Block]
-				Case "scp-420-j", "420", "weed", "scp420-j", "scp-420j", "420j"
-					;[Block]
-					For i = 1 To 20
-						If Rand(2) = 1
-							StrTemp = "Some SCP-420-J"
-							Temp = it_scp420j
-						Else
-							StrTemp = "Joint"
-							Temp = it_joint
-						EndIf
-						it.Items = CreateItem(StrTemp, Temp, EntityX(me\Collider, True) + Cos((360.0 / 20.0) * i) * Rnd(0.3, 0.5), EntityY(Camera, True), EntityZ(me\Collider, True) + Sin((360.0 / 20.0) * i) * Rnd(0.3, 0.5))
-						EntityType(it\Collider, HIT_ITEM)
-					Next
-					PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
-					;[End Block]
-				Case "godmode", "god"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							chs\GodMode = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							chs\GodMode = False
-							;[End Block]
-						Default
-							;[Block]
-							chs\GodMode = (Not chs\GodMode)
-							;[End Block]
-					End Select
-					If chs\GodMode
-						CreateConsoleMsg(GetLocalString("console", "god.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "god.off"))
-					EndIf
-					;[End Block]
-				Case "revive", "undead", "resurrect"
-					;[Block]
-					ResetNegativeStats(True)
-					If t\OverlayID[10] <> 0 Then FreeEntity(t\OverlayID[10]) : t\OverlayID[10] = 0
-					me\Playable = True
-					;[End Block]
-				Case "noclip", "fly"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							chs\NoClip = True
-							me\Playable = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							chs\NoClip = False
-							RotateEntity(me\Collider, 0.0, EntityYaw(me\Collider), 0.0)
-							;[End Block]
-						Default
-							;[Block]
-							chs\NoClip = (Not chs\NoClip)
-							If (Not chs\NoClip)
-								RotateEntity(me\Collider, 0.0, EntityYaw(me\Collider), 0.0)
-							Else
-								me\Playable = True
-							EndIf
-							;[End Block]
-					End Select
-					
-					If chs\NoClip
-						CreateConsoleMsg(GetLocalString("console", "fly.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "fly.off"))
-					EndIf
-					
-					me\DropSpeed = 0.0
-					;[End Block]
-				Case "noblink", "nb"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							chs\NoBlink = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							chs\NoBlink = False
-							;[End Block]
-						Default
-							;[Block]
-							chs\NoBlink = (Not chs\NoBlink)
-							;[End Block]
-					End Select
-					If chs\NoBlink
-						CreateConsoleMsg(GetLocalString("console", "nb.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "nb.off"))
-					EndIf
-					;[End Block]
-				Case "debughud", "dbh"
-					;[Block]
-					If Instr(ConsoleInput, " ") <> 0
-						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Else
-						StrTemp = ""
-					EndIf
-					
-					Select StrTemp
-						Case "game", "1"
-							;[Block]
-							chs\DebugHUD = 1
-							;[End Block]
-						Case "player", "me", "2"
-							;[Block]
-							chs\DebugHUD = 2
-							;[End Block]
-						Case "scps", "scp", "3"
-							;[Block]
-							chs\DebugHUD = 3
-							;[End Block]
-						Case "off", "false", "0"
-							;[Block]
-							chs\DebugHUD = 0
-							;[End Block]
-						Default
-							;[Block]
-							CreateConsoleMsg(GetLocalString("console", "debug.cate"), 255, 150, 0)
-							;[End Block]
-					End Select
-					;[End Block]
-				Case "stopsound", "stfu"
-					;[Block]
-					KillSounds()
-					
-					For e.Events = Each Events
-						If e\EventID = e_cont1_173
-							For i = 0 To 2
-								RemoveNPC(e\room\NPC[i])
-								If i < 2 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
-							Next
-							If n_I\Curr173\Idle = 1 Then n_I\Curr173\Idle = 0
-							PositionEntity(n_I\Curr173\Collider, 0.0, 0.0, 0.0)
-							ResetEntity(n_I\Curr173\Collider)
-							
-							PositionEntity(e\room\Objects[2], EntityX(e\room\Objects[2], True), e\room\y + 384.0 * RoomScale, EntityZ(e\room\Objects[2], True), True)
-							RotateEntity(e\room\Objects[2], EntityPitch(e\room\Objects[2], True), EntityYaw(e\room\Objects[2], True), EntityRoll(e\room\Objects[2], True), True)
-							RemoveEvent(e)
-							Exit
-						EndIf
-					Next
-					CreateConsoleMsg(GetLocalString("console", "stfu"))
-					;[End Block]
-				Case "camerafog", "cf"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					If opt\DebugMode = 1 ; ~ Allow using infinite value for debugging
-						fog\FarDist = StrTemp
-					Else
-						fog\FarDist = Clamp(StrTemp, 6.0, 17.0)
-					EndIf
-					CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
-					;[End Block]
-				Case "spawn", "s"
-					;[Block]
-					Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					StrTemp = Piece(Args, 1)
-					StrTemp2 = Piece(Args, 2)
-					
-					; ~ Hacky fix for when the user doesn't input a second parameter.
-					If StrTemp <> StrTemp2
-						ConsoleSpawnNPC(StrTemp, StrTemp2)
-					Else
-						ConsoleSpawnNPC(StrTemp)
-					EndIf
-					;[End Block]
-				Case "infinitestamina", "infstam", "is"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							chs\InfiniteStamina = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							chs\InfiniteStamina = False
-							;[End Block]
-						Default
-							;[Block]
-							chs\InfiniteStamina = (Not chs\InfiniteStamina)
-							;[End Block]
-					End Select
-					
-					If chs\InfiniteStamina
-						CreateConsoleMsg(GetLocalString("console", "is.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "is.off"))
-					EndIf
-					;[End Block]
-				Case "money", "rich"
-					;[Block]
-					For i = 1 To 20
-						If Rand(2) = 1
-							StrTemp = "Quarter"
-							Temp = it_25ct
-						Else
-							StrTemp = "Coin"
-							Temp = it_coin
-						EndIf
-						it.Items = CreateItem(StrTemp, Temp, EntityX(me\Collider, True) + Cos((360.0 / 20.0) * i) * Rnd(0.3, 0.5), EntityY(Camera, True), EntityZ(me\Collider, True) + Sin((360.0 / 20.0) * i) * Rnd(0.3, 0.5))
-						EntityType(it\Collider, HIT_ITEM)
-					Next
-					;[End Block]
-				Case "doorcontrol"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							RemoteDoorOn = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							RemoteDoorOn = False
-							;[End Block]
-						Default
-							;[Block]
-							RemoteDoorOn = (Not RemoteDoorOn)
-							;[End Block]
-					End Select
-					
-					If RemoteDoorOn
-						CreateConsoleMsg(GetLocalString("console", "door.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "door.off"))
-					EndIf
-					
-					For e2.Events = Each Events
-						If e2\EventID = e_room2c_ec
-							UpdateLever(e2\room\RoomLevers[2]\OBJ)
-							RotateEntity(e2\room\RoomLevers[2]\OBJ, 80.0 + (-160.0 * RemoteDoorOn), EntityYaw(e2\room\RoomLevers[2]\OBJ), 0.0)
-							Exit
-						EndIf
-					Next
-					;[End Block]
-				Case "unlockcheckpoints"
-					;[Block]
-					For e2.Events = Each Events
-						If e2\EventID = e_room2_sl
-							e2\EventState3 = 0.0
-							UpdateLever(e2\room\RoomLevers[0]\OBJ)
-							RotateEntity(e2\room\RoomLevers[0]\OBJ, 80.0, EntityYaw(e2\room\RoomLevers[0]\OBJ), 0.0)
-						ElseIf e2\EventID = e_cont2_008
-							e2\EventState = 2.0
-							UpdateLever(e2\room\Objects[1])
-							RotateEntity(e2\room\Objects[1], 0.0, EntityYaw(e2\room\Objects[1]), 0.0)
-							If e2\room\RoomEmitters[0] <> Null Then FreeEmitter(e2\room\RoomEmitters[0])
-						EndIf
-					Next
-					
-					CreateConsoleMsg(GetLocalString("console", "uc"))
-					;[End Block]
-				Case "disablenuke"
-					;[Block]
-					For e.Events = Each Events
-						If e\EventID = e_room2_nuke
-							e\EventState = 0.0
-							UpdateLever(e\room\RoomLevers[0]\OBJ)
-							UpdateLever(e\room\RoomLevers[1]\OBJ)
-							RotateEntity(e\room\RoomLevers[0]\OBJ, 80.0, EntityYaw(e\room\RoomLevers[0]\OBJ), 0.0)
-							RotateEntity(e\room\RoomLevers[1]\OBJ, 80.0, EntityYaw(e\room\RoomLevers[1]\OBJ), 0.0)
-							Exit
-						EndIf
-					Next
-					;[End Block]
-				Case "unlockexits"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "a"
-							;[Block]
-							For e.Events = Each Events
-								If e\EventID = e_gate_a_entrance
-									e\EventState3 = 1.0
-									e\room\RoomDoors[1]\Open = True
-									Exit
-								EndIf
-							Next
-							CreateConsoleMsg(GetLocalString("console", "ue.a"))
-							;[End Block]
-						Case "b"
-							;[Block]
-							For e.Events = Each Events
-								If e\EventID = e_gate_b_entrance
-									e\EventState3 = 1.0
-									e\room\RoomDoors[1]\Open = True
-									Exit
-								EndIf
-							Next
-							CreateConsoleMsg(GetLocalString("console", "ue.b"))
-							;[End Block]
-						Default
-							;[Block]
-							For e.Events = Each Events
-								If e\EventID = e_gate_b_entrance Lor e\EventID = e_gate_a_entrance
-									e\EventState3 = 1.0
-									e\room\RoomDoors[1]\Open = True
-								EndIf
-							Next
-							CreateConsoleMsg(GetLocalString("console", "ue"))
-							;[End Block]
-					End Select
-					RemoteDoorOn = True
-					;[End Block]
-				Case "kill", "suicide"
-					;[Block]
-					me\Terminated = True
-					Select Rand(4)
-						Case 1
-							;[Block]
-							msg\DeathMsg = GetLocalString("death", "kill_1")
-							;[End Block]
-						Case 2
-							;[Block]
-							msg\DeathMsg = Format(GetLocalString("death", "kill_2"), SubjectName)
-							;[End Block]
-						Case 3
-							;[Block]
-							msg\DeathMsg = GetLocalString("death", "kill_3")
-							;[End Block]
-						Case 4
-							;[Block]
-							msg\DeathMsg = Format(GetLocalString("death", "kill_4"), SubjectName)
-							;[End Block]
-					End Select
-					;[End Block]
-				Case "tele"
-					;[Block]
-					Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					StrTemp = Piece(Args, 1, " ")
-					StrTemp2 = Piece(Args, 2, " ")
-					StrTemp3 = Piece(Args, 3, " ")
-					PositionEntity(me\Collider, Float(StrTemp), Float(StrTemp2), Float(StrTemp3))
-					PositionEntity(Camera, Float(StrTemp), Float(StrTemp2), Float(StrTemp3))
-					ResetEntity(me\Collider)
-					ResetEntity(Camera)
-					CreateConsoleMsg(Format(Format(Format(GetLocalString("console", "tele"), EntityX(me\Collider), "{0}"), EntityY(me\Collider), "{1}"), EntityZ(me\Collider), "{2}"))
-					;[End Block]
-				Case "asd"
-					;[Block]
-					chs\NoBlink = True
-					chs\NoTarget = True
-					chs\NoClip = True
-					chs\GodMode = True
-					chs\InfiniteStamina = True
-					
-					fog\FarDist = 17.0
-					
-					KillSounds()
-					
-					For e.Events = Each Events
-						If e\EventID = e_cont1_173
-							For i = 0 To 2
-								RemoveNPC(e\room\NPC[i])
-								If i < 2 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
-							Next
-							If n_I\Curr173\Idle = 1 Then n_I\Curr173\Idle = 0
-							PositionEntity(n_I\Curr173\Collider, 0.0, 0.0, 0.0)
-							ResetEntity(n_I\Curr173\Collider)
-							
-							PositionEntity(e\room\Objects[2], EntityX(e\room\Objects[2], True), e\room\y + 384.0 * RoomScale, EntityZ(e\room\Objects[2], True), True)
-							RotateEntity(e\room\Objects[2], EntityPitch(e\room\Objects[2], True), EntityYaw(e\room\Objects[2], True), EntityRoll(e\room\Objects[2], True), True)
-							RemoveEvent(e)
-							Exit
-						EndIf
-					Next
-					CreateConsoleMsg(GetLocalString("console", "stfu"))
-					;[End Block]
-				Case "notarget", "nt"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					Select StrTemp
-						Case "on", "1", "true"
-							;[Block]
-							chs\NoTarget = True
-							;[End Block]
-						Case "off", "0", "false"
-							;[Block]
-							chs\NoTarget = False
-							;[End Block]
-						Default
-							;[Block]
-							chs\NoTarget = (Not chs\NoTarget)
-							;[End Block]
-					End Select
-					
-					If chs\NoTarget
-						CreateConsoleMsg(GetLocalString("console", "nt.on"))
-					Else
-						CreateConsoleMsg(GetLocalString("console", "nt.off"))
-					EndIf
-					;[End Block]
-				Case "spawnpumpkin", "pumpkin"
-					;[Block]
-					CreateConsoleMsg(GetLocalString("console", "pumpkin"))
-					;[End Block]
-				Case "teleport173"
-					;[Block]
-					PositionEntity(n_I\Curr173\Collider, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-					ResetEntity(n_I\Curr173\Collider)
-					;[End Block]
-				Case "seteventstate"
-					;[Block]
-					Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					StrTemp = Piece(Args, 1, " ")
-					StrTemp2 = Piece(Args, 2, " ")
-					StrTemp3 = Piece(Args, 3, " ")
-					StrTemp4 = Piece(Args, 4, " ")
-					
-					Local PL_Room_Found% = False
-					
-					If StrTemp = "" Lor StrTemp2 = "" Lor StrTemp3 = "" Lor StrTemp4 = ""
-						CreateConsoleMsg(GetLocalString("console", "ses.failed"), 255, 150, 0)
-					Else
-						For e.Events = Each Events
-							If PlayerRoom = e\room
-								If Lower(StrTemp) <> "keep" Then e\EventState = Float(StrTemp)
-								If Lower(StrTemp2) <> "keep" Then e\EventState2 = Float(StrTemp2)
-								If Lower(StrTemp3) <> "keep" Then e\EventState3 = Float(StrTemp3)
-								If Lower(StrTemp4) <> "keep" Then e\EventState4 = Float(StrTemp4)
-								CreateConsoleMsg(Format(Format(Format(Format(GetLocalString("console", "ses.success"), e\EventState, "{0}"), e\EventState2, "{1}"), e\EventState3, "{2}"), e\EventState4, "{3}"))
-								PL_Room_Found = True
-								Exit
-							EndIf
-						Next
-						If (Not PL_Room_Found) Then CreateConsoleMsg(GetLocalString("console", "ses.failed.apply"), 255, 150, 0)
-					EndIf
-					;[End Block]
-				Case "giveachievement"
-					;[Block]
-					If Instr(ConsoleInput, " ") <> 0
-						StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					Else
-						StrTemp = ""
-					EndIf
-					
-					If StrTemp = "all"
-						Local Defines% = JsonGetArray(JsonGetValue(AchievementsArray, "achievements"))
-						Local ArraySize% = JsonGetArraySize(Defines)
-						
-						For i = 0 To ArraySize - 1
-							Local ID$ = JsonGetString(JsonGetValue(JsonGetArrayValue(Defines, i), "id"))
-							
-							If opt\DebugMode
-								GiveAchievement(ID)
-							Else
-								If ID <> "console" And ID <> "keter" And ID <> "apollyon" Then GiveAchievement(ID)
-							EndIf
-						Next
-						SaveAchievementsFile()
-						CreateConsoleMsg(GetLocalString("console", "ga.all"))
-					EndIf
-					
-					If S2IMapContains(AchievementsIndex, StrTemp)
-						GiveAchievement(StrTemp)
-						
-						Local AchvName% = JsonGetValue(JsonGetValue(JsonGetValue(LocalAchievementsArray, "translations"), StrTemp), "name")
-						
-						If JsonIsNull(AchvName) Then AchvName = JsonGetValue(JsonGetValue(JsonGetValue(AchievementsArray, "translations"), StrTemp), "name")
-						CreateConsoleMsg(Format(GetLocalString("console", "ga.success"), JsonGetString(AchvName)))
-					ElseIf StrTemp <> "all"
-						CreateConsoleMsg(Format(GetLocalString("console", "ga.failed"), StrTemp), 255, 0, 0)
-					EndIf
-					;[End Block]
-				Case "427state"
-					;[Block]
-					StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
-					
-					I_427\Timer = 70.0 * Float(StrTemp)
-					
-					CreateConsoleMsg(Format(GetLocalString("console", "427"), StrTemp))
-					;[End Block]
-				Case "teleport106"
-					;[Block]
-					If (Not n_I\Curr106\Contained)
-						n_I\Curr106\State = 2.0
-						n_I\Curr106\Idle = 0
-						n_I\Curr106\EnemyX = EntityX(me\Collider)
-						n_I\Curr106\EnemyY = EntityY(me\Collider)
-						n_I\Curr106\EnemyZ = EntityZ(me\Collider)
-					EndIf
-					;[End Block]
-				Case "jorge"
-					;[Block]
-					CreateConsoleMsg(GetLocalString("console", "jorge"))
-					;[End Block]
-				Case "resetfunds"
-					;[Block]
-					For it.Items = Each Items
-						Select it\ItemTemplate\ID
-							Case it_mastercard
-								;[Block]
-								it\State = 10
-								;[End Block]
-							Case it_mastercard_golden
-								;[Block]
-								it\State = 1000
-								;[End Block]
-						End Select
-					Next
-					CreateConsoleMsg(GetLocalString("console", "funds"))
-					;[End Block]
-				Case "codes"
-					;[Block]
-					CreateConsoleMsg(GetLocalString("console", "codes_1"))
-					CreateConsoleMsg("")
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_2"), CODE_DR_MAYNARD))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_3"), CODE_DR_HARP))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_4"), CODE_DR_L))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_5"), CODE_O5_COUNCIL))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_6"), CODE_MAINTENANCE_TUNNELS))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_7"), CODE_CONT1_035))
-					CreateConsoleMsg(Format(GetLocalString("console", "codes_9"), CODE_DR_GEARS))
-					CreateConsoleMsg("")
-					CreateConsoleMsg(GetLocalString("console", "codes_8"))
-					;[End Block]
-				Default
-					;[Block]
-					CreateConsoleMsg(GetLocalString("console", "notfound"), 255, 0, 0)
-					;[End Block]
-			End Select
+			ExecuteConsoleCommand(ConsoleInput)
 			ConsoleInput = ""
 		EndIf
 		
@@ -2291,6 +1012,1290 @@ Function UpdateConsole%()
 	CatchErrors("Uncaught: UpdateConsole()")
 End Function
 
+Function ExecuteConsoleCommand%(ConsoleMessage$)
+	Local ev.Events, e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, itt.ItemTemplates, rt.RoomTemplates
+	Local Tex%, Tex2%, Temp%, i%
+	Local Args$, StrTemp$, StrTemp2$, StrTemp3$, StrTemp4$
+	
+	If Instr(ConsoleInput, " ") <> 0
+		StrTemp = Lower(Left(ConsoleInput, Instr(ConsoleInput, " ") - 1))
+	Else
+		StrTemp = Lower(ConsoleInput)
+	EndIf
+	
+	Select Lower(StrTemp)
+		Case "help"
+			;[Block]
+			If Instr(ConsoleInput, " ") <> 0
+				StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Else
+				StrTemp = ""
+			EndIf
+			ConsoleR = 0 : ConsoleG = 255 : ConsoleB = 255
+			
+			Select StrTemp
+				Case "1", ""
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "help_1.1"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg("- teleport [room name]")
+					CreateConsoleMsg("- roomlist")
+					CreateConsoleMsg("- spawnitem [item name / ID]")
+					CreateConsoleMsg("- spawndrink [drink name]")
+					CreateConsoleMsg("- itemlist")
+					CreateConsoleMsg("- ending")
+					CreateConsoleMsg("- notarget")
+					CreateConsoleMsg("- godmode")
+					CreateConsoleMsg("- noclip")
+					CreateConsoleMsg("- noclipspeed")
+					CreateConsoleMsg("- infinitestamina")
+					CreateConsoleMsg("- noblink")
+					CreateConsoleMsg("- asd")
+					CreateConsoleMsg("- revive")
+					CreateConsoleMsg("- heal")
+					CreateConsoleMsg("- money")
+					CreateConsoleMsg("- debughud [category]")
+					CreateConsoleMsg("- codes")
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg(GetLocalString("console", "help_1.2"))
+					CreateConsoleMsg(GetLocalString("console", "help.command"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "2"
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "help_2.1"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg("- reset096")
+					CreateConsoleMsg("- reset372")
+					CreateConsoleMsg("- 106retreat")
+					CreateConsoleMsg("- disable173")
+					CreateConsoleMsg("- enable173")
+					CreateConsoleMsg("- disable106")
+					CreateConsoleMsg("- enable106")
+					CreateConsoleMsg("- disable049")
+					CreateConsoleMsg("- enable049")
+					CreateConsoleMsg("- disable096")
+					CreateConsoleMsg("- enable096")
+					CreateConsoleMsg("- disable066")
+					CreateConsoleMsg("- enable066")
+					CreateConsoleMsg("- disable966")
+					CreateConsoleMsg("- enable966")
+					CreateConsoleMsg("- doorcontrol")
+					CreateConsoleMsg("- unlockcheckpoints")
+					CreateConsoleMsg("- unlockexits")
+					CreateConsoleMsg("- disablenuke")
+					CreateConsoleMsg("- resetfunds")
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg(GetLocalString("console", "help_2.2"))
+					CreateConsoleMsg(GetLocalString("console", "help.command"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "3"
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "help_3.1"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg("- camerafog [x]")
+					CreateConsoleMsg("- spawn [npc type] [state]")
+					CreateConsoleMsg("- injure [value]")
+					CreateConsoleMsg("- infect [value]")
+					CreateConsoleMsg("- crystal [value]")
+					CreateConsoleMsg("- giveachievement [ID / All]")
+					CreateConsoleMsg("- wireframe")
+					CreateConsoleMsg("- halloween")
+					CreateConsoleMsg("- newyear")
+					CreateConsoleMsg("- sanic")
+					CreateConsoleMsg("- weed")
+					CreateConsoleMsg("******************************")
+					CreateConsoleMsg(GetLocalString("console", "help.command"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "camerafog"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "camerafog"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.camerafog"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "noclip", "fly"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "noclip"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.noclip"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "noblink", "nb"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "noblink"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.noblink"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "godmode", "god"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "god"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.god"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "infinitestamina", "is"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "infinitestamina"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.is"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "notarget", "nt"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "notarget"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.nt"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "wireframe", "wf"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "wireframe"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.wf"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "spawnitem", "si", "giveitem"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawnitem"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.si"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "spawncup", "givecup", "spawndrink", "givedrink"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawndrink"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.sd"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "spawn", "s"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "spawn"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.s"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "reset372" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "reset372"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.r372"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "106retreat" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "106retreat"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.106r"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable106"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable106"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-106"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable106"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable106"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-106"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable173"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable173"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-173"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable173"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable173"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-173"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable066"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable066"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-066"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable066"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable066"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-066"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable096"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable096"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-096"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable096"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable096"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-096"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "reset096" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "reset096"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.r096"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "doorcontrol" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "doorcontrol"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.dc"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "asd"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "asd"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.asd"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "unlockcheckpoints" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "unlockcheckpoints"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.uc"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable049"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable049"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-049"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable049"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable049"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-049"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "disable966"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable966"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-966"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable966"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable966"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-966"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "revive", "undead", "resurrect"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "revive"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.revive"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "teleport"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "teleport"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.teleport"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "stopsound", "stfu"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "stopsound"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.stfu"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "weed", "scp-420-j", "420j", "scp420-j", "scp-420j", "420"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "weed"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.weed"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "infect"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "infect"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.infect"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "crystal" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "crystal"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.crystal"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "resetfunds"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "resetfunds"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.rf"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "giveachievement"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "giveachievement"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.ac"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "codes" 
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "codes"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.codes"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Default
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "help.no"), 255, 150, 0)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "ending"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "A"
+					;[Block]
+					me\SelectedEnding = Rand(Ending_A1, Ending_A2)
+					;[End Block]
+				Case "B"
+					;[Block]
+					me\SelectedEnding = Rand(Ending_B1, Ending_B2)
+					;[End Block]
+				Default
+					;[Block]
+					me\SelectedEnding = Rand(Ending_A1, Ending_B2)
+					;[End Block]
+			End Select
+			
+			me\Terminated = True
+			;[End Block]
+		Case "noclipspeed"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			chs\NoClipSpeed = Float(StrTemp)
+			
+			CreateConsoleMsg(Format(GetLocalString("console", "fly.speed"), StrTemp))
+			;[End Block]
+		Case "injure"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			me\Injuries = Float(StrTemp)
+			
+			CreateConsoleMsg(Format(GetLocalString("console", "inj"), StrTemp))
+			;[End Block]
+		Case "cls", "clear"
+			;[Block]
+			ClearConsole()
+			;[End Block]
+		Case "infect"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			I_008\Timer = Float(StrTemp)
+			
+			CreateConsoleMsg(Format(GetLocalString("console", "008"), StrTemp))
+			;[End Block]
+		Case "crystal"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			I_409\Timer = Float(StrTemp)
+			
+			CreateConsoleMsg(Format(GetLocalString("console", "409"), StrTemp))
+			;[End Block]
+		Case "heal"
+			;[Block]
+			ResetNegativeStats()
+			CreateConsoleMsg(GetLocalString("console", "heal"))
+			;[End Block]
+		Case "teleport", "tp"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Temp = False
+			i = FindRoomID(StrTemp)
+			
+			For r.Rooms = Each Rooms
+				If r\RoomTemplate\RoomID = i Lor Str(r\RoomTemplate\RoomID) = StrTemp
+					Temp = True
+					If r\RoomCenter <> 0
+						TeleportEntity(me\Collider, EntityX(r\RoomCenter, True), EntityY(r\OBJ) + 0.5, EntityZ(r\RoomCenter, True), 0.3, True)
+					Else
+						TeleportEntity(me\Collider, EntityX(r\OBJ), EntityY(r\OBJ) + 0.5, EntityZ(r\OBJ))
+					EndIf
+					TeleportToRoom(r)
+					CreateConsoleMsg(Format(GetLocalString("console", "tp.success"), StrTemp))
+					Exit
+				EndIf
+			Next
+			
+			If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "tp.failed"), 255, 0, 0)
+			;[End Block]
+		Case "roomlist", "roomslist", "rooms", "room list"
+			;[Block]
+			For rt.RoomTemplates = Each RoomTemplates
+				CreateConsoleMsg("ID: " + rt\RoomID + "; Name: " + rt\Name)
+			Next
+			;[End Block]
+		Case "spawnitem", "si", "giveitem", "gi"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Temp = False 
+			For itt.ItemTemplates = Each ItemTemplates
+				If Lower(itt\Name) = StrTemp Lor Lower(itt\DisplayName) = StrTemp Lor Str(itt\ID) = StrTemp
+					it.Items = CreateItem(itt\Name, itt\ID, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider))
+					EntityType(it\Collider, HIT_ITEM)
+					CreateConsoleMsg(Format(GetLocalString("console", "si.success"), itt\DisplayName))
+					Temp = True
+					Exit
+				EndIf
+			Next
+			
+			If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "si.failed"), 255, 0, 0)
+			;[End Block]
+		Case "spawncup", "givecup", "spawndrink", "givedrink"
+			;[Block]
+			StrTemp = Upper(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Temp = False
+			
+			If S2IMapContains(I_294\DrinksMap, StrTemp)
+				Local Drink% = JsonGetArrayValue(I_294\Drinks, S2IMapGet(I_294\DrinksMap, StrTemp))
+				Local Temp2% = 0
+				
+				Temp2 = JsonGetValue(Drink, "explosion")
+				If (Not JsonIsNull(Temp2))
+					If JsonGetBool(Temp2)
+						me\ExplosionTimer = 135.0
+						Temp2 = JsonGetValue(Drink, "death_message")
+						If (Not JsonIsNull(Temp2)) Then msg\DeathMsg = JsonGetString(Temp2)
+					EndIf
+				EndIf
+				
+				Local DrinkColor% = JsonGetArray(JsonGetValue(Drink, "color"))
+				Local Alpha# = JsonGetFloat(JsonGetValue(Drink, "alpha"))
+				
+				Temp2 = JsonGetValue(Drink, "glow")
+				If (Not JsonIsNull(Temp2))
+					If JsonGetBool(Temp2) Then Alpha = -Alpha
+				EndIf
+				
+				it.Items = CreateItem("Cup", it_cup, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider), JsonGetInt(JsonGetArrayValue(DrinkColor, 0)), JsonGetInt(JsonGetArrayValue(DrinkColor, 1)), JsonGetInt(JsonGetArrayValue(DrinkColor, 2)), Alpha)
+				it\Name = StrTemp
+				it\DisplayName = Format(GetLocalString("items", "cupof"), StrTemp)
+				EntityType(it\Collider, HIT_ITEM)
+				CreateConsoleMsg(Format(GetLocalString("console", "si.success"), it\DisplayName))
+				Temp = True
+			EndIf
+			If (Not Temp) Then CreateConsoleMsg(GetLocalString("console", "si.failed"), 255, 0, 0)
+			;[End Block]
+		Case "itemlist", "itemslist", "items", "item list"
+			;[Block]
+			For itt.ItemTemplates = Each ItemTemplates
+				CreateConsoleMsg(Format(Format(Format(GetLocalString("console", "itemlist"), itt\ID, "{0}"), itt\Name, "{1}"), itt\DisplayName, "{2}"), 255, 150, 0)
+			Next
+			;[End Block]
+		Case "wireframe", "wf"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					WireFrameState = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					WireFrameState = False
+					;[End Block]
+				Default
+					;[Block]
+					WireFrameState = (Not WireFrameState)
+					;[End Block]
+			End Select
+			
+			If WireFrameState
+				CreateConsoleMsg(GetLocalString("console", "wf.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "wf.off"))
+			EndIf
+			
+			WireFrame(WireFrameState)
+			;[End Block]
+		Case "reset096", "r096"
+			;[Block]
+			If n_I\Curr096 <> Null
+				n_I\Curr096\State = 0.0
+				StopStream_Strict(n_I\Curr096\SoundCHN) : n_I\Curr096\SoundCHN = 0 : n_I\Curr096\SoundCHN_IsStream = False
+				If n_I\Curr096\SoundCHN2 <> 0 Then StopStream_Strict(n_I\Curr096\SoundCHN2) : n_I\Curr096\SoundCHN2 = 0 : n_I\Curr096\SoundCHN2_IsStream = False
+				GiveAchievement("096", False)
+			EndIf
+			CreateConsoleMsg(GetLocalString("console", "r096"))
+			;[End Block]
+		Case "reset372", "r372"
+			;[Block]
+			For n.NPCs = Each NPCs
+				If n\NPCType = NPCType372
+					RemoveNPC(n)
+					CreateEvent(e_cont3_372, r_cont3_372, 0, 0.0)
+					Exit
+				EndIf
+			Next
+			CreateConsoleMsg(GetLocalString("console", "r372"))
+			;[End Block]
+		Case "disable173", "dis173"
+			;[Block]
+			n_I\Curr173\Idle = 3 ; ~ This phenominal comment is brought to you by PolyFox. His absolute wisdom in this fatigue of knowledge brought about a new era of SCP-173 state checks.
+			HideEntity(n_I\Curr173\OBJ)
+			HideEntity(n_I\Curr173\OBJ2)
+			HideEntity(n_I\Curr173\Collider)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-173"))
+			;[End Block]
+		Case "enable173", "en173"
+			;[Block]
+			n_I\Curr173\Idle = 0
+			ShowEntity(n_I\Curr173\OBJ)
+			ShowEntity(n_I\Curr173\OBJ2)
+			ShowEntity(n_I\Curr173\Collider)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-173"))
+			;[End Block]
+		Case "disable106", "dis106"
+			;[Block]
+			n_I\Curr106\State = 0.0
+			n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
+			n_I\Curr106\Contained = True
+			HideEntity(n_I\Curr106\Collider)
+			HideEntity(n_I\Curr106\OBJ)
+			HideEntity(n_I\Curr106\OBJ2)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-106"))
+			;[End Block]
+		Case "enable106", "en106"
+			;[Block]
+			n_I\Curr106\Idle = 0
+			n_I\Curr106\Contained = False
+			ShowEntity(n_I\Curr106\Collider)
+			ShowEntity(n_I\Curr106\OBJ)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-106"))
+			;[End Block]
+		Case "disable966", "dis966"
+			;[Block]
+			For n.NPCs = Each NPCs
+				If n\NPCType = NPCType966
+					n\State = -1.0
+					HideEntity(n\Collider)
+					HideEntity(n\OBJ)
+				EndIf
+			Next
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-966"))
+			;[End Block]
+		Case "enable966", "en966"
+			;[Block]
+			For n.NPCs = Each NPCs
+				If n\NPCType = NPCType966
+					n\State = 0.0
+					ShowEntity(n\Collider)
+					If wi\NightVision > 0 Then ShowEntity(n\OBJ)
+				EndIf
+			Next
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-966"))
+			;[End Block]
+		Case "disable049", "dis049"
+			;[Block]
+			If n_I\Curr049 <> Null
+				n_I\Curr049\Idle = 1
+				HideEntity(n_I\Curr049\Collider)
+				HideEntity(n_I\Curr049\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-049"))
+			;[End Block]
+		Case "enable049", "en049"
+			;[Block]
+			If n_I\Curr049 <> Null
+				n_I\Curr049\Idle = 0
+				ShowEntity(n_I\Curr049\Collider)
+				ShowEntity(n_I\Curr049\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-049"))
+			;[End Block]
+		Case "disable066", "dis066"
+			;[Block]
+			If n_I\Curr066 <> Null
+				n_I\Curr066\Idle = 1
+				HideEntity(n_I\Curr066\Collider)
+				HideEntity(n_I\Curr066\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-066"))
+			;[End Block]
+		Case "enable066", "en066"
+			;[Block]
+			If n_I\Curr066 <> Null
+				n_I\Curr066\Idle = 0
+				ShowEntity(n_I\Curr066\Collider)
+				ShowEntity(n_I\Curr066\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-066"))
+			;[End Block]
+		Case "disable096", "dis096"
+			;[Block]
+			If n_I\Curr096 <> Null
+				n_I\Curr096\Idle = 1
+				HideEntity(n_I\Curr096\Collider)
+				HideEntity(n_I\Curr096\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-096"))
+			;[End Block]
+		Case "enable096", "en096"
+			;[Block]
+			If n_I\Curr096 <> Null
+				n_I\Curr096\Idle = 0
+				ShowEntity(n_I\Curr096\Collider)
+				ShowEntity(n_I\Curr096\OBJ)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-096"))
+			;[End Block]
+		Case "106retreat", "106r"
+			;[Block]
+			If n_I\Curr106\State > 1.0
+				n_I\Curr106\State = 0.0
+				n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
+				CreateConsoleMsg(GetLocalString("console", "106r"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "106r.failed"), 255, 150, 0)
+			EndIf
+			;[End Block]
+		Case "halloween"
+			;[Block]
+			n_I\IsHalloween = (Not n_I\IsHalloween)
+			If n_I\IsHalloween
+				n_I\IsNewYear = False
+				n_I\IsAprilFools = False
+				Tex = LoadTexture_Strict("GFX\NPCs\scp_173_H.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex)
+				EntityTexture(n_I\Curr173\OBJ2, Tex)
+				DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+				CreateConsoleMsg(GetLocalString("console", "halloween.on"))
+			Else
+				Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex2)
+				EntityTexture(n_I\Curr173\OBJ2, Tex2)
+				DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
+				CreateConsoleMsg(GetLocalString("console", "halloween.off"))
+			EndIf
+			;[End Block]
+		Case "newyear" 
+			;[Block]
+			n_I\IsNewYear = (Not n_I\IsNewYear)
+			If n_I\IsNewYear
+				n_I\IsHalloween = False
+				n_I\IsAprilFools = False
+				Tex = LoadTexture_Strict("GFX\NPCs\scp_173_NY.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex)
+				EntityTexture(n_I\Curr173\OBJ2, Tex)
+				DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+				CreateConsoleMsg(GetLocalString("console", "newyear.on"))
+			Else
+				Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex2)
+				EntityTexture(n_I\Curr173\OBJ2, Tex2)
+				DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
+				CreateConsoleMsg(GetLocalString("console", "newyear.off"))
+			EndIf
+			;[End Block]
+		Case "joke" 
+			;[Block]
+			n_I\IsAprilFools = (Not n_I\IsAprilFools)
+			If n_I\IsAprilFools
+				n_I\IsHalloween = False
+				n_I\IsNewYear = False
+				Tex = LoadTexture_Strict("GFX\NPCs\scp_173_J.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex)
+				EntityTexture(n_I\Curr173\OBJ2, Tex)
+				DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+				CreateConsoleMsg(GetLocalString("console", "aprilfools.on"))
+			Else
+				Tex2 = LoadTexture_Strict("GFX\NPCs\scp_173.png")
+				EntityTexture(n_I\Curr173\OBJ, Tex2)
+				EntityTexture(n_I\Curr173\OBJ2, Tex2)
+				DeleteSingleTextureEntryFromCache(Tex2) : Tex2 = 0
+				CreateConsoleMsg(GetLocalString("console", "aprilfools.off"))
+			EndIf
+			;[End Block]
+		Case "sanic"
+			;[Block]
+			chs\SuperMan = (Not chs\SuperMan)
+			If chs\SuperMan
+				CreateConsoleMsg(GetLocalString("console", "sanic.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "sanic.off"))
+			EndIf
+			;[End Block]
+		Case "scp-420-j", "420", "weed", "scp420-j", "scp-420j", "420j"
+			;[Block]
+			For i = 1 To 20
+				If Rand(2) = 1
+					StrTemp = "Some SCP-420-J"
+					Temp = it_scp420j
+				Else
+					StrTemp = "Joint"
+					Temp = it_joint
+				EndIf
+				it.Items = CreateItem(StrTemp, Temp, EntityX(me\Collider, True) + Cos((360.0 / 20.0) * i) * Rnd(0.3, 0.5), EntityY(Camera, True), EntityZ(me\Collider, True) + Sin((360.0 / 20.0) * i) * Rnd(0.3, 0.5))
+				EntityType(it\Collider, HIT_ITEM)
+			Next
+			PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
+			;[End Block]
+		Case "godmode", "god"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					chs\GodMode = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					chs\GodMode = False
+					;[End Block]
+				Default
+					;[Block]
+					chs\GodMode = (Not chs\GodMode)
+					;[End Block]
+			End Select
+			If chs\GodMode
+				CreateConsoleMsg(GetLocalString("console", "god.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "god.off"))
+			EndIf
+			;[End Block]
+		Case "revive", "undead", "resurrect"
+			;[Block]
+			ResetNegativeStats(True)
+			If t\OverlayID[10] <> 0 Then FreeEntity(t\OverlayID[10]) : t\OverlayID[10] = 0
+			me\Playable = True
+			;[End Block]
+		Case "noclip", "fly"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					chs\NoClip = True
+					me\Playable = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					chs\NoClip = False
+					RotateEntity(me\Collider, 0.0, EntityYaw(me\Collider), 0.0)
+					;[End Block]
+				Default
+					;[Block]
+					chs\NoClip = (Not chs\NoClip)
+					If (Not chs\NoClip)
+						RotateEntity(me\Collider, 0.0, EntityYaw(me\Collider), 0.0)
+					Else
+						me\Playable = True
+					EndIf
+					;[End Block]
+			End Select
+			
+			If chs\NoClip
+				CreateConsoleMsg(GetLocalString("console", "fly.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "fly.off"))
+			EndIf
+			
+			me\DropSpeed = 0.0
+			;[End Block]
+		Case "noblink", "nb"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					chs\NoBlink = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					chs\NoBlink = False
+					;[End Block]
+				Default
+					;[Block]
+					chs\NoBlink = (Not chs\NoBlink)
+					;[End Block]
+			End Select
+			If chs\NoBlink
+				CreateConsoleMsg(GetLocalString("console", "nb.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "nb.off"))
+			EndIf
+			;[End Block]
+		Case "debughud", "dbh"
+			;[Block]
+			If Instr(ConsoleInput, " ") <> 0
+				StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Else
+				StrTemp = ""
+			EndIf
+			
+			Select StrTemp
+				Case "game", "1"
+					;[Block]
+					chs\DebugHUD = 1
+					;[End Block]
+				Case "player", "me", "2"
+					;[Block]
+					chs\DebugHUD = 2
+					;[End Block]
+				Case "scps", "scp", "3"
+					;[Block]
+					chs\DebugHUD = 3
+					;[End Block]
+				Case "off", "false", "0"
+					;[Block]
+					chs\DebugHUD = 0
+					;[End Block]
+				Default
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug.cate"), 255, 150, 0)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "stopsound", "stfu"
+			;[Block]
+			KillSounds()
+			
+			For e.Events = Each Events
+				If e\EventID = e_cont1_173
+					For i = 0 To 2
+						RemoveNPC(e\room\NPC[i])
+						If i < 2 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
+					Next
+					If n_I\Curr173\Idle = 1 Then n_I\Curr173\Idle = 0
+					PositionEntity(n_I\Curr173\Collider, 0.0, 0.0, 0.0)
+					ResetEntity(n_I\Curr173\Collider)
+					
+					PositionEntity(e\room\Objects[2], EntityX(e\room\Objects[2], True), e\room\y + 384.0 * RoomScale, EntityZ(e\room\Objects[2], True), True)
+					RotateEntity(e\room\Objects[2], EntityPitch(e\room\Objects[2], True), EntityYaw(e\room\Objects[2], True), EntityRoll(e\room\Objects[2], True), True)
+					RemoveEvent(e)
+					Exit
+				EndIf
+			Next
+			CreateConsoleMsg(GetLocalString("console", "stfu"))
+			;[End Block]
+		Case "camerafog", "cf"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			If opt\DebugMode = 1 ; ~ Allow using infinite value for debugging
+				fog\FarDist = StrTemp
+			Else
+				fog\FarDist = Clamp(StrTemp, 6.0, 17.0)
+			EndIf
+			CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
+			;[End Block]
+		Case "spawn", "s"
+			;[Block]
+			Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			StrTemp = Piece(Args, 1)
+			StrTemp2 = Piece(Args, 2)
+			
+					; ~ Hacky fix for when the user doesn't input a second parameter.
+			If StrTemp <> StrTemp2
+				ConsoleSpawnNPC(StrTemp, StrTemp2)
+			Else
+				ConsoleSpawnNPC(StrTemp)
+			EndIf
+			;[End Block]
+		Case "infinitestamina", "infstam", "is"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					chs\InfiniteStamina = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					chs\InfiniteStamina = False
+					;[End Block]
+				Default
+					;[Block]
+					chs\InfiniteStamina = (Not chs\InfiniteStamina)
+					;[End Block]
+			End Select
+			
+			If chs\InfiniteStamina
+				CreateConsoleMsg(GetLocalString("console", "is.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "is.off"))
+			EndIf
+			;[End Block]
+		Case "money", "rich"
+			;[Block]
+			For i = 1 To 20
+				If Rand(2) = 1
+					StrTemp = "Quarter"
+					Temp = it_25ct
+				Else
+					StrTemp = "Coin"
+					Temp = it_coin
+				EndIf
+				it.Items = CreateItem(StrTemp, Temp, EntityX(me\Collider, True) + Cos((360.0 / 20.0) * i) * Rnd(0.3, 0.5), EntityY(Camera, True), EntityZ(me\Collider, True) + Sin((360.0 / 20.0) * i) * Rnd(0.3, 0.5))
+				EntityType(it\Collider, HIT_ITEM)
+			Next
+			;[End Block]
+		Case "doorcontrol"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					RemoteDoorOn = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					RemoteDoorOn = False
+					;[End Block]
+				Default
+					;[Block]
+					RemoteDoorOn = (Not RemoteDoorOn)
+					;[End Block]
+			End Select
+			
+			If RemoteDoorOn
+				CreateConsoleMsg(GetLocalString("console", "door.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "door.off"))
+			EndIf
+			
+			For e2.Events = Each Events
+				If e2\EventID = e_room2c_ec
+					UpdateLever(e2\room\RoomLevers[2]\OBJ)
+					RotateEntity(e2\room\RoomLevers[2]\OBJ, 80.0 + (-160.0 * RemoteDoorOn), EntityYaw(e2\room\RoomLevers[2]\OBJ), 0.0)
+					Exit
+				EndIf
+			Next
+			;[End Block]
+		Case "unlockcheckpoints"
+			;[Block]
+			For e2.Events = Each Events
+				If e2\EventID = e_room2_sl
+					e2\EventState3 = 0.0
+					UpdateLever(e2\room\RoomLevers[0]\OBJ)
+					RotateEntity(e2\room\RoomLevers[0]\OBJ, 80.0, EntityYaw(e2\room\RoomLevers[0]\OBJ), 0.0)
+				ElseIf e2\EventID = e_cont2_008
+					e2\EventState = 2.0
+					UpdateLever(e2\room\Objects[1])
+					RotateEntity(e2\room\Objects[1], 0.0, EntityYaw(e2\room\Objects[1]), 0.0)
+					If e2\room\RoomEmitters[0] <> Null Then FreeEmitter(e2\room\RoomEmitters[0])
+				EndIf
+			Next
+			
+			CreateConsoleMsg(GetLocalString("console", "uc"))
+			;[End Block]
+		Case "disablenuke"
+			;[Block]
+			For e.Events = Each Events
+				If e\EventID = e_room2_nuke
+					e\EventState = 0.0
+					UpdateLever(e\room\RoomLevers[0]\OBJ)
+					UpdateLever(e\room\RoomLevers[1]\OBJ)
+					RotateEntity(e\room\RoomLevers[0]\OBJ, 80.0, EntityYaw(e\room\RoomLevers[0]\OBJ), 0.0)
+					RotateEntity(e\room\RoomLevers[1]\OBJ, 80.0, EntityYaw(e\room\RoomLevers[1]\OBJ), 0.0)
+					Exit
+				EndIf
+			Next
+			;[End Block]
+		Case "unlockexits"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "a"
+					;[Block]
+					For e.Events = Each Events
+						If e\EventID = e_gate_a_entrance
+							e\EventState3 = 1.0
+							e\room\RoomDoors[1]\Open = True
+							Exit
+						EndIf
+					Next
+					CreateConsoleMsg(GetLocalString("console", "ue.a"))
+					;[End Block]
+				Case "b"
+					;[Block]
+					For e.Events = Each Events
+						If e\EventID = e_gate_b_entrance
+							e\EventState3 = 1.0
+							e\room\RoomDoors[1]\Open = True
+							Exit
+						EndIf
+					Next
+					CreateConsoleMsg(GetLocalString("console", "ue.b"))
+					;[End Block]
+				Default
+					;[Block]
+					For e.Events = Each Events
+						If e\EventID = e_gate_b_entrance Lor e\EventID = e_gate_a_entrance
+							e\EventState3 = 1.0
+							e\room\RoomDoors[1]\Open = True
+						EndIf
+					Next
+					CreateConsoleMsg(GetLocalString("console", "ue"))
+					;[End Block]
+			End Select
+			RemoteDoorOn = True
+			;[End Block]
+		Case "kill", "suicide"
+			;[Block]
+			me\Terminated = True
+			Select Rand(4)
+				Case 1
+					;[Block]
+					msg\DeathMsg = GetLocalString("death", "kill_1")
+					;[End Block]
+				Case 2
+					;[Block]
+					msg\DeathMsg = Format(GetLocalString("death", "kill_2"), SubjectName)
+					;[End Block]
+				Case 3
+					;[Block]
+					msg\DeathMsg = GetLocalString("death", "kill_3")
+					;[End Block]
+				Case 4
+					;[Block]
+					msg\DeathMsg = Format(GetLocalString("death", "kill_4"), SubjectName)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case "tele"
+			;[Block]
+			Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			StrTemp = Piece(Args, 1, " ")
+			StrTemp2 = Piece(Args, 2, " ")
+			StrTemp3 = Piece(Args, 3, " ")
+			PositionEntity(me\Collider, Float(StrTemp), Float(StrTemp2), Float(StrTemp3))
+			PositionEntity(Camera, Float(StrTemp), Float(StrTemp2), Float(StrTemp3))
+			ResetEntity(me\Collider)
+			ResetEntity(Camera)
+			CreateConsoleMsg(Format(Format(Format(GetLocalString("console", "tele"), EntityX(me\Collider), "{0}"), EntityY(me\Collider), "{1}"), EntityZ(me\Collider), "{2}"))
+			;[End Block]
+		Case "asd"
+			;[Block]
+			chs\NoBlink = True
+			chs\NoTarget = True
+			chs\NoClip = True
+			chs\GodMode = True
+			chs\InfiniteStamina = True
+			
+			fog\FarDist = 17.0
+			
+			KillSounds()
+			
+			For e.Events = Each Events
+				If e\EventID = e_cont1_173
+					For i = 0 To 2
+						RemoveNPC(e\room\NPC[i])
+						If i < 2 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
+					Next
+					If n_I\Curr173\Idle = 1 Then n_I\Curr173\Idle = 0
+					PositionEntity(n_I\Curr173\Collider, 0.0, 0.0, 0.0)
+					ResetEntity(n_I\Curr173\Collider)
+					
+					PositionEntity(e\room\Objects[2], EntityX(e\room\Objects[2], True), e\room\y + 384.0 * RoomScale, EntityZ(e\room\Objects[2], True), True)
+					RotateEntity(e\room\Objects[2], EntityPitch(e\room\Objects[2], True), EntityYaw(e\room\Objects[2], True), EntityRoll(e\room\Objects[2], True), True)
+					RemoveEvent(e)
+					Exit
+				EndIf
+			Next
+			CreateConsoleMsg(GetLocalString("console", "stfu"))
+			;[End Block]
+		Case "notarget", "nt"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					chs\NoTarget = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					chs\NoTarget = False
+					;[End Block]
+				Default
+					;[Block]
+					chs\NoTarget = (Not chs\NoTarget)
+					;[End Block]
+			End Select
+			
+			If chs\NoTarget
+				CreateConsoleMsg(GetLocalString("console", "nt.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "nt.off"))
+			EndIf
+			;[End Block]
+		Case "spawnpumpkin", "pumpkin"
+			;[Block]
+			CreateConsoleMsg(GetLocalString("console", "pumpkin"))
+			;[End Block]
+		Case "teleport173"
+			;[Block]
+			PositionEntity(n_I\Curr173\Collider, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			ResetEntity(n_I\Curr173\Collider)
+			;[End Block]
+		Case "seteventstate"
+			;[Block]
+			Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			StrTemp = Piece(Args, 1, " ")
+			StrTemp2 = Piece(Args, 2, " ")
+			StrTemp3 = Piece(Args, 3, " ")
+			StrTemp4 = Piece(Args, 4, " ")
+			
+			Local PL_Room_Found% = False
+			
+			If StrTemp = "" Lor StrTemp2 = "" Lor StrTemp3 = "" Lor StrTemp4 = ""
+				CreateConsoleMsg(GetLocalString("console", "ses.failed"), 255, 150, 0)
+			Else
+				For e.Events = Each Events
+					If PlayerRoom = e\room
+						If Lower(StrTemp) <> "keep" Then e\EventState = Float(StrTemp)
+						If Lower(StrTemp2) <> "keep" Then e\EventState2 = Float(StrTemp2)
+						If Lower(StrTemp3) <> "keep" Then e\EventState3 = Float(StrTemp3)
+						If Lower(StrTemp4) <> "keep" Then e\EventState4 = Float(StrTemp4)
+						CreateConsoleMsg(Format(Format(Format(Format(GetLocalString("console", "ses.success"), e\EventState, "{0}"), e\EventState2, "{1}"), e\EventState3, "{2}"), e\EventState4, "{3}"))
+						PL_Room_Found = True
+						Exit
+					EndIf
+				Next
+				If (Not PL_Room_Found) Then CreateConsoleMsg(GetLocalString("console", "ses.failed.apply"), 255, 150, 0)
+			EndIf
+			;[End Block]
+		Case "giveachievement"
+			;[Block]
+			If Instr(ConsoleInput, " ") <> 0
+				StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			Else
+				StrTemp = ""
+			EndIf
+			
+			If StrTemp = "all"
+				Local Defines% = JsonGetArray(JsonGetValue(AchievementsArray, "achievements"))
+				Local ArraySize% = JsonGetArraySize(Defines)
+				
+				For i = 0 To ArraySize - 1
+					Local ID$ = JsonGetString(JsonGetValue(JsonGetArrayValue(Defines, i), "id"))
+					
+					If opt\DebugMode
+						GiveAchievement(ID)
+					Else
+						If ID <> "console" And ID <> "keter" And ID <> "apollyon" Then GiveAchievement(ID)
+					EndIf
+				Next
+				SaveAchievementsFile()
+				CreateConsoleMsg(GetLocalString("console", "ga.all"))
+			EndIf
+			
+			If S2IMapContains(AchievementsIndex, StrTemp)
+				GiveAchievement(StrTemp)
+				
+				Local AchvName% = JsonGetValue(JsonGetValue(JsonGetValue(LocalAchievementsArray, "translations"), StrTemp), "name")
+				
+				If JsonIsNull(AchvName) Then AchvName = JsonGetValue(JsonGetValue(JsonGetValue(AchievementsArray, "translations"), StrTemp), "name")
+				CreateConsoleMsg(Format(GetLocalString("console", "ga.success"), JsonGetString(AchvName)))
+			ElseIf StrTemp <> "all"
+				CreateConsoleMsg(Format(GetLocalString("console", "ga.failed"), StrTemp), 255, 0, 0)
+			EndIf
+			;[End Block]
+		Case "427state"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			I_427\Timer = 70.0 * Float(StrTemp)
+			
+			CreateConsoleMsg(Format(GetLocalString("console", "427"), StrTemp))
+			;[End Block]
+		Case "teleport106"
+			;[Block]
+			If (Not n_I\Curr106\Contained)
+				n_I\Curr106\State = 2.0
+				n_I\Curr106\Idle = 0
+				n_I\Curr106\EnemyX = EntityX(me\Collider)
+				n_I\Curr106\EnemyY = EntityY(me\Collider)
+				n_I\Curr106\EnemyZ = EntityZ(me\Collider)
+			EndIf
+			;[End Block]
+		Case "jorge"
+			;[Block]
+			CreateConsoleMsg(GetLocalString("console", "jorge"))
+			;[End Block]
+		Case "resetfunds"
+			;[Block]
+			For it.Items = Each Items
+				Select it\ItemTemplate\ID
+					Case it_mastercard
+						;[Block]
+						it\State = 10
+						;[End Block]
+					Case it_mastercard_golden
+						;[Block]
+						it\State = 1000
+						;[End Block]
+				End Select
+			Next
+			CreateConsoleMsg(GetLocalString("console", "funds"))
+			;[End Block]
+		Case "codes"
+			;[Block]
+			CreateConsoleMsg(GetLocalString("console", "codes_1"))
+			CreateConsoleMsg("")
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_2"), CODE_DR_MAYNARD))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_3"), CODE_DR_HARP))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_4"), CODE_DR_L))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_5"), CODE_O5_COUNCIL))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_6"), CODE_MAINTENANCE_TUNNELS))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_7"), CODE_CONT1_035))
+			CreateConsoleMsg(Format(GetLocalString("console", "codes_9"), CODE_DR_GEARS))
+			CreateConsoleMsg("")
+			CreateConsoleMsg(GetLocalString("console", "codes_8"))
+			;[End Block]
+		Default
+			;[Block]
+			CreateConsoleMsg(GetLocalString("console", "notfound"), 255, 0, 0)
+			;[End Block]
+	End Select
+End Function
 Function RenderConsole%()
 	If (Not opt\CanOpenConsole) Then Return
 	
@@ -5441,11 +5446,11 @@ Function UpdateGUI%()
 								SelectedItem\State2 = -1.0
 								If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
 								RadioState[6] = RadioState[6] + fps\Factor[0]
-								Temp = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
+								x = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
 								If RadioState[6] - fps\Factor[0] <= RadioState[7] * 50.0 And RadioState[6] > RadioState[7] * 50.0
 									PlaySound_Strict(snd_I\RadioBuzz)
 									RadioState[7] = RadioState[7] + 1.0
-									If RadioState[7] >= Temp
+									If RadioState[7] >= x
 										RadioState[7] = 0.0
 										RadioState[6] = -100.0
 										RadioState[8] = RadioState[8] + 1.0
@@ -6450,18 +6455,18 @@ Function RenderDebugHUD%()
 			TextEx(x, y + (20 * MenuScale), Format(GetLocalString("console", "debug_3.OmniChance.Any"), Temp + 1))
 			TextEx(x, y + (40 * MenuScale), Format(GetLocalString("console", "debug_3.OmniChance.5"), (Temp / 2) + 1))
 			
-			Local RoomAmount% = 0, RoomsFound% = 0
+			Local RoomsAmount% = 0, RoomsFound% = 0
 			
 			For r.Rooms = Each Rooms
 				Local RID% = r\RoomTemplate\RoomID
 				
 				If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
-					RoomAmount = RoomAmount + 1
+					RoomsAmount = RoomsAmount + 1
 					RoomsFound = RoomsFound + r\Found
 				EndIf
 			Next
 			
-			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1))))
+			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomsAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1))))
 			;[End Block]
 	End Select
 	SetFontEx(fo\FontID[Font_Default])
@@ -7342,18 +7347,18 @@ Function RenderGUI%()
 								
 								If SelectedItem\ItemTemplate\ID = it_navulti
 									Local np.NPCs, r.Rooms
-									Local RoomAmount% = 0, RoomsFound% = 0
+									Local RoomsAmount% = 0, RoomsFound% = 0
 									
 									For r.Rooms = Each Rooms
 										Local RID% = r\RoomTemplate\RoomID
 										
 										If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
-											RoomAmount = RoomAmount + 1
+											RoomsAmount = RoomsAmount + 1
 											RoomsFound = RoomsFound + r\Found
 										EndIf
 									Next
 									
-									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomAmount)
+									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomsAmount)
 									If (MilliSec Mod 600) < 400
 										Color(200, 0, 0)
 										For np.NPCs = Each NPCs
@@ -8729,18 +8734,18 @@ Function RenderEnding%()
 					x = x + (132 * MenuScale)
 					y = y + (122 * MenuScale)
 					
-					Local RoomAmount% = 0, RoomsFound% = 0
+					Local RoomsAmount% = 0, RoomsFound% = 0
 					
 					For r.Rooms = Each Rooms
 						Local RID% = r\RoomTemplate\RoomID
 						
 						If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
-							RoomAmount = RoomAmount + 1
+							RoomsAmount = RoomsAmount + 1
 							RoomsFound = RoomsFound + r\Found
 						EndIf
 					Next
 					
-					If RoomAmount = RoomsFound Then SNAVUnlocked = True
+					If RoomsAmount = RoomsFound Then SNAVUnlocked = True
 					
 					Local DocsAmount% = 0, DocsFound% = 0
 					
@@ -8778,7 +8783,7 @@ Function RenderEnding%()
 					
 					TextEx(x, y, Format(GetLocalString("menu", "end.scps"), SCPsEncountered))
 					TextEx(x, y + (20 * MenuScale), Format(Format(GetLocalString("menu", "end.achi"), AchievementsUnlocked, "{0}"), S2IMapSize(AchievementsIndex), "{1}"))
-					TextEx(x, y + (40 * MenuScale), Format(Format(GetLocalString("menu", "end.room"), RoomsFound, "{0}"), RoomAmount, "{1}"))
+					TextEx(x, y + (40 * MenuScale), Format(Format(GetLocalString("menu", "end.room"), RoomsFound, "{0}"), RoomsAmount, "{1}"))
 					TextEx(x, y + (60 * MenuScale), Format(Format(GetLocalString("menu", "end.doc"), DocsFound, "{0}"), DocsAmount, "{1}"))
 					TextEx(x, y + (80 * MenuScale), Format(GetLocalString("menu", "end.914"), me\RefinedItems))
 					TextEx(x, y + (100 * MenuScale), Format(Format(Format(GetLocalString("menu", "end.escape"), EscapeHours, "{0}"), EscapeMinutes, "{1}"), EscapeSeconds, "{2}"))
