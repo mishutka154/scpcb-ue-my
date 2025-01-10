@@ -684,7 +684,7 @@ Function RemoveSecurityCamInstances%()
 End Function
 
 Const MaxMonitorModelIDAmount% = 2
-Const MaxMonitorOverlayIDAmount% = 18
+Const MaxMonitorOverlayIDAmount% = 17
 
 Type MonitorInstance
 	Field MonitorModelID%[MaxMonitorModelIDAmount]
@@ -773,7 +773,7 @@ Function RemoveMonitorInstances%()
 End Function
 
 Const MaxNPCModelIDAmount% = 33
-Const MaxNPCTextureID% = 21
+Const MaxNPCTextureID% = 22
 
 Type NPCInstance
 	Field NPCModelID%[MaxNPCModelIDAmount]

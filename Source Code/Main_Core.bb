@@ -5454,7 +5454,10 @@ Function UpdateGUI%()
 										RadioState[7] = 0.0
 										RadioState[6] = -100.0
 										RadioState[8] = RadioState[8] + 1.0
-										If RadioState[8] = 4.0 Then RadioState[8] = 0.0 : RadioState[6] = -200.0
+										If RadioState[8] = 4.0
+											RadioState[8] = 0.0
+											RadioState[6] = -200.0
+										EndIf
 									EndIf
 								EndIf
 							Else

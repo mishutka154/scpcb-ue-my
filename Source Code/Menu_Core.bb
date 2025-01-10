@@ -2107,7 +2107,7 @@ Type MenuButton
 End Type
 
 Function UpdateMenuButton%(x%, y%, Width%, Height%, Txt$, FontID% = Font_Default, WaitForMouseUp% = False, Locked% = False, R% = 255, G% = 255, B% = 255)
-	Local mb.MenuButton, currMButton.MenuButton
+	Local mb.MenuButton, CurrButton.MenuButton
 	Local Clicked% = False
 	Local ButtonExists% = False
 	
@@ -2130,10 +2130,10 @@ Function UpdateMenuButton%(x%, y%, Width%, Height%, Txt$, FontID% = Font_Default
 		mb\B = B
 		mb\G = G
 	Else
-		currMButton = mb
-		currMButton\Txt = Txt
-		currMButton\FontID = FontID
-		currMButton\Locked = Locked
+		CurrButton = mb
+		CurrButton\Txt = Txt
+		CurrButton\FontID = FontID
+		currButton\Locked = Locked
 	EndIf
 	
 	If MouseOn(x, y, Width, Height)
@@ -2186,7 +2186,7 @@ Type MenuTick
 End Type
 
 Function UpdateMenuTick%(x%, y%, Selected%, Locked% = False)
-	Local mt.MenuTick, currTick.MenuTick
+	Local mt.MenuTick, CurrTick.MenuTick
 	Local TickExists% = False
 	Local Width% = 20 * MenuScale
 	Local Height% = 20 * MenuScale
@@ -2405,7 +2405,7 @@ Type MenuInputBox
 End Type
 
 Function UpdateMenuInputBox$(x%, y%, Width%, Height%, Txt$, FontID% = Font_Default, ID% = 0, MaxChr% = 0)
-	Local mib.MenuInputBox, currInputBox.MenuInputBox
+	Local mib.MenuInputBox, CurrInputBox.MenuInputBox
 	Local InputBoxExists% = False
 	
 	For mib.MenuInputBox = Each MenuInputBox
@@ -2480,7 +2480,7 @@ Type MenuSlideBar
 End Type
 
 Function UpdateMenuSlideBar#(x%, y%, Width%, Value#, ID%)
-	Local msb.MenuSlideBar, currSlideBar.MenuSlideBar
+	Local msb.MenuSlideBar, CurrSlideBar.MenuSlideBar
 	Local SlideBarExists% = False
 	
 	For msb.MenuSlideBar = Each MenuSlideBar
@@ -2541,7 +2541,7 @@ End Type
 Global OnSliderID%
 
 Function UpdateMenuSlider3%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$)
-	Local ms.MenuSlider, currSlider.MenuSlider
+	Local ms.MenuSlider, CurrSlider.MenuSlider
 	Local Slider3Exists% = False
 	Local WidthHalf% = Width / 2
 	
@@ -2563,8 +2563,8 @@ Function UpdateMenuSlider3%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$)
 		ms\Val3 = Val3
 		ms\Amount = 3
 	Else
-		currSlider = ms
-		currSlider\Value = Value
+		CurrSlider = ms
+		CurrSlider\Value = Value
 	EndIf
 	
 	If mo\MouseDown1 And OnSliderID = 0
@@ -2584,7 +2584,7 @@ Function UpdateMenuSlider3%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$)
 End Function
 
 Function UpdateMenuSlider5%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$, Val4$, Val5$)
-	Local ms.MenuSlider, currSlider.MenuSlider
+	Local ms.MenuSlider, CurrSlider.MenuSlider
 	Local Slider5Exists% = False
 	
 	For ms.MenuSlider = Each MenuSlider
@@ -2607,8 +2607,8 @@ Function UpdateMenuSlider5%(x%, y%, Width%, Value%, ID%, Val1$, Val2$, Val3$, Va
 		ms\Val5 = Val5
 		ms\Amount = 5
 	Else
-		currSlider = ms
-		currSlider\Value = Value
+		CurrSlider = ms
+		CurrSlider\Value = Value
 	EndIf
 	
 	If mo\MouseDown1 And OnSliderID = 0
@@ -2708,7 +2708,7 @@ Global ScrollBarY# = 0.0
 Global ScrollMenuHeight# = 0.0
 
 ;Function UpdateMenuScrollBar#(Width%, Height%, BarX%, BarY%, BarWidth%, BarHeight%, Value#, Vertical% = False, Locked% = False)
-;	Local msb.MenuScrollBar, currScrollBar.MenuScrollBar
+;	Local msb.MenuScrollBar, CurrScrollBar.MenuScrollBar
 ;	Local ScrollBarExist% = False
 ;	
 ;	For msb.MenuScrollBar = Each MenuScrollBar

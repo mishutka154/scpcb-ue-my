@@ -899,7 +899,7 @@ End Function
 
 Function TeleportCloser%(n.NPCs)
 	Local ClosestDist# = 0.0
-	Local closestWaypoint.WayPoints
+	Local ClosestWaypoint.WayPoints
 	Local w.WayPoints
 	Local Dist#
 	
@@ -913,9 +913,9 @@ Function TeleportCloser%(n.NPCs)
 					; ~ Teleports to the nearby waypoint that takes it closest to the player
 					Local NewDist# = EntityDistanceSquared(me\Collider, w\OBJ)
 					
-					If NewDist < ClosestDist Lor closestWaypoint = Null
+					If NewDist < ClosestDist Lor ClosestWaypoint = Null
 						ClosestDist = NewDist
-						closestWaypoint = w
+						ClosestWaypoint = w
 					EndIf
 				EndIf
 			EndIf
@@ -923,16 +923,16 @@ Function TeleportCloser%(n.NPCs)
 	Next
 	
 	
-	If closestWaypoint <> Null
+	If ClosestWaypoint <> Null
 		Local ShouldTeleport% = False
 		
 		If n\InFacility <> NullFloor Lor SelectedDifficulty\AggressiveNPCs Then
 			ShouldTeleport = True
-		ElseIf EntityY(closestWaypoint\OBJ, True) <= 6.5 And EntityY(closestWaypoint\OBJ, True) >= -6.5
+		ElseIf EntityY(ClosestWaypoint\OBJ, True) <= 6.5 And EntityY(ClosestWaypoint\OBJ, True) >= -6.5
 			ShouldTeleport = True
 		EndIf
 		If ShouldTeleport
-			TeleportEntity(n\Collider, EntityX(closestWaypoint\OBJ, True), EntityY(closestWaypoint\OBJ, True) + 0.2, EntityZ(closestWaypoint\OBJ, True), n\CollRadius, True)
+			TeleportEntity(n\Collider, EntityX(ClosestWaypoint\OBJ, True), EntityY(ClosestWaypoint\OBJ, True) + 0.2, EntityZ(ClosestWaypoint\OBJ, True), n\CollRadius, True)
 			n\CurrSpeed = 0.0
 			n\PathStatus = PATH_STATUS_NO_SEARCH
 			n\PathTimer = 0.0
