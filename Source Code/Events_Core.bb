@@ -6463,6 +6463,10 @@ Function UpdateEvents%()
 										; ~ Remove event, if SCP-173 is far away from the room (perhaps because the player left and SCP-173 moved to some other room?) 
 										RemoveEvent(e)
 									Else
+										TFormPoint(-801.0, 240.0, -206.95, e\room\OBJ, 0)
+										de.Decals = CreateDecal(DECAL_CRACKED_GLASS, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 180.0, 0.0, 0.2, 0.5)
+										EntityParent(de\OBJ, e\room\OBJ)
+										
 										PlaySoundEx(LoadTempSound("SFX\Room\GlassBreak.ogg"), Camera, n_I\Curr173\OBJ) 
 										HideEntity(e\room\Objects[2])
 										PositionEntity(n_I\Curr173\Collider, EntityX(e\room\Objects[1], True), 0.5, EntityZ(e\room\Objects[1], True))
