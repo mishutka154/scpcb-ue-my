@@ -135,10 +135,7 @@ Type Stream
 	Field CHN%
 End Type
 
-Const Mode% = 2
-Const TwoD% = 8192
-
-Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
+Function StreamSound_Strict%(File$, Volume# = 1.0, Loop% = True)
 	If FileType(lang\LanguagePath + File) = 1 Then File = lang\LanguagePath + File
 	If FileType(File) <> 1
 		OpenConsoleOnError(Format(GetLocalString("runerr", "sound.notfound"), File))
@@ -147,14 +144,14 @@ Function StreamSound_Strict%(File$, Volume# = 1.0, CustomMode% = Mode)
 	
 	Local st.Stream = New Stream
 	
-	st\CHN = PlayMusic(File, CustomMode + TwoD)
+	st\CHN = PlayMusic(File, Volume)
 	
 	If st\CHN = -1
 		OpenConsoleOnError(Format(Format(GetLocalString("runerr", "sound.stream.failed.n1"), File, "{0}"), st\CHN, "{1}"))
 		Return(-1)
 	EndIf
-	ChannelVolume(st\CHN, Volume)
-	
+
+	ChannelLoop(st\CHN, Loop)
 	CreateSubtitlesToken(File, Null)
 	
 	Return(Handle(st))
