@@ -377,7 +377,7 @@ Function GetRandDocument$()
 	End Select
 End Function
 
-Const TotalSCPDocumentsAmount% = 40
+Const TotalSCPDocumentsAmount% = 41
 
 Function GetEReaderDocument$(State%)
 	Select State
@@ -527,25 +527,29 @@ Function GetEReaderDocument$(State%)
 			;[End Block]
 		Case 35
 			;[Block]
-			Return("doc_1025")
+			Return("doc_999")
 			;[End Block]
 		Case 36
 			;[Block]
-			Return("doc_1048")
+			Return("doc_1025")
 			;[End Block]
 		Case 37
 			;[Block]
-			Return("doc_IR_1048_a")
+			Return("doc_1048")
 			;[End Block]
 		Case 38
 			;[Block]
-			Return("doc_1123")
+			Return("doc_IR_1048_a")
 			;[End Block]
 		Case 39
 			;[Block]
-			Return("doc_1162_ARC")
+			Return("doc_1123")
 			;[End Block]
 		Case 40
+			;[Block]
+			Return("doc_1162_ARC")
+			;[End Block]
+		Case 41
 			;[Block]
 			Return("doc_1499")
 			;[End Block]
