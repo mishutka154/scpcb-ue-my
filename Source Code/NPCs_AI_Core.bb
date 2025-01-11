@@ -729,9 +729,9 @@ Function UpdateNPCType049%(n.NPCs)
 								n\PathLocation = n\PathLocation + 1
 							EndIf
 						Else
-							n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 							PointEntity(n\OBJ, n\Path[n\PathLocation]\OBJ)
 							RotateEntity(n\Collider, 0.0, CurveAngle(EntityYaw(n\OBJ), EntityYaw(n\Collider), 10.0), 0.0)
+							n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 							MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 							n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 10.0 - SelectedDifficulty\OtherFactors)
 							
