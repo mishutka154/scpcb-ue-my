@@ -791,7 +791,7 @@ Function ResetNegativeStats%(Revive% = False)
 		me\StaminaEffect = 1.0
 		me\StaminaEffectTimer = 0.0
 	EndIf
-	me\Stamina = 100.0
+	me\Stamina = me\StaminaMax
 	
 	For i = 0 To 6
 		I_1025\State[i] = 0.0
