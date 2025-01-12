@@ -6545,20 +6545,22 @@ Function RenderNVG%()
 				; ~ Replace with a cool design later lol so don't actually translate anything
 				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
 			EndIf
-			If Dist < 256.0 ; ~ Don't draw text if SCP-173 is too far away
-				CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
-				
-				ProjX = ProjectedX() : ProjY = ProjectedY()
-				
-				Color(100, 100, 100)
-				
-				Local MaxRectWidth% = 15 * MenuScale
-				Local MaxRectHeight% = 50 * MenuScale
-				Local ScaleFactor# = 16.0 / Sqr(Dist)
-				Local RectWidth% = MaxRectWidth * ScaleFactor
-				Local RectHeight% = MaxRectHeight * ScaleFactor
-				
-				Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
+				If EntityInView(n_I\Curr173\Collider, Camera)
+					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+					
+					ProjX = ProjectedX() : ProjY = ProjectedY()
+					
+					Color(100, 100, 100)
+					
+					Local MaxRectWidth% = 15 * MenuScale
+					Local MaxRectHeight% = 50 * MenuScale
+					Local ScaleFactor# = 16.0 / Sqr(Dist)
+					Local RectWidth% = MaxRectWidth * ScaleFactor
+					Local RectHeight% = MaxRectHeight * ScaleFactor
+					
+					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+				EndIf
 			EndIf
 		ElseIf wi\NightVision = 2 ; ~ Show a HUD
 			Color(100, 100, 255)
