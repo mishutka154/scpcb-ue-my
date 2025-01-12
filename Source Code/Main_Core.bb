@@ -3416,7 +3416,7 @@ Function UpdateNVG%()
 	wi\IsNVGBlinking = False
 	wi\NVGPower = 0
 	
-	If (wi\NightVision > 0 And wi\NightVision <> 3) Lor wi\SCRAMBLE > 0
+	If (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) And wi\NightVision <> 3
 		For i = 0 To MaxItemAmount - 1
 			If Inventory(i) <> Null
 				If (wi\NightVision = 1 And Inventory(i)\ItemTemplate\ID = it_nvg) Lor (wi\NightVision = 2 And Inventory(i)\ItemTemplate\ID = it_veryfinenvg) Lor (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\ID = it_scramble) Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\ID = it_finescramble)
@@ -6538,6 +6538,9 @@ Function RenderNVG%()
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
 			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			
+			Color(100, 100, 100)
+			
 			SetFontEx(fo\FontID[Font_Digital])
 			If n_I\Curr106\Contained
 				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
@@ -6550,8 +6553,6 @@ Function RenderNVG%()
 					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
 					
 					ProjX = ProjectedX() : ProjY = ProjectedY()
-					
-					Color(100, 100, 100)
 					
 					Local MaxRectWidth% = 15 * MenuScale
 					Local MaxRectHeight% = 50 * MenuScale

@@ -178,6 +178,7 @@ Function RenderSubtitles%()
 		EndIf
 		TextEx(subassets\BoxLeft + (10 * MenuScale), sub\CurrYPos, sub\CurrentText)
 	Next
+	Color(255, 255, 255)
 End Function
 
 Function CreateSubtitlesToken%(SoundPath$, snd.Sound)
