@@ -1592,7 +1592,7 @@ Function UpdateEvents%()
 									it.Items = CreateItem("Unknown Note", it_paper, e\room\x, e\room\y - 1516.0 * RoomScale, e\room\z)
 									EntityType(it\Collider, HIT_ITEM)
 									
-									it.Items = CreateItem("Level 3 Key Card", it_key3_bloody, e\room\x, e\room\y - 1504.0 * RoomScale, e\room\z)
+									it.Items = CreateItem("Bloody Level 3 Key Card", it_key3, e\room\x, e\room\y - 1504.0 * RoomScale, e\room\z)
 									EntityType(it\Collider, HIT_ITEM)
 									
 									e\room\NPC[0]\IsDead = True
@@ -5346,7 +5346,7 @@ Function UpdateEvents%()
 							
 							ShowEntity(e\room\Objects[0])
 							
-							it.Items = CreateItem("Level 3 Key Card", it_key3_bloody, EntityX(e\room\NPC[0]\Collider), EntityY(e\room\NPC[0]\Collider) + 0.1, EntityZ(e\room\NPC[0]\Collider))
+							it.Items = CreateItem("Bloody Level 3 Key Card", it_key3, EntityX(e\room\NPC[0]\Collider), EntityY(e\room\NPC[0]\Collider) + 0.1, EntityZ(e\room\NPC[0]\Collider))
 							EntityType(it\Collider, HIT_ITEM)
 							
 							RemoveNPC(e\room\NPC[0]) : e\room\NPC[0] = Null

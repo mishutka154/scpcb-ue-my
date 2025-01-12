@@ -147,31 +147,31 @@ Const it_syringeinf% = 86
 
 ; ~ [KEYCARDS, HANDS, KEYS, CARDS, COINS]
 ;[Block]
-Const it_key0% = 87, it_key0_bloody% = 88
-Const it_key1% = 89, it_key1_bloody% = 90
-Const it_key2% = 91
-Const it_key3% = 92, it_key3_bloody% = 93
-Const it_key4% = 94
-Const it_key5% = 95
-Const it_key6% = 96
-Const it_keyomni% = 97
+Const it_key0% = 87
+Const it_key1% = 88
+Const it_key2% = 89
+Const it_key3% = 90
+Const it_key4% = 91
+Const it_key5% = 92
+Const it_key6% = 93
+Const it_keyomni% = 94
 
-Const it_mastercard% = 98
-Const it_mastercard_golden% = 99
-Const it_playcard% = 100
+Const it_mastercard% = 95
+Const it_mastercard_golden% = 96
+Const it_playcard% = 97
 
-Const it_hand% = 101
-Const it_hand2% = 102
-Const it_hand3% = 103
+Const it_hand% = 98
+Const it_hand2% = 99
+Const it_hand3% = 100
 
-Const it_key_yellow% = 104
-Const it_key_white% = 105
-Const it_lostkey% = 106
+Const it_key_yellow% = 101
+Const it_key_white% = 102
+Const it_lostkey% = 103
 
-Const it_25ct% = 107
-Const it_coin% = 108
+Const it_25ct% = 104
+Const it_coin% = 105
 
-Const it_pizza% = 109
+Const it_pizza% = 106
 ;[End Block]
 ;[End Block]
 
@@ -1635,7 +1635,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case it_key0, it_key0_bloody, it_key1, it_key1_bloody, it_key2, it_key3, it_key3_bloody, it_key4, it_key5, it_key6
+		Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6
 			;[Block]
 			Local Level% = item\ItemTemplate\ID
 			Local LevelName%
@@ -1647,13 +1647,13 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					If Level = it_key0 Lor Level = it_key0_bloody
+					If Level = it_key0
 						MakeDecal = True
 					ElseIf Level = it_key6
 						it2.Items = CreateItem("Level 0 Key Card", it_key0, x, y, z)
 					Else
 						Select Level
-							Case it_key1, it_key1_bloody
+							Case it_key1
 								;[Block]
 								LevelName = 1
 								;[End Block]
@@ -1661,7 +1661,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								;[Block]
 								LevelName = 2
 								;[End Block]
-							Case it_key3, it_key3_bloody
+							Case it_key3
 								;[Block]
 								LevelName = 3
 								;[End Block]
@@ -1684,7 +1684,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case FINE
 					;[Block]
 					Select Level
-						Case it_key0, it_key0_bloody
+						Case it_key0
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
@@ -1720,7 +1720,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 							End Select
 							;[End Block]
-						Case it_key1, it_key1_bloody
+						Case it_key1
 							;[Block]
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
@@ -1792,7 +1792,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 									;[End Block]
 							End Select
 							;[End Block]
-						Case it_key3, it_key3_bloody
+						Case it_key3
 							;[Block]
 							If Rand(12 + (6 * SelectedDifficulty\OtherFactors)) = 1
 								it2.Items = CreateItem("Level 4 Key Card", it_key4, x, y, z)
@@ -2881,11 +2881,11 @@ Function GetUsingItem%(item.Items)
 			;[Block]
 			Return(KEY_CARD_6)
 			;[End Block]
-		Case it_key0, it_key0_bloody
+		Case it_key0
 			;[Block]
 			Return(KEY_CARD_0)
 			;[End Block]
-		Case it_key1, it_key1_bloody
+		Case it_key1
 			;[Block]
 			Return(KEY_CARD_1)
 			;[End Block]
@@ -2893,7 +2893,7 @@ Function GetUsingItem%(item.Items)
 			;[Block]
 			Return(KEY_CARD_2)
 			;[End Block]
-		Case it_key3, it_key3_bloody
+		Case it_key3
 			;[Block]
 			Return(KEY_CARD_3)
 			;[End Block]
