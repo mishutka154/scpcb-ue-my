@@ -3440,11 +3440,9 @@ Function UpdateNVG%()
 	
 	If wi\NVGPower > 0
 		If wi\SCRAMBLE = 2
-			For np.NPCs = Each NPCs
-				np\NVGX = EntityX(np\Collider, True)
-				np\NVGY = EntityY(np\Collider, True)
-				np\NVGZ = EntityZ(np\Collider, True)
-			Next
+			n_I\Curr173\NVGX = EntityX(n_I\Curr173\Collider, True)
+			n_I\Curr173\NVGY = EntityY(n_I\Curr173\Collider, True)
+			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\Collider, True)
 		ElseIf wi\NightVision = 2
 			If wi\NVGTimer <= 0.0
 				For np.NPCs = Each NPCs
@@ -6539,28 +6537,22 @@ Function RenderNVG%()
 		Local Dist#, ProjX#, ProjY#
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
-			For np.NPCs = Each NPCs
-				If np\NVGName <> "" And (Not np\HideFromNVG) And (Not np\IsDead) ; ~ Don't waste your time if the string is empty
-					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
-					If Dist < 256.0 ; ~ Don't draw box if the NPC is too far away
-						If EntityInView(np\Collider, Camera)
-							CameraProject(Camera, np\NVGX, np\NVGY + np\CollRadius, np\NVGZ)
-							
-							ProjX = ProjectedX() : ProjY = ProjectedY()
-							
-							Color(100, 100, 100)
-							
-							Local MaxRectWidth% = 15 * MenuScale
-							Local MaxRectHeight% = 50 * MenuScale
-							Local ScaleFactor# = 16.0 / Sqr(Dist)
-							Local RectWidth% = MaxRectWidth * ScaleFactor
-							Local RectHeight% = MaxRectHeight * ScaleFactor
-							
-							Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
-						EndIf
-					EndIf
-				EndIf
-			Next
+			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			If Dist < 256.0 ; ~ Don't draw text if SCP-173 is too far away
+				CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+				
+				ProjX = ProjectedX() : ProjY = ProjectedY()
+				
+				Color(100, 100, 100)
+				
+				Local MaxRectWidth% = 15 * MenuScale
+				Local MaxRectHeight% = 50 * MenuScale
+				Local ScaleFactor# = 16.0 / Sqr(Dist)
+				Local RectWidth% = MaxRectWidth * ScaleFactor
+				Local RectHeight% = MaxRectHeight * ScaleFactor
+				
+				Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+			EndIf
 		ElseIf wi\NightVision = 2 ; ~ Show a HUD
 			Color(100, 100, 255)
 			
