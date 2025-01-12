@@ -3431,6 +3431,7 @@ Function UseDoor%(PlaySFX% = True)
 	If SelectedItem <> Null Then Temp = GetUsingItem(SelectedItem)
 	
 	Local CurrCase% = (d_I\ClosestDoor\KeyCard > KEY_MISC) + (2 * (d_I\ClosestDoor\KeyCard > KEY_860 And d_I\ClosestDoor\KeyCard < KEY_MISC)) + (3 * (d_I\ClosestDoor\Code <> 0)) + (4 * (d_I\ClosestDoor\DoorType = WOODEN_DOOR Lor d_I\ClosestDoor\DoorType = OFFICE_DOOR)) + (5 * (d_I\ClosestDoor\DoorType = ELEVATOR_DOOR))
+	Local BreakTheDoor% = False
 	
 	Select CurrCase
 		Case 1 ; ~ Key Card
@@ -3454,6 +3455,7 @@ Function UseDoor%(PlaySFX% = True)
 							EndIf
 						Else
 							If Temp = KEY_005
+								If SelectedItem\ItemTemplate\ID = it_coarse005 Then BreakTheDoor = True
 								CreateMsg(GetLocalString("msg", "key.005"))
 							Else
 								If Temp < d_I\ClosestDoor\KeyCard
@@ -3504,6 +3506,7 @@ Function UseDoor%(PlaySFX% = True)
 						Else
 							If Temp = KEY_005
 								CreateMsg(GetLocalString("msg", "dna.granted.005"))
+								If SelectedItem\ItemTemplate\ID = it_coarse005 Then BreakTheDoor = True
 							Else
 								CreateMsg(GetLocalString("msg", "dna.granted"))
 							EndIf
@@ -3540,6 +3543,7 @@ Function UseDoor%(PlaySFX% = True)
 				
 				If (d_I\ClosestDoor\Locked = 0) And (d_I\ClosestDoor\Code <> CODE_LOCKED) And (Temp = KEY_005)
 					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
+					If SelectedItem\ItemTemplate\ID = it_coarse005 Then BreakTheDoor = True
 				Else
 					PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
 					Return
@@ -3685,6 +3689,16 @@ Function UseDoor%(PlaySFX% = True)
 	End Select
 	
 	OpenCloseDoor(d_I\ClosestDoor, PlaySFX)
+	If BreakTheDoor
+		d_I\ClosestDoor\FastOpen = True
+		If d_I\ClosestDoor\Open Then d_I\ClosestDoor\Locked = 1
+		me\BigCameraShake = 3.0
+		
+		Local emit.Emitter = SetEmitter(Null, EntityX(d_I\ClosestDoor\OBJ, True), EntityY(d_I\ClosestDoor\OBJ, True), EntityZ(d_I\ClosestDoor\OBJ, True), 16)
+		
+		EntityParent(emit\Owner, d_I\ClosestDoor\OBJ)
+		PlaySoundEx(snd_I\OpenDoorFastSFX, Camera, d_I\ClosestDoor\FrameOBJ)
+	EndIf
 End Function
 
 Function OpenCloseDoor%(d.Doors, PlaySFX% = True, PlayCautionSFX% = False)

@@ -31,6 +31,7 @@
 
 [Items]
 - Added open SCP-427 icon.
+- Added new variations of SCP-005.
 
 - Speed up equipping SCP-268 and ballistic helmet.
 - Speed up using cups slightly.
