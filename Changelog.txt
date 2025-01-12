@@ -35,7 +35,8 @@
 - Speed up equipping SCP-268 and ballistic helmet.
 - Speed up using cups slightly.
 - Syringes can restore some of the player's stamina.
-- Fine SCRAMBLE GEAR shows SCP-173's position.
+- Fine SCRAMBLE GEAR shows NPCs' positions.
+- Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visted.
 
 [NPCs]
