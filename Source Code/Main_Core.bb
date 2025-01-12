@@ -6540,7 +6540,7 @@ Function RenderNVG%()
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
 			For np.NPCs = Each NPCs
-				If np\NVGName <> "" And (Not np\HideFromNVG) And (Not np\IsDead) ; ~ Don't waste your time if the string is empty
+				If np\NVGName <> "" And (Not np\HideFromNVG) And (Not np\IsDead) And np\NPCType <> NPCType966 ; ~ Don't waste your time if the string is empty
 					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
 					If Dist < 256.0 ; ~ Don't draw box if the NPC is too far away
 						If EntityInView(np\Collider, Camera)
