@@ -6538,6 +6538,13 @@ Function RenderNVG%()
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
 			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			SetFontEx(fo\FontID[Font_Digital])
+			If n_I\Curr106\Contained
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
+			Else
+				; ~ Replace with a cool design later lol so don't actually translate anything
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
+			EndIf
 			If Dist < 256.0 ; ~ Don't draw text if SCP-173 is too far away
 				CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
 				
