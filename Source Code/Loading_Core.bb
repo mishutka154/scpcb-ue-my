@@ -925,7 +925,6 @@ Function LoadNPCs%()
 	n_I\NPCModelID[NPC_966_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_966.b3d")
 	
 	n_I\NPCModelID[NPC_999_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_999.b3d")
-	EntityAlpha(n_I\NPCModelID[NPC_999_MODEL], 0.85)
 	
 	n_I\NPCModelID[NPC_1048_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_1048.b3d")
 	n_I\NPCModelID[NPC_1048_A_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_1048_a.b3d")
