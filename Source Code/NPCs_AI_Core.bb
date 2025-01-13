@@ -31,7 +31,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 						If EntityVisible(n\Collider, me\Collider) Then PointEntity(n\Collider, me\Collider)
 						Dist = EntityDistanceSquared(n\Collider, me\Collider)
 					Else
-						If NPCSeesNPC(n\Target, n) = 1 Then n\State2 = 70.0 * 2.0
+						If NPCSeesNPC(n\Target, n) = 1 Then n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
 						If EntityVisible(n\Collider, n\Target\Collider) Then PointEntity(n\Collider, n\Target\Collider)
 						Dist = EntityDistanceSquared(n\Collider, n\Target\Collider)
 					EndIf
@@ -1441,12 +1441,14 @@ Function UpdateNPCType096%(n.NPCs)
 			EndIf
 			
 			If (Not me\Terminated)
+				If n\Target <> Null Then Dist = EntityDistanceSquared(n\Target\Collider, n\Collider)
+				
 				If MilliSecs() > n\State3
 					n\LastSeen = 0
 					If n\Target = Null
-						If EntityVisible(me\Collider, n\Collider) Then n\LastSeen = 1
+						If Dist < 64.0 And EntityVisible(me\Collider, n\Collider) Then n\LastSeen = 1
 					Else
-						If EntityVisible(n\Target\Collider, n\Collider) Then n\LastSeen = 1
+						If Dist < 64.0 And EntityVisible(n\Target\Collider, n\Collider) Then n\LastSeen = 1
 					EndIf
 					n\State3 = MilliSecs() + 2000
 				EndIf
@@ -1455,8 +1457,6 @@ Function UpdateNPCType096%(n.NPCs)
 				If n\LastSeen = 1
 					n\PathTimer = Max(70.0 * 3.0, n\PathTimer)
 					n\PathStatus = PATH_STATUS_NO_SEARCH
-					
-					If n\Target <> Null Then Dist = EntityDistanceSquared(n\Target\Collider, n\Collider)
 					
 					If Dist < 7.84 Lor n\Frame < 150.0
 						If n\Frame > 193.0 Then SetNPCFrame(n, 2.0) ; ~ Go to the start of the jump animation
@@ -3495,7 +3495,8 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 End Function
 
 Function UpdateNPCType1048%(n.NPCs)
-	Local Visible% = (EntityDistanceSquared(me\Collider, n\Collider) < 4.0 And EntityInView(n\OBJ, Camera))
+	Local InView% =  EntityInView(n\OBJ, Camera)
+	Local Visible% = (EntityDistanceSquared(me\Collider, n\Collider) < 4.0 And InView)
 	
 	If Visible Then GiveAchievement("1048")
 	
@@ -3540,7 +3541,7 @@ Function UpdateNPCType1048%(n.NPCs)
 				If n\Frame > 324.9 Then n\State2 = 2.0
 			ElseIf n\State2 = 2.0
 				AnimateNPC(n, 325.0, 305.0, (-n\Speed) / 1.5, False)
-				If n\Frame < 305.1 And (Not EntityInView(n\OBJ, Camera)) Then n\State2 = 3.0
+				If n\Frame < 305.1 And (Not InView) Then n\State2 = 3.0
 			EndIf
 			;[End Block]
 		Case 3.0 ; ~ Gives a paper
