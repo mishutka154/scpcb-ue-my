@@ -6469,7 +6469,7 @@ Function RenderDebugHUD%()
 				EndIf
 			Next
 			
-			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomsAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1))))
+			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomsAmount - (RoomsFound * 2)) * (1 + SelectedDifficulty\OtherFactors), 1))))
 			;[End Block]
 	End Select
 	SetFontEx(fo\FontID[Font_Default])
