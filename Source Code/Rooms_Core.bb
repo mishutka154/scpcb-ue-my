@@ -633,7 +633,7 @@ Function FillRoom%(r.Rooms)
 			r\Objects[7] = LoadAnimMesh_Strict("GFX\Map\Props\scp_914_gears.b3d")
 			Scale = RoomScale * 1.34
 			ScaleEntity(r\Objects[7], Scale, Scale, Scale)
-			PositionEntity(r\Objects[7], r\x - 408.0 * RoomScale, r\y, r\z + 640.0 * RoomScale)
+			PositionEntity(r\Objects[7], r\x - 408.0 * RoomScale, r\y + 8.0 * RoomScale, r\z + 640.0 * RoomScale)
 			RotateEntity(r\Objects[7], 0.0, 270.0, 0.0)
 			EntityParent(r\Objects[7], r\OBJ)
 			
