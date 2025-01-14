@@ -3437,12 +3437,12 @@ Function UseDoor%(PlaySFX% = True)
 		Case 1 ; ~ Key Card
 			;[Block]
 			If SelectedItem = Null
-				CreateMsg(GetLocalString("msg", "key.require"))
+				If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "key.require"))
 				PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
 				Return
 			Else
 				If Temp <= KEY_MISC
-					CreateMsg(GetLocalString("msg", "key.require"))
+					If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "key.require"))
 				Else
 					If Temp = KEY_CARD_6
 						CreateMsg(GetLocalString("msg", "key.slot.6"))
@@ -3460,7 +3460,7 @@ Function UseDoor%(PlaySFX% = True)
 							Else
 								If Temp < d_I\ClosestDoor\KeyCard
 									If d_I\ClosestDoor\KeyCard = KEY_005
-										CreateMsg(GetLocalString("msg", "key.required.106"))
+										If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "key.required.106"))
 									Else
 										CreateMsg(Format(GetLocalString("msg", "key.higher"), d_I\ClosestDoor\KeyCard - 2))
 									EndIf
@@ -3487,12 +3487,12 @@ Function UseDoor%(PlaySFX% = True)
 		Case 2 ; ~ DNA
 			;[Block]
 			If SelectedItem = Null
-				CreateMsg(GetLocalString("msg", "dna.denied_1"))
+				If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "dna.denied_1"))
 				PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
 				Return
 			Else
 				If ((Temp >= KEY_MISC) Lor (Temp < KEY_HAND_YELLOW)) And (Temp <> KEY_005)
-					CreateMsg(GetLocalString("msg", "dna.denied_1"))
+					If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "dna.denied_1"))
 				Else
 					If (d_I\ClosestDoor\KeyCard <> Temp) And (Temp <> KEY_005)
 						CreateMsg(GetLocalString("msg", "dna.denied_2"))
@@ -3573,7 +3573,7 @@ Function UseDoor%(PlaySFX% = True)
 			;[Block]
 			If d_I\ClosestDoor\Locked > 0
 				If SelectedItem = Null
-					CreateMsg(GetLocalString("msg", "wood.wontbudge"))
+					If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "wood.wontbudge"))
 					If d_I\ClosestDoor\DoorType = OFFICE_DOOR
 						PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
 						SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
@@ -3582,7 +3582,7 @@ Function UseDoor%(PlaySFX% = True)
 					EndIf
 				Else
 					If (Temp > KEY_860) And (Temp <> KEY_005)
-						CreateMsg(GetLocalString("msg", "wood.wontbudge"))
+						If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "wood.wontbudge"))
 					Else
 						If d_I\ClosestDoor\Locked = 2 Lor ((Temp <> d_I\ClosestDoor\KeyCard) And (Temp <> KEY_005))
 							CreateMsg(GetLocalString("msg", "wood.nothappend.005"))
