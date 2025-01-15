@@ -5488,8 +5488,8 @@ Function CreateMap%()
 	SetRoom(0, ROOM2, "room2_js", 0.85)
 	SetRoom(0, ROOM2, "room2_elevator", 0.9)
 	
-	SetRoom(0, ROOM2C, "room2c_gw_lcz", 0.0)
-	SetRoom(0, ROOM2C, "cont2c_066_1162_arc", 0.5)
+	SetRoom(0, ROOM2C, "cont2c_066_1162_arc", 0.0)
+	SetRoom(0, ROOM2C, "room2c_gw_lcz", 0.5)
 	
 	SetRoom(0, ROOM3, "room3_storage", Rnd(0.2, 0.6))
 	SetRoom(0, ROOM3, "cont3_372", 0.8)
