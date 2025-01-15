@@ -118,11 +118,7 @@
 		Nikita Sidorov ("Jabka") https://github.com/Jabka666
 		SnoeBrawler https://github.com/SnoeGit
 		Andre Pari ("ADMClef")
-		Dawid Mleczko ("Mleczyk76")
-		slend https://github.com/slend13561
-		Ayylien
 		Egor Oleynik ("Chumnaya Karkusa")
-		EpicDasherFR https://github.com/EpicDasherFR
 		ZiYueCommentary https://github.com/ZiYueCommentary
 		itzslain https://github.com/itzslain
 
@@ -134,6 +130,10 @@
 		Stefan Koch ("Salvage") https://github.com/Saalvage
 		Dmitriy Sazanov ("Dmitriy-Bars")
 		Leonard Blackmore ("UnknownDev")
+		Ayylien
+		EpicDasherFR https://github.com/EpicDasherFR
+		Dawid Mleczko ("Mleczyk76")
+		slend https://github.com/slend13561
 
 *Contributors
 
