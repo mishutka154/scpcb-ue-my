@@ -510,9 +510,9 @@ Function UpdateGame%()
 				me\BlinkTimer = me\BLINKFREQ
 				me\EyeStuck = Max(me\EyeStuck - fps\Factor[0], 0.0)
 				
-				If me\EyeStuck < 9000.0 Then me\BlurTimer = Max(me\BlurTimer, (9000.0 - me\EyeStuck) / 2.0)
-				If me\EyeStuck < 6000.0 Then DarkAlpha = Clamp(DarkAlpha, (6000.0 - me\EyeStuck) / 5000.0, 1.0)
-				If me\EyeStuck < 9000.0 And me\EyeStuck + fps\Factor[0] >= 9000.0 Then CreateMsg(GetLocalString("msg", "eyedrop.tear"))
+				If me\EyeStuck < 4200.0 Then me\BlurTimer = Max(me\BlurTimer, (4200.0 - me\EyeStuck) / 2.0)
+				If me\EyeStuck < 3000.0 Then DarkAlpha = Clamp(DarkAlpha, (3000.0 - me\EyeStuck) / 2500.0, 1.0)
+				If me\EyeStuck < 4200.0 And me\EyeStuck + fps\Factor[0] >= 4200.0 Then CreateMsg(GetLocalString("msg", "eyedrop.tear"))
 			EndIf
 			
 			If chs\InfiniteStamina Then me\Stamina = 100.0
@@ -5132,7 +5132,7 @@ Function UpdateGUI%()
 					If CanUseItem()
 						me\BlinkEffect = 0.0
 						me\BlinkEffectTimer = 60.0
-						me\EyeStuck = 10000.0
+						me\EyeStuck = 8400.0
 						me\BlurTimer = 1000.0
 						
 						CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
@@ -6469,7 +6469,7 @@ Function RenderDebugHUD%()
 				EndIf
 			Next
 			
-			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomsAmount - (RoomsFound * 2)) * (2 + SelectedDifficulty\OtherFactors), 1))))
+			TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_3.NavUltiChance"), Int(Max((RoomsAmount - (RoomsFound * 2)) * (1 + SelectedDifficulty\OtherFactors), 1))))
 			;[End Block]
 	End Select
 	SetFontEx(fo\FontID[Font_Default])
