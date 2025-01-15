@@ -3378,15 +3378,39 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				;[End Block]
 			Case 2.0 ; ~ Following the player
 				;[Block]
-				If Visible
-					GiveAchievement("999")
-					PointEntity(n\Collider, me\Collider)
+				Local it.Items
+				Local FoundItem.Items = Null
+				
+				For it.Items = Each Items
+					If it\ItemTemplate\ID = it_pizza And (Not it\Picked)
+						If EntityDistanceSquared(n\Collider, it\Collider) < 1.0
+							FoundItem = it
+							Exit
+						EndIf
+					EndIf
+				Next
+				
+				If FoundItem = Null
+					If Visible
+						GiveAchievement("999")
+						PointEntity(n\Collider, me\Collider)
+						RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
+						n\State3 = 70.0 * 1.5
+						n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
+					EndIf
+				Else
+					PointEntity(n\Collider, FoundItem\Collider)
 					RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 					n\State3 = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
+					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
+						; ~ TODO: Give a buff for 999?
+						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
+						RemoveItem(FoundItem)
+					EndIf
 				EndIf
-				n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
 				
+				n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
 				If n\State3 > 0.0
 					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
 					If Dist < 0.64
@@ -3396,7 +3420,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
 						n\CurrSpeed = 0.0
-						;me\HealTimer = 1.0 ; ~ TODO: Make another heal buff
+						If me\Injuries > 0.5 Then me\HealTimer = 1.0 ; ~ TODO: Check if this works well
 					EndIf
 					If n\CurrSpeed =< 0.001
 						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
@@ -3459,9 +3483,11 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				EndIf
 				;[End Block]
 		End Select
-		If Rand(100) = 1
-			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 6.0, 0.5)
+		If Rand(160) = 1
+			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 5.0, 0.3)
 		EndIf
+		; ~ TODO: Need a jelly sound when 999 moves
+		; ~ Spawn jelly decals
 		If n\CurrSpeed > 0.0
 			If MilliSecs() > n\State2
 				Pvt = CreatePivot()
