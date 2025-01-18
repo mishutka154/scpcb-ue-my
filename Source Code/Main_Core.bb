@@ -7319,10 +7319,12 @@ Function RenderGUI%()
 									
 									For x2 = FromX To ToX
 										For z2 = FromZ To ToZ
-											If CurrMapGrid\Grid[x2 + (z2 * MapGridSize)] > MapGrid_NoTile And (CurrMapGrid\Found[x2 + (z2 * MapGridSize)] > MapGrid_NoTile Lor (Not Offline))
+											Local Index% = x2 + (z2 * MapGridSize)
+											
+											If CurrMapGrid\Grid[Index] > MapGrid_NoTile And (CurrMapGrid\Found[Index] > MapGrid_NoTile Lor (Not Offline))
 												Local DrawX% = x + (PlayerX - x2) * RectSize, DrawY% = y - (PlayerZ - z2) * RectSize
 												
-												Color(30 + (170 * (SelectedItem\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile Lor CurrMapGrid\Found[x2 + (z2 * MapGridSize)] =< MapGrid_NoTile))), 30, 30)
+												Color(30 + (170 * (SelectedItem\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[Index] <= MapGrid_NoTile Lor CurrMapGrid\Found[Index] <= MapGrid_NoTile))), 30, 30)
 												If CurrMapGrid\Grid[(x2 + 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
 												If CurrMapGrid\Grid[(x2 - 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX + RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
 												
@@ -7349,9 +7351,13 @@ Function RenderGUI%()
 									If Offline Then TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), GetLocalString("msg", "nav.data"))
 									
 									YawValue = EntityYaw(me\Collider) - 90.0
-									x1 = x + Cos(YawValue) * (6.0 * MenuScale) : y1 = y - Sin(YawValue) * (6.0 * MenuScale)
-									x2 = x + Cos(YawValue - 140.0) * (5.0 * MenuScale) : y2 = y - Sin(YawValue - 140.0) * (5.0 * MenuScale)
-									x3 = x + Cos(YawValue + 140.0) * (5.0 * MenuScale) : y3 = y - Sin(YawValue + 140.0) * (5.0 * MenuScale)
+									
+									Local OffsetX# = 6.0 * MenuScale
+									Local OffsetY# = 5.0 * MenuScale
+									
+									x1 = x + Cos(YawValue) * OffsetX : y1 = y - Sin(YawValue) * OffsetX
+									x2 = x + Cos(YawValue - 140.0) * OffsetY : y2 = y - Sin(YawValue - 140.0) * OffsetY
+									x3 = x + Cos(YawValue + 140.0) * OffsetY : y3 = y - Sin(YawValue + 140.0) * OffsetY
 									
 									Line(x1, y1, x2, y2)
 									Line(x1, y1, x3, y3)
@@ -7377,33 +7383,35 @@ Function RenderGUI%()
 									If (MilliSec Mod 600) < 400
 										Color(200, 0, 0)
 										For np.NPCs = Each NPCs
-											If np\NPCType = NPCType173 Lor np\NPCType = NPCType106 Lor np\NPCType = NPCType096 Lor np\NPCType = NPCType049 Lor np\NPCType = NPCType066
-												If (Not np\HideFromNVG)
-													Dist = EntityDistanceSquared(Camera, np\Collider)
-													If Dist < 900.0
-														SqrValue = Sqr(Dist)
-														Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
-														TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
-														SCPs_Found = SCPs_Found + 1
+											Select np\NPCType
+												Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType066
+													;[Block]
+													If (Not np\HideFromNVG)
+														Dist = EntityDistanceSquared(Camera, np\Collider)
+														If Dist < 900.0
+															SqrValue = Sqr(Dist)
+															Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
+															TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
+															SCPs_Found = SCPs_Found + 1
+														EndIf
 													EndIf
-												EndIf
-											EndIf
+													;[End Block]
+											End Select
 										Next
-										If PlayerRoom\RoomTemplate\RoomID = r_cont1_895
-											If CoffinDistance < 8.0
-												Dist = Rnd(4.0, 8.0)
-												Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-												TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
-											EndIf
+										
+										If PlayerRoom\RoomTemplate\RoomID = r_cont1_895 And CoffinDistance < 8.0
+											Dist = Rnd(4.0, 8.0)
+											Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
+											TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
 										EndIf
 									EndIf
 								EndIf
 								
+								; ~ Battery
 								If SelectedItem\State > 0.0 And (SelectedItem\ItemTemplate\ID = it_nav Lor SelectedItem\ItemTemplate\ID = it_nav310)
 									xTemp = x - NAV_WIDTH_HALF + (196 * MenuScale)
 									yTemp = y - NAV_HEIGHT_HALF + (10 * MenuScale)
 									
-									; ~ Battery
 									n = Min(Ceil(SelectedItem\State / 10.0), 10)
 									Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
 									Rect(xTemp, yTemp, 80 * MenuScale, 20 * MenuScale, False)
