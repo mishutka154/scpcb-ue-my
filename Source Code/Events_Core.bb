@@ -3518,6 +3518,8 @@ Function UpdateEvents%()
 							
 							I_294\Using = Temp
 							If I_294\Using
+								CreateHintMsg(GetLocalString("msg", "294.keys"), 6.0, True)
+								FlushKeys()
 								SelectedItem = Null
 								mo\MouseHit1 = False
 							EndIf

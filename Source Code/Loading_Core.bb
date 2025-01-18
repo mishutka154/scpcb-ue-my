@@ -2637,7 +2637,7 @@ Function Init294Drinks%()
 	Local LocalDrinks% = JsonParseFromFile(lang\LanguagePath + SCP294File)
 	Local i%, j%
 	
-	If JsonIsArray(LocalDrinks) ; ~ Has localized scp294 drinks -> Use localized only
+	If JsonIsArray(LocalDrinks) ; ~ Has localized SCP-294 drinks -> Use localized only
 		I_294\Drinks = JsonGetArray(LocalDrinks)
 	Else
 		I_294\Drinks = JsonGetArray(JsonParseFromFile(SCP294File))
