@@ -13,6 +13,9 @@
 - Player now regenerates blood when no longer bleeding, recovery rate depends on injury and caps at 60% bloodloss before stopping.
 - Slightly increase stamina regeneration when standing still.
 
+[Launcher]
+- Added wiki button.
+
 [Rooms]
 - Added penny in «room1_storage».
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
@@ -59,6 +62,7 @@
 - Fixed vehicle textures.
 - Fixed SCP-173's spawnpoint positions in «room3_2_ez» and «room3_3_ez».
 - Fixed «RLS» drink free spawning.
+- Fixed «room2_mt» blackout spam on the elevators.
 
 [Known issues]
 - Rooms can overlap and block the way.
