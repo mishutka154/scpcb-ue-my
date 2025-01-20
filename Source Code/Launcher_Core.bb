@@ -138,7 +138,7 @@ Function UpdateLauncher%(lnchr.Launcher)
 	Local LauncherIMG%[2]
 	Local LauncherMediaWidth%
 	
-	LauncherIMG[0] = LoadAnimImage_Strict("GFX\Menu\launcher_media.png", 64, 64, 0, 3)
+	LauncherIMG[0] = LoadAnimImage_Strict("GFX\Menu\launcher_media.png", 64, 64, 0, 4)
 	LauncherMediaWidth = ImageWidth(LauncherIMG[0]) / 2
 	LauncherIMG[1] = LoadAnimImage_Strict("GFX\Menu\language_button.png", 40, 40, 0, 4)
 	
@@ -305,24 +305,33 @@ Function UpdateLauncher%(lnchr.Launcher)
 			EndIf
 		EndIf
 		DrawBlock(LauncherIMG[0], LauncherWidth - 620, LauncherHeight - 86, 0)
-		If MouseOn(LauncherWidth - 510, LauncherHeight - 86, 64, 64)
-			Rect(LauncherWidth - 511, LauncherHeight - 87, 66, 66, False)
-			TextEx(LauncherWidth - 510 + LauncherMediaWidth, LauncherHeight - 106, "MODDB", True)
+		If MouseOn(LauncherWidth - 540, LauncherHeight - 86, 64, 64)
+			Rect(LauncherWidth - 541, LauncherHeight - 87, 66, 66, False)
+			TextEx(LauncherWidth - 540 + LauncherMediaWidth, LauncherHeight - 106, "MODDB", True)
 			If mo\MouseHit1
 				PlaySound_Strict(ButtonSFX[0])
 				ExecFile_Strict("https://www.moddb.com/mods/scp-containment-breach-ultimate-edition")
 			EndIf
 		EndIf
-		DrawBlock(LauncherIMG[0], LauncherWidth - 510, LauncherHeight - 86, 1)
-		If MouseOn(LauncherWidth - 400, LauncherHeight - 86, 64, 64)
-			Rect(LauncherWidth - 401, LauncherHeight - 87, 66, 66, False)
-			TextEx(LauncherWidth - 400 + LauncherMediaWidth, LauncherHeight - 106, "YOUTUBE", True)
+		DrawBlock(LauncherIMG[0], LauncherWidth - 540, LauncherHeight - 86, 1)
+		If MouseOn(LauncherWidth - 460, LauncherHeight - 86, 64, 64)
+			Rect(LauncherWidth - 461, LauncherHeight - 87, 66, 66, False)
+			TextEx(LauncherWidth - 460 + LauncherMediaWidth, LauncherHeight - 106, "YOUTUBE", True)
 			If mo\MouseHit1
 				PlaySound_Strict(ButtonSFX[0])
 				ExecFile_Strict("https://www.youtube.com/channel/UCPqWOCPfKooDnrLNzA67Acw")
 			EndIf
 		EndIf
-		DrawBlock(LauncherIMG[0], LauncherWidth - 400, LauncherHeight - 86, 2)
+		DrawBlock(LauncherIMG[0], LauncherWidth - 460, LauncherHeight - 86, 2)
+		If MouseOn(LauncherWidth - 380, LauncherHeight - 86, 64, 64)
+			Rect(LauncherWidth - 381, LauncherHeight - 87, 66, 66, False)
+			TextEx(LauncherWidth - 380 + LauncherMediaWidth, LauncherHeight - 106, "Wiki", True)
+			If mo\MouseHit1
+				PlaySound_Strict(ButtonSFX[0])
+				ExecFile_Strict("https://scpcbultimatereborn.miraheze.org/wiki/Main_Page")
+			EndIf
+		EndIf
+		DrawBlock(LauncherIMG[0], LauncherWidth - 380, LauncherHeight - 86, 3)
 		; ~ Language selector
 		If SelectorDeniedTimer <> 0
 			Color(255, 0, 0)
