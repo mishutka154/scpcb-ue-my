@@ -3033,7 +3033,7 @@ Function UpdateEvents%()
 								mo\MouseHit1 = False
 								PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\BodyHorrorExchange" + Rand(0, 3) + ".ogg"))
 								me\LightFlash = 5.0
-								If me\Injuries > 15.0
+								If me\Injuries > 7.0
 									msg\DeathMsg = GetLocalString("death", "1162")
 									Kill(True)
 								Else
