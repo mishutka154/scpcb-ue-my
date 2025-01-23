@@ -2717,7 +2717,7 @@ Function UpdateMoving%()
 	
 	If me\Stamina < me\StaminaMax
 		Temp3 = (me\CurrSpeed > 0.0)
-		me\Stamina = Min(me\Stamina + (0.2 * fps\Factor[0] * ((Temp3 * 0.6) + (Not Temp3))), 100.0)
+		me\Stamina = Min(me\Stamina + (0.2 * fps\Factor[0] * (((Temp3 * 0.6) + (Not Temp3)) / (1.0 + I_966\HasInsomnia))), 100.0)
 	EndIf
 	me\StaminaMax = 100.0
 	
