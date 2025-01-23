@@ -8055,6 +8055,7 @@ Function UpdateDimension106%()
 				e\EventState3 = 0.0
 				e\EventState2 = PD_StartRoom
 			EndIf
+			Exit
 		EndIf
 	Next
 End Function
@@ -8340,6 +8341,7 @@ Function UpdateDimension1499%()
 					e\EventState = 1.0
 				EndIf
 			EndIf
+			Exit
 		EndIf
 	Next
 End Function
@@ -9382,6 +9384,7 @@ Function UpdateIntro%()
 					EndIf
 				EndIf
 			EndIf
+			Exit
 		EndIf
 	Next
 End Function
