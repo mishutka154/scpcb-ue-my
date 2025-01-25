@@ -949,20 +949,13 @@ Const PATH_STATUS_NOT_FOUND% = 2
 ;[End Block]
 
 Function FindPath%(n.NPCs, x#, y#, z#)
-	Local Dist#, Dist2#
+	Local StartDist#, EndDist#, Dist#
 	Local w.WayPoints, StartPoint.WayPoints, EndPoint.WayPoints, Smallest.WayPoints
 	Local i%, gTemp#
 	
 	; ~ PathStatus = PATH_STATUS_NO_SEARCH, route hasn't been searched for yet
 	; ~ PathStatus = PATH_STATUS_FOUND, route found
 	; ~ PathStatus = PATH_STATUS_NOT_FOUND, route not found (target unreachable)
-	
-	For w.WayPoints = Each WayPoints
-		w\State = 0
-		w\Fcost = 0
-		w\Gcost = 0
-		w\Hcost = 0
-	Next
 	
 	n\PathStatus = PATH_STATUS_NO_SEARCH
 	n\PathLocation = 0
@@ -978,46 +971,45 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 	
 	PositionEntity(Temp, EntityX(n\Collider, True), EntityY(n\Collider, True) + 0.15, EntityZ(n\Collider, True))
 	
-	Dist = 350.0
+	StartDist = 350.0
+	EndDist = 400.0
 	For w.WayPoints = Each WayPoints
-		Dist2 = EntityDistanceSquared(w\OBJ, Temp)
-		If Dist2 < Dist
+		w\State = 0
+		w\Fcost = 0
+		w\Gcost = 0
+		w\Hcost = 0
+		
+		Dist = EntityDistanceSquared(w\OBJ, Temp)
+		If Dist < StartDist
 			; ~ Prefer waypoints that are visible
-			If (Not EntityVisible(w\OBJ, Temp)) Then Dist2 = Dist2 * 3.0
-			If Dist2 < Dist
-				Dist = Dist2
+			If (Not EntityVisible(w\OBJ, Temp)) Then Dist = Dist * 3.0
+			If Dist < StartDist
+				StartDist = Dist
 				StartPoint = w
 			EndIf
 		EndIf
-	Next
-	FreeEntity(Temp) : Temp = 0
-	
-	If StartPoint = Null
-		FreeEntity(Pvt) : Pvt = 0
-		Return(PATH_STATUS_NOT_FOUND)
-	EndIf
-	StartPoint\State = 1
-	
-	EndPoint = Null
-	Dist = 400.0
-	For w.WayPoints = Each WayPoints
-		Dist2 = EntityDistanceSquared(Pvt, w\OBJ)
-		If Dist2 < Dist
-			Dist = Dist2
+		
+		Dist = EntityDistanceSquared(Pvt, w\OBJ)
+		If Dist < EndDist
+			EndDist = Dist
 			EndPoint = w
 		EndIf
 	Next
+	
 	FreeEntity(Pvt) : Pvt = 0
+	FreeEntity(Temp) : Temp = 0
+	
+	If StartPoint = Null Lor EndPoint = Null Then Return(PATH_STATUS_NOT_FOUND)
+	StartPoint\State = 1
 	
 	If EndPoint = StartPoint
-		If Dist < 0.4
+		If EndDist < 0.4
 			Return(PATH_STATUS_NO_SEARCH)
 		Else
 			n\Path[0] = EndPoint
 			Return(PATH_STATUS_FOUND)
 		EndIf
 	EndIf
-	If EndPoint = Null Then Return(PATH_STATUS_NOT_FOUND)
 	
 	Local Temp2%
 	
