@@ -887,6 +887,9 @@ Function FillRoom%(r.Rooms)
 			
 			r\RoomLevers.Levers[0] = CreateLever(r, r\x - 49.0 * RoomScale, r\y + 689.0 * RoomScale, r\z + 913.0 * RoomScale, 0.0, True)
 			
+			it.Items = CreateItem("Paper From Nobody #3", it_paper, r\x + 841.0 * RoomScale, r\y + 640.0 * RoomScale, r\z - 25.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			Scale = RoomScale * 1.8
 			
 			r\Textures[0] = LoadAnimTexture_Strict("GFX\Overlays\SL_monitors_checkpoint.png", 1, 512, 512, 0, 4, DeleteAllTextures)
@@ -2391,7 +2394,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("ReVision Eyedrops", it_eyedrops, r\x + 1930.0 * RoomScale, r\y + 225.0 * RoomScale, r\z + 128.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Paper From Nobody #3", it_paper, r\x + 996.0 * RoomScale, r\y + 160.0 * RoomScale, r\z -102.0 * RoomScale)
+			it.Items = CreateItem("Paper From Nobody #4", it_paper, r\x + 996.0 * RoomScale, r\y + 160.0 * RoomScale, r\z -102.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case r_room2_test_hcz
@@ -3562,7 +3565,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
-			it.Items = CreateItem("Paper From Nobody #4", it_paper, r\x + 12.0 * RoomScale, r\y - 630.0 * RoomScale, r\z - 410.0 * RoomScale)
+			it.Items = CreateItem("Paper From Nobody #5", it_paper, r\x + 12.0 * RoomScale, r\y - 630.0 * RoomScale, r\z - 410.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Fine Night Vision Goggles", it_finenvg, r\x + 48.0 * RoomScale, r\y - 648.0 * RoomScale, r\z + 784.0 * RoomScale)
