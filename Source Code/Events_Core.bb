@@ -4150,6 +4150,10 @@ Function UpdateEvents%()
 												GiveAchievement("tesla")
 												n\State = 4.0
 												;[End Block]
+											Case NPCType049
+												;[Block]
+												n\State = 5.0
+												;[End Block]
 											Case NPCType173
 												;[Block]
 												If (Not (n_I\IsAprilFools Lor n_I\IsHalloween Lor n_I\IsNewYear)) Then ChangeNPCTextureID(n, NPC_173_TESLA_TEXTURE)

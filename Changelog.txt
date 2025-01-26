@@ -47,6 +47,7 @@
 
 [NPCs]
 - Added SCP-999.
+- Added tesla stun animation for SCP-049.
 
 - Better texture for guards and SCP-049-2.
 - SCP-1048-A now has better explosion effect.

@@ -765,6 +765,17 @@ Function UpdateNPCType049%(n.NPCs)
 				
 				UpdateSoundOrigin(n\SoundCHN2, Camera, n\OBJ, 10.0, 1.0, True)
 				;[End Block]
+			Case 5.0 ; ~ Hit by tesla gate
+				;[Block]
+				If n\Frame < 1120.0
+					SetNPCFrame(n, 1121.0)
+					MoveEntity(n\Collider, 0.0, 0.0, 0.5)
+				Else
+					AnimateNPC(n, 1121.0, 1224.0, 0.3, False)
+					
+					If n\Frame > 1223.9 Then n\State = 2.0
+				EndIf
+				;[End Block]
 		End Select
 		n\LastSeen = Max(n\LastSeen - fps\Factor[0], 0.0)
 	EndIf
