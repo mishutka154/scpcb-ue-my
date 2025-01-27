@@ -7235,10 +7235,10 @@ Function UpdateEvents%()
 					If InteractObject(e\room\Objects[1], 0.8)
 						If I_714\Using <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 4
 							CreateMsg(GetLocalString("msg", "duck"))
+							PlaySound_Strict(LoadTempSound("SFX\SCP\Joke\Quack.ogg"))
 						Else
 							CreateMsg(GetLocalString("msg", "flamingo"))
 						EndIf
-						PlaySound_Strict(LoadTempSound("SFX\SCP\Joke\Quack.ogg"))
 					EndIf
 					
 					; ~ Interact with Penny
