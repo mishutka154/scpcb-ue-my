@@ -34,6 +34,7 @@ Type Emitter
 	Field room.Rooms
 	Field State%
 	Field SoundCHN%
+	Field LoopTimer#
 End Type
 
 Type Particle
@@ -329,6 +330,7 @@ Function UpdateParticles_Devil()
 	Local emit.Emitter, p.Particle
 	Local i%
 	Local InSmoke% = False
+	Local LoopTime# = (3 - opt\ParticleAmount) * 2.0
 	
 	For emit.Emitter = Each Emitter
 		ClearSurface(emit\Surf)
@@ -345,7 +347,7 @@ Function UpdateParticles_Devil()
 				Next
 			EndIf
 			emit\LoopAmount = (emit\LoopAmount + 1) Mod emit\tmp\Interval
-			If emit\LoopAmount = 0 And (Not emit\Del)
+			If emit\LoopAmount = 0 And (Not emit\Del) And emit\LoopTimer <= 0.0
 				For i = 1 To emit\tmp\ParticlesPerInterval
 					If (emit\tmp\MaxParticles > -1 And ParticlesAmount < emit\tmp\MaxParticles) Lor emit\tmp\MaxParticles = -1
 						p.Particle = New Particle
@@ -365,7 +367,10 @@ Function UpdateParticles_Devil()
 						p\sY = p\emitter\tmp\sY * SM
 					EndIf
 				Next
+				emit\LoopTimer = LoopTime
 			EndIf
+			emit\LoopTimer = emit\LoopTimer - fps\Factor[0]
+			
 			If emit\tmp\AnimTex
 				emit\tmp\TexFrame = emit\tmp\TexFrame + emit\tmp\TexSpeed
 				If emit\tmp\TexFrame > emit\tmp\MaxTexFrames - 1 Then emit\tmp\TexFrame = 0
