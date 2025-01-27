@@ -314,7 +314,7 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			
-			emit.Emitter = SetEmitter(r, r\x + 3384.0 * RoomScale, r\y + 500.0 * RoomScale, r\z + 4500.0 * RoomScale, 7)
+			emit.Emitter = SetEmitter(r, r\x + 3370.0 * RoomScale, r\y + 520.0 * RoomScale, r\z + 4570.0 * RoomScale, 7)
 			emit\State = 2
 			;[End Block]
 		Case r_cont1_173_intro
