@@ -1528,49 +1528,43 @@ Function UpdateEvents%()
 					me\Zone = 1
 					CoffinDistance = EntityDistance(me\Collider, e\room\Objects[0])
 					If CoffinDistance < 2.0
-						GiveAchievement("895")
+						If e\EventState2 = 0.0
+							GiveAchievement("895")
+							If e\Sound = 0
+								e\Sound = LoadSound_Strict("SFX\Room\895Chamber\GuardIdle" + Rand(0, 2) + ".ogg")
+								e\SoundCHN = PlaySoundEx(e\Sound, Camera, e\room\OBJ)
+							EndIf
+							If (Not n_I\Curr106\Contained) And n_I\Curr106\State < 2.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+								If e\EventState2 = 0.0
+									TFormPoint(0.0, -1531.0, 2356.0, e\room\OBJ, 0)
+									
+									n_I\Curr106\EnemyX = TFormedX() : n_I\Curr106\EnemyY = TFormedY() : n_I\Curr106\EnemyZ = TFormedZ()
+									n_I\Curr106\State = 2.0
+								EndIf
+							EndIf
+							e\EventState2 = 1.0
+						EndIf
+					ElseIf CoffinDistance > 6.0 And e\EventState2 = 1.0
 						If e\room\NPC[0] = Null
+							FreeSound_Strict(e\Sound) : e\Sound = 0
+							StopChannel(e\SoundCHN) : e\SoundCHN = 0
+							
 							e\room\NPC[0] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y, e\room\z)
-							e\room\NPC[0]\State = 8.0 : e\room\NPC[0]\GravityMult = 0.0 : e\room\NPC[0]\FallingPickDistance = 0.0
-							e\room\NPC[0]\Sound = LoadSound_Strict("SFX\Room\895Chamber\GuardIdle" + Rand(0, 2) + ".ogg")
-							e\room\NPC[0]\SoundCHN = PlaySoundEx(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 10.0, 1.0, True)
+							e\room\NPC[0]\State = 8.0 : e\room\NPC[0]\PrevState = 1 : e\room\NPC[0]\GravityMult = 0.25
+							LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardScream" + Rand(0, 2) + ".ogg")
+							e\room\NPC[0]\SoundCHN = PlaySoundEx(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 100.0, 1.0, True)
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 90.0, 0.0)
 							SetNPCFrame(e\room\NPC[0], 270.0)
 							
 							e\room\RoomDoors[0]\Open = True
 						EndIf
-						If (Not n_I\Curr106\Contained) And n_I\Curr106\State < 2.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
-							If e\EventState2 = 0.0
-								TFormPoint(0.0, -1531.0, 2356.0, e\room\OBJ, 0)
-								
-								n_I\Curr106\EnemyX = TFormedX() : n_I\Curr106\EnemyY = TFormedY() : n_I\Curr106\EnemyZ = TFormedZ()
-								n_I\Curr106\State = 2.0
-								
-								e\EventState2 = 1.0
-							EndIf
-						EndIf
-					ElseIf CoffinDistance > 6.0
-						If e\room\NPC[0] <> Null
-							If e\room\NPC[0]\PrevState = 0
-								StopChannel(e\room\NPC[0]\SoundCHN) : e\room\NPC[0]\SoundCHN = 0
-								LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardScream" + Rand(0, 2) + ".ogg")
-								e\room\NPC[0]\SoundCHN = PlaySoundEx(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 100.0, 1.0, True)
-								e\room\NPC[0]\State2 = 0.0 : e\room\NPC[0]\PrevState = 1
-							EndIf
-						EndIf
 					EndIf
 					
 					If e\room\NPC[0] <> Null
-						If e\room\NPC[0]\PrevState <> 2 And e\room\NPC[0]\PrevState <> 1 Then UpdateSoundOrigin(e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 100.0, 1.0, True)
-						If e\room\NPC[0]\PrevState = 0
-							e\room\NPC[0]\GravityMult = 0.0
-						ElseIf e\room\NPC[0]\PrevState = 1
-							If e\room\NPC[0]\State2 < 70.0
-								e\room\NPC[0]\State2 = e\room\NPC[0]\State2 + fps\Factor[0] : e\room\NPC[0]\GravityMult = 0.0
-							Else
-								e\room\NPC[0]\GravityMult = 1.0
-							EndIf
+						If (Not e\room\NPC[0]\IsDead) Then UpdateSoundOrigin(e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 100.0, 1.0, True)
+						If e\room\NPC[0]\PrevState = 1
 							If EntityY(e\room\NPC[0]\Collider) > ((-1531.0) * RoomScale) + 0.35
+								EntityType(e\room\NPC[0]\Collider, HIT_PLAYER)
 								Dist = EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider)
 								If Dist < 0.64 ; ~ Get the player out of the way
 									SqrValue = PowTwo(Sqr(Dist) - 0.8)
@@ -1579,41 +1573,29 @@ Function UpdateEvents%()
 								EndIf
 								If EntityY(e\room\NPC[0]\Collider) > 0.6 Then EntityType(e\room\NPC[0]\Collider, 0)
 							Else
-								e\EventState = e\EventState + fps\Factor[0]
+								fDir = e\room\NPC[0]\Frame
 								AnimateNPC(e\room\NPC[0], 270.0, 286.0, 0.4, False)
-								If e\Sound = 0
-									LoadEventSound(e, "SFX\Character\BodyFall.ogg")
-									e\SoundCHN = PlaySound_Strict(e\Sound)
+								If fDir < 275.0 And e\room\NPC[0]\Frame >= 275.0
+									PlaySoundEx(LoadTempSound("SFX\Character\BodyFall.ogg"), Camera, e\room\NPC[0]\Collider)
 									
 									de.Decals = CreateDecal(DECAL_BLOOD_2, e\room\x, e\room\y - 1531.0 * RoomScale, e\room\z, 90.0, Rnd(360.0), 0.0, 0.4)
 									EntityParent(de\OBJ, e\room\OBJ)
-								EndIf
-								If e\room\NPC[0]\Frame = 286.0
+									
 									it.Items = CreateItem("Unknown Note", it_paper, e\room\x, e\room\y - 1516.0 * RoomScale, e\room\z)
 									EntityType(it\Collider, HIT_ITEM)
 									
 									it.Items = CreateItem("Bloody Level 3 Key Card", it_key3, e\room\x, e\room\y - 1504.0 * RoomScale, e\room\z)
 									EntityType(it\Collider, HIT_ITEM)
 									
+									LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardRadio.ogg")
+								ElseIf e\room\NPC[0]\Frame > 285.9
 									e\room\NPC[0]\IsDead = True
 									e\room\NPC[0]\PrevState = 2
 								EndIf
 							EndIf
-							If e\room\NPC[0]\SoundCHN2 = 0
-								e\room\NPC[0]\Sound2 = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
-								e\room\NPC[0]\SoundCHN2 = LoopSoundEx(e\room\NPC[0]\Sound2, e\room\NPC[0]\SoundCHN2, Camera, e\room\NPC[0]\Collider, 5)
-							EndIf
 						ElseIf e\room\NPC[0]\PrevState = 2
-							If (Not ChannelPlaying(e\SoundCHN))
-								If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
-								StopChannel(e\SoundCHN) : e\SoundCHN = 0
-							EndIf
-							If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN))
-								If e\room\NPC[0]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[0]\Sound) : e\room\NPC[0]\Sound = 0
-								StopChannel(e\room\NPC[0]\SoundCHN) : e\room\NPC[0]\SoundCHN = 0
-							EndIf
-							If e\room\NPC[0]\Sound2 = 0 Then e\room\NPC[0]\Sound2 = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
-							e\room\NPC[0]\SoundCHN2 = LoopSoundEx(e\room\NPC[0]\Sound2, e\room\NPC[0]\SoundCHN2, Camera, e\room\NPC[0]\Collider, 5.0)
+							If e\room\NPC[0]\Sound = 0 Then LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardRadio.ogg")
+							e\room\NPC[0]\SoundCHN = LoopSoundEx(e\room\NPC[0]\Sound, e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 5.0)
 						EndIf
 					EndIf
 					

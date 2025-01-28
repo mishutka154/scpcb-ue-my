@@ -16,7 +16,7 @@ Type NPCs
 	Field OBJ%, OBJ2%, OBJ3%, Collider%
 	Field NPCType%, ID%
 	Field CollRadius#
-	Field DropSpeed#, Gravity%, FallingPickDistance#
+	Field DropSpeed#, FallingPickDistance#
 	Field State#, State2#, State3#, PrevState%
 	Field Frame#, Angle#, AnimTimer#
 	Field Sound%, SoundCHN%
@@ -202,7 +202,6 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\NVGName = "SCP-173"
 			n\HasAnim = False
 			n\Speed = IniGetFloat(NPCsFile, "SCP-173", "Speed") / 100.0
-			n\Gravity = True
 			
 			n\Collider = CreatePivot()
 			n\CollRadius = 0.32
@@ -1743,4 +1742,4 @@ Function ChangeNPCTextureID%(n.NPCs, TextureID%)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

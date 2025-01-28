@@ -41,7 +41,7 @@
 - Speed up using cups slightly.
 - Syringes can restore some of the player's stamina.
 - Very Fine Eyedrops blur and blindness effects take longer before affecting the player and are shorter in duration.
-- Fine SCRAMBLE GEAR shows NPCs' positions.
+- Fine SCRAMBLE GEAR gives some useful information about NPCs.
 - Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visited.
 
@@ -64,6 +64,7 @@
 - Fixed SCP-173's spawnpoint positions in «room3_2_ez» and «room3_3_ez».
 - Fixed «RLS» drink free spawning.
 - Fixed «room2_mt» blackout spam on the elevators.
+- Fixed position of the falling guard after loading the game.
 
 [Known issues]
 - Rooms can overlap and block the way.
