@@ -1433,7 +1433,7 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 			n.NPCs = CreateNPC(NPCType1048_A, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), "SCP-1048-A")
 			;[End Block]
-		Case "1048", "scp1048", "scp-1048", "scp-1048", "bear", "builderbear"
+		Case "1048", "scp1048", "scp-1048", "bear", "builderbear"
 			;[Block]
 			n.NPCs = CreateNPC(NPCType1048, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), "SCP-1048")
