@@ -1837,6 +1837,8 @@ Function RemoveSoundInstances%()
 End Function
 
 Function LoadEvents%()
+	SeedRnd(GenerateSeedNumber(RandomSeed))
+	
 	If opt\IntroEnabled Then CreateEvent(e_cont1_173_intro, r_cont1_173_intro, 0)
 	CreateEvent(e_cont1_173, r_cont1_173, 0)
 	
