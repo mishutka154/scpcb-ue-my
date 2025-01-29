@@ -3379,7 +3379,7 @@ Function UpdateEvents%()
 						TFormPoint(-1180.0, -256.0, 896.0, e\room\OBJ, 0)
 						e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 						e\room\NPC[0]\State3 = 2.0
-						ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_MAINTENANCE)
+						ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_MAINTENANCE_TEXTURE)
 						
 						e\room\NPC[0]\SoundCHN = PlaySoundEx(LoadTempSound("SFX\Character\Maintenance\EscapeFromClosets.ogg"), Camera, e\room\NPC[0]\Collider, 12.0, 1.0, True)
 						
@@ -3533,9 +3533,9 @@ Function UpdateEvents%()
 				If e\room\Dist < 8.0
 					If e\EventState = 0.0
 						If n_I\Curr066 = Null
-							n_I\Curr066 = CreateNPC(NPCType066, EntityX(e\room\OBJ), 0.4, EntityZ(e\room\OBJ))
+							n_I\Curr066 = CreateNPC(NPCType066, EntityX(e\room\OBJ), -0.1, EntityZ(e\room\OBJ))
 						Else
-							PositionEntity(n_I\Curr066\Collider, EntityX(e\room\OBJ), 0.4, EntityZ(e\room\OBJ))
+							PositionEntity(n_I\Curr066\Collider, EntityX(e\room\OBJ), -0.1, EntityZ(e\room\OBJ))
 							ResetEntity(n_I\Curr066\Collider)
 						EndIf
 						e\EventState = 1.0

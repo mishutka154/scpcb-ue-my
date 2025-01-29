@@ -4734,7 +4734,7 @@ Const MTF_DISABLING_TESLA% = 11
 
 Function UpdateNPCTypeMTF%(n.NPCs)
 	If n\IsDead
-		AnimateNPC(n, 1050.0, 1174.0, 0.7, False)
+		AnimateNPC(n, 1050.0, 1174.0, 0.8, False)
 	Else
 		Local r.Rooms, p.Particles, n2.NPCs, w.WayPoints, de.Decals, e.Events, emit.Emitter
 		Local i%
@@ -4762,12 +4762,14 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 			EndIf
 		EndIf
 		
+		Local MyBossIsNotDead% = (MyBoss <> Null And (Not MyBoss\IsDead))
+		
 		Select n\State ; ~ What is this MTF doing
 			Case MTF_WANDERING_AROUND
 				;[Block]
 				n\Speed = 0.015
 				; ~ Set a timer to step back
-				If MyBoss <> Null
+				If MyBossIsNotDead
 					Dist = EntityDistanceSquared(n\Collider, MyBoss\Collider)
 					If Dist < 0.64 Then n\State3 = 70.0
 					If n\State3 > 0.0
@@ -4779,7 +4781,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 				EndIf
 				
 				If n\PathTimer <= 0.0 ; ~ Update path
-					If MyBoss <> Null ; ~ I'll follow my boss
+					If MyBossIsNotDead ; ~ I'll follow my boss
 						n\PathStatus = FindPath(n, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.1, EntityZ(MyBoss\Collider, True)) ; ~ Whatever you say boss
 					Else ; ~ I am the leader
 						If n_I\Curr173\Idle = 2
@@ -5763,7 +5765,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 					If Curr173Dist < 25.0
 						Local TempDist# = 1.0
 						
-						If MyBoss <> Null Then TempDist = 3.0 + (3.0 * (MyBoss = n_I\MTFCoLeader))
+						If MyBossIsNotDead Then TempDist = 3.0 + (3.0 * (MyBoss = n_I\MTFCoLeader))
 						
 						PointEntity(n\Collider, n\Target\Collider)
 						
@@ -5899,7 +5901,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 					EndIf
 					
 					If n\PathTimer <= 0.0 ; ~ Update path
-						If MyBoss <> Null ; ~ I'll follow the leader
+						If MyBossIsNotDead ; ~ I'll follow the leader
 							n\PathStatus = FindPath(n, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.1, EntityZ(MyBoss\Collider, True))
 						Else ; ~ I am the leader
 							For r.Rooms = Each Rooms
@@ -5996,7 +5998,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 				If n\State2 > 0.0
 					If NPCSeesNPC(n\Target, n) = 1 Then n\State2 = 70.0 * 10.0
 					; ~ Set a timer to step back
-					If MyBoss <> Null
+					If MyBossIsNotDead
 						Dist = EntityDistanceSquared(n\Collider, MyBoss\Collider)
 						If Dist < 0.64 Then n\State3 = 70.0
 						If n\State3 > 0.0
@@ -6008,7 +6010,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 					EndIf
 					
 					If n\PathTimer <= 0.0 ; ~ Update path
-						If MyBoss <> Null ; ~ I'll follow the leader
+						If MyBossIsNotDead ; ~ I'll follow the leader
 							n\PathStatus = FindPath(n, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.1, EntityZ(MyBoss\Collider, True)) ; ~ Whatever you say boss
 						Else ; ~ I am the leader
 							For r.Rooms = Each Rooms
@@ -6257,7 +6259,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 		; ~ Teleport companions close to the leader if they get stuck
 		If PlayerRoom\RoomTemplate\RoomID <> r_gate_a
 			If Rand(100) = 1
-				If MyBoss <> Null
+				If MyBossIsNotDead
 					If n\State = MTF_WANDERING_AROUND Lor n\State = MTF_096_SPOTTED
 						If EntityDistanceSquared(n\Collider, MyBoss\Collider) > 256.0
 							If (Not EntityInView(n\Collider, Camera)) And (Not EntityInView(MyBoss\Collider, Camera)) Then TeleportEntity(n\Collider, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.28, EntityZ(MyBoss\Collider, True), n\CollRadius, True)
@@ -6271,9 +6273,13 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 		If PlayerRoom\RoomTemplate\RoomID <> r_cont2_049 And n\InFacility = LowerFloor Then TeleportCloser(n)
 		
 		If n\HP =< 0
+			; ~ TODO!
+;			If (MTFTimer > 20000.0 And MTFTimer < 31000.0)
+;				PlayAnnouncement("SFX\Character\MTF\AnnouncLost.ogg")
+;				MTFTimer = 31000.0
+;			EndIf
+;			
 			n\IsDead = True
-			n_I\MTFLeader = Null
-			n_I\MTFCoLeader = Null
 		EndIf
 	EndIf
 	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
