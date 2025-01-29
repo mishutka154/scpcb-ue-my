@@ -48,7 +48,7 @@
 [NPCs]
 - Added SCP-999.
 - Added tesla stun animation for SCP-049.
-- Added different texture for MTF leader.
+- Added special texture for MTF leader.
 
 - Better texture for guards and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
