@@ -67,6 +67,7 @@
 - Fixed «room2_mt» blackout spam on the elevators.
 - Fixed position of the falling guard after loading the game.
 - Fixed different generation of the map and events on the same seeds.
+- Hopefully fixed render of the ending areas.
 
 [Known issues]
 - Rooms can overlap and block the way.

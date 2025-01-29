@@ -1135,7 +1135,7 @@ Function UpdateEvents%()
 							
 							Temp = UpdateLever(e\room\RoomLevers[1]\OBJ)
 							
-							If SoundTransmission <> Temp Then
+							If SoundTransmission <> Temp
 								If SoundTransmission
 									If ChannelPlaying(e\SoundCHN) 
 										ChannelVolume(e\SoundCHN, 0)
@@ -7285,6 +7285,7 @@ Function UpdateDimension106%()
 					HideRoomsNoColl(r)
 				Next
 				ShowRoomsNoColl(e\room)
+				ShowRoomsColl(e\room)
 				
 				PlayerFallingPickDistance = 0.0
 				PrevIsBlackOut = IsBlackOut : IsBlackOut = False
@@ -8193,6 +8194,8 @@ Function UpdateDimension1499%()
 					HideRoomsNoColl(r)
 				Next
 				ShowRoomsNoColl(e\room)
+				ShowRoomsColl(e\room)
+				
 				If QuickLoadPercent = 100 Lor QuickLoadPercent = -1
 					UpdateChunks(15)
 					If EntityHidden(I_1499\Sky) Then ShowEntity(I_1499\Sky)
@@ -9442,6 +9445,7 @@ Function UpdateEndings%()
 							HideRoomsNoColl(r)
 						Next
 						ShowRoomsNoColl(e\room)
+						ShowRoomsColl(e\room)
 						
 						If e\EventState < 2.0 And me\SelectedEnding = -1 
 							If e\room\NPC[0]\State = 2.0
@@ -9782,6 +9786,7 @@ Function UpdateEndings%()
 							HideRoomsNoColl(r)
 						Next
 						ShowRoomsNoColl(e\room)
+						ShowRoomsColl(e\room)
 						
 						ShouldPlay = 16
 						
