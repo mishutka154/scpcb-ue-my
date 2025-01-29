@@ -2055,7 +2055,7 @@ Function LoadWayPoints%(LoadingStart% = 55)
 				If x < 20.0
 					z = Abs(EntityZ(r\OBJ, True) - EntityZ(d\FrameOBJ, True))
 					If z < 20.0
-						Dist2 = (x * x) + (z * z)
+						Dist2 = PowTwo(x) + PowTwo(z)
 						If Dist2 < Dist
 							ClosestRoom = r
 							Dist = Dist2
@@ -2692,6 +2692,8 @@ Function InitNewGame%()
 	RenderLoading(50, GetLocalString("loading", "stuff"))
 	
 	me\BlinkTimer = -10.0 : me\BlinkEffect = 1.0 : me\Stamina = 100.0 : me\StaminaEffect = 1.0 : me\HeartBeatRate = 70.0
+	
+	SeedRnd(GenerateSeedNumber(RandomSeed))
 	
 	I_005\ChanceToSpawn = Rand(3)
 	KEY2_SPAWNRATE = Rand(6)
