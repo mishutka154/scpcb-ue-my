@@ -6273,6 +6273,7 @@ Function UpdateEvents%()
 								If IsRoomAdjacent(PlayerRoom\Adjacent[i], e\room)
 									LoadEventSound(e, "SFX\Room\035Chamber\InProximity.ogg")
 									PlaySound_Strict(e\Sound, True)
+									Exit
 								EndIf
 							Next
 						EndIf
