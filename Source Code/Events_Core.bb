@@ -5111,7 +5111,7 @@ Function UpdateEvents%()
 						PointEntity(e\room\NPC[0]\Collider, e\room\OBJ)
 						SetNPCFrame(e\room\NPC[0], 326.0)
 						
-						Local DrawingName$ = "drawing_1048(" + Rand(25) + ").png"
+						Local DrawingName$ = "drawing_1048(" + Rand(26) + ").png"
 						
 						For itt.ItemTemplates = Each ItemTemplates
 							If itt\Name = "Drawing"
