@@ -7207,13 +7207,15 @@ Function UpdateEvents%()
 					e\EventState = e\EventState + fps\Factor[0]
 					
 					If e\EventState < 70.0
-						If EntityHidden(e\room\Objects[0]) Then ShowEntity(e\room\Objects[0])
+						Temp = 1.0
 					ElseIf e\EventState < 140.0
-						If Not EntityHidden(e\room\Objects[0]) Then HideEntity(e\room\Objects[0])
+						Temp = 0.0
 					Else
 						e\EventState = 0.0
+						Temp = 1.0
 					EndIf
-					
+					e\EventState3 = CurveValue(Temp, e\EventState3, 10.0)
+					EntityAlpha(e\room\Objects[0], e\EventState3) 
 					; ~ Interact with Ordinary Duck
 					If InteractObject(e\room\Objects[1], 0.8)
 						If I_714\Using <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 4
