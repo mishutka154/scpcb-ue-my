@@ -1,6 +1,8 @@
 {v1.5}
 
 [Global]
+- Use SoLoud instead of FMod for audio engine.
+
 - Added decay sound for corroded doors.
 - Added a tiny camera zoom which creates the effect of moving leaves.
 
@@ -55,6 +57,7 @@
 - Better texture for guards and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.
+- SCP-966 now reduces the player's stamina regeneration.
 
 [Bug Fixes]
 - Fixed SCP-789-J trigger distance.
