@@ -3546,8 +3546,8 @@ Function UpdateGUI%()
 		EndIf
 	EndIf
 	
+	If I_294\Using Then Update294()
 	If (Not (MenuOpen Lor me\Terminated Lor ConsoleOpen))
-		If I_294\Using Then Update294()
 		If (Not (InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null))
 			If d_I\ClosestButton <> 0
 				If mo\MouseUp1
@@ -9682,7 +9682,7 @@ Global I_294.SCP294
 
 Function Update294%()
 	Local it.Items
-	Local x#, y#, StrTemp$, Temp%, Temp2%
+	Local x#, y#, xTemp%, yTemp%, StrTemp$, Temp%, Temp2%
 	Local Alpha#
 	
 	x = mo\Viewport_Center_X - (ImageWidth(t\ImageID[5]) / 2)
@@ -9691,9 +9691,166 @@ Function Update294%()
 	Temp = (PlayerRoom\SoundCHN = 0)
 	
 	If Temp
-		; ~ TODO: Upper function doesn't work for some localizations!
-		I_294\ToInput = Upper(UpdateInput(I_294\ToInput, 64))
-		If mo\MouseHit1 Lor KeyHit(28)
+		If mo\MouseHit1
+			xTemp = Floor((MousePosX - x - (228 * MenuScale)) / (35.5 * MenuScale))
+			yTemp = Floor((MousePosY - y - (342 * MenuScale)) / (36.5 * MenuScale))
+			
+			Temp = False
+			
+			If (yTemp >= 0 And yTemp < 5) And (xTemp >= 0 And xTemp < 10)
+				PlaySound_Strict(ButtonSFX[0])
+				
+				StrTemp = ""
+				
+				Select yTemp
+					Case 0
+						;[Block]
+						StrTemp = ((xTemp + 1) Mod 10)
+						;[End Block]
+					Case 1
+						;[Block]
+						Select xTemp
+							Case 0
+								;[Block]
+								StrTemp = "Q"
+								;[End Block]
+							Case 1
+								;[Block]
+								StrTemp = "W"
+								;[End Block]
+							Case 2
+								;[Block]
+								StrTemp = "E"
+								;[End Block]
+							Case 3
+								;[Block]
+								StrTemp = "R"
+								;[End Block]
+							Case 4
+								;[Block]
+								StrTemp = "T"
+								;[End Block]
+							Case 5
+								;[Block]
+								StrTemp = "Y"
+								;[End Block]
+							Case 6
+								;[Block]
+								StrTemp = "U"
+								;[End Block]
+							Case 7
+								;[Block]
+								StrTemp = "I"
+								;[End Block]
+							Case 8
+								;[Block]
+								StrTemp = "O"
+								;[End Block]
+							Case 9
+								;[Block]
+								StrTemp = "P"
+								;[End Block]
+						End Select
+						;[End Block]
+					Case 2
+						;[Block]
+						Select Int(xTemp)
+							Case 0
+								;[Block]
+								StrTemp = "A"
+								;[End Block]
+							Case 1
+								;[Block]
+								StrTemp = "S"
+								;[End Block]
+							Case 2
+								;[Block]
+								StrTemp = "D"
+								;[End Block]
+							Case 3
+								;[Block]
+								StrTemp = "F"
+								;[End Block]
+							Case 4
+								;[Block]
+								StrTemp = "G"
+								;[End Block]
+							Case 5
+								;[Block]
+								StrTemp = "H"
+								;[End Block]
+							Case 6
+								;[Block]
+								StrTemp = "J"
+								;[End Block]
+							Case 7
+								;[Block]
+								StrTemp = "K"
+								;[End Block]
+							Case 8
+								;[Block]
+								StrTemp = "L"
+								;[End Block]
+							Case 9 ; ~ Dispense
+								;[Block]
+								Temp = True
+								;[End Block]
+						End Select
+						;[End Block]
+					Case 3
+						;[Block]
+						Select Int(xTemp)
+							Case 0
+								;[Block]
+								StrTemp = "Z"
+								;[End Block]
+							Case 1
+								;[Block]
+								StrTemp = "X"
+								;[End Block]
+							Case 2
+								;[Block]
+								StrTemp = "C"
+								;[End Block]
+							Case 3
+								;[Block]
+								StrTemp = "V"
+								;[End Block]
+							Case 4
+								;[Block]
+								StrTemp = "B"
+								;[End Block]
+							Case 5
+								;[Block]
+								StrTemp = "N"
+								;[End Block]
+							Case 6
+								;[Block]
+								StrTemp = "M"
+								;[End Block]
+							Case 7
+								;[Block]
+								StrTemp = "-"
+								;[End Block]
+							Case 8
+								;[Block]
+								StrTemp = " "
+								;[End Block]
+							Case 9
+								;[Block]
+								I_294\ToInput = Left(I_294\ToInput, Max(Len(I_294\ToInput) - 1, 0))
+								;[End Block]
+						End Select
+						;[End Block]
+					Case 4
+						;[Block]
+						StrTemp = " "
+						;[End Block]
+				End Select
+			EndIf
+			
+			I_294\ToInput = I_294\ToInput + StrTemp
+			
 			If Temp And I_294\ToInput <> "" ; ~ Dispense
 				I_294\ToInput = Trim(I_294\ToInput)
 				If Left(I_294\ToInput, Min(7, Len(I_294\ToInput))) = "cup of "
@@ -9708,7 +9865,7 @@ Function Update294%()
 					If (Not JsonIsNull(JsonGetValue(Drink, "dispense_sound"))) Then PlayerRoom\SoundCHN = PlaySound_Strict(LoadTempSound(JsonGetString(JsonGetValue(Drink, "dispense_sound"))))
 					
 					If me\UsedMastercard > 0
-						Local CardID% = it_mastercard + (me\UsedMastercard = 2) ; ~ NOTICE: THAT it_mastercard = 97 and it_mastercard_golden = 98
+						Local CardID% = it_mastercard + (me\UsedMastercard = 2) ; ~ NOTICE: THAT it_mastercard = 92 and it_mastercard_golden = 93
 						Local i%
 						
 						PlaySound_Strict(LoadTempSound("SFX\SCP\294\PullMasterCard.ogg"))
