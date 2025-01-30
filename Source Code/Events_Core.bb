@@ -2539,6 +2539,7 @@ Function UpdateEvents%()
 						UpdateForest(fr)
 						
 						If e\room\NPC[0] = Null And e\EventState4 = 0.0 Then e\room\NPC[0] = CreateNPC(NPCType860_2, 0.0, 0.0, 0.0)
+						me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSec) / 20.0) + 1.0) * 5.0)
 						If e\EventState4 = 1.0
 							ShouldPlay = 33
 							If Rand(100) = 1

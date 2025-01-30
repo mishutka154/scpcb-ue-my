@@ -2,6 +2,7 @@
 
 [Global]
 - Added decay sound for corroded doors.
+- Added a tiny camera zoom which creates the effect of moving leaves.
 
 - Removed buttons glowing.
 - SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
