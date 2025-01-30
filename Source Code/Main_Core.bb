@@ -9865,7 +9865,7 @@ Function Update294%()
 					If (Not JsonIsNull(JsonGetValue(Drink, "dispense_sound"))) Then PlayerRoom\SoundCHN = PlaySound_Strict(LoadTempSound(JsonGetString(JsonGetValue(Drink, "dispense_sound"))))
 					
 					If me\UsedMastercard > 0
-						Local CardID% = it_mastercard + (me\UsedMastercard = 2) ; ~ NOTICE: THAT it_mastercard = 92 and it_mastercard_golden = 93
+						Local CardID% = it_mastercard + (me\UsedMastercard = 2)  ; ~ NOTICE: it_mastercard = 97 and it_mastercard_golden = 98
 						Local i%
 						
 						PlaySound_Strict(LoadTempSound("SFX\SCP\294\PullMasterCard.ogg"))

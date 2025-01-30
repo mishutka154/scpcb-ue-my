@@ -337,9 +337,9 @@ Function DeInitSubtitlesAssets%()
 		RemoveSubtitlesToken(snd)
 	Next
 
-	FreeTexture(subassets\BoxTexture)
-	FreeEntity(subassets\BoxSprite)
-	FreeEntity(subassets\BoxCamera)
+	FreeTexture(subassets\BoxTexture) : subassets\BoxTexture = 0
+	FreeEntity(subassets\BoxSprite) : subassets\BoxSprite = 0
+	FreeEntity(subassets\BoxCamera) : subassets\BoxCamera = 0
 
 	Delete(subassets) : subassets = Null
 End Function
