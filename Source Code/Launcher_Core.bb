@@ -325,7 +325,7 @@ Function UpdateLauncher%(lnchr.Launcher)
 		DrawBlock(LauncherIMG[0], LauncherWidth - 460, LauncherHeight - 86, 2)
 		If MouseOn(LauncherWidth - 380, LauncherHeight - 86, 64, 64)
 			Rect(LauncherWidth - 381, LauncherHeight - 87, 66, 66, False)
-			TextEx(LauncherWidth - 380 + LauncherMediaWidth, LauncherHeight - 106, "Wiki", True)
+			TextEx(LauncherWidth - 380 + LauncherMediaWidth, LauncherHeight - 106, "WIKI", True)
 			If mo\MouseHit1
 				PlaySound_Strict(ButtonSFX[0])
 				ExecFile_Strict("https://scpcbultimatereborn.miraheze.org/wiki/Main_Page")
