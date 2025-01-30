@@ -69,18 +69,18 @@ End Type
 Function UpdateSubtitles%()
 	If SelectedDifficulty\Name = difficulties[APOLLYON]\Name Lor (Not opt\EnableSubtitles) Then Return
 	
-	Local queue.QueuedSubtitlesMsg
-	Local lastSubtitles.SubtitlesMsg
+	Local Queue.QueuedSubtitlesMsg
+	Local LastSubtitles.SubtitlesMsg
 	Local CoordEx% = (10 * MenuScale)
 	
-	For queue.QueuedSubtitlesMsg = Each QueuedSubtitlesMsg
-		If queue\TimeStart > 0.0
-			queue\TimeStart = queue\TimeStart - fps\Factor[0]
+	For Queue.QueuedSubtitlesMsg = Each QueuedSubtitlesMsg
+		If Queue\TimeStart > 0.0
+			Queue\TimeStart = Queue\TimeStart - fps\Factor[0]
 		Else
-			Local TxtLine$ = queue\Txt
+			Local TxtLine$ = Queue\Txt
 			Local HasSplit% = False
 			
-			lastSubtitles.SubtitlesMsg = Last SubtitlesMsg
+			LastSubtitles.SubtitlesMsg = Last SubtitlesMsg
 			
 			; ~ Split long lines of text into multiple lines
 			While Len(TxtLine) > 0
@@ -122,20 +122,20 @@ Function UpdateSubtitles%()
 					
 					; ~ Move previously added lines upwards
 					If HasSplit
-						lastSubtitles\yPos = lastSubtitles\yPos - subassets\TextHeight
-						lastSubtitles\CurrYPos = lastSubtitles\CurrYPos - subassets\TextHeight
+						LastSubtitles\yPos = LastSubtitles\yPos - subassets\TextHeight
+						LastSubtitles\CurrYPos = LastSubtitles\CurrYPos - subassets\TextHeight
 						
-						If Before lastSubtitles <> Null Then lastSubtitles = Before lastSubtitles
+						If Before LastSubtitles <> Null Then LastSubtitles = Before LastSubtitles
 					EndIf
-					CreateSubtitlesMsg(queue\SoundPath, queue\snd, Trim(TxtLine), queue\TimeLeft, queue\R, queue\G, queue\B)
+					CreateSubtitlesMsg(Queue\SoundPath, Queue\snd, Trim(TxtLine), Queue\TimeLeft, Queue\R, Queue\G, Queue\B)
 					HasSplit = True
 					TxtLine = NextLine
 				Else
-					CreateSubtitlesMsg(queue\SoundPath, queue\snd, Trim(TxtLine), queue\TimeLeft, queue\R, queue\G, queue\B)
+					CreateSubtitlesMsg(Queue\SoundPath, Queue\snd, Trim(TxtLine), Queue\TimeLeft, Queue\R, Queue\G, Queue\B)
 					TxtLine = ""
 				EndIf
 			Wend
-			Delete(queue)
+			Delete(Queue)
 		EndIf
 	Next
 	
@@ -252,10 +252,10 @@ Function CreateSubtitlesToken%(SoundPath$, snd.Sound)
 End Function
 
 Function RemoveSubtitlesToken%(snd.Sound)
-	Local queue.QueuedSubtitlesMsg
+	Local Queue.QueuedSubtitlesMsg
 	
-	For queue.QueuedSubtitlesMsg = Each QueuedSubtitlesMsg
-		If queue\snd = snd Then Delete(queue)
+	For Queue.QueuedSubtitlesMsg = Each QueuedSubtitlesMsg
+		If Queue\snd = snd Then Delete(Queue)
 	Next
 End Function
 
@@ -270,20 +270,20 @@ End Function
 Function QueueSubtitlesMsg%(SoundPath$, snd.Sound, Txt$, TimeStart#, TimeLeft#, R% = 255, G% = 255, B% = 255)
 	If Txt = "" Lor Left(Txt, 1) = "[" Then Return
 	
-	Local queue.QueuedSubtitlesMsg
+	Local Queue.QueuedSubtitlesMsg
 	
-	queue.QueuedSubtitlesMsg = New QueuedSubtitlesMsg
-	queue\SoundPath = SoundPath
-	queue\snd = snd
+	Queue.QueuedSubtitlesMsg = New QueuedSubtitlesMsg
+	Queue\SoundPath = SoundPath
+	Queue\snd = snd
 	
-	queue\Txt = Txt
+	Queue\Txt = Txt
 	
-	queue\R = R : queue\G = G : queue\B = B
+	Queue\R = R : Queue\G = G : Queue\B = B
 	
-	queue\TimeLeft = TimeLeft * 70.0
-	queue\TimeStart = TimeStart * 70.0
+	Queue\TimeLeft = TimeLeft * 70.0
+	Queue\TimeStart = TimeStart * 70.0
 	
-	Insert queue Before First QueuedSubtitlesMsg
+	Insert Queue Before First QueuedSubtitlesMsg
 End Function
 
 Function CreateSubtitlesMsg%(SoundPath$, snd.Sound, Txt$, TimeLeft#, R% = 255, G% = 255, B% = 255)
@@ -314,9 +314,9 @@ Function CreateSubtitlesMsg%(SoundPath$, snd.Sound, Txt$, TimeLeft#, R% = 255, G
 	sub\TextIndex = 0
 	
 	Local Lines% = 0
-	Local subtitles.SubtitlesMsg
+	Local sub2.SubtitlesMsg
 	
-	For subtitles.SubtitlesMsg = Each SubtitlesMsg
+	For sub2.SubtitlesMsg = Each SubtitlesMsg
 		Lines = Lines + 1
 	Next
 	
