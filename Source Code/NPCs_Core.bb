@@ -346,8 +346,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_966_MODEL])
-			Temp = IniGetFloat(NPCsFile, "SCP-966", "Scale") / 40.0
-			ScaleEntity(n\OBJ, Temp, Temp, Temp)
+			n\ModelScale = IniGetFloat(NPCsFile, "SCP-966", "Scale") / 40.0 * Rnd(0.875, 1.0)
+			ScaleEntity(n\OBJ, n\ModelScale, n\ModelScale, n\ModelScale)
 			SetNPCFrame(n, 15.0)
 			;[End Block]
 		Case NPCType999
