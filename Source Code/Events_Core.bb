@@ -7765,11 +7765,11 @@ Function UpdateDimension106%()
 						;[End Block]
 					Case PD_Labyrinth
 						;[Block]
-						fog\FarDist = 4.0
+						fog\FarDist = 3.5
 						
 						UpdateDoors()
 						
-						me\Injuries = me\Injuries + (fps\Factor[0] * 0.0001)
+						me\Injuries = me\Injuries + (fps\Factor[0] * 0.00015)
 						
 						If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[8], True) + 7202.0 * RoomScale, EntityZ(me\Collider), EntityZ(e\room\Objects[8], True) + 1502.0 * RoomScale) > PowTwo(3678.0 * RoomScale)
 							n_I\Curr106\Speed = n_I\Curr106\Speed * 3.0
