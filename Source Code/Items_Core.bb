@@ -39,7 +39,7 @@ Const it_ticket% = 7
 ;[Block]
 Const it_scp005% = 8
 Const it_coarse005% = 9
-Const it_fine005% = 10
+Const it_crystal005% = 10
 
 Const it_scp148ingot% = 11
 Const it_scp148% = 12
@@ -862,6 +862,13 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 						Use1123()
 						If I_714\Using <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then Return
 						;[End Block]
+					Case it_crystal005
+						;[Block]
+						If I_409\Timer = 0.0 And (Not I_427\Using)
+							me\BlurTimer = Max(1000.0, me\BlurTimer)
+							I_409\Timer = 0.001
+						EndIf
+						;[End Block]
 					Case it_killbat
 						;[Block]
 						me\LightFlash = 1.0
@@ -881,7 +888,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 						;[Block]
 						GiveAchievement("omni")
 						;[End Block]
-					Case it_scp005, it_coarse005, it_fine005
+					Case it_scp005, it_coarse005, it_crystal005
 						;[Block]
 						GiveAchievement("005")
 						;[End Block]
@@ -1001,6 +1008,13 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 		Case it_scp1123
 			;[Block]
 			Use1123()
+			;[End Block]
+		Case it_crystal005
+			;[Block]
+			If I_409\Timer = 0.0 And (Not I_427\Using)
+				me\BlurTimer = Max(1000.0, me\BlurTimer)
+				I_409\Timer = 0.001
+			EndIf
 			;[End Block]
 	End Select
 	
@@ -1174,7 +1188,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					If Rand(50) = 1
+					If Rand(75) = 1
 						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
 						it2.Items = CreateItem("Fine Gas Mask", it_finegasmask, x, y, z)
@@ -1182,7 +1196,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					If Rand(100) = 1
+					If Rand(150) = 1
 						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
 						it2.Items = CreateItem("Very Fine Gas Mask", it_veryfinegasmask, x, y, z)
@@ -2020,7 +2034,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case it_scp005, it_coarse005, it_fine005
+		Case it_scp005, it_coarse005, it_crystal005
 			;[Block]
 			Select Setting
 				Case ROUGH
@@ -2052,7 +2066,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-005", it_fine005, x, y, z)
+					If item\ItemTemplate\ID = it_crystal005
+						it2.Items = CreateItem("SCP-005", it_scp005, x, y, z)
+					Else
+						Remove = False
+					EndIf
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2916,7 +2934,7 @@ Function GetUsingItem%(item.Items)
 			;[Block]
 			Return(KEY_CARD_OMNI)
 			;[End Block]
-		Case it_scp005, it_coarse005, it_fine005
+		Case it_scp005, it_coarse005, it_crystal005
 			;[Block]
 			Return(KEY_005)
 			;[End Block]
