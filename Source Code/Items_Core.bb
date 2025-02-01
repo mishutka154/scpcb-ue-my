@@ -1188,7 +1188,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					If Rand(50) = 1
+					If Rand(75) = 1
 						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
 						it2.Items = CreateItem("Fine Gas Mask", it_finegasmask, x, y, z)
@@ -1196,7 +1196,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					If Rand(100) = 1
+					If Rand(150) = 1
 						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
 						it2.Items = CreateItem("Very Fine Gas Mask", it_veryfinegasmask, x, y, z)
