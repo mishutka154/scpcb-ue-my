@@ -25,6 +25,7 @@
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - Added Revision Eyedrops in «room2_closets».
+- Changed SCP-005 in «cont2_409» to a crystallized variant.
 
 - Lowered clearance access of «room1_storage» to level 1.
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
@@ -34,6 +35,7 @@
 - Reduced spawn chance of «room2_tesla_lcz».
 - Moved Gas Mask to the lower floor of «room2_closets».
 - Return back a second quarter in the cafeteria room.
+- Pocket Dimension Labyrinth deals more damage to the player.
 
 - Design improvements for some rooms...
 
@@ -48,6 +50,7 @@
 - Fine SCRAMBLE GEAR gives some useful information about NPCs.
 - Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visited.
+- SCP-500 always spawns now.
 
 [NPCs]
 - Added SCP-999.
@@ -58,6 +61,7 @@
 - SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.
 - SCP-966 now reduces the player's stamina regeneration.
+- SCP-966's height is now randomized.
 
 [Bug Fixes]
 - Fixed SCP-789-J trigger distance.
