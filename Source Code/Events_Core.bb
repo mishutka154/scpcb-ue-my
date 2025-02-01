@@ -889,21 +889,10 @@ Function UpdateEvents%()
 					If (e\EventState Mod 600.0 > 300.0) And ((e\EventState + fps\Factor[0]) Mod 600.0 < 300.0)
 						i = Floor((e\EventState - 5000.0) / 600.0) + 1.0
 						
-						Select i
-							Case 0
-								;[Block]
-								PlayAnnouncement("SFX\Room\Intro\IA\Scripted\Scripted5.ogg")
-								CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
-								;[End Block]
-							Case 1
-								;[Block]
-								CreateHintMsg(Format(GetLocalString("msg", "lean.left"), key\Name[key\LEAN_LEFT]), 6.0, True)
-								;[End Block]
-							Case 2
-								;[Block]
-								CreateHintMsg(Format(GetLocalString("msg", "lean.right"), key\Name[key\LEAN_RIGHT]), 6.0, True)
-								;[End Block]
-						End Select
+						If i = 0
+							PlayAnnouncement("SFX\Room\Intro\IA\Scripted\Scripted5.ogg")
+							CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
+						EndIf
 						If i > 0 And i < 26
 							If (Not CommotionState[i]) ; ~ Prevents the same commotion file from playing more then once
 								PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Commotion\Commotion" + (i - 1) + ".ogg"))

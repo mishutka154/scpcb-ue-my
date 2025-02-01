@@ -6,6 +6,7 @@
 - Added decay sound for corroded doors.
 - Added a tiny camera zoom which creates the effect of moving leaves.
 
+- Removed leaning.
 - Removed buttons glowing.
 - SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
 - Partially reverted SCP-079 increased chances to hack monitors with SCP-895.

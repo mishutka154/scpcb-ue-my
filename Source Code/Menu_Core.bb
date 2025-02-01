@@ -781,11 +781,6 @@ Function UpdateMainMenu%()
 						UpdateMenuInputBox(x - (150 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SPRINT, 210)], Font_Default, 7)
 						UpdateMenuInputBox(x + (140 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210)], Font_Default, 13)
 						
-						y = y + (20 * MenuScale)
-						
-						UpdateMenuInputBox(x - (150 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\LEAN_LEFT, 210)], Font_Default, 14)
-						UpdateMenuInputBox(x + (140 * MenuScale), y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\LEAN_RIGHT, 210)], Font_Default, 15)
-						
 						If opt\CanOpenConsole
 							y = y + (20 * MenuScale)
 							
@@ -845,14 +840,6 @@ Function UpdateMainMenu%()
 								Case 13
 									;[Block]
 									key\SCREENSHOT = TempKey
-									;[End Block]
-								Case 14
-									;[Block]
-									key\LEAN_LEFT = TempKey
-									;[End Block]
-								Case 15
-									;[Block]
-									key\LEAN_RIGHT = TempKey
 									;[End Block]
 							End Select
 							SelectedInputBox = 0
@@ -1665,11 +1652,6 @@ Function RenderMainMenu%()
 					
 					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.sprint"))
 					TextEx(x + (260 * MenuScale), y + (5 * MenuScale), GetLocalString("options", "key.screenshot"))
-					
-					y = y + (20 * MenuScale)
-					
-					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.lean.left"))
-					TextEx(x + (260 * MenuScale), y + (5 * MenuScale), GetLocalString("options", "key.lean.right"))
 					
 					If opt\CanOpenConsole
 						y = y + (20 * MenuScale)

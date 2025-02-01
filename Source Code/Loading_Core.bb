@@ -2201,7 +2201,7 @@ Type Player
 	Field HeartBeatRate#, HeartBeatTimer#, HeartBeatVolume#
 	Field Injuries#, Bloodloss#, PrevInjuries#, PrevBloodloss#, HealTimer#
 	Field DropSpeed#, HeadDropSpeed#, CurrSpeed#
-	Field Crouch%, CrouchState#, Lean#
+	Field Crouch%, CrouchState#
 	Field SndVolume#
 	Field SelectedEnding%, EndingScreen%, EndingTimer#
 	Field CreditsScreen%, CreditsTimer#

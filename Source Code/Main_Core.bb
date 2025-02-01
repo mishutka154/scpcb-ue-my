@@ -487,7 +487,6 @@ Function UpdateGame%()
 			If wi\NightVision = 0 Then DarkAlpha = Max((1.0 - SecondaryLightOn) * 0.9, DarkAlpha)
 			
 			If me\Terminated
-				me\Lean = CurveValue(0.0, me\Lean, 6.0)
 				ResetSelectedStuff()
 				me\BlurTimer = me\KillAnimTimer * 5.0
 				If me\SelectedEnding <> -1
@@ -2843,17 +2842,8 @@ Function UpdateMoving%()
 			Temp2 = Temp2 / Max((me\Injuries + 3.0 - (2.25 * (I_1025\FineState[3] > 0.0))) / 3.0, 1.0)
 			If me\Injuries > 0.5 Then Temp2 = Temp2 * Min((Sin(me\Shake / 2.0) + 1.2), 1.0) ; ~ Find way to cap minimum speed or something later
 			Temp = False
-			me\Lean = CurveValue(0.0, me\Lean, 12.0)
 			If me\Playable And me\FallTimer >= 0.0 And (Not me\Terminated)
 				If (Not me\Zombie)
-					If (Not KeyDown(key\SPRINT)) And (Not InvOpen) And OtherOpen = Null
-						If KeyDown(key\LEAN_LEFT)
-							If (Not KeyDown(key\LEAN_RIGHT)) Then me\Lean = CurveValue(20.0, me\Lean, 6.0 + (6.0 * (me\Injuries > 3.0)))
-						ElseIf KeyDown(key\LEAN_RIGHT)
-							me\Lean = CurveValue(-20.0, me\Lean, 6.0 + (6.0 * (me\Injuries > 3.0)))
-						EndIf
-					EndIf
-					
 					If KeyDown(key\MOVEMENT_DOWN)
 						If (Not KeyDown(key\MOVEMENT_UP))
 							Temp = True
@@ -3055,13 +3045,10 @@ Function UpdateMouseLook%()
 		EndIf
 		
 		Local Up# = (Sin(me\Shake) / (20.0 + me\CrouchState * 20.0)) * 0.6
-		Local Roll# = Clamp(Sin(me\Shake / 2.0) * 2.5 * Min((me\Injuries * (1.0 - (0.75 * (I_1025\FineState[3] > 0.0)))) + 0.25, 3.0), -8.0, 8.0) + me\Lean
+		Local Roll# = Clamp(Sin(me\Shake / 2.0) * 2.5 * Min((me\Injuries * (1.0 - (0.75 * (I_1025\FineState[3] > 0.0)))) + 0.25, 3.0), -8.0, 8.0)
 		
 		RotateEntity(Camera, EntityPitch(me\Collider), EntityYaw(me\Collider), Roll / 2.0)
-		
-		Local Yaw# = EntityYaw(Camera)
-		
-		PositionEntity(Camera, EntityX(me\Collider) - Cos(Yaw) * me\Lean * 0.0055, EntityY(me\Collider) + Up + 0.6 + me\CrouchState * (-0.3), EntityZ(me\Collider) - Sin(Yaw) * me\Lean * 0.0055)
+		PositionEntity(Camera, EntityX(me\Collider), EntityY(me\Collider) + Up + 0.6 + me\CrouchState * (-0.3), EntityZ(me\Collider))
 		
 		; ~ Update the smoothing que to smooth the movement of the mouse
 		Local Temp# = (opt\MouseSensitivity + 0.5)
@@ -7801,14 +7788,6 @@ Function UpdateMenu%()
 						
 						UpdateMenuInputBox(x, y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\SCREENSHOT, 210)], Font_Default, 13)
 						
-						y = y + (20 * MenuScale)
-						
-						UpdateMenuInputBox(x, y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\LEAN_LEFT, 210)], Font_Default, 14)
-						
-						y = y + (20 * MenuScale)
-						
-						UpdateMenuInputBox(x, y, 110 * MenuScale, 20 * MenuScale, key\Name[Min(key\LEAN_RIGHT, 210)], Font_Default, 15)
-						
 						If opt\CanOpenConsole
 							y = y + (20 * MenuScale)
 							
@@ -7868,14 +7847,6 @@ Function UpdateMenu%()
 								Case 13
 									;[Block]
 									key\SCREENSHOT = TempKey
-									;[End Block]
-								Case 14
-									;[Block]
-									key\LEAN_LEFT = TempKey
-									;[End Block]
-								Case 15
-									;[Block]
-									key\LEAN_RIGHT = TempKey
 									;[End Block]
 							End Select
 							SelectedInputBox = 0
@@ -8441,21 +8412,13 @@ Function RenderMenu%()
 						
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.screenshot"))
 						
-						y = y + (20 * MenuScale)
-						
-						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.lean.left"))
-						
-						y = y + (20 * MenuScale)
-						
-						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.lean.right"))
-						
 						If opt\CanOpenConsole
 							y = y + (20 * MenuScale)
 							
 							TextEx(x, y + (5 * MenuScale), GetLocalString("options", "key.console"))
 						EndIf
 						
-						If MouseOn(x, y - ((140 + (20 * opt\CanOpenConsole)) * MenuScale), 380 * MenuScale, ((240 + (20 * opt\CanOpenConsole)) * MenuScale)) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ControlConfiguration)
+						If MouseOn(x, y - ((140 + (20 * opt\CanOpenConsole)) * MenuScale), 380 * MenuScale, ((160 + (20 * opt\CanOpenConsole)) * MenuScale)) Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ControlConfiguration)
 						
 						RenderMenuButtons()
 						RenderMenuTicks()
