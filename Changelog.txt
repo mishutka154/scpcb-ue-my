@@ -17,6 +17,7 @@
 - Player now regenerates blood when no longer bleeding, recovery rate depends on injury and caps at 60% bloodloss before stopping.
 - Slightly increase stamina regeneration when standing still.
 - Now the anomalous clock smoothly changes alpha.
+- Changed auto save timer from 2 mins to 1 min.
 
 [Launcher]
 - Added wiki button.

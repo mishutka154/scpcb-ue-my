@@ -3012,7 +3012,7 @@ Function InitOtherStuff%()
 	chs\NoClipSpeed = 2.0
 	If opt\DebugMode Then InitCheats()
 	
-	as\Timer = 70.0 * 120.0
+	as\Timer = 70.0 * 70.0
 	If SelectedDifficulty\SaveType <> SAVE_ANYWHERE Then opt\AutoSaveEnabled = False
 End Function
 
