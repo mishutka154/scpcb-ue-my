@@ -3577,7 +3577,7 @@ Function UpdateGUI%()
 	
 	If d_I\SelectedDoor <> Null
 		If SelectedItem <> Null
-			If SelectedItem\ItemTemplate\ID = it_scp005 Lor SelectedItem\ItemTemplate\ID = it_coarse005 Lor SelectedItem\ItemTemplate\ID = it_fine005
+			If SelectedItem\ItemTemplate\ID = it_scp005 Lor SelectedItem\ItemTemplate\ID = it_coarse005 Lor SelectedItem\ItemTemplate\ID = it_crystal005
 				UseDoor()
 				ShouldDrawHUD = False
 			Else
@@ -4027,7 +4027,7 @@ Function UpdateGUI%()
 						PrevItem = Inventory(MouseSlot)
 						
 						Select SelectedItem\ItemTemplate\ID
-							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_burntbadge, it_harnbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill, it_fine005
+							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_burntbadge, it_harnbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill
 								;[Block]
 								If Inventory(MouseSlot)\ItemTemplate\ID = it_clipboard
 									; ~ Add an item to clipboard
@@ -6034,9 +6034,16 @@ Function UpdateGUI%()
 					Use1123()
 					SelectedItem = Null
 					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_fine005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden, it_paper
+				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden, it_paper
 					;[Block]
 					; ~ Skip this line
+					;[End Block]
+				Case it_crystal005
+					;[Block]
+					If I_409\Timer = 0.0 And (Not I_427\Using)
+						me\BlurTimer = Max(1000.0, me\BlurTimer)
+						I_409\Timer = 0.001
+					EndIf
 					;[End Block]
 				Case it_e_reader, it_e_reader20, it_e_reader30
 					;[Block]
@@ -6705,7 +6712,7 @@ Function RenderGUI%()
 	
 	If d_I\SelectedDoor <> Null
 		If SelectedItem <> Null
-			If SelectedItem\ItemTemplate\ID = it_scp005 Lor SelectedItem\ItemTemplate\ID = it_coarse005 Lor SelectedItem\ItemTemplate\ID = it_fine005  Then ShouldDrawHUD = False
+			If SelectedItem\ItemTemplate\ID = it_scp005 Lor SelectedItem\ItemTemplate\ID = it_coarse005 Lor SelectedItem\ItemTemplate\ID = it_crystal005 Then ShouldDrawHUD = False
 		EndIf
 		If ShouldDrawHUD
 			Local ButtonPosX# = EntityX(d_I\ClosestButton, True)
@@ -7123,7 +7130,7 @@ Function RenderGUI%()
 					
 					RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State)
 					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_fine005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
+				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
 					;[Block]
 					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
 					;[End Block]

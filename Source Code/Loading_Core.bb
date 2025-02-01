@@ -1178,7 +1178,7 @@ Function LoadItems%()
 	;[Block]
 	CreateItemTemplate("SCP-005", "SCP-005", it_scp005, "scp_005.b3d", "INV_scp_005.png", "", 0.0003, 1)
 	CreateItemTemplate("SCP-005", "Coarse SCP-005", it_coarse005, "scp_005.b3d", "INV_scp_005.png", "", 0.0003, 1)
-	CreateItemTemplate("SCP-005", "Fine SCP-005", it_fine005, "scp_005.b3d", "INV_scp_005.png", "", 0.0002, 1)
+	CreateItemTemplate("SCP-005", "Crystallized SCP-005", it_crystal005, "scp_005.b3d", "INV_scp_005_crystal.png", "", 0.0003, 1, "scp_005_crystal.png")
 	
 	CreateItemTemplate(GetLocalString("items", "148"), "SCP-148 Ingot", it_scp148ingot, "scp_148.b3d", "INV_scp_148.png", "", RoomScale, 2)
 	CreateItemTemplate(GetLocalString("items", "metalpanel"), "Metal Panel", it_scp148, "metal_panel.b3d", "INV_metal_panel.png", "", RoomScale, 2)

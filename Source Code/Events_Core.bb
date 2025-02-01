@@ -2431,7 +2431,7 @@ Function UpdateEvents%()
 							
 							TFormPoint(-5000.0, -4409.0, 1520.0, e\room\OBJ, 0)
 							If I_005\ChanceToSpawn = 2
-								it.Items = CreateItem("SCP-005", it_scp005, TFormedX(), TFormedY(), TFormedZ())
+								it.Items = CreateItem("Crystallized SCP-005", it_crystal005, TFormedX(), TFormedY(), TFormedZ())
 							Else
 								it.Items = CreateItem("Level 5 Key Card", it_key5, TFormedX(), TFormedY(), TFormedZ())
 							EndIf
