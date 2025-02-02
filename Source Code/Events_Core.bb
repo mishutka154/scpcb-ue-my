@@ -2519,129 +2519,51 @@ Function UpdateEvents%()
 				Local fr.Forest = e\room\fr
 				
 				If PlayerRoom = e\room And fr <> Null
-					If e\EventState = 1.0 ; ~ The player is in the forest
-						For r.Rooms = Each Rooms
-							HideRoomsNoColl(r)
-						Next
-						ShowRoomsNoColl(e\room)
+					If (Not EntityHidden(fr\Forest_Pivot)) Then HideEntity(fr\Forest_Pivot)
+					; ~ Reset the doors after leaving the forest
+					For i = 0 To 1
+						fr\ForestDoors[i]\Open = False
+						fr\ForestDoors[i]\Locked = 2
+					Next
+					
+					If e\room\RoomDoors[0]\Open
+						If EntityHidden(fr\Forest_Pivot) Then ShowEntity(fr\Forest_Pivot)
 						
-						UpdateForest(fr)
+						me\BlinkTimer = -10.0
 						
-						If e\room\NPC[0] = Null And e\EventState4 = 0.0 Then e\room\NPC[0] = CreateNPC(NPCType860_2, 0.0, 0.0, 0.0)
-						me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSec) / 20.0) + 1.0) * 5.0)
-						If e\EventState4 = 1.0
-							ShouldPlay = 33
-							If Rand(100) = 1
-								me\CameraShake = 0.7
-								me\HeartBeatVolume = 0.7
-								me\HeartBeatRate = Rnd(60, 70)
-							EndIf
-						Else
-							ShouldPlay = 9
-						EndIf
-						If e\room\NPC[0] <> Null
-							If (e\room\NPC[0]\State2 = 1.0 And e\room\NPC[0]\State > 1.0) Lor e\room\NPC[0]\State > 2.0 Then ShouldPlay = 12 ; ~ The monster is chasing the player
-						EndIf
+						; ~ Reset monster to the (hidden) idle state
+						If e\room\NPC[0] <> Null Then e\room\NPC[0]\State = 0.0
 						
-						; ~ The player fell
-						If (Not chs\NoClip)
-							If EntityY(me\Collider) <= 28.5 
-								me\BlinkTimer = -10.0
-								Kill() 
-							ElseIf EntityY(me\Collider) > EntityY(fr\Forest_Pivot, True) + 0.5
-								MoveEntity(me\Collider, 0.0, ((EntityY(fr\Forest_Pivot, True) + 0.5) - EntityY(me\Collider)) * fps\Factor[0], 0.0)
-							EndIf
-						EndIf
+						; ~ Reset the door leading to the forest
+						e\room\RoomDoors[0]\Open = False
+						e\room\RoomDoors[0]\Locked = 1
 						
-						If e\room\NPC[0] <> Null
-							If e\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) > 400.0
-								e\EventState3 = e\EventState3 + (1.0 + me\CurrSpeed) * fps\Factor[0]
-								If (e\EventState3 Mod 500.0) < 10.0 And ((e\EventState3 - (1.0 + me\CurrSpeed) * fps\Factor[0]) Mod 500.0) > 490.0
-									If e\EventState3 > 3000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (500.0 * SelectedDifficulty\AggressiveNPCs)) < e\EventState3
-										e\room\NPC[0]\State = 2.0
-										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-										e\EventState3 = e\EventState3 - Rnd(1000.0, 2000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs))
-									Else
-										e\room\NPC[0]\State = 1.0
-										PositionEntity(e\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-									EndIf
-								EndIf
-							EndIf
-						EndIf
+						PrevIsBlackOut = IsBlackOut : IsBlackOut = False
 						
-						If fr\ForestDoors[0]\Open Lor fr\ForestDoors[1]\Open
-							me\BlinkTimer = -10.0
-							
-							PositionEntity(me\Collider, EntityX(e\room\RoomDoors[0]\FrameOBJ, True), 0.5, EntityZ(e\room\RoomDoors[0]\FrameOBJ, True))
-							
-							RotateEntity(me\Collider, 0.0, EntityYaw(e\room\OBJ, True) + e\EventState2 * 180.0, 0.0)
-							MoveEntity(me\Collider, 0.0, 0.0, 1.5)
-							
-							ResetEntity(me\Collider)
-							
-							ResetRender()
-							
-							IsBlackOut = PrevIsBlackOut
-							If wi\NightVision > 0
-								fog\FarDist = 15.0
-							ElseIf wi\SCRAMBLE > 0
-								fog\FarDist = 9.0
-							Else
-								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
-							EndIf
-							
-							ClearFogColor()
-							
-							e\EventState = 0.0
-							e\EventState3 = 0.0
-						EndIf
-					Else
-						If (Not EntityHidden(fr\Forest_Pivot)) Then HideEntity(fr\Forest_Pivot)
-						; ~ Reset the doors after leaving the forest
-						For i = 0 To 1
-							fr\ForestDoors[i]\Open = False
-							fr\ForestDoors[i]\Locked = 2
-						Next
+						Pvt = CreatePivot()
+						PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
+						PointEntity(Pvt, e\room\OBJ)
+						Angle = WrapAngle(EntityYaw(Pvt) - EntityYaw(e\room\OBJ, True))
 						
-						If e\room\RoomDoors[0]\Open
-							If EntityHidden(fr\Forest_Pivot) Then ShowEntity(fr\Forest_Pivot)
-							
-							me\BlinkTimer = -10.0
-							
-							; ~ Reset monster to the (hidden) idle state
-							If e\room\NPC[0] <> Null Then e\room\NPC[0]\State = 0.0
-							
-							; ~ Reset the door leading to the forest
-							e\room\RoomDoors[0]\Open = False
-							e\room\RoomDoors[0]\Locked = 1
-							
-							PrevIsBlackOut = IsBlackOut : IsBlackOut = False
-							
-							Pvt = CreatePivot()
-							PositionEntity(Pvt, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
-							PointEntity(Pvt, e\room\OBJ)
-							Angle = WrapAngle(EntityYaw(Pvt) - EntityYaw(e\room\OBJ, True))
-							
-							i = (Angle <= 90.0 Lor Angle >= 270.0)
-							
-							PositionEntity(me\Collider, EntityX(fr\ForestDoors[i]\FrameOBJ, True), EntityY(fr\ForestDoors[i]\FrameOBJ, True) + EntityY(me\Collider, True) + 0.5, EntityZ(fr\ForestDoors[i]\FrameOBJ, True), True)
-							RotateEntity(me\Collider, 0.0, EntityYaw(fr\ForestDoors[i]\FrameOBJ, True) - 180.0, 0.0, True)
-							MoveEntity(me\Collider, -0.5, 0.0, 0.5)
-							
-							; ~ Determine the locked door
-							fr\ForestDoors[0]\Locked = 2 - i
-							fr\ForestDoors[1]\Locked = 1 + i
-							
-							e\EventState2 = (1.0 - i)
-							
-							FreeEntity(Pvt) : Pvt = 0
-							ResetEntity(me\Collider)
-							
-							; ~ Reset monster spawn timer
-							e\EventState3 = 0.0
-							; ~ The player has entered the forest
-							e\EventState = 1.0
-						EndIf
+						i = (Angle <= 90.0 Lor Angle >= 270.0)
+						
+						PositionEntity(me\Collider, EntityX(fr\ForestDoors[i]\FrameOBJ, True), EntityY(fr\ForestDoors[i]\FrameOBJ, True) + EntityY(me\Collider, True) + 0.5, EntityZ(fr\ForestDoors[i]\FrameOBJ, True), True)
+						RotateEntity(me\Collider, 0.0, EntityYaw(fr\ForestDoors[i]\FrameOBJ, True) - 180.0, 0.0, True)
+						MoveEntity(me\Collider, -0.5, 0.0, 0.5)
+						
+						; ~ Determine the locked door
+						fr\ForestDoors[0]\Locked = 2 - i
+						fr\ForestDoors[1]\Locked = 1 + i
+						
+						e\EventState2 = (1.0 - i)
+						
+						FreeEntity(Pvt) : Pvt = 0
+						ResetEntity(me\Collider)
+						
+						; ~ Reset monster spawn timer
+						e\EventState3 = 0.0
+						; ~ The player has entered the forest
+						e\EventState = 1.0
 					EndIf
 				Else
 					If fr <> Null
@@ -10182,6 +10104,105 @@ Function Update035Label%(OBJ%)
 	
 	FreeImage(S2IMapGet(AchievementsImages, "035"))
 	S2IMapSet(AchievementsImages, "035", ScaleImageEx(LoadImage_Strict("GFX\Menu\achievements\Achv" + CurrTex + ".png"), MenuScale, MenuScale))
+End Function
+
+Function UpdateForest%()
+	Local r.Rooms
+	
+	For r.Rooms = Each Rooms
+		HideRoomsNoColl(r)
+	Next
+	ShowRoomsNoColl(forest_event\room)
+	ShowRoomsNoColl(forest_event\room)
+	
+	Local tX%, tY%
+	
+	For tX = 0 To ForestGridSize - 1
+		For tY = 0 To ForestGridSize - 1
+			If forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)] <> 0
+				If DistanceSquared(EntityX(me\Collider, True), EntityX(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True), EntityZ(me\Collider, True), EntityZ(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True)) < PowTwo(HideDistance)
+					If EntityHidden(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)]) Then ShowEntity(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])
+				Else
+					If (Not EntityHidden(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])) Then HideEntity(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])
+				EndIf
+			EndIf
+		Next
+	Next
+	
+	If forest_event\room\NPC[0] = Null And forest_event\EventState4 = 0.0 Then forest_event\room\NPC[0] = CreateNPC(NPCType860_2, 0.0, 0.0, 0.0)
+	me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSec) / 20.0) + 1.0) * 5.0)
+	If forest_event\EventState4 = 1.0
+		ShouldPlay = 33
+		If Rand(100) = 1
+			me\CameraShake = 0.7
+			me\HeartBeatVolume = 0.7
+			me\HeartBeatRate = Rnd(60, 70)
+		EndIf
+	Else
+		ShouldPlay = 9
+	EndIf
+	If forest_event\room\NPC[0] <> Null
+		If (forest_event\room\NPC[0]\State2 = 1.0 And forest_event\room\NPC[0]\State > 1.0) Lor forest_event\room\NPC[0]\State > 2.0 Then ShouldPlay = 12 ; ~ The monster is chasing the player
+	EndIf
+	
+	; ~ The player fell
+	If (Not chs\NoClip)
+		If EntityY(me\Collider) <= 28.5 
+			me\BlinkTimer = -10.0
+			Kill() 
+		ElseIf EntityY(me\Collider) > EntityY(forest_event\room\fr\Forest_Pivot, True) + 0.5
+			MoveEntity(me\Collider, 0.0, ((EntityY(forest_event\room\fr\Forest_Pivot, True) + 0.5) - EntityY(me\Collider)) * fps\Factor[0], 0.0)
+		EndIf
+	EndIf
+	
+	If forest_event\room\NPC[0] <> Null
+		If forest_event\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, forest_event\room\NPC[0]\Collider) > 400.0
+			forest_event\EventState3 = forest_event\EventState3 + (1.0 + me\CurrSpeed) * fps\Factor[0]
+			If (forest_event\EventState3 Mod 500.0) < 10.0 And ((forest_event\EventState3 - (1.0 + me\CurrSpeed) * fps\Factor[0]) Mod 500.0) > 490.0
+				If forest_event\EventState3 > 3000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (500.0 * SelectedDifficulty\AggressiveNPCs)) < forest_event\EventState3
+					forest_event\room\NPC[0]\State = 2.0
+					PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
+					forest_event\EventState3 = forest_event\EventState3 - Rnd(1000.0, 2000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs))
+				Else
+					forest_event\room\NPC[0]\State = 1.0
+					PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
+				EndIf
+			EndIf
+		EndIf
+	EndIf
+	
+	If forest_event\room\fr\ForestDoors[0]\Open Lor forest_event\room\fr\ForestDoors[1]\Open
+		me\BlinkTimer = -10.0
+		
+		PositionEntity(me\Collider, EntityX(forest_event\room\RoomDoors[0]\FrameOBJ, True), 0.5, EntityZ(forest_event\room\RoomDoors[0]\FrameOBJ, True))
+		
+		RotateEntity(me\Collider, 0.0, EntityYaw(forest_event\room\OBJ, True) + forest_event\EventState2 * 180.0, 0.0)
+		MoveEntity(me\Collider, 0.0, 0.0, 1.5)
+		
+		ResetEntity(me\Collider)
+		
+		ResetRender()
+		
+		IsBlackOut = PrevIsBlackOut
+		If wi\NightVision > 0
+			fog\FarDist = 15.0
+		ElseIf wi\SCRAMBLE > 0
+			fog\FarDist = 9.0
+		Else
+			fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+		EndIf
+		
+		ClearFogColor()
+		
+		For tX = 0 To ForestGridSize - 1
+			For tY = 0 To ForestGridSize - 1
+				If forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)] <> 0 Then HideEntity(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])
+			Next
+		Next
+		
+		forest_event\EventState = 0.0
+		forest_event\EventState3 = 0.0
+	EndIf
 End Function
 
 ;~IDEal Editor Parameters:

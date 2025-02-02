@@ -996,8 +996,8 @@ Function PlaceForest%(fr.Forest, x#, y#, z#, r.Rooms)
 	
 	; ~ Load assets
 	Local hMap%[5], Mask%[5]
-	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.jpg")
-	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.jpg")
+	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.png")
+	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.png")
 	
 	hMap[ROOM1] = LoadImage_Strict("GFX\Map\Forest\forest1h.png")
 	Mask[ROOM1] = LoadTexture_Strict("GFX\Map\Forest\forest1h_mask.png", 1 + 2 + (256 * opt\SaveTexturesInVRAM), DeleteMapTextures, False)
@@ -1149,6 +1149,7 @@ Function PlaceForest%(fr.Forest, x#, y#, z#, r.Rooms)
 										;[End Block]
 								End Select
 								If Detail_Entity <> 0
+									EntityAutoFade(Detail_Entity, 7.5, 7.5)
 									EntityFX(Detail_Entity, 1)
 									EntityParent(Detail_Entity, Tile_Entity)
 								EndIf
@@ -1236,8 +1237,8 @@ Function PlaceMapCreatorForest%(fr.Forest, x#, y#, z#, r.Rooms)
 	
 	Local hMap%[5], Mask%[5]
 	; ~ Load assets
-	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.jpg")
-	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.jpg")
+	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.png")
+	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.png")
 	
 	hMap[ROOM1] = LoadImage_Strict("GFX\Map\Forest\forest1h.png")
 	Mask[ROOM1] = LoadTexture_Strict("GFX\Map\Forest\forest1h_mask.png", 1 + 2 + (256 * opt\SaveTexturesInVRAM), DeleteMapTextures, False)
@@ -1328,6 +1329,7 @@ Function PlaceMapCreatorForest%(fr.Forest, x#, y#, z#, r.Rooms)
 										;[End Block]
 								End Select
 								If Detail_Entity <> 0
+									EntityAutoFade(Detail_Entity, 7.5, 7.5)
 									EntityFX(Detail_Entity, 1)
 									EntityParent(Detail_Entity, Tile_Entity)
 								EndIf
@@ -1423,26 +1425,6 @@ Function DestroyForest%(fr.Forest, RemoveGrid% = True)
 	Next
 	
 	CatchErrors("Uncaught: DestroyForest(" + RemoveGrid + ")")
-End Function
-
-Function UpdateForest%(fr.Forest)
-	CatchErrors("UpdateForest()")
-	
-	Local tX%, tY%
-	
-	For tX = 0 To ForestGridSize - 1
-		For tY = 0 To ForestGridSize - 1
-			If fr\TileEntities[tX + (tY * ForestGridSize)] <> 0
-				If DistanceSquared(EntityX(me\Collider, True), EntityX(fr\TileEntities[tX + (tY * ForestGridSize)], True), EntityZ(me\Collider, True), EntityZ(fr\TileEntities[tX + (tY * ForestGridSize)], True)) < PowTwo(HideDistance)
-					If EntityHidden(fr\TileEntities[tX + (tY * ForestGridSize)]) Then ShowEntity(fr\TileEntities[tX + (tY * ForestGridSize)])
-				Else
-					If (Not EntityHidden(fr\TileEntities[tX + (tY * ForestGridSize)])) Then HideEntity(fr\TileEntities[tX + (tY * ForestGridSize)])
-				EndIf
-			EndIf
-		Next
-	Next
-	
-	CatchErrors("Uncaught: UpdateForest()")
 End Function
 
 Global RoomTempID%
@@ -4024,9 +4006,7 @@ Function UpdateSecurityCams%()
 					EntityParent(sc\Pvt, 0) ; ~ Sets position and rotation of the pivot to the cam object
 				EndIf
 				If EntityVisible(sc\CameraOBJ, Camera)
-					If sc <> sc_I\CoffinCam
-						MTFCameraCheckDetected = (MTFCameraCheckTimer > 0.0)
-					EndIf
+					If sc <> sc_I\CoffinCam Then MTFCameraCheckDetected = (MTFCameraCheckTimer > 0.0)
 					
 					PointEntity(sc\Pvt, Camera)
 					

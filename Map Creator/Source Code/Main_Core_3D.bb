@@ -708,19 +708,19 @@ Function LoadRoomTemplateMeshes%()
 	Next
 	
 	Local hMap%[5], Mask%[5]
-	Local GroundTexture% = LoadTexture_Strict("GFX\map\textures\forestfloor.jpg", 1)
-	Local PathTexture% = LoadTexture_Strict("GFX\map\textures\forestpath.jpg", 1)
+	Local GroundTexture% = LoadTexture_Strict("GFX\map\textures\forestfloor.png", 1)
+	Local PathTexture% = LoadTexture_Strict("GFX\map\textures\forestpath.png", 1)
 	
 	hMap[ROOM1] = LoadImage_Strict("GFX\map\forest\forest1h.png")
-	Mask[ROOM1] = LoadTexture_Strict("GFX\map\forest\forest1h_mask.png", 1 + 2)
+	Mask[ROOM1] = LoadTexture_Strict("GFX\map\forest\forest1h_mask.png", 1 + 2 + 256)
 	hMap[ROOM2] = LoadImage_Strict("GFX\map\forest\forest2h.png")
-	Mask[ROOM2] = LoadTexture_Strict("GFX\map\forest\forest2h_mask.png", 1 + 2)
+	Mask[ROOM2] = LoadTexture_Strict("GFX\map\forest\forest2h_mask.png", 1 + 2 + 256)
 	hMap[ROOM2C] = LoadImage_Strict("GFX\map\forest\forest2Ch.png")
-	Mask[ROOM2C] = LoadTexture_Strict("GFX\map\forest\forest2Ch_mask.png", 1 + 2)
+	Mask[ROOM2C] = LoadTexture_Strict("GFX\map\forest\forest2Ch_mask.png", 1 + 2 + 256)
 	hMap[ROOM3] = LoadImage_Strict("GFX\map\forest\forest3h.png")
-	Mask[ROOM3] = LoadTexture_Strict("GFX\map\forest\forest3h_mask.png", 1 + 2)
+	Mask[ROOM3] = LoadTexture_Strict("GFX\map\forest\forest3h_mask.png", 1 + 2 + 256)
 	hMap[ROOM4] = LoadImage_Strict("GFX\map\forest\forest4h.png")
-	Mask[ROOM4] = LoadTexture_Strict("GFX\map\forest\forest4h_mask.png", 1 + 2)
+	Mask[ROOM4] = LoadTexture_Strict("GFX\map\forest\forest4h_mask.png", 1 + 2 + 256)
 	
 	Local FR_Prefix$ = "scp-860-1 "
 	

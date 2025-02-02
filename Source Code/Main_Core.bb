@@ -379,6 +379,9 @@ Function UpdateGame%()
 			ElseIf PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 				UpdateSoundEmitters()
 				If QuickLoadPercent = -1 Lor QuickLoadPercent = 100 Then UpdateDimension106()
+			ElseIf forest_event <> Null And forest_event\EventState = 1.0
+				UpdateDoors()
+				UpdateForest()
 			Else
 				UpdateLightVolume()
 				UpdateLights(Camera)
@@ -3281,8 +3284,8 @@ Function UpdateZoneColor%()
 			If forest_event\room\NPC[0] <> Null
 				If forest_event\room\NPC[0]\State >= 2.0 Then SetZoneColor(FogColorForestChase)
 			EndIf
-			CameraFogRange(Camera, 0.1, fog\FarDist)
-			CameraRange(Camera, 0.01, fog\FarDist * 1.2)
+			CameraFogRange(Camera, 0.1, 6.0) ; ~ fog\FarDist
+			CameraRange(Camera, 0.01, 7.2) ; ~ fog\FarDist * 1.2
 		EndIf
 	EndIf
 	
