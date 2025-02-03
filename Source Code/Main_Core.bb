@@ -288,6 +288,7 @@ Function UpdateGame%()
 		ShouldDeleteGadgets = False
 		
 		UpdateMusic()
+		AutoReleaseChannels()
 		If opt\EnableSFXRelease Then AutoReleaseSounds()
 		
 		UpdateStreamSounds()
