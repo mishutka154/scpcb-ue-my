@@ -890,7 +890,7 @@ Function UpdateEvents%()
 						i = Floor((e\EventState - 5000.0) / 600.0) + 1.0
 						
 						If i = 0
-							PlayAnnouncement("SFX\Room\Intro\IA\Scripted\Scripted5.ogg")
+							PlaySound_Strict(LoadTempSound("SFX\Room\Intro\IA\Scripted\Scripted5.ogg"))
 							CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
 						EndIf
 						If i > 0 And i < 26
