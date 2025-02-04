@@ -106,7 +106,6 @@ Function UpdateMainMenu%()
 		OnPalette = False
 		
 		UpdateMusic()
-		AutoReleaseChannels()
 		If opt\EnableSFXRelease Then AutoReleaseSounds()
 		
 		If ShouldPlay = 20

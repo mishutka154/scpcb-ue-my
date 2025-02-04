@@ -53,18 +53,6 @@ Function AutoReleaseSounds%()
 	Next
 End Function
 
-Function AutoReleaseChannels()
-   	Local Channel%
-
-   	For i = CountChannels() - 1 To 0 Step -1
-  		Channel = GetChannel(i)
-
-        If Not ChannelPlaying(Channel)
-        	StopChannel(Channel)
-       	EndIf
-    Next
-End Function
-
 Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
 	Local snd.Sound = Object.Sound(SoundHandle)
 	Local CurrTime% = MilliSecs()
