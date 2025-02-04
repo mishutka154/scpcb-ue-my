@@ -53,15 +53,16 @@ Function AutoReleaseSounds%()
 	Next
 End Function
 
-Function AutoReleaseChannels%()
-   	Local Channel%, i%
-	Local ChannelsAmount% = CountChannels()
-	
-	For i = ChannelsAmount - 1 To 0 Step -1
-		Channel = GetChannel(i)
-		
-		If (Not ChannelPlaying(Channel)) Then StopChannel(Channel) : Channel = 0
-	Next
+Function AutoReleaseChannels()
+   	Local Channel%
+
+   	For i = CountChannels() - 1 To 0 Step -1
+  		Channel = GetChannel(i)
+
+        If Not ChannelPlaying(Channel)
+        	StopChannel(Channel)
+       	EndIf
+    Next
 End Function
 
 Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
