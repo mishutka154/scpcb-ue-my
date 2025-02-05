@@ -3238,14 +3238,15 @@ End Function
 Function UpdateZoneColor%()
 	Local e.Events
 	Local IsOutSide% = (IsPlayerOutsideFacility() Lor PlayerRoom\RoomTemplate\RoomID = r_cont1_173_intro)
+	Local DistFog# = fog\FarDist - (2.0 * (SecondaryLightOn =< 0.3) * (wi\NightVision = 0)) * LightVolume
 	
 	fog\CurrName = ""
 	fog\CurrAmbientName = ""
 	
 	CameraFogMode(Camera, 1)
-	CameraFogRange(Camera, 0.1 * LightVolume, fog\FarDist * LightVolume)
+	CameraFogRange(Camera, 0.1 * LightVolume, DistFog)
 	; ~ Allow to use big range for debugging
-	CameraRange(Camera, 0.01, 100.0 * opt\DebugMode + (Not opt\DebugMode) * fog\FarDist * LightVolume * 1.3)
+	CameraRange(Camera, 0.01, 100.0 * opt\DebugMode + (Not opt\DebugMode) * DistFog * 1.25)
 	; ~ Handle room-specific settings
 	If PlayerRoom\RoomTemplate\RoomID = r_room3_storage And InFacility = LowerFloor
 		SetZoneColor(FogColorStorageTunnels)
@@ -4729,7 +4730,7 @@ Function UpdateGUI%()
 							
 							If wi\SCRAMBLE > 0
 								CreateMsg(GetLocalString("msg", "gear.off"))
-								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+								fog\FarDist = 6.0
 								wi\SCRAMBLE = 0
 							Else
 								CreateMsg(GetLocalString("msg", "gear.on"))
@@ -4867,8 +4868,8 @@ Function UpdateGUI%()
 							DropItem(SelectedItem)
 						Else
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							If wi\NightVision > 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut) : wi\NightVision = 0
-							If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut): wi\SCRAMBLE = 0
+							If wi\NightVision > 0 Then fog\FarDist = 6.0 : wi\NightVision = 0
+							If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 : wi\SCRAMBLE = 0
 							wi\GasMask = 0 : wi\BallisticHelmet = False
 							I_427\Using = False : I_1499\Using = 0
 							I_268\Using = 0
@@ -10117,7 +10118,7 @@ Function UpdateLeave1499%()
 					EndIf
 				Next
 				r1499 = Null
-				fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+				fog\FarDist = 6.0
 				ClearFogColor()
 				PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Exit.ogg"))
 				I_1499\PrevX = 0.0

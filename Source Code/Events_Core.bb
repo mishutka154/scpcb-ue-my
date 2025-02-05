@@ -2266,7 +2266,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If e\EventState >= 70.0
-								If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+								If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0
 								If x2
 									ShouldPlay = 8
 									IsBlackOut = False
@@ -3326,7 +3326,7 @@ Function UpdateEvents%()
 						If e\EventState - fps\Factor[0] < 70.0 * 6.5
 							PlaySound_Strict(snd_I\HorrorSFX[0])
 							PlaySound_Strict(snd_I\LightOffSFX)
-							me\LightBlink = 10.0
+							me\LightBlink = 9.0
 						EndIf
 						
 						If e\EventState > 70.0 * 7.5 And e\EventState - fps\Factor[0] <= 70.0 * 7.5
@@ -3547,7 +3547,7 @@ Function UpdateEvents%()
 					e\EventState2 = UpdateLever(e\room\RoomLevers[1]\OBJ)
 					If PrevState2 <> e\EventState2 And e\EventState > 0.0 Then PlaySoundEx(snd_I\LightOffSFX, Camera, e\room\RoomLevers[1]\OBJ)
 					IsBlackOut = (e\EventState2 = 0.0)
-					If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+					If wi\NightVision = 0 And wi\SCRAMBLE = 0 Then fog\FarDist = 6.0
 					
 					If e\EventState = 0.0
 						If Rand(200) = 1 Lor EntityY(me\Collider, True) > 2.0
@@ -7548,7 +7548,7 @@ Function UpdateDimension106%()
 											ElseIf wi\SCRAMBLE > 0
 												fog\FarDist = 9.0
 											Else
-												fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+												fog\FarDist = 6.0
 											EndIf
 											
 											me\Playable = True
@@ -7828,7 +7828,7 @@ Function UpdateDimension106%()
 									ElseIf wi\SCRAMBLE > 0
 										fog\FarDist = 9.0
 									Else
-										fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+										fog\FarDist = 6.0
 									EndIf
 									
 									If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
@@ -7928,7 +7928,7 @@ Function UpdateDimension106%()
 										ElseIf wi\SCRAMBLE > 0
 											fog\FarDist = 9.0
 										Else
-											fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+											fog\FarDist = 6.0
 										EndIf
 										
 										me\Playable = True
