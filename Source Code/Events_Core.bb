@@ -742,11 +742,11 @@ Function UpdateEvents%()
 					
 					If e\room\NPC[0] <> Null Then AnimateNPC(e\room\NPC[0], 249.0, 286.0, 0.4, False)
 					
-					If EntityDistanceSquared(me\Collider, e\room\RoomDoors[2]\FrameOBJ) < 1.21 Then e\EventState = Max(e\EventState, 500.0)
+					If EntityX(me\Collider) < (e\room\x + 1384.0 * RoomScale) Then e\EventState = Max(e\EventState, 900.0)
 					If e\EventState >= 500.0
 						e\EventState = e\EventState + fps\Factor[0]
 					ElseIf EntityDistanceSquared(me\Collider, e\room\RoomDoors[2]\FrameOBJ) < 5.0
-						e\EventState = e\EventState + (fps\Factor[0] * 2.0)
+						e\EventState = 500.0
 					EndIf
 					If e\EventState >= 500.0
 						If e\EventState2 = 0.0
@@ -842,8 +842,6 @@ Function UpdateEvents%()
 								If e\room\NPC[2]\State = 1.0 Then e\room\RoomDoors[3]\Open = True
 							Else
 								If e\room\NPC[2]\State <> 1.0
-									If EntityX(me\Collider) < (e\room\x + 1384.0 * RoomScale) Then e\EventState = Max(e\EventState, 900.0)
-									
 									If e\room\RoomDoors[3]\OpenState = 0.0
 										For i = 1 To 2
 											RemoveNPC(e\room\NPC[i])
