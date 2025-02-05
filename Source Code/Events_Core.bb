@@ -7010,7 +7010,7 @@ Function UpdateEvents%()
 						e\EventState = 1.0
 					ElseIf e\EventState = 1.0
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 1.96
-							me\LightBlink = 10.0
+							me\LightBlink = 9.0
 							PlaySound_Strict(snd_I\LightOffSFX)
 							e\room\NPC[0]\State = 1.0
 							e\EventState = 2.0
