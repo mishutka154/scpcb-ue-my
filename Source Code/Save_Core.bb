@@ -1394,7 +1394,7 @@ Function LoadGame%(File$)
 	ElseIf wi\SCRAMBLE > 0
 		fog\FarDist = 9.0
 	Else
-		fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+		fog\FarDist = 6.0
 	EndIf
 	
 	For i = 0 To 1
@@ -2292,7 +2292,7 @@ Function LoadGameQuick%(File$)
 	ElseIf wi\SCRAMBLE > 0
 		fog\FarDist = 9.0
 	Else
-		fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+		fog\FarDist = 6.0
 	EndIf
 	
 	; ~ Free some entities that could potentially cause memory leaks (for the endings)
