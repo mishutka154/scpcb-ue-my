@@ -549,6 +549,9 @@ Function UpdateGame%()
 			Else
 				If (Not EntityHidden(t\OverlayID[5])) Then HideEntity(t\OverlayID[5])
 			EndIf
+			
+			UpdateNVG()
+			UpdateGUI()
 		EndIf
 		
 		If fps\Factor[0] = 0.0
@@ -557,9 +560,6 @@ Function UpdateGame%()
 			UpdateWorld()
 			ManipulateNPCBones()
 		EndIf
-		
-		UpdateNVG()
-		UpdateGUI()
 		
 		If (Not MenuOpen)
 			If KeyHit(key\INVENTORY)
