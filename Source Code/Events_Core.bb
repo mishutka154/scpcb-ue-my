@@ -976,6 +976,7 @@ Function UpdateEvents%()
 					EndIf
 				Else
 					If e\room\Dist < 7.0
+						e\room\RoomTemplate\DisableDecals = 1
 						If I_005\ChanceToSpawn = 3
 							TFormPoint(375.0, 52.0, -875.0, e\room\OBJ, 0)
 							n.NPCs = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
@@ -5707,6 +5708,7 @@ Function UpdateEvents%()
 					
 					If EntityY(me\Collider) < (-4600.0) * RoomScale
 						me\Zone = 0
+						e\room\RoomTemplate\DisableDecals = 1
 						
 						If wi\GasMask = 0 And wi\HazmatSuit = 0
 							me\BlurTimer = Min(me\BlurTimer + (fps\Factor[0] * 1.05), 1500.0)
@@ -5815,6 +5817,7 @@ Function UpdateEvents%()
 							EndIf
 						EndIf
 					Else
+						e\room\RoomTemplate\DisableDecals = 0
 						e\EventState = 0.0
 					EndIf
 				EndIf
