@@ -6351,14 +6351,14 @@ Function UpdateEvents%()
 						Else
 							If EntityHidden(e\room\Objects[2]) Then ShowEntity(e\room\Objects[2])
 							; ~ Start a timer for SCP-173 breaking through the window
-							e\EventState = e\EventState + 1.0
-							Dist = EntityDistanceSquared(me\Collider, e\room\Objects[1])
-							If Dist < 1.0
-								; ~ If close, increase the timer so that SCP-173 is ready to attack
-								e\EventState = Max(e\EventState, 70.0 * 12.0)
-							ElseIf Dist > 1.96
+							e\EventState = e\EventState + fps\Factor[0]
+							
+							; ~ If close, allow SCP-173 to break glass now
+							If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 1.96 Then e\EventState = Max(e\EventState, 70.0 * 12.0)
+							
+							If e\EventState > 70.0 * 12.0
 								; ~ If the player moves a bit further and blinks, SCP-173 attacks
-								If e\EventState > 70.0 * 12.0 And (Not PlayerSees173(n_I\Curr173))
+								If (Not PlayerSees173(n_I\Curr173)) And ((Not EntityInView(e\room\Objects[2], Camera)) Lor (me\BlinkTimer < -6.0 And me\BlinkTimer > -16.0))
 									If EntityDistanceSquared(n_I\Curr173\Collider, e\room\Objects[0]) > 25.0
 										; ~ Remove event, if SCP-173 is far away from the room (perhaps because the player left and SCP-173 moved to some other room?) 
 										RemoveEvent(e)
