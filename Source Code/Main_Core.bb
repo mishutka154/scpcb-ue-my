@@ -3224,7 +3224,6 @@ Type FogAmbient
 	Field FarDist#
 	Field CurrName$, CurrAmbientName$
 	Field R#, G#, B#
-	Field TargetAmbientR%, TargetAmbientG%, TargetAmbientB%
 	Field AmbientR#, AmbientG#, AmbientB#
 End Type
 
@@ -3318,11 +3317,11 @@ Function UpdateZoneColor%()
 	CameraClsColor(Camera, (Not IsOutSide) * fog\R, (Not IsOutSide) * fog\G, (Not IsOutSide) * fog\B)
 	
 	; ~ Calculate the current ambient color which affects the lighting of props/objects/NPCs/items
-	fog\TargetAmbientR = Left(fog\CurrAmbientName, 3) : fog\TargetAmbientG = Mid(fog\CurrAmbientName, 4, 3) : fog\TargetAmbientB = Right(fog\CurrAmbientName, 3)
+	Local TargetAmbientR% = Left(fog\CurrAmbientName, 3), TargetAmbientG% = Mid(fog\CurrAmbientName, 4, 3), TargetAmbientB% = Right(fog\CurrAmbientName, 3)
 	
-	fog\AmbientR = CurveValue(fog\TargetAmbientR, fog\AmbientR, ZoneColorChangeSpeed)
-	fog\AmbientG = CurveValue(fog\TargetAmbientG, fog\AmbientG, ZoneColorChangeSpeed)
-	fog\AmbientB = CurveValue(fog\TargetAmbientB, fog\AmbientB, ZoneColorChangeSpeed)
+	fog\AmbientR = CurveValue(TargetAmbientR, fog\AmbientR, ZoneColorChangeSpeed)
+	fog\AmbientG = CurveValue(TargetAmbientG, fog\AmbientG, ZoneColorChangeSpeed)
+	fog\AmbientB = CurveValue(TargetAmbientB, fog\AmbientB, ZoneColorChangeSpeed)
 	
 	Local CurrR# = fog\AmbientR, CurrG# = fog\AmbientG, CurrB# = fog\AmbientB
 	
@@ -3351,22 +3350,21 @@ Function UpdateZoneColor%()
 		End Select
 	EndIf
 	
-	If (Not IsEqual(fog\AmbientR, fog\TargetAmbientR, 0.01)) Lor (Not IsEqual(fog\AmbientG, fog\TargetAmbientG, 0.01)) Lor (Not IsEqual(fog\AmbientB, fog\TargetAmbientB, 0.01))
-		; ~ Save the current backbuffer
-        Local OldBuffer% = BackBuffer()
-		
-        ; ~ Change draw target to AmbientLightRoomTex
-		SetBuffer(TextureBuffer(AmbientLightRoomTex))
-		; ~ Clear color to provided values (CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
-        ClsColor(CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
-        Cls()
-		; ~ Reset clear color to black (default)
-        ClsColor(0, 0, 0)
-		; ~ Restore the previous buffer
-        SetBuffer(OldBuffer)
-		
-        AmbientLight(CurrR, CurrG, CurrB)
-    EndIf
+	
+	; ~ Save the current backbuffer
+	Local OldBuffer% = BackBuffer()
+	
+	; ~ Change draw target to AmbientLightRoomTex
+	SetBuffer(TextureBuffer(AmbientLightRoomTex))
+	; ~ Clear color to provided values (CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
+	ClsColor(CurrR / 3.0, CurrG / 3.0, CurrB / 3.0)
+	Cls()
+	; ~ Reset clear color to black (default)
+	ClsColor(0, 0, 0)
+	; ~ Restore the previous buffer
+	SetBuffer(OldBuffer)
+	
+	AmbientLight(CurrR, CurrG, CurrB)
 End Function
 
 Function ResetSelectedStuff%()
