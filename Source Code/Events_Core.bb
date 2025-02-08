@@ -6354,7 +6354,7 @@ Function UpdateEvents%()
 							e\EventState = e\EventState + fps\Factor[0]
 							
 							; ~ If close, allow SCP-173 to break glass now
-							If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 1.96 Then e\EventState = Max(e\EventState, 70.0 * 12.0)
+							If EntityDistanceSquared(me\Collider, e\room\Objects[1]) < 0.64 Then e\EventState = Max(e\EventState, 70.0 * 12.0)
 							
 							If e\EventState > 70.0 * 12.0
 								; ~ If the player moves a bit further and blinks, SCP-173 attacks
@@ -6369,7 +6369,8 @@ Function UpdateEvents%()
 										
 										PlaySoundEx(LoadTempSound("SFX\Room\GlassBreak.ogg"), Camera, n_I\Curr173\OBJ) 
 										HideEntity(e\room\Objects[2])
-										PositionEntity(n_I\Curr173\Collider, EntityX(e\room\Objects[1], True), 0.5, EntityZ(e\room\Objects[1], True))
+										TFormPoint(-669.0, 128.0, -64.0, e\room\OBJ, 0)
+										PositionEntity(n_I\Curr173\Collider, TFormedX(), TFormedY(), TFormedZ())
 										ResetEntity(n_I\Curr173\Collider)
 										RemoveEvent(e)
 									EndIf
