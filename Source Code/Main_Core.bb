@@ -4678,7 +4678,7 @@ Function UpdateGUI%()
 							
 							If wi\NightVision > 0
 								CreateMsg(GetLocalString("msg", "nvg.off"))
-								fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+								fog\FarDist = 6.0
 								wi\NightVision = 0
 								If SelectedItem\State > 0.0 Then PlaySound_Strict(snd_I\NVGSFX[1])
 							Else

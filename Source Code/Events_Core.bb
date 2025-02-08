@@ -10191,7 +10191,7 @@ Function UpdateForest%()
 		ElseIf wi\SCRAMBLE > 0
 			fog\FarDist = 9.0
 		Else
-			fog\FarDist = 6.0 - (2.0 * IsBlackOut)
+			fog\FarDist = 6.0
 		EndIf
 		
 		ClearFogColor()
