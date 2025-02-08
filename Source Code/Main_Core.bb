@@ -3535,8 +3535,8 @@ Function UpdateGUI%()
 		EndIf
 	EndIf
 	
-	If I_294\Using Then Update294()
 	If (Not (MenuOpen Lor me\Terminated Lor ConsoleOpen))
+		If I_294\Using Then Update294()
 		If (Not (InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null))
 			If d_I\ClosestButton <> 0
 				If mo\MouseUp1
