@@ -8421,6 +8421,7 @@ Function UpdateIntro%()
 						HideRoomsNoColl(r)
 					Next
 					ShowRoomsNoColl(e\room)
+					ShowRoomsColl(e\room)
 					
 					CanSave = 1
 					
@@ -10119,7 +10120,7 @@ Function UpdateForest%()
 		HideRoomsNoColl(r)
 	Next
 	ShowRoomsNoColl(forest_event\room)
-	ShowRoomsNoColl(forest_event\room)
+	ShowRoomsColl(forest_event\room)
 	
 	Local tX%, tY%
 	
