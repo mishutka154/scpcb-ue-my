@@ -561,6 +561,22 @@ Function UpdateGame%()
 			ManipulateNPCBones()
 		EndIf
 		
+		If KeyHit(1) And me\EndingTimer >= 0.0 And me\SelectedEnding = -1 And me\KillAnimTimer <= 400.0
+			If MenuOpen
+				If (Not ConsoleOpen) Then ResumeSounds()
+				If igm\OptionsMenu <> 0 Then SaveOptionsINI()
+				StopMouseMovement()
+				ShouldDeleteGadgets = True
+			Else
+				PauseSounds()
+			EndIf
+			MenuOpen = (Not MenuOpen)
+			
+			igm\AchievementsMenu = 0
+			igm\OptionsMenu = 0
+			igm\QuitMenu = 0
+		EndIf
+		
 		If (Not MenuOpen)
 			If KeyHit(key\INVENTORY)
 				If d_I\SelectedDoor = Null And SelectedScreen = Null And (Not I_294\Using) And me\Playable And (Not me\Zombie) And me\VomitTimer >= 0.0 And me\FallTimer >= 0.0 And (Not me\Terminated) And me\SelectedEnding = -1
@@ -3675,22 +3691,6 @@ Function UpdateGUI%()
 		msg\KeyPadInput = ""
 		msg\KeyPadTimer = 0.0
 		msg\KeyPadMsg = ""
-	EndIf
-	
-	If KeyHit(1) And me\EndingTimer >= 0.0 And me\SelectedEnding = -1 And me\KillAnimTimer <= 400.0
-		If MenuOpen
-			If (Not ConsoleOpen) Then ResumeSounds()
-			If igm\OptionsMenu <> 0 Then SaveOptionsINI()
-			StopMouseMovement()
-			ShouldDeleteGadgets = True
-		Else
-			PauseSounds()
-		EndIf
-		MenuOpen = (Not MenuOpen)
-		
-		igm\AchievementsMenu = 0
-		igm\OptionsMenu = 0
-		igm\QuitMenu = 0
 	EndIf
 	
 	UpdateBatteryTimer()
