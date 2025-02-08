@@ -6230,6 +6230,10 @@ Function UpdateEvents%()
 								emit.Emitter = SetEmitter(e\room, EntityX(e\room\Objects[i], True), EntityY(e\room\Objects[i], True), EntityZ(e\room\Objects[i], True), 4)
 								emit\State = 1
 							Next
+							If e\room\RoomDoors[1]\Open
+								PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[1]\FrameOBJ, 7.0)
+								OpenCloseDoor(e\room\RoomDoors[1])
+							EndIf
 							RemoveEvent(e)
 						EndIf
 					EndIf

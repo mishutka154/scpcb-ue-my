@@ -41,6 +41,8 @@
 
 - Design improvements for some rooms...
 
+- Tiny improvement for «room2_test_hcz» event.
+
 [Items]
 - Added open SCP-427 icon.
 - Added new variations of SCP-005.
