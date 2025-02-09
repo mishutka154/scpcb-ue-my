@@ -2218,6 +2218,7 @@ Type Player
 	Field StopHidingTimer#
 	Field CurrFunds%, UsedMastercard%
 	Field InsideElevator%
+	Field PlayerModelPivot%, PlayerModelOBJ%
 End Type
 
 Global me.Player
@@ -2358,6 +2359,12 @@ Function LoadEntities%()
 	CameraRange(Camera, 0.01, fog\FarDist)
 	CameraClsColor(Camera, 30.0, 30.0, 30.0)
 	AmbientLight(30.0, 30.0, 30.0)
+	
+	me\PlayerModelPivot = CreatePivot()
+	me\PlayerModelOBJ = LoadAnimMesh_Strict("GFX\NPCs\player_body.b3d", me\PlayerModelPivot)
+	ScaleEntity(me\PlayerModelOBJ, (0.51 / MeshWidth(me\PlayerModelOBJ)), (0.51 / MeshWidth(me\PlayerModelOBJ)), (0.51 / MeshWidth(me\PlayerModelOBJ)))
+	MeshCullBox(me\PlayerModelOBJ, -MeshWidth(me\PlayerModelOBJ), -MeshHeight(me\PlayerModelOBJ), -MeshDepth(me\PlayerModelOBJ), MeshWidth(me\PlayerModelOBJ) * 2.0, MeshHeight(me\PlayerModelOBJ) * 2.0, MeshDepth(me\PlayerModelOBJ) * 2.0)
+	HideEntity(me\PlayerModelOBJ)
 	
 	ParticleCam = Camera
 	ParticlePiv = CreatePivot()
