@@ -3208,7 +3208,7 @@ End Function
 
 Function UpdatePlayerModel()
 	CatchErrors("UpdatePlayerModel()")
-	Local e.Events, IsIntro%
+	;Local e.Events, IsIntro%
 	Local FrameStart#, FrameEnd#, Speed#, Loop%
 	
 	; ~ Tried to make it better than in my mod. - Love, Wolfnaya
@@ -3224,72 +3224,72 @@ Function UpdatePlayerModel()
 		
 		; ~ Updating wake up animation condition
 		;[Block]
-		For e.Events = Each Events
-			If e <> Null
-				If e\room\RoomTemplate\RoomID = r_cont1_173_intro
-					If PlayerRoom = e\room
-						If e\EventState2 < 14.0
-							IsIntro = True
-						Else
-							IsIntro = False
-						EndIf
-					EndIf
-				EndIf
-			EndIf
-		Next
+;		For e.Events = Each Events
+;			If e <> Null
+;				If e\room\RoomTemplate\RoomID = r_cont1_173_intro
+;					If PlayerRoom = e\room
+;						If e\EventState2 < 14.0
+;							IsIntro = True
+;						Else
+;							IsIntro = False
+;						EndIf
+;					EndIf
+;				EndIf
+;			EndIf
+;		Next
 		;[End Block]
 		
 		; ~ Assigning frames
 		;[Block]
-		If (Not IsIntro)
-			If me\CurrSpeed > 0.0
-				If me\Crouch
-					If KeyDown(key\MOVEMENT_UP)
-						FrameStart = 157.0 : FrameEnd = 181.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_DOWN)
-						FrameStart = 181.0 : FrameEnd = 157.0 : Speed = -0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_RIGHT)
-						FrameStart = 182.0 : FrameEnd = 206.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_LEFT)
-						FrameStart = 207.0 : FrameEnd = 231.0 : Speed = 0.245 : Loop = True
-					EndIf
-				Else
-					If KeyDown(key\SPRINT) And me\Stamina > 0.0
-						If KeyDown(key\MOVEMENT_UP)
-							FrameStart = 95.0 : FrameEnd = 112.0 : Speed = 0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_DOWN)
-							FrameStart = 112.0 : FrameEnd = 95.0 : Speed = -0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_RIGHT)
-							FrameStart = 113.0 : FrameEnd = 130.0 : Speed = 0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_LEFT)
-							FrameStart = 131.0 : FrameEnd = 148.0 : Speed = 0.245 : Loop = True
-						EndIf
-					Else
-						If KeyDown(key\MOVEMENT_UP)
-							FrameStart = 20.0 : FrameEnd = 44.0 : Speed = 0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_DOWN)
-							FrameStart = 44.0 : FrameEnd = 20.0 : Speed = -0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_RIGHT)
-							FrameStart = 45.0 : FrameEnd = 69.0 : Speed = 0.245 : Loop = True
-						ElseIf KeyDown(key\MOVEMENT_LEFT)
-							FrameStart = 70.0 : FrameEnd = 94.0 : Speed = 0.245 : Loop = True
-						EndIf
-					EndIf
+;		If (Not IsIntro)
+		If me\CurrSpeed > 0.0
+			If me\Crouch
+				If KeyDown(key\MOVEMENT_UP)
+					FrameStart = 157.0 : FrameEnd = 181.0 : Speed = 0.245 : Loop = True
+				ElseIf KeyDown(key\MOVEMENT_DOWN)
+					FrameStart = 181.0 : FrameEnd = 157.0 : Speed = -0.245 : Loop = True
+				ElseIf KeyDown(key\MOVEMENT_RIGHT)
+					FrameStart = 182.0 : FrameEnd = 206.0 : Speed = 0.245 : Loop = True
+				ElseIf KeyDown(key\MOVEMENT_LEFT)
+					FrameStart = 207.0 : FrameEnd = 231.0 : Speed = 0.245 : Loop = True
 				EndIf
 			Else
-				If me\Crouch
-					FrameStart = 149.0 : FrameEnd = 155.0 : Speed = 0.3 : Loop = False
+				If KeyDown(key\SPRINT) And me\Stamina > 0.0
+					If KeyDown(key\MOVEMENT_UP)
+						FrameStart = 95.0 : FrameEnd = 112.0 : Speed = 0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_DOWN)
+						FrameStart = 112.0 : FrameEnd = 95.0 : Speed = -0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_RIGHT)
+						FrameStart = 113.0 : FrameEnd = 130.0 : Speed = 0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_LEFT)
+						FrameStart = 131.0 : FrameEnd = 148.0 : Speed = 0.245 : Loop = True
+					EndIf
 				Else
-					If AnimTime(me\PlayerModelOBJ) <= 155.0 And AnimTime(me\PlayerModelOBJ) > 149.0
-						FrameStart = 155.0 : FrameEnd = 149.0 : Speed = -0.3 : Loop = False
-					Else
-						FrameStart = 1.0 : FrameEnd = 18.0 : Speed = 0.1 : Loop = True
+					If KeyDown(key\MOVEMENT_UP)
+						FrameStart = 20.0 : FrameEnd = 44.0 : Speed = 0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_DOWN)
+						FrameStart = 44.0 : FrameEnd = 20.0 : Speed = -0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_RIGHT)
+						FrameStart = 45.0 : FrameEnd = 69.0 : Speed = 0.245 : Loop = True
+					ElseIf KeyDown(key\MOVEMENT_LEFT)
+						FrameStart = 70.0 : FrameEnd = 94.0 : Speed = 0.245 : Loop = True
 					EndIf
 				EndIf
 			EndIf
+		Else
+			If me\Crouch
+				FrameStart = 149.0 : FrameEnd = 155.0 : Speed = 0.3 : Loop = False
+			Else
+				If AnimTime(me\PlayerModelOBJ) <= 155.0 And AnimTime(me\PlayerModelOBJ) > 149.0
+					FrameStart = 155.0 : FrameEnd = 149.0 : Speed = -0.3 : Loop = False
+				Else
+					FrameStart = 1.0 : FrameEnd = 18.0 : Speed = 0.1 : Loop = True
+				EndIf
+			EndIf
+		EndIf
 ;		Else
 ;			FrameStart = 232.0 : FrameEnd = 271.0 : Speed = 0.3 : Loop = False
-		EndIf
+;		EndIf
 		;[End Block]
 		
 		; ~ Updating animations
@@ -3688,6 +3688,9 @@ Function UpdateGUI%()
 			EndIf
 		EndIf
 		If ShouldDrawHUD
+			
+			HideEntity(me\PlayerModelOBJ)
+			
 			Local ButtonPosX# = EntityX(d_I\ClosestButton, True)
 			Local ButtonPosY# = EntityY(d_I\ClosestButton, True)
 			Local ButtonPosZ# = EntityZ(d_I\ClosestButton, True)
