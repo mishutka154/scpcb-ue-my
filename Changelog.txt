@@ -5,6 +5,7 @@
 
 - Added decay sound for corroded doors.
 - Added a tiny camera zoom which creates the effect of moving leaves.
+- Added player body.
 
 - Removed leaning.
 - Removed buttons glowing.

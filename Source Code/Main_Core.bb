@@ -2864,33 +2864,46 @@ Function UpdateMoving%()
 			Temp = False
 			If me\Playable And me\FallTimer >= 0.0 And (Not me\Terminated)
 				If (Not me\Zombie)
+					pm\AnimID = PLAYER_ANIM_IDLE + me\Crouch
 					If KeyDown(key\MOVEMENT_DOWN)
 						If (Not KeyDown(key\MOVEMENT_UP))
 							Temp = True
 							Angle = 180.0
+							pm\AnimID = PLAYER_ANIM_WALK + (Sprint = 2.5) + (2 * me\Crouch)
 							If KeyDown(key\MOVEMENT_LEFT)
-								If (Not KeyDown(key\MOVEMENT_RIGHT)) Then Angle = 135.0
+								If (Not KeyDown(key\MOVEMENT_RIGHT))
+									Angle = 135.0
+									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+								EndIf
 							ElseIf KeyDown(key\MOVEMENT_RIGHT)
 								Angle = -135.0
+								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 							EndIf
 						Else
 							If KeyDown(key\MOVEMENT_LEFT)
 								If (Not KeyDown(key\MOVEMENT_RIGHT))
 									Temp = True
 									Angle = 90.0
+									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 								EndIf
 							ElseIf KeyDown(key\MOVEMENT_RIGHT)
 								Temp = True
 								Angle = -90.0
+								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 							EndIf
 						EndIf
 					ElseIf KeyDown(key\MOVEMENT_UP)
 						Temp = True
 						Angle = 0.0
+						pm\AnimID = PLAYER_ANIM_WALK + (Sprint = 2.5) + (2 * me\Crouch)
 						If KeyDown(key\MOVEMENT_LEFT)
-							If (Not KeyDown(key\MOVEMENT_RIGHT)) Then Angle = 45.0
+							If (Not KeyDown(key\MOVEMENT_RIGHT))
+								Angle = 45.0
+								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+							EndIf
 						ElseIf KeyDown(key\MOVEMENT_RIGHT)
 							Angle = -45.0
+							pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 						EndIf
 					ElseIf me\ForceMove > 0.0
 						Temp = True
@@ -2900,10 +2913,12 @@ Function UpdateMoving%()
 							If (Not KeyDown(key\MOVEMENT_RIGHT))
 								Temp = True
 								Angle = 90.0
+								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 							EndIf
 						ElseIf KeyDown(key\MOVEMENT_RIGHT)
 							Temp = True
 							Angle = -90.0
+							pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 						EndIf
 					EndIf
 				Else
@@ -3206,101 +3221,16 @@ Function UpdateMouseLook%()
 	CatchErrors("Uncaught: UpdateMouseLook()")
 End Function
 
-Function UpdatePlayerModel()
-	CatchErrors("UpdatePlayerModel()")
-	;Local e.Events, IsIntro%
-	Local FrameStart#, FrameEnd#, Speed#, Loop%
-	
-	; ~ Tried to make it better than in my mod. - Love, Wolfnaya
-	
+Function UpdatePlayerModel%()
 	If (Not me\Terminated)
+		If EntityHidden(pm\OBJ) Then ShowEntity(pm\OBJ)
+		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
+		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0)
 		
-		; ~ Updating the transform of the mesh
-		;[Block]
-		ShowEntity(me\PlayerModelOBJ)
-		PositionEntity(me\PlayerModelPivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
-		RotateEntity(me\PlayerModelPivot, 0.0, EntityYaw(Camera), 0.0)
-		;[End Block]
-		
-		; ~ Updating wake up animation condition
-		;[Block]
-;		For e.Events = Each Events
-;			If e <> Null
-;				If e\room\RoomTemplate\RoomID = r_cont1_173_intro
-;					If PlayerRoom = e\room
-;						If e\EventState2 < 14.0
-;							IsIntro = True
-;						Else
-;							IsIntro = False
-;						EndIf
-;					EndIf
-;				EndIf
-;			EndIf
-;		Next
-		;[End Block]
-		
-		; ~ Assigning frames
-		;[Block]
-;		If (Not IsIntro)
-		If me\CurrSpeed > 0.0
-			If me\Crouch
-				If KeyDown(key\MOVEMENT_UP)
-					FrameStart = 157.0 : FrameEnd = 181.0 : Speed = 0.245 : Loop = True
-				ElseIf KeyDown(key\MOVEMENT_DOWN)
-					FrameStart = 181.0 : FrameEnd = 157.0 : Speed = -0.245 : Loop = True
-				ElseIf KeyDown(key\MOVEMENT_RIGHT)
-					FrameStart = 182.0 : FrameEnd = 206.0 : Speed = 0.245 : Loop = True
-				ElseIf KeyDown(key\MOVEMENT_LEFT)
-					FrameStart = 207.0 : FrameEnd = 231.0 : Speed = 0.245 : Loop = True
-				EndIf
-			Else
-				If KeyDown(key\SPRINT) And me\Stamina > 0.0
-					If KeyDown(key\MOVEMENT_UP)
-						FrameStart = 95.0 : FrameEnd = 112.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_DOWN)
-						FrameStart = 112.0 : FrameEnd = 95.0 : Speed = -0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_RIGHT)
-						FrameStart = 113.0 : FrameEnd = 130.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_LEFT)
-						FrameStart = 131.0 : FrameEnd = 148.0 : Speed = 0.245 : Loop = True
-					EndIf
-				Else
-					If KeyDown(key\MOVEMENT_UP)
-						FrameStart = 20.0 : FrameEnd = 44.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_DOWN)
-						FrameStart = 44.0 : FrameEnd = 20.0 : Speed = -0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_RIGHT)
-						FrameStart = 45.0 : FrameEnd = 69.0 : Speed = 0.245 : Loop = True
-					ElseIf KeyDown(key\MOVEMENT_LEFT)
-						FrameStart = 70.0 : FrameEnd = 94.0 : Speed = 0.245 : Loop = True
-					EndIf
-				EndIf
-			EndIf
-		Else
-			If me\Crouch
-				FrameStart = 149.0 : FrameEnd = 155.0 : Speed = 0.3 : Loop = False
-			Else
-				If AnimTime(me\PlayerModelOBJ) <= 155.0 And AnimTime(me\PlayerModelOBJ) > 149.0
-					FrameStart = 155.0 : FrameEnd = 149.0 : Speed = -0.3 : Loop = False
-				Else
-					FrameStart = 1.0 : FrameEnd = 18.0 : Speed = 0.1 : Loop = True
-				EndIf
-			EndIf
-		EndIf
-;		Else
-;			FrameStart = 232.0 : FrameEnd = 271.0 : Speed = 0.3 : Loop = False
-;		EndIf
-		;[End Block]
-		
-		; ~ Updating animations
-		;[Block]
-		AnimateEx(me\PlayerModelOBJ, AnimTime(me\PlayerModelOBJ), FrameStart, FrameEnd, Speed, Loop)
-		;[End Block]
+		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 10.0)
 	Else
-		HideEntity(me\PlayerModelOBJ) : Return
+		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
 	EndIf
-	
-	CatchErrors("Uncaught: UpdatePlayerModel()")
 End Function
 
 ; ~ Fog Constants
@@ -3688,8 +3618,7 @@ Function UpdateGUI%()
 			EndIf
 		EndIf
 		If ShouldDrawHUD
-			
-			HideEntity(me\PlayerModelOBJ)
+			HideEntity(pm\OBJ) ; ~ Hide player body model
 			
 			Local ButtonPosX# = EntityX(d_I\ClosestButton, True)
 			Local ButtonPosY# = EntityY(d_I\ClosestButton, True)

@@ -2221,7 +2221,6 @@ Type Player
 	Field StopHidingTimer#
 	Field CurrFunds%, UsedMastercard%
 	Field InsideElevator%
-	Field PlayerModelPivot%, PlayerModelOBJ%
 End Type
 
 Global me.Player
@@ -2279,6 +2278,7 @@ Function LoadData%()
 	
 	chs.Cheats = New Cheats
 	me.Player = New Player
+	pm.PlayerModel = New PlayerModel
 	wi.WearableItems = New WearableItems
 	fog.FogAmbient = New FogAmbient
 	
@@ -2327,10 +2327,43 @@ End Function
 
 Global Camera%
 
+Type PlayerModel
+	Field Pivot%, OBJ%
+	Field StartFrame#[15]
+	Field EndFrame#[15]
+	Field AnimationSpeed#[15]
+	Field AnimID%
+End Type
+
+Global pm.PlayerModel
+
+; ~ Player body animation constants
+;[Block]
+Const PLAYER_ANIM_IDLE% = 1
+Const PLAYER_ANIM_CROUCH_IDLE% = 2
+
+Const PLAYER_ANIM_WALK% = 3
+Const PLAYER_ANIM_RUN% = 4
+Const PLAYER_ANIM_CROUCH_WALK% = 5
+
+Const PLAYER_ANIM_WALK_STRAFE_RIGHT% = 6
+Const PLAYER_ANIM_WALK_STRAFE_LEFT% = 7
+
+Const PLAYER_ANIM_RUN_STRAFE_RIGHT% = 8
+Const PLAYER_ANIM_RUN_STRAFE_LEFT% = 9
+
+Const PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT% = 10
+Const PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT% = 11
+
+Const PLAYER_ANIM_CROUCH% = 12
+Const PLAYER_ANIM_UNCROUCH% = 13
+;[End Block]
+
+
 Function LoadEntities%()
 	CatchErrors("LoadEntities()")
 	
-	Local i%, Tex%
+	Local i%, j%, k%, Tex%
 	Local Name$, Test%, File$
 	
 	DeInitMainMenuAssets()
@@ -2363,11 +2396,96 @@ Function LoadEntities%()
 	CameraClsColor(Camera, 30.0, 30.0, 30.0)
 	AmbientLight(30.0, 30.0, 30.0)
 	
-	me\PlayerModelPivot = CreatePivot()
-	me\PlayerModelOBJ = LoadAnimMesh_Strict("GFX\NPCs\player_body.b3d", me\PlayerModelPivot)
-	ScaleEntity(me\PlayerModelOBJ, (0.51 / MeshWidth(me\PlayerModelOBJ)), (0.51 / MeshWidth(me\PlayerModelOBJ)), (0.51 / MeshWidth(me\PlayerModelOBJ)))
-	MeshCullBox(me\PlayerModelOBJ, -MeshWidth(me\PlayerModelOBJ), -MeshHeight(me\PlayerModelOBJ), -MeshDepth(me\PlayerModelOBJ), MeshWidth(me\PlayerModelOBJ) * 2.0, MeshHeight(me\PlayerModelOBJ) * 2.0, MeshDepth(me\PlayerModelOBJ) * 2.0)
-	HideEntity(me\PlayerModelOBJ)
+	pm\Pivot = CreatePivot()
+	pm\OBJ = LoadAnimMesh_Strict("GFX\NPCs\player_body.b3d", pm\Pivot)
+	i = MeshWidth(pm\OBJ) : j = MeshHeight(pm\OBJ) : k = MeshDepth(pm\OBJ)
+	ScaleEntity(pm\OBJ, 0.51 / i, 0.51 / i, 0.51 / i)
+	MeshCullBox(pm\OBJ, -i, -j, -k, i * 2.0, j * 2.0, k * 2.0)
+	HideEntity(pm\OBJ)
+	
+	For i = PLAYER_ANIM_IDLE To PLAYER_ANIM_UNCROUCH
+		Select i
+			Case PLAYER_ANIM_IDLE
+				;[Block]
+				pm\StartFrame[i] = 1.0
+				pm\EndFrame[i] = 19.0
+				pm\AnimationSpeed[i] = 0.1
+				;[End Block]
+			Case PLAYER_ANIM_CROUCH_IDLE
+				;[Block]
+				pm\StartFrame[i] = 155.0
+				pm\EndFrame[i] = 156.0
+				pm\AnimationSpeed[i] = 0.05
+				;[End Block]
+			Case PLAYER_ANIM_WALK
+				;[Block]
+				pm\StartFrame[i] = 20.0
+				pm\EndFrame[i] = 44.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_RUN
+				;[Block]
+				pm\StartFrame[i] = 95.0
+				pm\EndFrame[i] = 112.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_CROUCH_WALK
+				;[Block]
+				pm\StartFrame[i] = 157.0
+				pm\EndFrame[i] = 181.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_WALK_STRAFE_RIGHT
+				;[Block]
+				pm\StartFrame[i] = 45.0
+				pm\EndFrame[i] = 69.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_WALK_STRAFE_LEFT
+				;[Block]
+				pm\StartFrame[i] = 70.0
+				pm\EndFrame[i] = 94.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_RUN_STRAFE_RIGHT
+				;[Block]
+				pm\StartFrame[i] = 113.0
+				pm\EndFrame[i] = 130.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_RUN_STRAFE_LEFT
+				;[Block]
+				pm\StartFrame[i] = 131.0
+				pm\EndFrame[i] = 148.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT
+				;[Block]
+				pm\StartFrame[i] = 182.0
+				pm\EndFrame[i] = 206.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT
+				;[Block]
+				pm\StartFrame[i] = 207.0
+				pm\EndFrame[i] = 231.0
+				pm\AnimationSpeed[i] = 0.245
+				;[End Block]
+			Case PLAYER_ANIM_CROUCH
+				;[Block]
+				pm\StartFrame[i] = 149.0
+				pm\EndFrame[i] = 156.0
+				pm\AnimationSpeed[i] = 0.3
+				;[End Block]
+			Case PLAYER_ANIM_UNCROUCH
+				;[Block]
+				pm\StartFrame[i] = 149.0
+				pm\EndFrame[i] = 156.0
+				pm\AnimationSpeed[i] = 0.3
+				;[End Block]
+		End Select
+		ExtractAnimSeq(pm\OBJ, pm\StartFrame[i], pm\EndFrame[i])
+	Next
 	
 	ParticleCam = Camera
 	ParticlePiv = CreatePivot()
