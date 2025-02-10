@@ -1947,7 +1947,7 @@ Function UpdateEvents%()
 								
 								If e\EventState2 = 0.0
 									If EntityDistanceSquared(n_I\Curr173\Collider, e\room\Objects[4]) < 9.0
-										If (Not PlayerSees173(n_I\Curr173))
+										If (Not PlayerSees173(n_I\Curr173)) And ((Not EntityInView(e\room\Objects[2], Camera)) Lor (me\BlinkTimer < -6.0 And me\BlinkTimer > -16.0))
 											; ~ SCP-173's attack point
 											TFormPoint(-448.0, -4985, 752.0, e\room\OBJ, 0)
 											PositionEntity(n_I\Curr173\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
@@ -1974,7 +1974,7 @@ Function UpdateEvents%()
 									RotateEntity(e\room\Objects[1], Clamp(EntityPitch(e\room\Objects[1]) + Clamp(-mo\Mouse_Y_Speed_1, -10.0, 10.0), 35.0, 89.0), EntityYaw(e\room\Objects[1]), 0.0)
 								EndIf
 								If I_008\Timer = 0.0
-									If me\Bloodloss > 0.0 Lor wi\GasMask = 0 Then InjurePlayer(0.0, 0.001)
+									If me\Bloodloss > 0.0 Then InjurePlayer(0.0, 0.001)
 								EndIf
 								
 								If wi\GasMask = 0 And wi\HazmatSuit = 0 Then me\EyeIrritation = Max(70.0, me\EyeIrritation)
