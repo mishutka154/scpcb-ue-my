@@ -2329,38 +2329,11 @@ Global Camera%
 
 Type PlayerModel
 	Field Pivot%, OBJ%
-	Field StartFrame#[15]
-	Field EndFrame#[15]
-	Field AnimationSpeed#[15]
+	Field AnimationSpeed#[13]
 	Field AnimID%
 End Type
 
 Global pm.PlayerModel
-
-; ~ Player body animation constants
-;[Block]
-Const PLAYER_ANIM_IDLE% = 1
-Const PLAYER_ANIM_CROUCH_IDLE% = 2
-
-Const PLAYER_ANIM_WALK% = 3
-Const PLAYER_ANIM_RUN% = 4
-Const PLAYER_ANIM_CROUCH_WALK% = 5
-
-Const PLAYER_ANIM_WALK_STRAFE_RIGHT% = 6
-Const PLAYER_ANIM_WALK_STRAFE_LEFT% = 7
-
-Const PLAYER_ANIM_RUN_STRAFE_RIGHT% = 8
-Const PLAYER_ANIM_RUN_STRAFE_LEFT% = 9
-
-Const PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT% = 10
-Const PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT% = 11
-
-Const PLAYER_ANIM_CROUCH% = 12
-Const PLAYER_ANIM_UNCROUCH% = 13
-
-Const PLAYER_ANIM_NOCLIP% = 14
-;[End Block]
-
 
 Function LoadEntities%()
 	CatchErrors("LoadEntities()")
@@ -2405,94 +2378,84 @@ Function LoadEntities%()
 	MeshCullBox(pm\OBJ, -i, -j, -k, i * 2.0, j * 2.0, k * 2.0)
 	HideEntity(pm\OBJ)
 	
+	Local StartFrame#, EndFrame#
+	
 	For i = PLAYER_ANIM_IDLE To PLAYER_ANIM_NOCLIP
 		Select i
 			Case PLAYER_ANIM_IDLE
 				;[Block]
-				pm\StartFrame[i] = 1.0
-				pm\EndFrame[i] = 19.0
+				StartFrame = 1.0
+				EndFrame = 19.0
 				pm\AnimationSpeed[i] = 0.1
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_IDLE
 				;[Block]
-				pm\StartFrame[i] = 157.0
-				pm\EndFrame[i] = 181.0
+				StartFrame = 157.0
+				EndFrame = 181.0
 				pm\AnimationSpeed[i] = 0.05
 				;[End Block]
 			Case PLAYER_ANIM_WALK
 				;[Block]
-				pm\StartFrame[i] = 20.0
-				pm\EndFrame[i] = 44.0
+				StartFrame = 20.0
+				EndFrame = 44.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_RUN
 				;[Block]
-				pm\StartFrame[i] = 95.0
-				pm\EndFrame[i] = 112.0
+				StartFrame = 95.0
+				EndFrame = 112.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK
 				;[Block]
-				pm\StartFrame[i] = 189.0
-				pm\EndFrame[i] = 213.0
+				StartFrame = 189.0
+				EndFrame = 213.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_WALK_STRAFE_RIGHT
 				;[Block]
-				pm\StartFrame[i] = 45.0
-				pm\EndFrame[i] = 69.0
+				StartFrame = 45.0
+				EndFrame = 69.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_WALK_STRAFE_LEFT
 				;[Block]
-				pm\StartFrame[i] = 70.0
-				pm\EndFrame[i] = 94.0
+				StartFrame = 70.0
+				EndFrame = 94.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_RUN_STRAFE_RIGHT
 				;[Block]
-				pm\StartFrame[i] = 113.0
-				pm\EndFrame[i] = 130.0
+				StartFrame = 113.0
+				EndFrame = 130.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_RUN_STRAFE_LEFT
 				;[Block]
-				pm\StartFrame[i] = 131.0
-				pm\EndFrame[i] = 148.0
+				StartFrame = 131.0
+				EndFrame = 148.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT
 				;[Block]
-				pm\StartFrame[i] = 214.0
-				pm\EndFrame[i] = 238.0
+				StartFrame = 214.0
+				EndFrame = 238.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT
 				;[Block]
-				pm\StartFrame[i] = 239.0
-				pm\EndFrame[i] = 263.0
+				StartFrame = 239.0
+				EndFrame = 263.0
 				pm\AnimationSpeed[i] = 0.245
-				;[End Block]
-			Case PLAYER_ANIM_CROUCH
-				;[Block]
-				pm\StartFrame[i] = 149.0
-				pm\EndFrame[i] = 156.0
-				pm\AnimationSpeed[i] = 0.3
-				;[End Block]
-			Case PLAYER_ANIM_UNCROUCH
-				;[Block]
-				pm\StartFrame[i] = 182.0
-				pm\EndFrame[i] = 188.0
-				pm\AnimationSpeed[i] = 0.3
 				;[End Block]
 			Case PLAYER_ANIM_NOCLIP
 				;[Block]
-				pm\StartFrame[i] = 264.0
-				pm\EndFrame[i] = 284.0
+				StartFrame = 264.0
+				EndFrame = 284.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 		End Select
-		ExtractAnimSeq(pm\OBJ, pm\StartFrame[i], pm\EndFrame[i])
+		ExtractAnimSeq(pm\OBJ, StartFrame, EndFrame)
 	Next
 	
 	ParticleCam = Camera
@@ -3258,6 +3221,9 @@ Function NullGame%(PlayButtonSFX% = True)
 	FreeEntity(me\Collider) : me\Collider = 0
 	FreeEntity(me\Head) : me\Head = 0
 	Delete(me) : me = Null
+	FreeEntity(pm\Pivot) : pm\Pivot = 0
+	FreeEntity(pm\OBJ) : pm\OBJ = 0
+	Delete(pm) : pm = Null
 	Delete(wi) : wi = Null
 	Delete(fog) : fog = Null
 	

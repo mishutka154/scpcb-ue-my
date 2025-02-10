@@ -2679,6 +2679,39 @@ Function RefillCup%()
 	Next
 End Function
 
+; ~ Player body animation constants
+;[Block]
+Const PLAYER_ANIM_IDLE% = 1
+Const PLAYER_ANIM_CROUCH_IDLE% = 2
+
+Const PLAYER_ANIM_WALK% = 3
+Const PLAYER_ANIM_RUN% = 4
+Const PLAYER_ANIM_CROUCH_WALK% = 5
+
+Const PLAYER_ANIM_WALK_STRAFE_RIGHT% = 6
+Const PLAYER_ANIM_WALK_STRAFE_LEFT% = 7
+
+Const PLAYER_ANIM_RUN_STRAFE_RIGHT% = 8
+Const PLAYER_ANIM_RUN_STRAFE_LEFT% = 9
+
+Const PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT% = 10
+Const PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT% = 11
+
+Const PLAYER_ANIM_NOCLIP% = 12
+;[End Block]
+
+Function UpdatePlayerModel%()
+	If (Not me\Terminated)
+		If EntityHidden(pm\OBJ) Then ShowEntity(pm\OBJ)
+		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
+		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0, True)
+		
+		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 10.0)
+	Else
+		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
+	EndIf
+End Function
+
 Function SetCrouch%(NewCrouch%)
 	If NewCrouch <> me\Crouch
 		PlaySound_Strict(snd_I\CrouchSFX)
@@ -3221,18 +3254,6 @@ Function UpdateMouseLook%()
 	EndIf
 	
 	CatchErrors("Uncaught: UpdateMouseLook()")
-End Function
-
-Function UpdatePlayerModel%()
-	If (Not me\Terminated)
-		If EntityHidden(pm\OBJ) Then ShowEntity(pm\OBJ)
-		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
-		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0)
-		
-		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 10.0)
-	Else
-		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
-	EndIf
 End Function
 
 ; ~ Fog Constants
