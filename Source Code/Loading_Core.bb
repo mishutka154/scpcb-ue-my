@@ -1340,7 +1340,10 @@ End Function
 Global SoundTransmission%
 Global SoundEmitter%
 
-Global TempSounds%[10]
+Const MaxTempSounds% = 10
+
+Global TempSounds%[MaxTempSounds]
+Global TempSoundsName$[MaxTempSounds]
 Global TempSoundIndex% = 0
 
 ; ~ The Music now has to be pre-defined, as the new system uses streaming instead of the usual sound loading system Blitz3D has

@@ -8756,8 +8756,11 @@ Function UpdateEnding%()
 					If UpdateMenuButton(x, y, 430 * MenuScale, 60 * MenuScale, GetLocalString("menu", "mainmenu"), Font_Default_Big)
 						ShouldPlay = 23
 						NowPlaying = ShouldPlay
-						For i = 0 To 9
-							If TempSounds[i] <> 0 Then FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
+						For i = 0 To MaxTempSounds - 1
+							If TempSounds[i] <> 0
+								FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
+								TempSoundsName[i] = ""
+							EndIf
 						Next
 						StopStream_Strict(MusicCHN) : MusicCHN = 0
 						MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0)

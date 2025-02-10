@@ -95,12 +95,15 @@ Function LoadNPCSound%(n.NPCs, File$, Number% = 0)
 End Function
 
 Function LoadTempSound%(File$)
-	Local TempSound%
+	Local TempSound%, i%
 	
+	For i = 0 To MaxTempSounds - 1
+		If TempSoundsName[i] = File Then Return(TempSounds[i])
+	Next
 	If TempSounds[TempSoundIndex] <> 0 Then FreeSound_Strict(TempSounds[TempSoundIndex]) : TempSounds[TempSoundIndex] = 0
 	TempSound = LoadSound_Strict(File)
 	TempSounds[TempSoundIndex] = TempSound
-	TempSoundIndex = ((TempSoundIndex + 1) Mod 10)
+	TempSoundIndex = ((TempSoundIndex + 1) Mod MaxTempSounds)
 	Return(TempSound)
 End Function
 
@@ -278,8 +281,11 @@ Function KillSounds%(EraseSounds% = True)
 	Local e.Events, n.NPCs, d.Doors, snd.Sound, sc.SecurityCams, r.Rooms, se.SoundEmitters, emit.Emitter
 	Local i%
 	
-	For i = 0 To 9
-		If TempSounds[i] <> 0 Then FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
+	For i = 0 To MaxTempSounds - 1
+		If TempSounds[i] <> 0
+			FreeSound_Strict(TempSounds[i]) : TempSounds[i] = 0
+			TempSoundsName[i] = ""
+		EndIf
 	Next
 	
 	For e.Events = Each Events
