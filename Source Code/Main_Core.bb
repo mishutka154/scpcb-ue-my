@@ -2857,6 +2857,8 @@ Function UpdateMoving%()
 			If KeyDown(key\MOVEMENT_LEFT) Then MoveEntity(me\Collider, (-Temp2) * fps\Factor[0], 0.0, 0.0)
 			If KeyDown(key\MOVEMENT_RIGHT) Then MoveEntity(me\Collider, Temp2 * fps\Factor[0], 0.0, 0.0)
 			
+			pm\AnimID = PLAYER_ANIM_NOCLIP
+			
 			ResetEntity(me\Collider)
 		Else
 			Temp2 = Temp2 / Max((me\Injuries + 3.0 - (2.25 * (I_1025\FineState[3] > 0.0))) / 3.0, 1.0)

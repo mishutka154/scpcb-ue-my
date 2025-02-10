@@ -2329,9 +2329,9 @@ Global Camera%
 
 Type PlayerModel
 	Field Pivot%, OBJ%
-	Field StartFrame#[15]
-	Field EndFrame#[15]
-	Field AnimationSpeed#[15]
+	Field StartFrame#[14]
+	Field EndFrame#[14]
+	Field AnimationSpeed#[14]
 	Field AnimID%
 End Type
 
@@ -2357,6 +2357,8 @@ Const PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT% = 11
 
 Const PLAYER_ANIM_CROUCH% = 12
 Const PLAYER_ANIM_UNCROUCH% = 13
+
+Const PLAYER_ANIM_NOCLIP% = 14
 ;[End Block]
 
 
@@ -2413,8 +2415,8 @@ Function LoadEntities%()
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_IDLE
 				;[Block]
-				pm\StartFrame[i] = 155.0
-				pm\EndFrame[i] = 156.0
+				pm\StartFrame[i] = 157.0
+				pm\EndFrame[i] = 181.0
 				pm\AnimationSpeed[i] = 0.05
 				;[End Block]
 			Case PLAYER_ANIM_WALK
@@ -2431,8 +2433,8 @@ Function LoadEntities%()
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK
 				;[Block]
-				pm\StartFrame[i] = 157.0
-				pm\EndFrame[i] = 181.0
+				pm\StartFrame[i] = 189.0
+				pm\EndFrame[i] = 213.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_WALK_STRAFE_RIGHT
@@ -2461,14 +2463,14 @@ Function LoadEntities%()
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_RIGHT
 				;[Block]
-				pm\StartFrame[i] = 182.0
-				pm\EndFrame[i] = 206.0
+				pm\StartFrame[i] = 214.0
+				pm\EndFrame[i] = 238.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH_WALK_STRAFE_LEFT
 				;[Block]
-				pm\StartFrame[i] = 207.0
-				pm\EndFrame[i] = 231.0
+				pm\StartFrame[i] = 239.0
+				pm\EndFrame[i] = 263.0
 				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 			Case PLAYER_ANIM_CROUCH
@@ -2479,9 +2481,15 @@ Function LoadEntities%()
 				;[End Block]
 			Case PLAYER_ANIM_UNCROUCH
 				;[Block]
-				pm\StartFrame[i] = 149.0
-				pm\EndFrame[i] = 156.0
+				pm\StartFrame[i] = 182.0
+				pm\EndFrame[i] = 188.0
 				pm\AnimationSpeed[i] = 0.3
+				;[End Block]
+			Case PLAYER_ANIM_NOCLIP
+				;[Block]
+				pm\StartFrame[i] = 264.0
+				pm\EndFrame[i] = 284.0
+				pm\AnimationSpeed[i] = 0.245
 				;[End Block]
 		End Select
 		ExtractAnimSeq(pm\OBJ, pm\StartFrame[i], pm\EndFrame[i])
