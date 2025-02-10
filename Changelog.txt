@@ -38,6 +38,8 @@
 - Moved Gas Mask to the lower floor of «room2_closets».
 - Return back a second quarter in the cafeteria room.
 - Pocket Dimension Labyrinth deals more damage to the player.
+- Player no longer infected by SCP-008 by entering chamber without gas mask.
+- «cont1_173» event has Ulgrin and Franklin react to SCP-173 sooner.
 
 - Design improvements for some rooms...
 
@@ -82,6 +84,7 @@
 - Fixed different generation of the map and events on the same seeds.
 - Hopefully fixed render of the ending areas.
 - Fixed SCP-049-2 not roaming.
+- Fixed SCP-173 being able to break windows when the player was looking at window.
 
 [Known issues]
 - Rooms can overlap and block the way.
