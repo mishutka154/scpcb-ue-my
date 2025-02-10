@@ -1940,7 +1940,7 @@ Function UpdateEvents%()
 							
 							UpdateRedLight(e\room\Objects[5], 1500, 800)
 							
-							If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 4.5
+							If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 5.0
 								For i = 0 To 1
 									e\room\RoomDoors[i]\Locked = 1
 								Next
