@@ -1089,6 +1089,8 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 End Function
 
 Function NPCSeesNPC%(n.NPCs, n2.NPCs, Dist# = 36.0)
+	If n = Null Lor n2 = Null Then Return(0)
+	
 	If EntityDistanceSquared(n\Collider, n2\Collider) < Dist
 		If EntityVisible(n\Collider, n2\Collider) Then Return(1)
 		If n = n_I\Curr173
