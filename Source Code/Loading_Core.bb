@@ -2329,9 +2329,9 @@ Global Camera%
 
 Type PlayerModel
 	Field Pivot%, OBJ%
-	Field StartFrame#[14]
-	Field EndFrame#[14]
-	Field AnimationSpeed#[14]
+	Field StartFrame#[15]
+	Field EndFrame#[15]
+	Field AnimationSpeed#[15]
 	Field AnimID%
 End Type
 
@@ -2405,7 +2405,7 @@ Function LoadEntities%()
 	MeshCullBox(pm\OBJ, -i, -j, -k, i * 2.0, j * 2.0, k * 2.0)
 	HideEntity(pm\OBJ)
 	
-	For i = PLAYER_ANIM_IDLE To PLAYER_ANIM_UNCROUCH
+	For i = PLAYER_ANIM_IDLE To PLAYER_ANIM_NOCLIP
 		Select i
 			Case PLAYER_ANIM_IDLE
 				;[Block]
