@@ -1,38 +1,38 @@
-Function PlaySoundEx%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False)
-	Range = Max(Range, 1.0)
-	
+Function PlaySoundEx%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False, IgnoreDistance% = False)
 	Local SoundCHN% = 0
 	
-	If Volume > 0.0
+	If Entity <> 0 And Volume > 0.0
+		Range = Max(Range, 1.0)
+		
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		
-		If (1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)
+		If ((1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)) Lor IgnoreDistance
 			Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 			
-			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice)
+			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice, False)
 			
-			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 			ChannelPan(SoundCHN, PanValue)
+			ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume, 0.0, 1.0))
 		EndIf
-	Else
-		ChannelVolume(SoundCHN, 0.0)
 	EndIf
 	Return(SoundCHN)
 End Function
 
 Function LoopSoundEx%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False)
-	Range = Max(Range, 1.0)
-	
 	If Volume > 0.0
+		Range = Max(Range, 1.0)
+		
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 		
-		If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle, IsVoice)
+		If (Not ChannelPlaying(SoundCHN)) Then
+			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice, False)
+		EndIf
 		
-		ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 		ChannelPan(SoundCHN, PanValue)
+		ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume, 0.0, 1.0))
 	Else
-		ChannelVolume(SoundCHN, 0.0)
+		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
 	EndIf
 	Return(SoundCHN)
 End Function
@@ -40,21 +40,21 @@ End Function
 Function UpdateSoundOrigin%(SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False, SFXVolume% = True)
 	If (Not ChannelPlaying(SoundCHN)) Lor Entity = 0 Then Return
 	
-	Range = Max(Range, 1.0)
-	
 	If Volume > 0.0
+		Range = Max(Range, 1.0)
+		
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		
 		If (1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)
 			Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 			
-			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((Not SFXVolume) + (SFXVolume * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)))
 			ChannelPan(SoundCHN, PanValue)
+			ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((Not SFXVolume) + (SFXVolume * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)), 0.0, 1.0))
 		Else
-			ChannelVolume(SoundCHN, 0.0)
+			If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
 		EndIf
 	Else
-		ChannelVolume(SoundCHN, 0.0)
+		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
 	EndIf
 End Function
 
@@ -451,13 +451,13 @@ Function PlayStepSound%(IncludeSprint% = True)
 			;[End Block]
 	End Select
 	
-	TempCHN = PlaySound_Strict(StepSFX(Temp, (IncludeSprint And SoundHasSprint), SoundRand))
+	TempCHN = PlaySound_Strict(StepSFX(Temp, (IncludeSprint And SoundHasSprint), SoundRand), False, False)
 	
 	Local SoundVol# = (1.0 - (me\Crouch * 0.7)) * opt\SFXVolume * opt\MasterVolume
 	
 	ChannelVolume(TempCHN, SoundVol)
 	If DecalStep = 2 And Temp <> 5
-		TempCHN2 = PlaySound_Strict(StepSFX(5, 0, Rand(0, 1)))
+		TempCHN2 = PlaySound_Strict(StepSFX(5, 0, Rand(0, 1)), False, False)
 		ChannelVolume(TempCHN2, SoundVol)
 	EndIf
 	me\SndVolume = Max(4.0 * IncludeSprint + (1 - IncludeSprint) * (2.5 - me\Crouch * 0.7), me\SndVolume)

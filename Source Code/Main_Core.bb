@@ -2809,13 +2809,12 @@ Function UpdateMoving%()
 				Temp3 = 0
 				If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then Temp3 = 1
 				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), 0), True)
-				ChannelVolume(BreathCHN, opt\VoiceVolume * opt\MasterVolume)
 			EndIf
 		ElseIf me\Stamina < 40.0
 			If (Not ChannelPlaying(BreathCHN))
 				Temp3 = 0
 				If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then Temp3 = 1
-				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)), True)
+				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)), True, False)
 				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\VoiceVolume * opt\MasterVolume)
 			EndIf
 		EndIf
@@ -3027,8 +3026,8 @@ Function UpdateMoving%()
 				de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.03, 0.08) * Min(me\Injuries, 2.5))
 				de\SizeChange = Rnd(0.001, 0.0015) : de\MaxSize = de\Size + Rnd(0.008, 0.009)
 				EntityParent(de\OBJ, PlayerRoom\OBJ)
-				TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)])
-				ChannelVolume(TempCHN, Rnd(0.0, 0.8) * opt\SFXVolume * opt\MasterVolume)
+				TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)], False, False)
+				ChannelVolume(TempCHN, Rnd(0.3, 0.6) * opt\SFXVolume * opt\MasterVolume)
 				ChannelPitch(TempCHN, Rand(20000, 30000))
 				
 				FreeEntity(Pvt) : Pvt = 0
@@ -3065,7 +3064,7 @@ Function UpdateMoving%()
 	
 	If me\HeartBeatVolume > 0.0
 		If me\HeartBeatTimer <= 0.0
-			TempCHN = PlaySound_Strict(snd_I\HeartBeatSFX)
+			TempCHN = PlaySound_Strict(snd_I\HeartBeatSFX, False, False)
 			ChannelVolume(TempCHN, me\HeartBeatVolume * opt\SFXVolume * opt\MasterVolume)
 			
 			me\HeartBeatTimer = 70.0 * (60.0 / Max(me\HeartBeatRate, 1.0))
@@ -3195,10 +3194,7 @@ Function UpdateMouseLook%()
 			If ChannelPlaying(BreathCHN)
 				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 			Else
-				If (Not ChannelPlaying(BreathGasRelaxedCHN))
-					BreathGasRelaxedCHN = PlaySound_Strict(snd_I\BreathGasRelaxedSFX, True)
-					ChannelVolume(BreathGasRelaxedCHN, opt\VoiceVolume * opt\MasterVolume)
-				EndIf
+				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then BreathGasRelaxedCHN = PlaySound_Strict(snd_I\BreathGasRelaxedSFX, True)
 			EndIf
 		EndIf
 		
@@ -3587,10 +3583,7 @@ Function UpdateGUI%()
 						PlaySound_Strict(PD_event\Sound2, True)
 						PD_event\Img2 = ScaleImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
 					Else
-						If (Not ChannelPlaying(PD_event\SoundCHN))
-							PD_event\SoundCHN = PlaySound_Strict(PD_event\Sound)
-							ChannelVolume(PD_event\SoundCHN, opt\VoiceVolume * opt\MasterVolume)
-						EndIf
+						If (Not ChannelPlaying(PD_event\SoundCHN)) Then PD_event\SoundCHN = PlaySound_Strict(PD_event\Sound, True)
 					EndIf
 				Else
 					If ChannelPlaying(PD_event\SoundCHN) Then StopChannel(PD_event\SoundCHN) : PD_event\SoundCHN = 0
@@ -9686,8 +9679,8 @@ Function Update427%()
 			de.Decals = CreateDecal(DECAL_427, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.03, 0.08) * 2.0)
 			de\SizeChange = Rnd(0.001, 0.0015) : de\MaxSize = de\Size + 0.009
 			EntityParent(de\OBJ, PlayerRoom\OBJ)
-			TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)])
-			ChannelVolume(TempCHN, Rnd(0.0, 0.8) * opt\SFXVolume * opt\MasterVolume)
+			TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)], False, False)
+			ChannelVolume(TempCHN, Rnd(0.3, 0.6) * opt\SFXVolume * opt\MasterVolume)
 			ChannelPitch(TempCHN, Rand(20000, 30000))
 			FreeEntity(Pvt) : Pvt = 0
 			me\BlurTimer = 800.0

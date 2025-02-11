@@ -1126,12 +1126,12 @@ Function UpdateEvents%()
 							If SoundTransmission <> Temp
 								If SoundTransmission
 									If ChannelPlaying(e\SoundCHN) 
-										ChannelVolume(e\SoundCHN, 0)
+										ChannelVolume(e\SoundCHN, 0.0)
 									Else
 										e\SoundCHN = 0
 									EndIf
 									If ChannelPlaying(e\SoundCHN2) 
-										ChannelVolume(e\SoundCHN2, 0)
+										ChannelVolume(e\SoundCHN2, 0.0)
 									Else
 										e\SoundCHN2 = 0
 									EndIf
