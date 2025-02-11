@@ -2839,7 +2839,7 @@ Function UpdateNPCType939%(n.NPCs)
 		Return
 	EndIf
 	
-	Local Dist#, PrevFrame#, Temp%
+	Local Dist#, PrevFrame#, Temp%, Visible% = EntityVisible(me\Collider, n\Collider)
 	
 	Select n\State
 		Case 0.0 ; ~ Idles
@@ -2896,7 +2896,7 @@ Function UpdateNPCType939%(n.NPCs)
 			;[End Block]
 		Case 3.0 ; ~ Attack
 			;[Block]
-			If EntityVisible(me\Collider, n\Collider)
+			If Visible
 				n\EnemyX = EntityX(me\Collider)
 				n\EnemyZ = EntityZ(me\Collider)
 				n\LastSeen = 70.0
@@ -2935,7 +2935,7 @@ Function UpdateNPCType939%(n.NPCs)
 						
 						; ~ Player is visible
 						If DistanceSquared(n\EnemyX, EntityX(n\Collider), n\EnemyZ, EntityZ(n\Collider)) < 1.0
-							If EntityVisible(me\Collider, n\Collider) Then SetNPCFrame(n, 18.0)
+							If Visible Then SetNPCFrame(n, 18.0)
 						EndIf
 					Else
 						n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 5.0)
@@ -2963,11 +2963,10 @@ Function UpdateNPCType939%(n.NPCs)
 	End Select
 	
 	If EntityDistanceSquared(n\Collider, me\Collider) < 49.0
-		If EntityVisible(me\Collider, n\Collider) And EntityInView(n\Collider, Camera) Then GiveAchievement("939")
+		If Visible And EntityInView(n\Collider, Camera) Then GiveAchievement("939")
 	EndIf
 	
 	If n\State < 3.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn)); And (Not n\IgnorePlayer)
-		Local Visible% = EntityVisible(me\Collider, n\Collider)
 		Dist = EntityDistanceSquared(n\Collider, me\Collider) + ((Not Visible) * 2.5)
 		If Dist < 2.5 Lor (PowTwo(me\SndVolume * 1.5) > Dist And Visible)
 			If n\State3 = 0.0
