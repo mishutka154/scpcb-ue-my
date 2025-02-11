@@ -521,6 +521,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[End Block]
 	End Select
 	
+	CreateShadow(n\OBJ, n\CollRadius)
 	PositionEntity(n\Collider, x, y, z, True)
 	PositionEntity(n\OBJ, x, y, z, True)
 	

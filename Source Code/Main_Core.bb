@@ -361,6 +361,7 @@ Function UpdateGame%()
 			If (Not IsPlayerOutsideFacility()) Then HideDistance = 17.0
 			UpdateDeaf()
 			UpdateDecals()
+			UpdateShadows()
 			UpdateSaveState()
 			UpdateMouseLook()
 			UpdateMoving()

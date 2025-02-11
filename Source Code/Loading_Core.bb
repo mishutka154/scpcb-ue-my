@@ -1,4 +1,4 @@
-Const MaxDecalTextureIDAmount% = 25
+Const MaxDecalTextureIDAmount% = 26
 
 Type DecalInstance
 	Field DecalTextureID%[MaxDecalTextureIDAmount]
@@ -41,6 +41,8 @@ Const DECAL_KETER% = 22
 Const DECAL_APOLLYON% = 23
 
 Const DECAL_CRACKED_GLASS% = 24
+
+Const DECAL_SHADOW% = 25
 ;[End Block]
 
 Function LoadDecals%()
@@ -80,6 +82,8 @@ Function LoadDecals%()
 	If S2IMapContains(UnlockedAchievements, "apollyon") Then de_I\DecalTextureID[DECAL_APOLLYON] = LoadTexture_Strict("GFX\Menu\Achievements\AchvApollyon.png", 1 + 2, DeleteAllTextures, False)
 	
 	de_I\DecalTextureID[DECAL_CRACKED_GLASS] = LoadTexture_Strict("GFX\Decals\cracked_glass_decal.png", 1 + 2, DeleteAllTextures, False)
+	
+	de_I\DecalTextureID[DECAL_SHADOW] = LoadTexture_Strict("GFX\Decals\shadow_decal.png", 1 + 2, DeleteAllTextures, False)
 End Function
 
 Const MaxParticleTextureIDAmount% = 10
@@ -2630,6 +2634,8 @@ Function LoadEntities%()
 	t\OverlayTextureID[3] = LoadTexture_Strict("GFX\Overlays\tesla_overlay.png", 1 + 2, DeleteAllTextures, False)
 	
 	LoadDecals()
+	
+	CreateShadow(me\Collider, 0.3)
 	
 	LoadParticles()
 	

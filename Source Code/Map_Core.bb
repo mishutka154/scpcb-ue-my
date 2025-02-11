@@ -3750,6 +3750,64 @@ Function RemoveDoor%(d.Doors)
 	Delete(d)
 End Function
 
+Type Shadows
+	Field OBJ%, Surf%
+	Field Size#
+	Field ParentOBJ%
+End Type
+
+Function CreateShadow.Shadows(OBJ%, Size#)
+	Local shdw.Shadows
+	
+	shdw.Shadows = New Shadows
+	shdw\Size = Size
+	
+	shdw\OBJ = CreateMesh()
+	shdw\Surf = CreateSurface(shdw\OBJ)
+	shdw\ParentOBJ = OBJ
+	
+	Local v0% = AddVertex(shdw\Surf, -1.0, 1.0, 0.0, 0.0, 0.0)
+	Local v1% = AddVertex(shdw\Surf, 1.0, 1.0, 0.0, 1.0, 0.0)
+	Local v2% = AddVertex(shdw\Surf, 1.0, -1.0, 0.0, 1.0, 1.0)
+	Local v3% = AddVertex(shdw\Surf, -1.0, -1.0, 0.0, 0.0, 1.0)
+	
+	AddTriangle(shdw\Surf, v0, v1, v2)
+	AddTriangle(shdw\Surf, v0, v2, v3)
+	
+	PositionEntity(shdw\OBJ, EntityX(OBJ, True), 0.0025, EntityZ(OBJ, True), True)
+	ScaleEntity(shdw\OBJ, Size, Size, 1.0, True)
+	EntityTexture(shdw\OBJ, de_I\DecalTextureID[DECAL_SHADOW])
+	EntityParent(shdw\OBJ, OBJ)
+	RotateEntity(shdw\OBJ, 90.0, 0.0, 0.0, True)
+	
+	UpdateNormals(shdw\OBJ)
+	HideEntity(shdw\OBJ)
+	
+	Return(shdw)
+End Function
+
+Function UpdateShadows%()
+	Local shdw.Shadows
+	
+	For shdw.Shadows = Each Shadows
+		If EntityDistanceSquared(shdw\OBJ, me\Collider) < PowTwo(fog\FarDist * LightVolume)
+			If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+			
+			Local AutoFadeDist# = fog\FarDist * 0.8
+			
+			EntityAutoFade(shdw\OBJ, AutoFadeDist, AutoFadeDist)
+		Else
+			If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
+		EndIf
+	Next
+End Function
+
+Function RemoveShadow%(shdw.Shadows)
+	FreeEntity(shdw\OBJ) : shdw\OBJ = 0
+	shdw\Surf = 0 
+	Delete(shdw)
+End Function
+
 Type Decals
 	Field OBJ%, Surf%, ID%
 	Field Size#, SizeChange#, MaxSize#
