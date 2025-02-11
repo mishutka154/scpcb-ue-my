@@ -6848,7 +6848,7 @@ Function UpdateEvents%()
 				
 				If PlayerRoom = e\room
 					; ~ Lever for checkpoint locking (might have a function in the future for the case if the checkpoint needs to be locked again)
-					e\EventState3 = UpdateLever(e\room\RoomLevers[0]\OBJ)
+					e\EventState3 = UpdateLever(e\room\RoomLevers[0]\OBJ, (Not e\EventState3))
 					If e\EventState3 = 0.0
 						TurnCheckpointMonitorsOff()
 						EntityTexture(e\room\Objects[18], e\room\Textures[0], 0)
