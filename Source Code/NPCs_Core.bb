@@ -894,7 +894,7 @@ Function TeleportCloser%(n.NPCs)
 	Local w.WayPoints
 	Local Dist#
 	
-	If InFacility > UpperFloor Then Return
+	If InFacility > UpperFloor Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Then Return
 	
 	For w.WayPoints = Each WayPoints
 		If w\door = Null
