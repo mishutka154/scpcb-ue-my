@@ -2900,20 +2900,50 @@ Function UpdateMoving%()
 			If me\Playable And me\FallTimer >= 0.0 And (Not me\Terminated)
 				If (Not me\Zombie)
 					pm\AnimID = PLAYER_ANIM_IDLE + me\Crouch
-					If KeyDown(key\MOVEMENT_DOWN)
-						If (Not KeyDown(key\MOVEMENT_UP))
+					If Sprint > 0.0
+						If KeyDown(key\MOVEMENT_DOWN)
+							If (Not KeyDown(key\MOVEMENT_UP))
+								Temp = True
+								Angle = 180.0
+								pm\AnimID = PLAYER_ANIM_WALK + (Sprint = 2.5) + (2 * me\Crouch)
+								If KeyDown(key\MOVEMENT_LEFT)
+									If (Not KeyDown(key\MOVEMENT_RIGHT))
+										Angle = 135.0
+										pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+									EndIf
+								ElseIf KeyDown(key\MOVEMENT_RIGHT)
+									Angle = -135.0
+									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+								EndIf
+							Else
+								If KeyDown(key\MOVEMENT_LEFT)
+									If (Not KeyDown(key\MOVEMENT_RIGHT))
+										Temp = True
+										Angle = 90.0
+										pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+									EndIf
+								ElseIf KeyDown(key\MOVEMENT_RIGHT)
+									Temp = True
+									Angle = -90.0
+									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+								EndIf
+							EndIf
+						ElseIf KeyDown(key\MOVEMENT_UP)
 							Temp = True
-							Angle = 180.0
+							Angle = 0.0
 							pm\AnimID = PLAYER_ANIM_WALK + (Sprint = 2.5) + (2 * me\Crouch)
 							If KeyDown(key\MOVEMENT_LEFT)
 								If (Not KeyDown(key\MOVEMENT_RIGHT))
-									Angle = 135.0
-									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+									Angle = 45.0
+									pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 								EndIf
 							ElseIf KeyDown(key\MOVEMENT_RIGHT)
-								Angle = -135.0
-								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
+								Angle = -45.0
+								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 							EndIf
+						ElseIf me\ForceMove > 0.0
+							Temp = True
+							Angle = me\ForceAngle
 						Else
 							If KeyDown(key\MOVEMENT_LEFT)
 								If (Not KeyDown(key\MOVEMENT_RIGHT))
@@ -2926,34 +2956,6 @@ Function UpdateMoving%()
 								Angle = -90.0
 								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 							EndIf
-						EndIf
-					ElseIf KeyDown(key\MOVEMENT_UP)
-						Temp = True
-						Angle = 0.0
-						pm\AnimID = PLAYER_ANIM_WALK + (Sprint = 2.5) + (2 * me\Crouch)
-						If KeyDown(key\MOVEMENT_LEFT)
-							If (Not KeyDown(key\MOVEMENT_RIGHT))
-								Angle = 45.0
-								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
-							EndIf
-						ElseIf KeyDown(key\MOVEMENT_RIGHT)
-							Angle = -45.0
-							pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
-						EndIf
-					ElseIf me\ForceMove > 0.0
-						Temp = True
-						Angle = me\ForceAngle
-					Else
-						If KeyDown(key\MOVEMENT_LEFT)
-							If (Not KeyDown(key\MOVEMENT_RIGHT))
-								Temp = True
-								Angle = 90.0
-								pm\AnimID = PLAYER_ANIM_WALK_STRAFE_LEFT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
-							EndIf
-						ElseIf KeyDown(key\MOVEMENT_RIGHT)
-							Temp = True
-							Angle = -90.0
-							pm\AnimID = PLAYER_ANIM_WALK_STRAFE_RIGHT + (2 * (Sprint = 2.5)) + (4 * me\Crouch)
 						EndIf
 					EndIf
 				Else
