@@ -1803,6 +1803,10 @@ Function UpdateEvents%()
 					EndIf
 					
 					If e\EventState > 0.0
+						x1 = 318.7
+						y1 = 300.0
+						z1 = 126.9
+						
 						e\EventState = e\EventState + fps\Factor[0]
 						CanSave = 0
 						If (Not n_I\Curr106\Contained)
@@ -1814,10 +1818,11 @@ Function UpdateEvents%()
 							e\room\RoomDoors[0]\Open = False
 						EndIf
 						
-						Dist = DistanceSquared(EntityX(me\Collider, True), EntityX(e\room\Objects[2], True), EntityZ(me\Collider, True), EntityZ(e\room\Objects[2], True))
-						If Dist < PowTwo(160.0 * RoomScale)
-							MakeMeUnplayable()
-							
+						TFormPoint(EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 0, e\room\OBJ)
+						
+						Local IsPlayerInside% = IsEqual(TFormedX(), EntityX(e\room\Objects[2]), x1) And IsEqual(TFormedY(), EntityY(e\room\Objects[2]), y1) And IsEqual(TFormedZ(), EntityZ(e\room\Objects[2]), z1) 
+						
+						If IsPlayerInside
 							If Setting = ROUGH Lor Setting = COARSE
 								If e\EventState > 70.0 * 2.6 And e\EventState - fps\Factor[1] < 70.0 * 2.6 Then PlaySound_Strict(snd_I\Death914SFX)
 							EndIf
@@ -1848,11 +1853,12 @@ Function UpdateEvents%()
 						If e\EventState > 70.0 * 12.0
 							For it.Items = Each Items
 								If it\Collider <> 0 And (Not it\Picked)
-									If DistanceSquared(EntityX(it\Collider), EntityX(e\room\Objects[2], True), EntityZ(it\Collider), EntityZ(e\room\Objects[2], True)) < PowTwo(180.0 * RoomScale) Then Use914(it, Setting, EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True))
+									TFormPoint(EntityX(it\Collider), EntityY(it\Collider), EntityZ(it\Collider), 0, e\room\OBJ)
+									If IsEqual(TFormedX(), EntityX(e\room\Objects[2]), x1) And IsEqual(TFormedY(), EntityY(e\room\Objects[2]), y1) And IsEqual(TFormedZ(), EntityZ(e\room\Objects[2]), z1) Then Use914(it, Setting, EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True))
 								EndIf
 							Next
 							
-							If Dist < PowTwo(160.0 * RoomScale)
+							If IsPlayerInside
 								Select Setting
 									Case COARSE
 										;[Block]

@@ -86,6 +86,7 @@
 - Hopefully fixed render of the ending areas.
 - Fixed SCP-049-2 not roaming.
 - Fixed SCP-173 being able to break windows when the player was looking at window.
+- Fixed trigger area for transferring items/player in SCP-914.
 
 [Known issues]
 - Rooms can overlap and block the way.
