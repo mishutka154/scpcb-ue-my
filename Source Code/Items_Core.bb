@@ -868,6 +868,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 							me\BlurTimer = Max(1000.0, me\BlurTimer)
 							I_409\Timer = 0.001
 						EndIf
+						GiveAchievement("005")
 						;[End Block]
 					Case it_killbat
 						;[Block]
@@ -888,7 +889,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 						;[Block]
 						GiveAchievement("omni")
 						;[End Block]
-					Case it_scp005, it_coarse005, it_crystal005
+					Case it_scp005, it_coarse005
 						;[Block]
 						GiveAchievement("005")
 						;[End Block]
