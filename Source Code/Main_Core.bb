@@ -474,7 +474,7 @@ Function UpdateGame%()
 			me\EyeIrritation = Max(0.0, me\EyeIrritation - fps\Factor[0])
 			
 			If me\BlinkEffectTimer > 0.0
-				me\BlinkEffectTimer = me\BlinkEffectTimer - (fps\Factor[0] / 70.0)
+				me\BlinkEffectTimer = Max(0.0, me\BlinkEffectTimer - (fps\Factor[0] / 70.0))
 			Else
 				me\BlinkEffect = 1.0
 			EndIf
@@ -2768,7 +2768,7 @@ Function UpdateMoving%()
 	EndIf
 	
 	If me\StaminaEffectTimer > 0.0
-		me\StaminaEffectTimer = me\StaminaEffectTimer - (fps\Factor[0] / 70.0)
+		me\StaminaEffectTimer = Max(0.0, me\StaminaEffectTimer - (fps\Factor[0] / 70.0))
 	Else
 		me\StaminaEffect = 1.0
 	EndIf
