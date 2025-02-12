@@ -2767,12 +2767,6 @@ Function UpdateMoving%()
 		Kill()
 	EndIf
 	
-	If me\Stamina < me\StaminaMax
-		Temp3 = (me\CurrSpeed > 0.0)
-		me\Stamina = Min(me\Stamina + (0.2 * fps\Factor[0] * (((Temp3 * 0.6) + (Not Temp3)) / (1.0 + I_966\HasInsomnia))), 100.0)
-	EndIf
-	me\StaminaMax = 100.0
-	
 	If me\StaminaEffectTimer > 0.0
 		me\StaminaEffectTimer = me\StaminaEffectTimer - (fps\Factor[0] / 70.0)
 	Else
@@ -2783,22 +2777,6 @@ Function UpdateMoving%()
 		I_966\InsomniaEffectTimer = I_966\InsomniaEffectTimer - fps\Factor[0]
 	Else
 		I_966\HasInsomnia = 0.0
-	EndIf
-	
-	If I_714\Using = 2
-		me\StaminaMax = 15.0
-		me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 10.0)
-		me\Sanity = Max(-850.0, me\Sanity)
-	ElseIf I_714\Using = 1
-		me\StaminaMax = 30.0
-		me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 15.0)
-	Else
-		If wi\BallisticVest = 2 Lor wi\HazmatSuit = 1
-			me\StaminaMax = 60.0
-			me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 20.0)
-		EndIf
-		If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
-		If wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
 	EndIf
 	
 	Local Temp#
@@ -2835,7 +2813,7 @@ Function UpdateMoving%()
 			If me\Playable And me\FallTimer >= 0.0 And (Not me\Terminated)
 				If (KeyDown(key\MOVEMENT_DOWN) Xor KeyDown(key\MOVEMENT_UP)) Lor (KeyDown(key\MOVEMENT_RIGHT) Xor KeyDown(key\MOVEMENT_LEFT)) Lor me\ForceMove > 0.0 
 					If (Not me\Crouch) And (Not me\Zombie) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0
-						me\Stamina = me\Stamina - (fps\Factor[0] * (0.4  + (0.4 * I_966\HasInsomnia)) * me\StaminaEffect)
+						me\Stamina = me\Stamina - (fps\Factor[0] * (0.28  + (0.4 * I_966\HasInsomnia)) * me\StaminaEffect)
 						If me\Stamina <= 0.0 Then me\Stamina = -20.0
 						Sprint = 2.5
 					EndIf
@@ -3003,6 +2981,28 @@ Function UpdateMoving%()
 			If me\Playable And ShouldEntitiesFall Then TranslateEntity(me\Collider, 0.0, me\DropSpeed * fps\Factor[0], 0.0)
 		EndIf
 		me\ForceMove = 0.0
+	EndIf
+	
+	If me\Stamina < me\StaminaMax And Sprint < 2.5
+		Temp3 = (me\CurrSpeed > 0.0)
+		me\Stamina = Min(me\Stamina + (0.2 * fps\Factor[0] * (((Temp3 * 0.6) + (Not Temp3)) / (1.0 + I_966\HasInsomnia))), 100.0)
+	EndIf
+	me\StaminaMax = 100.0
+	
+	If I_714\Using = 2
+		me\StaminaMax = 15.0
+		me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 10.0)
+		me\Sanity = Max(-850.0, me\Sanity)
+	ElseIf I_714\Using = 1
+		me\StaminaMax = 30.0
+		me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 15.0)
+	Else
+		If wi\BallisticVest = 2 Lor wi\HazmatSuit = 1
+			me\StaminaMax = 60.0
+			me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 20.0)
+		EndIf
+		If wi\GasMask = 3 Lor wi\HazmatSuit = 3 Lor I_1499\Using = 2 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.002 * fps\Factor[0])
+		If wi\GasMask = 4 Lor wi\HazmatSuit = 4 Then me\Stamina = Min(100.0, me\Stamina + (100.0 - me\Stamina) * 0.01 * fps\Factor[0])
 	EndIf
 	
 	Update008()
