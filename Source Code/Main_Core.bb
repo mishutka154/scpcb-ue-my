@@ -2701,7 +2701,7 @@ Const PLAYER_ANIM_NOCLIP% = 12
 ;[End Block]
 
 Function UpdatePlayerModel%()
-	If (Not me\Terminated)
+	If (Not me\Terminated) And me\FallTimer >= 0.0
 		If EntityHidden(pm\OBJ) Then ShowEntity(pm\OBJ)
 		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
 		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0, True)
