@@ -615,7 +615,7 @@ Function RemoveNPC%(n.NPCs)
 	If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 	If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 	
-	RemoveShadow(n\Shadow)
+	If n\Shadow <> Null Then RemoveShadow(n\Shadow)
 	If n\OBJ2 <> 0 Then FreeEntity(n\OBJ2) : n\OBJ2 = 0
 	If n\OBJ3 <> 0 Then FreeEntity(n\OBJ3) : n\OBJ3 = 0
 	FreeEntity(n\Collider) : n\Collider = 0
