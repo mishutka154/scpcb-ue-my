@@ -2706,7 +2706,7 @@ Function UpdatePlayerModel%()
 		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
 		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0, True)
 		
-		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 10.0)
+		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 15.0)
 	Else
 		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
 	EndIf
