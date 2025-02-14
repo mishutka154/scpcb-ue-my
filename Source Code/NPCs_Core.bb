@@ -790,6 +790,7 @@ Function UpdateNPCs%()
 					If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2) : n\SoundCHN2 = 0
 					If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 				EndIf
+				If n\Shadow <> Null Then n\Shadow\Remove = True
 			EndIf
 			If n\NPCType = NPCTypeGuard
 				If n\OBJ3 <> 0

@@ -3754,6 +3754,8 @@ Type Shadows
 	Field OBJ%, Surf%
 	Field ParentOBJ%
 	Field UpdateTimer#
+	Field Alpha#
+	Field Remove% = False
 End Type
 
 Function CreateShadow.Shadows(OBJ%, Size#)
@@ -3791,32 +3793,39 @@ Function UpdateShadows%()
 		If EntityHidden(shdw\ParentOBJ)
 			HideEntity(shdw\OBJ)
 		Else
-			If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
-			
-			Local AutoFadeDist# = fog\FarDist * 0.5
 			Local x# = EntityX(shdw\ParentOBJ, True), y# = EntityY(shdw\ParentOBJ, True), z# = EntityZ(shdw\ParentOBJ, True)
 			
-			If shdw\UpdateTimer <= 0.0
-				Local Pvt% = CreatePivot()
+			If shdw\Remove
+				; ~ Simplify the code and remove the shadow when NPC is dead
+				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
+				If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
 				
-				PositionEntity(Pvt, x, y + 0.15, z, True)
-				RotateEntity(Pvt, 90.0, 0.0, 0.0)
-				
-				If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
-				FreeEntity(Pvt) : Pvt = 0
-				
-				shdw\UpdateTimer = 8.0
+				shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
+				EntityAlpha(shdw\OBJ, shdw\Alpha)
+				If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
 			Else
-				shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
-			EndIf
-			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
-			
-			Local Alpha# = Clamp(1.0 - (EntityDistanceSquared(shdw\OBJ, me\Collider) / fog\FarDist * 0.3), 0.0, 1.0)
-			
-			If Alpha > 0.0
-				EntityAlpha(shdw\OBJ, Alpha)
-			Else
-				If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
+				If shdw\UpdateTimer <= 0.0
+					Local Pvt% = CreatePivot()
+					
+					PositionEntity(Pvt, x, y + 0.15, z, True)
+					RotateEntity(Pvt, 90.0, 0.0, 0.0)
+					
+					If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
+					FreeEntity(Pvt) : Pvt = 0
+					
+					shdw\UpdateTimer = 8.0
+				Else
+					shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
+				EndIf
+				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
+				
+				shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(shdw\OBJ, me\Collider) / fog\FarDist * 0.3), 0.0, 1.0)
+				If shdw\Alpha > 0.0
+					EntityAlpha(shdw\OBJ, shdw\Alpha)
+					If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+				Else
+					If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
+				EndIf
 			EndIf
 		EndIf
 	Next
