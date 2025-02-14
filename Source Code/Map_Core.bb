@@ -3799,7 +3799,7 @@ Function UpdateShadows%()
 			If shdw\UpdateTimer <= 0.0
 				Local Pvt% = CreatePivot()
 				
-				PositionEntity(Pvt, x, y + 0.3, z, True)
+				PositionEntity(Pvt, x, y + 0.15, z, True)
 				RotateEntity(Pvt, 90.0, 0.0, 0.0)
 				
 				If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)

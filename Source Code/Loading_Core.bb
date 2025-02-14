@@ -2636,7 +2636,7 @@ Function LoadEntities%()
 	
 	LoadDecals()
 	
-	CreateShadow(pm\OBJ, 0.38)
+	CreateShadow(pm\OBJ, 0.4)
 	
 	LoadParticles()
 	
