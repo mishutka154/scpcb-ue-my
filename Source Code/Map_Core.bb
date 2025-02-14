@@ -3790,42 +3790,37 @@ Function UpdateShadows%()
 	Local shdw.Shadows
 	
 	For shdw.Shadows = Each Shadows
-		If EntityHidden(shdw\ParentOBJ)
-			HideEntity(shdw\OBJ)
-		Else
-			Local x# = EntityX(shdw\ParentOBJ, True), y# = EntityY(shdw\ParentOBJ, True), z# = EntityZ(shdw\ParentOBJ, True)
+		Local x# = EntityX(shdw\ParentOBJ, True), y# = EntityY(shdw\ParentOBJ, True), z# = EntityZ(shdw\ParentOBJ, True)
+		
+		If shdw\Remove
+			; ~ Simplify the code and remove the shadow when NPC is dead
+			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
+			If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
 			
-			If shdw\Remove
-				; ~ Simplify the code and remove the shadow when NPC is dead
-				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
-				If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+			shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
+			EntityAlpha(shdw\OBJ, shdw\Alpha)
+			If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
+		Else
+			If shdw\UpdateTimer <= 0.0
+				Local Pvt% = CreatePivot()
 				
-				shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
-				EntityAlpha(shdw\OBJ, shdw\Alpha)
-				If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
+				PositionEntity(Pvt, x, y + 0.15, z, True)
+				RotateEntity(Pvt, 90.0, 0.0, 0.0)
+				If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
+				FreeEntity(Pvt) : Pvt = 0
+				
+				shdw\UpdateTimer = 8.0
 			Else
-				If shdw\UpdateTimer <= 0.0
-					Local Pvt% = CreatePivot()
-					
-					PositionEntity(Pvt, x, y + 0.15, z, True)
-					RotateEntity(Pvt, 90.0, 0.0, 0.0)
-					
-					If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
-					FreeEntity(Pvt) : Pvt = 0
-					
-					shdw\UpdateTimer = 8.0
-				Else
-					shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
-				EndIf
-				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
-				
-				shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(shdw\OBJ, me\Collider) / fog\FarDist * 0.3), 0.0, 1.0)
-				If shdw\Alpha > 0.0
-					EntityAlpha(shdw\OBJ, shdw\Alpha)
-					If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
-				Else
-					If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
-				EndIf
+				shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
+			EndIf
+			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
+			
+			shdw\Alpha = Clamp(1.0 - (DistanceSquared(x, EntityX(me\Collider, True), z, EntityZ(me\Collider)) / fog\FarDist * 0.3), 0.0, 1.0)
+			If shdw\Alpha > 0.0
+				EntityAlpha(shdw\OBJ, shdw\Alpha)
+				If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+			Else
+				If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
 			EndIf
 		EndIf
 	Next
