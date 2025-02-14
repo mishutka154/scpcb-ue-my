@@ -1676,6 +1676,8 @@ Function LoadGameQuick%(File$)
 		EntityParent(emit\Owner, 0)
 	Next
 	
+	Local shdw.Shadows
+	
 	If ReadInt(f) <> 113 Then RuntimeErrorEx(GetLocalString("save", "corrupted_1"))
 	
 	For n.NPCs = Each NPCs

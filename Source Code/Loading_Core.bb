@@ -2380,6 +2380,7 @@ Function LoadEntities%()
 	i = MeshWidth(pm\OBJ) : j = MeshHeight(pm\OBJ) : k = MeshDepth(pm\OBJ)
 	ScaleEntity(pm\OBJ, 0.51 / i, 0.51 / i, 0.51 / i)
 	MeshCullBox(pm\OBJ, -i, -j, -k, i * 2.0, j * 2.0, k * 2.0)
+	EntityType(pm\OBJ, 0)
 	HideEntity(pm\OBJ)
 	
 	Local StartFrame#, EndFrame#
@@ -2635,7 +2636,7 @@ Function LoadEntities%()
 	
 	LoadDecals()
 	
-	CreateShadow(me\Collider, 0.3)
+	CreateShadow(pm\OBJ, 0.38)
 	
 	LoadParticles()
 	
@@ -3124,7 +3125,7 @@ End Function
 Function NullGame%(PlayButtonSFX% = True)
 	CatchErrors("NullGame()")
 	
-	Local ach.AchievementMsg, c.ConsoleMsg, e.Events, itt.ItemTemplates, it.Items, de.Decals, p.Particles, d.Doors, lvr.Levers, sc.SecurityCams
+	Local ach.AchievementMsg, c.ConsoleMsg, e.Events, itt.ItemTemplates, it.Items, de.Decals, shdw.Shadows, p.Particles, d.Doors, lvr.Levers, sc.SecurityCams
 	Local du.Dummy1499_1, n.NPCs, s.Screens, w.WayPoints, pr.Props, l.Lights, rt.RoomTemplates, r.Rooms, m.Materials, snd.Sound, fr.Forest, mt.MTGrid
 	Local ch.Chunk, chp.ChunkPart, sv.Save, cm.CustomMaps, se.SoundEmitters, tmp.Template, emit.Emitter
 	
@@ -3283,6 +3284,9 @@ Function NullGame%(PlayButtonSFX% = True)
 		RemoveDecal(de)
 	Next
 	RemoveDecalInstances()
+	For shdw.Shadows = Each Shadows
+		RemoveShadow(shdw)
+	Next
 	ParticleCam = 0
 	FreeEntity(ParticlePiv) : ParticlePiv = 0
 	DustParticleChance = 0

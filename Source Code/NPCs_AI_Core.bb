@@ -2807,7 +2807,7 @@ Function UpdateNPCType860_2%(n.NPCs)
 	If n\State <> 0.0
 		RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
 		
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.23, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.43, EntityZ(n\Collider))
 		RotateEntity(n\OBJ, EntityPitch(n\Collider) - 90.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 		
 		If Dist > 64.0
@@ -2993,7 +2993,7 @@ Function UpdateNPCType939%(n.NPCs)
 	
 	RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.28, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.41, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, EntityPitch(n\Collider) - 90.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 End Function
 
@@ -3670,7 +3670,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 	End Select
 	UpdateSoundOrigin(n\SoundCHN, Camera, n\Collider, 8.0, 1.0, True)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.15, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0)
 	
 	If n\HP =< 0
@@ -4040,7 +4040,7 @@ Function UpdateNPCType1499_1%(n.NPCs)
 		MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 		
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.26, EntityZ(n\Collider))
 		
 		If EntityHidden(n\OBJ) Then ShowEntity(n\OBJ)
 	Else

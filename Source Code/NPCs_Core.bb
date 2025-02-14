@@ -50,6 +50,7 @@ Type NPCs
 	Field HasAnim%
 	Field Contained% = False
 	Field TargetUpdateTimer#
+	Field Shadow.Shadows
 End Type
 
 Const NPCsFile$ = "Data\NPCs.ini"
@@ -93,6 +94,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = GetLocalString("npc", "undefine")
 			n\MaxGravity = 0.0
+			n\CollRadius = 0.2
 			n\HP = 500
 			
 			n\Collider = CreatePivot()
@@ -207,8 +209,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = IniGetFloat(NPCsFile, "SCP-173", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.32
-			EntityRadius(n\Collider, n\CollRadius - 0.09, n\CollRadius)
+			n\CollRadius = 0.2
+			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.12)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_173_MODEL])
@@ -280,7 +282,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = IniGetFloat(NPCsFile, "SCP-860-2", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.25
+			n\CollRadius = 0.45
 			EntityRadius(n\Collider, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
@@ -326,7 +328,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = IniGetFloat(NPCsFile, "SCP-939", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.32
+			n\CollRadius = 0.47
 			EntityRadius(n\Collider, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
@@ -374,9 +376,10 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\NVGName = "SCP-1048"
 			n\GravityMult = 0.0
 			n\MaxGravity = 0.0
+			n\CollRadius = 0.07
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.13)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1048_MODEL])
@@ -391,8 +394,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\HP = 60
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.1
-			EntityRadius(n\Collider, n\CollRadius, 0.15)
+			n\CollRadius = 0.07
+			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.13)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1048_A_MODEL])
@@ -404,7 +407,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = GetLocalString("npc", "undefine")
 			n\Speed = IniGetFloat(NPCsFile, "SCP-1499-1", "Speed") / 100.0 * Rnd(0.9, 1.1)
-			
+			n\CollRadius = 0.26
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
@@ -520,10 +523,10 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			If NPCSound[SOUND_NPC_MTF_BREATH] = 0 Then NPCSound[SOUND_NPC_MTF_BREATH] = LoadSound_Strict("SFX\Character\MTF\Breath.ogg")
 			;[End Block]
 	End Select
-	
-	CreateShadow(n\OBJ, n\CollRadius)
 	PositionEntity(n\Collider, x, y, z, True)
 	PositionEntity(n\OBJ, x, y, z, True)
+	
+	If n\NPCType <> NPCType372 And n\NPCType <> NPCType513_1 And n\NPCType <> NPCType966 And n\NPCType <> NPCTypeApache Then n\Shadow = CreateShadow(n\OBJ, n\CollRadius * 2.0)
 	
 	ResetEntity(n\Collider)
 	
@@ -612,6 +615,7 @@ Function RemoveNPC%(n.NPCs)
 	If n\Sound <> 0 Then FreeSound_Strict(n\Sound) : n\Sound = 0
 	If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 	
+	RemoveShadow(n\Shadow)
 	If n\OBJ2 <> 0 Then FreeEntity(n\OBJ2) : n\OBJ2 = 0
 	If n\OBJ3 <> 0 Then FreeEntity(n\OBJ3) : n\OBJ3 = 0
 	FreeEntity(n\Collider) : n\Collider = 0
