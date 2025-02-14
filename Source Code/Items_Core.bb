@@ -1812,7 +1812,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case it_key3
 							;[Block]
-							If Rand(12 + (6 * SelectedDifficulty\OtherFactors)) = 1
+							If Rand(16 + (8 * SelectedDifficulty\OtherFactors)) = 1
 								it2.Items = CreateItem("Level 4 Key Card", it_key4, x, y, z)
 							Else
 								it2.Items = CreateItem("Playing Card", it_playcard, x, y, z)
@@ -1860,7 +1860,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							
 							If Rand(0, CurrAchvAmount) = 0
 								it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
-							ElseIf Rand(12 + (6 * SelectedDifficulty\OtherFactors)) = 1
+							ElseIf Rand(16 + (8 * SelectedDifficulty\OtherFactors)) = 1
 								it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
 							Else
 								If Rand(15) = 1
@@ -1874,7 +1874,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							;[End Block]
 						Case it_key6
 							;[Block]
-							If Rand(6 + (3 * SelectedDifficulty\OtherFactors)) = 1
+							If Rand(8 + (4 * SelectedDifficulty\OtherFactors)) = 1
 								it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
 							Else
 								If Rand(5) = 1
@@ -1893,7 +1893,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					CurrAchvAmount = Max(((S2IMapSize(AchievementsIndex) - 3) - (S2IMapSize(UnlockedAchievements) - 1) - S2IMapContains(UnlockedAchievements, "apollyon")) * (4 + SelectedDifficulty\OtherFactors), 0)
 					If Rand(0, CurrAchvAmount) = 0
 						it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
-					ElseIf Rand(24 + (6 * SelectedDifficulty\OtherFactors)) = 1
+					ElseIf Rand(32 + (8 * SelectedDifficulty\OtherFactors)) = 1
 						it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
 					Else
 						it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
@@ -1920,7 +1920,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					If Rand(4 + (2 * SelectedDifficulty\OtherFactors)) = 1
+					If Rand(6 + (3 * SelectedDifficulty\OtherFactors)) = 1
 						it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
 					Else
 						it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
