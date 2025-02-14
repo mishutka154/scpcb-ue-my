@@ -3432,7 +3432,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
 						n\CurrSpeed = 0.0
-						If me\Injuries > 0.5 Then me\HealTimer = 1.0 ; ~ TODO: Check if this works well
+						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5) ; ~ TODO: Check if this works well
 					EndIf
 					If n\CurrSpeed =< 0.001
 						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
