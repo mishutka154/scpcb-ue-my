@@ -3815,7 +3815,7 @@ Function UpdateShadows%()
 			EndIf
 			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
 			
-			shdw\Alpha = Clamp(1.0 - (DistanceSquared(x, EntityX(me\Collider, True), z, EntityZ(me\Collider)) / fog\FarDist * 0.3), 0.0, 1.0)
+			shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(me\Collider, shdw\OBJ) / fog\FarDist * 0.3), 0.0, 1.0)
 			If shdw\Alpha > 0.0
 				EntityAlpha(shdw\OBJ, shdw\Alpha)
 				If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
