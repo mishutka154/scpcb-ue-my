@@ -573,6 +573,7 @@ Type Items
 	Field SecondInv.Items[20]
 	Field ID%
 	Field InvSlots%
+	Field Shadow.Shadows
 End Type
 
 Dim Inventory.Items(0)
@@ -656,6 +657,8 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 	
 	i\InvSlots = InvSlots
 	
+	i\Shadow = CreateShadow(i\OBJ, (MeshWidth(i\OBJ) + MeshDepth(i\OBJ)) / 2.0 * i\ItemTemplate\Scale)
+	
 	i\ID = LastItemID + 1
 	LastItemID = i\ID
 	
@@ -669,6 +672,7 @@ Function RemoveItem%(i.Items)
 	
 	Local n%
 	
+	If i\Shadow <> Null Then RemoveShadow(i\Shadow)
 	FreeEntity(i\OBJ) : i\OBJ = 0
 	FreeEntity(i\Collider) : i\Collider = 0
 	
@@ -757,6 +761,7 @@ Function UpdateItems%()
 		i\Dropped = 0
 		
 		If (Not i\Picked)
+			If i\Shadow <> Null Then i\Shadow\Hide = False
 			If i\DistTimer <= 0.0
 				i\Dist = EntityDistanceSquared(Camera, i\Collider)
 				i\DistTimer = 35.0
@@ -826,6 +831,7 @@ Function UpdateItems%()
 				i\DropSpeed = 0.0
 			EndIf
 		Else
+			If i\Shadow <> Null Then i\Shadow\Hide = True
 			i\DropSpeed = 0.0
 		EndIf
 		

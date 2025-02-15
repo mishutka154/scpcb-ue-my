@@ -3756,6 +3756,7 @@ Type Shadows
 	Field UpdateTimer#
 	Field Alpha#
 	Field Remove% = False
+	Field Hide%
 End Type
 
 Function CreateShadow.Shadows(OBJ%, Size#)
@@ -3800,11 +3801,13 @@ Function UpdateShadows%()
 			shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
 			EntityAlpha(shdw\OBJ, shdw\Alpha)
 			If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
+		ElseIf shdw\Hide
+			If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
 		Else
 			If shdw\UpdateTimer <= 0.0
 				Local Pvt% = CreatePivot()
 				
-				PositionEntity(Pvt, x, y + 0.15, z, True)
+				PositionEntity(Pvt, x, y, z, True)
 				RotateEntity(Pvt, 90.0, 0.0, 0.0)
 				If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
 				FreeEntity(Pvt) : Pvt = 0
