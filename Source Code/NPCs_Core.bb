@@ -61,6 +61,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 	
 	Local n.NPCs, n2.NPCs
 	Local Temp#, i%, Tex%
+	Local MeshW#, MeshH#, MeshD#
 	
 	n.NPCs = New NPCs
 	n\NPCType = NPCType
@@ -133,7 +134,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_049_2_MODEL])
 			Temp = IniGetFloat(NPCsFile, "SCP-049-2", "Scale") / 2.5
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
 			
 			If NPCSound[SOUND_NPC_049_2_BREATH] = 0 Then NPCSound[SOUND_NPC_049_2_BREATH] = LoadSound_Strict("SFX\SCP\049_2\Breath.ogg")
 			If NPCSound[SOUND_NPC_049_2_RESTING] = 0 Then NPCSound[SOUND_NPC_049_2_RESTING] = LoadSound_Strict("SFX\SCP\049_2\Resting.ogg")
@@ -164,7 +166,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_096_MODEL])
 			Temp = IniGetFloat(NPCsFile, "SCP-096", "Scale") / 3.0
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, (-MeshWidth(n\OBJ)) * 2.0, (-MeshHeight(n\OBJ)) * 2.0, (-MeshDepth(n\OBJ)) * 2.0, MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 4.0, MeshDepth(n\OBJ) * 4.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW * 2.0, -MeshH * 2.0, -MeshD * 2.0, MeshW * 2.0, MeshH * 4.0, MeshD * 4.0)
 			
 			n\OBJ2 = CreateSprite(FindChild(n\OBJ, "Reyelid"))
 			ScaleSprite(n\OBJ2, 0.07, 0.08)
@@ -284,7 +287,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_860_2_MODEL])
 			Temp = IniGetFloat(NPCsFile, "SCP-860-2", "Scale") / 20.0
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, (-MeshWidth(n\OBJ)) * 2.0, (-MeshHeight(n\OBJ)) * 2.0, (-MeshDepth(n\OBJ)) * 2.0, MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 4.0, MeshDepth(n\OBJ) * 4.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW * 2.0, -MeshH * 2.0, -MeshD * 2.0, MeshW * 2.0, MeshH * 4.0, MeshD * 4.0)
 			EntityFX(n\OBJ, 1)
 			
 			n\OBJ2 = CreateSprite()
@@ -346,8 +350,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_966_MODEL])
-			n\ModelScale = IniGetFloat(NPCsFile, "SCP-966", "Scale") / 40.0 * Rnd(0.875, 1.0)
-			ScaleEntity(n\OBJ, n\ModelScale, n\ModelScale, n\ModelScale)
+			Temp = IniGetFloat(NPCsFile, "SCP-966", "Scale") / 40.0 * Rnd(0.875, 1.0)
+			n\ModelScale = Temp
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
 			SetNPCFrame(n, 15.0)
 			;[End Block]
 		Case NPCType999
@@ -391,8 +396,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1048_A_MODEL])
-			n\ModelScale = IniGetFloat(NPCsFile, "SCP-1048", "Scale") / 10.0 * Rnd(0.9, 1.1)
-			ScaleEntity(n\OBJ, n\ModelScale, n\ModelScale, n\ModelScale)
+			Temp = IniGetFloat(NPCsFile, "SCP-1048", "Scale") / 10.0 * Rnd(0.9, 1.1)
+			n\ModelScale = Temp
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
 			;[End Block]
 		Case NPCType1499_1
 			;[Block]
@@ -404,8 +410,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1499_1_MODEL])
-			n\ModelScale = IniGetFloat(NPCsFile, "SCP-1499-1", "Scale") / 4.0 * Rnd(0.8, 1.0)
-			ScaleEntity(n\OBJ, n\ModelScale, n\ModelScale, n\ModelScale)
+			Temp = IniGetFloat(NPCsFile, "SCP-1499-1", "Scale") / 4.0 * Rnd(0.8, 1.0)
+			n\ModelScale = Temp
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
 			EntityFX(n\OBJ, 1)
 			EntityAutoFade(n\OBJ, HideDistance * 2.5, HideDistance * 2.95)
 			;[End Block]
@@ -451,7 +458,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 				EntityBlend(LightSprite, 3)
 				EntityFX(LightSprite, 1 + 8)
 			Next
-			ScaleEntity(n\OBJ, 0.7, 0.7, 0.7)
+			Temp = 0.7
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
 			;[End Block]
 		Case NPCTypeD, NPCTypeClerk
 			;[Block]
@@ -473,7 +481,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[ModelID])
 			Temp = IniGetFloat(NPCsFile, Name, "Scale") / MeshWidth(n\OBJ)
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
 			;[End Block]
 		Case NPCTypeGuard
 			;[Block]
@@ -487,7 +496,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_GUARD_MODEL])
 			Temp = IniGetFloat(NPCsFile, "Guard", "Scale") / 2.5
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
 			;[End Block]
 		Case NPCTypeMTF
 			;[Block]
@@ -503,7 +513,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_MTF_MODEL])
 			Temp = IniGetFloat(NPCsFile, "MTF", "Scale") / 2.5
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0) 
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0) 
 			
 			If NPCSound[SOUND_NPC_MTF_BEEP] = 0 Then NPCSound[SOUND_NPC_MTF_BEEP] = LoadSound_Strict("SFX\Character\MTF\Beep.ogg")
 			If NPCSound[SOUND_NPC_MTF_BREATH] = 0 Then NPCSound[SOUND_NPC_MTF_BREATH] = LoadSound_Strict("SFX\Character\MTF\Breath.ogg")
