@@ -761,7 +761,7 @@ Function UpdateItems%()
 				i\Dist = EntityDistanceSquared(Camera, i\Collider)
 				i\DistTimer = 35.0
 			Else
-				i\DistTimer = Max(0.0, i\DistTimer - fps\Factor[0])
+				i\DistTimer = i\DistTimer - fps\Factor[0]
 			EndIf
 			
 			If i\Dist < HideDist

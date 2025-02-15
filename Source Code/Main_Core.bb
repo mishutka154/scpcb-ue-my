@@ -2969,6 +2969,7 @@ Function UpdateMoving%()
 					
 					If Pick
 						me\DropSpeed = Clamp(me\DropSpeed - (0.006 * fps\Factor[0]), -2.0, 0.0)
+						If me\Playable And ShouldEntitiesFall Then TranslateEntity(me\Collider, 0.0, me\DropSpeed * fps\Factor[0], 0.0)
 					Else
 						me\DropSpeed = 0.0
 					EndIf
@@ -2977,8 +2978,6 @@ Function UpdateMoving%()
 				EndIf
 			EndIf
 			PlayerFallingPickDistance = 10.0
-			
-			If me\Playable And ShouldEntitiesFall Then TranslateEntity(me\Collider, 0.0, me\DropSpeed * fps\Factor[0], 0.0)
 		EndIf
 		me\ForceMove = 0.0
 	EndIf
