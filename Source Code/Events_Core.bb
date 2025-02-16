@@ -1912,7 +1912,7 @@ Function UpdateEvents%()
 					
 					PositionEntity(e\room\Objects[5], 0.0, e\EventState3, 0.0)
 					
-					UpdateSoundOrigin(e\SoundCHN, Camera, e\room\Objects[6])
+					UpdateSoundOrigin(e\BlindsCHN, Camera, e\room\Objects[6])
 				EndIf
 				;[End Block]
 			Case e_cont2_008
