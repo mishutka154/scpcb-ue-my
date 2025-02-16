@@ -657,7 +657,7 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 	
 	i\InvSlots = InvSlots
 	
-	i\Shadow = CreateShadow(i\OBJ, (MeshWidth(i\OBJ) + MeshDepth(i\OBJ)) / 2.0 * i\ItemTemplate\Scale)
+	i\Shadow = CreateShadow(i\OBJ)
 	
 	i\ID = LastItemID + 1
 	LastItemID = i\ID
