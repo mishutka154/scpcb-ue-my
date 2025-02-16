@@ -9593,8 +9593,6 @@ Function UpdateEndings%()
 						EndIf
 					EndIf
 					
-					Angle = Max(Sin(EntityYaw(me\Collider)), 0.0)
-					
 					If e\room\NPC[1] <> Null
 						; ~ Helicopter spots or player is within range --> Start shooting
 						If EntityDistanceSquared(e\room\NPC[1]\Collider, me\Collider) < 225.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
@@ -9716,8 +9714,6 @@ Function UpdateEndings%()
 						ShouldPlay = 16
 						
 						e\EventState = e\EventState + fps\Factor[0]
-						
-						Angle = Max(Sin(EntityYaw(me\Collider) + 90.0), 0.0)
 						
 						For i = 2 To 4
 							If e\room\NPC[i] <> Null
