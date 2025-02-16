@@ -9501,14 +9501,14 @@ Function Update409%()
 				me\CameraShake = 3.0
 			EndIf
 		EndIf
+		If I_409\Timer >= 55.0
 			me\StaminaEffect = 1.2
 			me\StaminaEffectTimer = 1.0
-			me\StaminaMax = 60.0
-			me\Stamina = CurveValue(Min(me\StaminaMax, me\Stamina), me\Stamina, 20.0)
-			If I_409\Timer >= 96.92
-				msg\DeathMsg = Format(GetLocalString("death", "409"), SubjectName)
-				Kill(True)
-			EndIf
+			me\Stamina = Min(me\Stamina, 60.0)
+		EndIf
+		If I_409\Timer >= 96.92
+			msg\DeathMsg = Format(GetLocalString("death", "409"), SubjectName)
+			Kill(True)
 		EndIf
 	Else
 		I_409\Revert = False
