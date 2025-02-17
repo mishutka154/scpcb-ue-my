@@ -524,6 +524,10 @@ Function UpdateMainMenu%()
 						
 						opt\AdvancedRoomLights = UpdateMenuTick(x, y, opt\AdvancedRoomLights)
 						
+						y = y + (30 * MenuScale)
+						
+						opt\BlobShadows = UpdateMenuTick(x, y, opt\BlobShadows)
+						
 						y = y + (40 * MenuScale)
 						
 						opt\ScreenGamma = UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\ScreenGamma * 50.0, 1) / 50.0
@@ -1446,7 +1450,7 @@ Function RenderMainMenu%()
 			Select mm\MainMenuTab
 				Case MainMenuTab_Options_Graphics
 					;[Block]
-					Height = 455 * MenuScale
+					Height = 485 * MenuScale
 					RenderFrame(x - (20 * MenuScale), y, Width, Height)
 					
 					y = y + (20 * MenuScale)
@@ -1472,6 +1476,12 @@ Function RenderMainMenu%()
 					Color(255, 255, 255)
 					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "lights"))
 					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_RoomLights)
+					
+					y = y + (30 * MenuScale)
+					
+					Color(255, 255, 255)
+					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "shadows"))
+					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_BlobShadows)
 					
 					y = y + (40 * MenuScale)
 					
@@ -2115,7 +2125,7 @@ Function UpdateMenuButton%(x%, y%, Width%, Height%, Txt$, FontID% = Font_Default
 		CurrButton = mb
 		CurrButton\Txt = Txt
 		CurrButton\FontID = FontID
-		currButton\Locked = Locked
+		CurrButton\Locked = Locked
 	EndIf
 	
 	If MouseOn(x, y, Width, Height)
@@ -2186,9 +2196,9 @@ Function UpdateMenuTick%(x%, y%, Selected%, Locked% = False)
 		mt\Selected = Selected
 		mt\Locked = Locked
 	Else
-		currTick = mt
-		currTick\Selected = Selected
-		currTick\Locked = Locked
+		CurrTick = mt
+		CurrTick\Selected = Selected
+		CurrTick\Locked = Locked
 	EndIf
 	
 	Local Highlight% = MouseOn(x, y, Width, Height)
@@ -2406,9 +2416,9 @@ Function UpdateMenuInputBox$(x%, y%, Width%, Height%, Txt$, FontID% = Font_Defau
 		mib\FontID = FontID
 		mib\ID = ID
 	Else
-		currInputBox = mib
-		currInputBox\Txt = Txt
-		currInputBox\FontID = FontID
+		CurrInputBox = mib
+		CurrInputBox\Txt = Txt
+		CurrInputBox\FontID = FontID
 	EndIf
 	
 	Local MouseOnBox% = False
@@ -2478,8 +2488,8 @@ Function UpdateMenuSlideBar#(x%, y%, Width%, Value#, ID%)
 		msb\Width = Width
 		msb\Value = Value
 	Else
-		currSlideBar = msb
-		currSlideBar\Value = Value
+		CurrSlideBar = msb
+		CurrSlideBar\Value = Value
 	EndIf
 	
 	If mo\MouseDown1 And OnSliderID = 0
@@ -2910,13 +2920,14 @@ Const Tooltip_BumpMapping% = 0
 Const Tooltip_VSync% = 1
 Const Tooltip_AntiAliasing% = 2
 Const Tooltip_RoomLights% = 3
-Const Tooltip_ScreenGamma% = 4
-Const Tooltip_TextureLODBias% = 5
-Const Tooltip_ParticleAmount% = 6
-Const Tooltip_SaveTexturesInVRAM% = 7
-Const Tooltip_FOV% = 8
-Const Tooltip_AnisotropicFiltering% = 9
-Const Tooltip_SecurityCamRenderInterval% = 10
+Const Tooltip_BlobShadows% = 4
+Const Tooltip_ScreenGamma% = 5
+Const Tooltip_TextureLODBias% = 6
+Const Tooltip_ParticleAmount% = 7
+Const Tooltip_SaveTexturesInVRAM% = 8
+Const Tooltip_FOV% = 9
+Const Tooltip_AnisotropicFiltering% = 10
+Const Tooltip_SecurityCamRenderInterval% = 11
 ;[End Block]
 
 ; ~ Audio Tooltips Constants
@@ -2989,6 +3000,10 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_RoomLights
 			;[Block]
 			Txt = GetLocalString("tooltip", "lights")
+			;[End Block]
+		Case Tooltip_BlobShadows
+			;[Block]
+			Txt = GetLocalString("tooltip", "shadows")
 			;[End Block]
 		Case Tooltip_ScreenGamma
 			;[Block]

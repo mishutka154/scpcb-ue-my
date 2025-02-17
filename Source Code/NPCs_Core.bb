@@ -526,7 +526,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 	PositionEntity(n\Collider, x, y, z, True)
 	PositionEntity(n\OBJ, x, y, z, True)
 	
-	If n\NPCType <> NPCType372 And n\NPCType <> NPCType513_1 And n\NPCType <> NPCType966 And n\NPCType <> NPCTypeApache Then n\Shadow = CreateShadow(n\OBJ, n\CollRadius * 2.0)
+	If n\NPCType <> NPCType372 And n\NPCType <> NPCType513_1 And n\NPCType <> NPCType966 And n\NPCType <> NPCTypeApache Then n\Shadow = CreateShadow(n\OBJ, n\CollRadius * 2.0, n\CollRadius * 2.0)
 	
 	ResetEntity(n\Collider)
 	

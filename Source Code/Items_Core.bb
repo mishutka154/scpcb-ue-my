@@ -596,7 +596,6 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 			i\ItemTemplate = it
 			i\Collider = CreatePivot()
 			EntityRadius(i\Collider, 0.01)
-			EntityPickMode(i\Collider, 1, False)
 			i\OBJ = CopyEntity(it\OBJ, i\Collider)
 			i\DisplayName = it\DisplayName
 			i\Name = it\Name
@@ -657,7 +656,7 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 	
 	i\InvSlots = InvSlots
 	
-	i\Shadow = CreateShadow(i\OBJ)
+	i\Shadow = CreateShadow(i\Collider, MeshWidth(i\OBJ) * i\ItemTemplate\Scale, MeshDepth(i\OBJ) * i\ItemTemplate\Scale)
 	
 	i\ID = LastItemID + 1
 	LastItemID = i\ID
@@ -761,7 +760,6 @@ Function UpdateItems%()
 		i\Dropped = 0
 		
 		If (Not i\Picked)
-			If i\Shadow <> Null Then i\Shadow\Hide = False
 			If i\DistTimer <= 0.0
 				i\Dist = EntityDistanceSquared(Camera, i\Collider)
 				i\DistTimer = 35.0
@@ -831,7 +829,6 @@ Function UpdateItems%()
 				i\DropSpeed = 0.0
 			EndIf
 		Else
-			If i\Shadow <> Null Then i\Shadow\Hide = True
 			i\DropSpeed = 0.0
 		EndIf
 		

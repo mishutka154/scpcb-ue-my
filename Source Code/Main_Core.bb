@@ -7536,7 +7536,7 @@ Global MenuOpen%
 Function UpdateMenu%()
 	CatchErrors("UpdateMenu()")
 	
-	Local r.Rooms, sc.SecurityCams, amsg.AchievementMsg 
+	Local r.Rooms, sc.SecurityCams, amsg.AchievementMsg, shdw.Shadows, it.Items, n.NPCs
 	Local z%, i%
 	
 	If MenuOpen
@@ -7613,6 +7613,28 @@ Function UpdateMenu%()
 						y = y + (30 * MenuScale)
 						
 						opt\AdvancedRoomLights = UpdateMenuTick(x, y, opt\AdvancedRoomLights)
+						
+						y = y + (30 * MenuScale)
+						
+						Local PrevBlobShadows% = opt\BlobShadows
+						
+						opt\BlobShadows = UpdateMenuTick(x, y, opt\BlobShadows)
+						
+						If PrevBlobShadows <> opt\BlobShadows
+							If (Not opt\BlobShadows)
+								For shdw.Shadows = Each Shadows
+									RemoveShadow(shdw)
+								Next
+							Else
+								For it.Items = Each Items
+									it\Shadow = CreateShadow(it\Collider, MeshWidth(it\OBJ) * it\ItemTemplate\Scale, MeshDepth(it\OBJ) * it\ItemTemplate\Scale)
+								Next
+								For n.NPCs = Each NPCs
+									If n\NPCType <> NPCType372 And n\NPCType <> NPCType513_1 And n\NPCType <> NPCType966 And n\NPCType <> NPCTypeApache And (Not n\IsDead) Then n\Shadow = CreateShadow(n\OBJ, n\CollRadius * 2.0, n\CollRadius * 2.0)
+								Next
+								CreateShadow(me\Collider, 0.4, 0.4)
+							EndIf
+						EndIf
 						
 						y = y + (40 * MenuScale)
 						
@@ -8272,6 +8294,11 @@ Function RenderMenu%()
 						Color(255, 255, 255)
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "lights"))
 						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_RoomLights)
+						
+						y = y + (30 * MenuScale)
+						
+						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "shadows"))
+						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_BlobShadows)
 						
 						y = y + (40 * MenuScale)
 						

@@ -184,6 +184,7 @@ Type Options
 	Field BumpEnabled%
 	Field SaveTexturesInVRAM%
 	Field AdvancedRoomLights%
+	Field BlobShadows%
 	Field VSync%
 	Field ScreenGamma#, PrevScreenGamma#
 	Field TextureDetails%, TextureDetailsLevel#
@@ -245,6 +246,8 @@ Function LoadOptionsINI%()
 	opt\AntiAliasing = IniGetInt(OptionFile, "Graphics", "Anti-Aliasing", True)
 	
 	opt\AdvancedRoomLights = IniGetInt(OptionFile, "Graphics", "Advanced Room Lighting", True)
+	
+	opt\BlobShadows = IniGetInt(OptionFile, "Graphics", "Blob Shadows", True)
 	
 	opt\ScreenGamma = IniGetFloat(OptionFile, "Graphics", "Screen Gamma", 1.0)
 	opt\PrevScreenGamma = 1.0
@@ -333,7 +336,7 @@ Function LoadOptionsINI%()
 	;[End Block]
 	
 	; ~ [AUDIO]
-	;[Block[
+	;[Block]
 	opt\PrevMasterVolume = IniGetFloat(OptionFile, "Audio", "Master Volume", 0.5)
 	opt\MasterVolume = opt\PrevMasterVolume
 	
@@ -449,6 +452,8 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	IniWriteString(OptionFile, "Graphics", "Anti-Aliasing", opt\AntiAliasing)
 	
 	IniWriteString(OptionFile, "Graphics", "Advanced Room Lighting", opt\AdvancedRoomLights)
+	
+	IniWriteString(OptionFile, "Graphics", "Blob Shadows", opt\BlobShadows)
 	
 	IniWriteString(OptionFile, "Graphics", "Screen Gamma", opt\ScreenGamma)
 	
@@ -569,6 +574,8 @@ Function ResetOptionsINI%()
 	
 	opt\AdvancedRoomLights = True
 	
+	opt\BlobShadows = True
+	
 	opt\ScreenGamma = 1.0
 	opt\PrevScreenGamma = 1.0
 	
@@ -675,7 +682,6 @@ Function ResetOptionsINI%()
 	
 	opt\Language = "en"
 End Function
-
 
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D TSS

@@ -3756,10 +3756,11 @@ Type Shadows
 	Field UpdateTimer#
 	Field Alpha#
 	Field Remove% = False
-	Field Hide%
 End Type
 
 Function CreateShadow.Shadows(OBJ%, ScaleX# = 0.0, ScaleZ# = 0.0)
+	If (Not opt\BlobShadows) Then Return(Null)
+	
 	Local shdw.Shadows
 	
 	shdw.Shadows = New Shadows
@@ -3776,11 +3777,6 @@ Function CreateShadow.Shadows(OBJ%, ScaleX# = 0.0, ScaleZ# = 0.0)
 	AddTriangle(shdw\Surf, v0, v1, v2)
 	AddTriangle(shdw\Surf, v0, v2, v3)
 	
-	If ScaleX = 0.0 And ScaleZ = 0.0
-		ScaleX = MeshWidth(OBJ) * EntityScaleX(OBJ)
-		ScaleZ = MeshDepth(OBJ) * EntityScaleX(OBJ)
-	EndIf
-	
 	PositionEntity(shdw\OBJ, EntityX(OBJ, True), EntityY(OBJ, True), EntityZ(OBJ, True), True)
 	ScaleEntity(shdw\OBJ, ScaleX, ScaleZ, 1.0, True)
 	RotateEntity(shdw\OBJ, 90.0, 0.0, 0.0, True)
@@ -3793,6 +3789,8 @@ Function CreateShadow.Shadows(OBJ%, ScaleX# = 0.0, ScaleZ# = 0.0)
 End Function
 
 Function UpdateShadows%()
+	If (Not opt\BlobShadows) Then Return
+	
 	Local shdw.Shadows
 	
 	For shdw.Shadows = Each Shadows
@@ -3806,18 +3804,13 @@ Function UpdateShadows%()
 			shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
 			EntityAlpha(shdw\OBJ, shdw\Alpha)
 			If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
-		ElseIf shdw\Hide
+		ElseIf EntityHidden(shdw\ParentOBJ)
 			If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
 		Else
 			If shdw\UpdateTimer <= 0.0
-				Local Pvt% = CreatePivot()
+				If LinePick(x, y, z, 0, -10.0, 0.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
 				
-				PositionEntity(Pvt, x, y, z, True)
-				RotateEntity(Pvt, 90.0, 0.0, 0.0)
-				If EntityPick(Pvt, 10.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
-				FreeEntity(Pvt) : Pvt = 0
-				
-				shdw\UpdateTimer = 8.0
+				shdw\UpdateTimer = 6.0
 			Else
 				shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
 			EndIf
