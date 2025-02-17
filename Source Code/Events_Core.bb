@@ -1429,7 +1429,7 @@ Function UpdateEvents%()
 								AnimateEx(e\room\Objects[3], AnimTime(e\room\Objects[3]), 434.0, 466.0, 0.1, False)
 								AnimateEx(e\room\Objects[4], AnimTime(e\room\Objects[4]), 434.0, 494.0, 0.1, False)
 								
-								If AnimTime(e\room\Objects[2]) > 515.0
+								If AnimTime(e\room\Objects[2]) > 533.0
 									If (Not EntityHidden(e\room\RoomSecurityCams[0]\ScrOBJ)) Then HideEntity(e\room\RoomSecurityCams[0]\ScrOBJ)
 									e\EventState = 67.0
 									e\EventState2 = 0.0
