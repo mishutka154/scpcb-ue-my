@@ -862,7 +862,7 @@ Function FillRoom%(r.Rooms)
 			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 161.0 * RoomScale, 22)
 			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 0.01, r\z + 161.0 * RoomScale, 23)
 			
-			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 1715.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 718.0 * RoomScale)
+			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 980.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 938.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Origami", it_origami, r\x + 1467.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 961.0 * RoomScale)
