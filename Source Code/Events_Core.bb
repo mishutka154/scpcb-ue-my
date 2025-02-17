@@ -6510,7 +6510,7 @@ Function UpdateEvents%()
 			Case e_1048_a
 				;[Block]
 				If e\room\Dist < 8.0
-					CreateNPC(NPCType1048_A, e\room\x, e\room\y + 50.0 * RoomScale, e\room\z)
+					CreateNPC(NPCType1048_A, e\room\x, e\room\y + 0.3, e\room\z)
 					RemoveEvent(e)
 				EndIf
 				;[End Block]
