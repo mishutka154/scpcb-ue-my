@@ -752,11 +752,11 @@ Global GraphicHeightHalf% = GraphicsHeight() / 2
 
 SetLanguage()
 
-DoorModelID[0] = LoadMesh_Strict("GFX\map\Props\Door01.x") ; ~ Default Door
+DoorModelID[0] = LoadMesh_Strict("GFX\map\Props\Door01.b3d") ; ~ Default Door
 
-DoorModelID[1] = LoadMesh_Strict("GFX\map\Props\ContDoorLeft.x") ; ~ Big Door Left
+DoorModelID[1] = LoadMesh_Strict("GFX\map\Props\ContDoorLeft.b3d") ; ~ Big Door Left
 
-DoorModelID[2] = LoadMesh_Strict("GFX\map\Props\ContDoorRight.x") ; ~ Big Door Right
+DoorModelID[2] = LoadMesh_Strict("GFX\map\Props\ContDoorRight.b3d") ; ~ Big Door Right
 
 Local i%
 
