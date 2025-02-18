@@ -88,6 +88,7 @@
 - Fixed SCP-049-2 not roaming.
 - Fixed SCP-173 being able to break windows when the player was looking at window.
 - Fixed trigger area for transferring items/player in SCP-914.
+- Fixed SCP-106's eyes not hiding properly.
 
 [Known issues]
 - Rooms can overlap and block the way.

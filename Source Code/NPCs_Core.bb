@@ -200,6 +200,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			EntityBlend(n\OBJ2, 3)
 			EntityFX(n\OBJ2, 1 + 8)
 			SpriteViewMode(n\OBJ2, 2)
+			RotateEntity(n\OBJ2, 0.0, -180.0, 0.0)
+			MoveEntity(n\OBJ2, 0.0, 0.95, -0.115)
+			EntityParent(n\OBJ2, n\OBJ)
 			HideEntity(n\OBJ2)
 			;[End Block]
 		Case NPCType173

@@ -1673,6 +1673,7 @@ Function UpdateNPCType106%(n.NPCs)
 				;[Block]
 				PositionEntity(n\Collider, 0.0, -500.0, 0.0)
 				ResetEntity(n\Collider)
+				HideEntity(n\OBJ2)
 				n\State = 1.0
 				;[End Block]
 			Case 1.0 ; ~ Idling outside the map
@@ -1949,16 +1950,13 @@ Function UpdateNPCType106%(n.NPCs)
 				
 				UpdateSoundOrigin(n\SoundCHN2, Camera, n\Collider)
 				
-				If Dist < PowTwo(fog\FarDist * LightVolume * 0.6)
+				If Dist < PowTwo(fog\FarDist * LightVolume * 0.5)
 					If (Not EntityHidden(n\OBJ2)) Then HideEntity(n\OBJ2)
 				Else
 					If EntityHidden(n\OBJ2) Then ShowEntity(n\OBJ2)
-					EntityAlpha(n\OBJ2, Min(Sqr(Dist) - fog\FarDist * LightVolume * 0.6, 1.0))
+					EntityAlpha(n\OBJ2, Clamp(Sqr(Dist) - fog\FarDist * LightVolume * 0.5, 0.0, 1.0))
 				EndIf
-				PositionEntity(n\OBJ2, EntityX(n\OBJ), EntityY(n\OBJ), EntityZ(n\OBJ))
-				RotateEntity(n\OBJ2, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
-				MoveEntity(n\OBJ2, 0.0, 0.946, -0.165)
-				
+					
 				If n\State3 =< 0.0
 					If (Not EntityInView(n\OBJ, Camera)) And Dist > 25.0
 						PositionEntity(n\Collider, 0.0, -500.0, 0.0)
