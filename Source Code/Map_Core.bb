@@ -2928,7 +2928,7 @@ Function UpdateDoors%()
 			
 			If (Not OfficeWooden)
 				If d\ButtonsUpdateTimer =< 0.0
-					; ~ Automatically disable d\AutoClose parameter in order to prevent player get stuck -- Jabka
+					; ~ Automatically disable d\AutoClose parameter in order to prevent player get stuck
 					If d\AutoClose And d\Locked > 0 Then d\AutoClose = False
 					
 					Local TextureID%
