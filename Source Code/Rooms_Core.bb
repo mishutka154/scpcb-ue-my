@@ -3134,48 +3134,29 @@ Function FillRoom%(r.Rooms)
 			
 			CreateDoor(r, r\x + 3072.0 * RoomScale, r\y - 928.0 * RoomScale, r\z + 5800.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_3)
 			
-			; ~ Guard spawnpoint
+			; ~ Guard attack area
+			r\Objects[1] = CreatePivot()
+			PositionEntity(r\Objects[1], r\x + 4363.0 * RoomScale, r\y - 248.0 * RoomScale, r\z + 2766.0 * RoomScale)
+			EntityParent(r\Objects[1], r\OBJ)
+			
 			r\Objects[2] = CreatePivot()
-			PositionEntity(r\Objects[2], r\x + 5203.0 * RoomScale, r\y + 1444.0 * RoomScale, r\z - 1739.0 * RoomScale)
+			PositionEntity(r\Objects[2], r\x + 5192.0 * RoomScale, r\y + 1408.0 * RoomScale, r\z - 4352.0 * RoomScale)
 			EntityParent(r\Objects[2], r\OBJ)
 			
+			; ~ Walkway
 			r\Objects[3] = CreatePivot()
-			PositionEntity(r\Objects[3], r\x + 4363.0 * RoomScale, r\y - 248.0 * RoomScale, r\z + 2766.0 * RoomScale)
+			PositionEntity(r\Objects[3], r\x + 4352.0 * RoomScale, r\y, r\z + 1344.0 * RoomScale)
 			EntityParent(r\Objects[3], r\OBJ)
 			
+			; ~ SCP-682's paw
 			r\Objects[4] = CreatePivot()
-			PositionEntity(r\Objects[4], r\x + 5192.0 * RoomScale, r\y + 1408.0 * RoomScale, r\z - 4352.0 * RoomScale)
+			PositionEntity(r\Objects[4], r\x + 2816.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 2816.0 * RoomScale)
 			EntityParent(r\Objects[4], r\OBJ)
 			
-			; ~ Walkway
+			; ~ Leave to this point
 			r\Objects[5] = CreatePivot()
-			PositionEntity(r\Objects[5], r\x + 4352.0 * RoomScale, r\y, r\z + 1344.0 * RoomScale)
+			PositionEntity(r\Objects[5], r\x + 3808.0 * RoomScale, r\y + 1536.0 * RoomScale, r\z - 13568.0 * RoomScale)
 			EntityParent(r\Objects[5], r\OBJ)
-			
-			; ~ SCP-682's paw
-			r\Objects[6] = CreatePivot()
-			PositionEntity(r\Objects[6], r\x + 2816.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 2816.0 * RoomScale)
-			EntityParent(r\Objects[6], r\OBJ)
-			
-			; ~ MTF spawnpoint
-			r\Objects[8] = CreatePivot()
-			PositionEntity(r\Objects[8], r\x + 3600.0 * RoomScale, r\y - 888.0 * RoomScale, r\z + 6623.0 * RoomScale)
-			EntityParent(r\Objects[8], r\OBJ)
-			
-			; ~ "SCP-682" pivot
-			r\Objects[9] = CreatePivot()
-			PositionEntity(r\Objects[9], r\x + 3808.0 * RoomScale, r\y + 1536.0 * RoomScale, r\z - 13568.0 * RoomScale)
-			EntityParent(r\Objects[9], r\OBJ)
-			
-			; ~ Apache radius
-			r\Objects[10] = CreatePivot()
-			PositionEntity(r\Objects[10], r\x - 7680.0 * RoomScale, r\y + 208.0 * RoomScale, r\z - 27048.0 * RoomScale)
-			EntityParent(r\Objects[10], r\OBJ)
-			
-			; ~ Extra apache spawnpoint
-			r\Objects[11] = CreatePivot()
-			PositionEntity(r\Objects[11], r\x - 5424.0 * RoomScale, r\y, r\z - 1068.0 * RoomScale)
-			EntityParent(r\Objects[11], r\OBJ)
 			
 			CreateCustomCenter(r, r\x - 5424.0 * RoomScale, r\z - 1700.0 * RoomScale)
 			;[End Block]

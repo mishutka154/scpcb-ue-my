@@ -30,6 +30,8 @@
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - Added Revision Eyedrops in «room2_closets».
+- Added a truck in the Gate B area.
+
 - Changed SCP-005 in «cont2_409» to a crystallized variant.
 
 - Lowered clearance access of «room1_storage» to level 1.

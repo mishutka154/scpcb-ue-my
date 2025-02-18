@@ -9307,7 +9307,7 @@ End Function
 Function UpdateEndings%()
 	Local e.Events, e2.Events, n.NPCs, r.Rooms, p.Particles, de.Decals, du.Dummy1499_1, emit.Emitter
 	Local Dist#, i%, k%, Pvt%, Temp%, xTemp#, zTemp#, Angle#, OBJ%
-	Local SinValue#, SqrValue#
+	Local SinValue#, SqrValue#, TargetX#, TargetY#, TargetZ#
 	
 	For e.Events = Each Events
 		Select e\EventID
@@ -9329,11 +9329,18 @@ Function UpdateEndings%()
 							RemoveDummy1499_1(du)
 						Next
 						
-						e\room\NPC[0] = CreateNPC(NPCTypeApache, e\room\x, 100.0, e\room\z)
+						e\room\NPC[0] = CreateNPC(NPCTypeApache, e\room\x, e\room\y + 10.0, e\room\z)
 						e\room\NPC[0]\State = 1.0
 						
-						e\room\NPC[1] = CreateNPC(NPCTypeGuard, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True), EntityZ(e\room\Objects[2], True))
+						TFormPoint(5203.0, 1444.0, -1739.0, e\room\OBJ, 0)
+						e\room\NPC[1] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 						e\room\NPC[1]\State = 0.0 : e\room\NPC[1]\State2 = 10.0
+						
+						TFormPoint(6234.0, 200.0, -8451.0, e\room\OBJ, 0)
+						e\room\NPC[6] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
+						RotateEntity(e\room\NPC[6]\Collider, 0.0, e\room\Angle + 90.0, 0.0)
+						CreateNPCAsset(e\room\NPC[6])
+						e\room\NPC[6]\State = 15.0
 						
 						e\room\Objects[0] = LoadMesh_Strict("GFX\Map\exit1terrain.b3d", e\room\OBJ)
 						ScaleEntity(e\room\Objects[0], RoomScale, RoomScale, RoomScale, True)
@@ -9372,6 +9379,10 @@ Function UpdateEndings%()
 						ShowRoomsNoColl(e\room)
 						ShowRoomsColl(e\room)
 						
+						If e\room\NPC[6] <> Null
+							If EntityX(me\Collider, True) > e\room\x - 250.0 * RoomScale Then e\room\NPC[6]\State = 16.0
+							If EntityX(e\room\NPC[6]\Collider, True) < e\room\x + 2000.0 * RoomScale Then RemoveNPC(e\room\NPC[6])
+						EndIf
 						If e\EventState < 2.0 And me\SelectedEnding = -1 
 							If e\room\NPC[0]\State = 2.0
 								ShouldPlay = 6
@@ -9382,16 +9393,17 @@ Function UpdateEndings%()
 								ShouldPlay = 5
 							EndIf
 							
-							If EntityDistanceSquared(me\Collider, e\room\Objects[5]) < PowTwo(320.0 * RoomScale)
+							If EntityDistanceSquared(me\Collider, e\room\Objects[3]) < PowTwo(320.0 * RoomScale)
 								For i = 2 To 3
 									e\room\RoomDoors[i]\Open = False
 									e\room\RoomDoors[i]\Locked = 1
 								Next
 								
-								e\room\NPC[2] = CreateNPC(NPCTypeApache, EntityX(e\room\Objects[11], True), EntityY(e\room\Objects[11], True) + 0.5, EntityZ(e\room\Objects[11], True))
+								TFormPoint(-5424.0, 200.0, -1068.0, e\room\OBJ, 0)
+								e\room\NPC[2] = CreateNPC(NPCTypeApache, TFormedX(), TFormedY(), TFormedZ())
 								e\room\NPC[2]\State = 3.0
 								
-								e\room\NPC[3] = CreateNPC(NPCTypeApache, EntityX(e\room\Objects[4], True), EntityY(e\room\Objects[4], True) - 2.0, EntityZ(e\room\Objects[4], True))
+								e\room\NPC[3] = CreateNPC(NPCTypeApache, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True) - 2.0, EntityZ(e\room\Objects[2], True))
 								e\room\NPC[3]\State = 3.0
 								
 								e\room\NPC[0]\State = 3.0
@@ -9408,18 +9420,22 @@ Function UpdateEndings%()
 							e\EventState = e\EventState + fps\Factor[0]
 							
 							If e\EventState < 70.0 * 40.0
-								e\room\NPC[0]\EnemyX = EntityX(e\room\Objects[6], True) + Sin(MilliSec / 25.0) * 3.0
-								e\room\NPC[0]\EnemyY = EntityY(e\room\Objects[6], True) + Cos(MilliSec / 85.0) + 9.0
-								e\room\NPC[0]\EnemyZ = EntityZ(e\room\Objects[6], True) + Cos(MilliSec / 25.0) * 3.0
+								TargetX = EntityX(e\room\Objects[4], True)
+								TargetY = EntityY(e\room\Objects[4], True)
+								TargetZ = EntityZ(e\room\Objects[4], True)
 								
-								e\room\NPC[2]\EnemyX = EntityX(e\room\Objects[6], True) + Sin(MilliSec / 23.0) * 3.0
-								e\room\NPC[2]\EnemyY = EntityY(e\room\Objects[6], True) + Cos(MilliSec / 83.0) + 5.0
-								e\room\NPC[2]\EnemyZ = EntityZ(e\room\Objects[6], True) + Cos(MilliSec / 23.0) * 3.0
+								e\room\NPC[0]\EnemyX = TargetX + Sin(MilliSec / 25.0) * 3.0
+								e\room\NPC[0]\EnemyY = TargetY + Cos(MilliSec / 85.0) + 9.0
+								e\room\NPC[0]\EnemyZ = TargetZ + Cos(MilliSec / 25.0) * 3.0
+								
+								e\room\NPC[2]\EnemyX = TargetX + Sin(MilliSec / 23.0) * 3.0
+								e\room\NPC[2]\EnemyY = TargetY + Cos(MilliSec / 83.0) + 5.0
+								e\room\NPC[2]\EnemyZ = TargetZ + Cos(MilliSec / 23.0) * 3.0
 								
 								If e\room\NPC[3]\State = 3.0 
-									e\room\NPC[3]\EnemyX = EntityX(e\room\Objects[6], True) + Sin(MilliSec / 20.0) * 3.0
-									e\room\NPC[3]\EnemyY = EntityY(e\room\Objects[6], True) + Cos(MilliSec / 80.0) + 3.5
-									e\room\NPC[3]\EnemyZ = EntityZ(e\room\Objects[6], True) + Cos(MilliSec / 20.0) * 3.0
+									e\room\NPC[3]\EnemyX = TargetX + Sin(MilliSec / 20.0) * 3.0
+									e\room\NPC[3]\EnemyY = TargetY + Cos(MilliSec / 80.0) + 3.5
+									e\room\NPC[3]\EnemyZ = TargetZ + Cos(MilliSec / 20.0) * 3.0
 								EndIf
 							EndIf
 						EndIf
@@ -9457,13 +9473,17 @@ Function UpdateEndings%()
 								me\CameraShake = 0.5
 								
 								; ~ Helicopters leave
-								e\room\NPC[0]\EnemyX = EntityX(e\room\Objects[9], True) + 4.0
-								e\room\NPC[0]\EnemyY = EntityY(e\room\Objects[9], True) + 4.0
-								e\room\NPC[0]\EnemyZ = EntityZ(e\room\Objects[9], True) + 4.0
+								TargetX = EntityX(e\room\Objects[5], True)
+								TargetY = EntityY(e\room\Objects[5], True)
+								TargetZ = EntityZ(e\room\Objects[5], True)
 								
-								e\room\NPC[2]\EnemyX = EntityX(e\room\Objects[9], True)
-								e\room\NPC[2]\EnemyY = EntityY(e\room\Objects[9], True)
-								e\room\NPC[2]\EnemyZ = EntityZ(e\room\Objects[9], True)
+								e\room\NPC[0]\EnemyX = TargetX + 4.0
+								e\room\NPC[0]\EnemyY = TargetY + 4.0
+								e\room\NPC[0]\EnemyZ = TargetZ + 4.0
+								
+								e\room\NPC[2]\EnemyX = TargetX
+								e\room\NPC[2]\EnemyY = TargetY
+								e\room\NPC[2]\EnemyZ = TargetZ
 							EndIf
 						EndIf
 						
@@ -9496,9 +9516,11 @@ Function UpdateEndings%()
 										e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\AlphaWarheadsFail.ogg", opt\VoiceVolume * opt\MasterVolume, False)
 										e\SoundCHN2_IsStream = True
 										
-										n.NPCs = CreateNPC(NPCTypeMTF, EntityX(e\room\Objects[8], True), EntityY(e\room\Objects[8], True) + 0.29, EntityZ(e\room\Objects[8], True))
+										TFormPoint(3600.0, -830.0, 6623.0, e\room\OBJ, 0)
+										n.NPCs = CreateNPC(NPCTypeMTF, TFormedX(), TFormedY(), TFormedZ())
 										e\room\NPC[4] = n
-										n.NPCs = CreateNPC(NPCTypeMTF, EntityX(e\room\RoomDoors[2]\OBJ, True), EntityY(e\room\RoomDoors[2]\OBJ, True) + 0.29, (EntityZ(e\room\RoomDoors[2]\OBJ, True) + EntityZ(e\room\RoomDoors[3]\OBJ, True)) / 2.0)
+										TFormPoint(4352.0, 200.0, 255.0, e\room\OBJ, 0)
+										n.NPCs = CreateNPC(NPCTypeMTF, TFormedX(), TFormedY(), TFormedZ())
 										e\room\NPC[5] = n
 										
 										For i = 4 To 5
@@ -9515,13 +9537,17 @@ Function UpdateEndings%()
 									If me\SelectedEnding = Ending_B1
 										e\room\RoomDoors[4]\Open = True : e\room\RoomDoors[4]\Locked = 0
 										
-										e\room\NPC[0]\EnemyX = EntityX(e\room\Objects[6], True) + Sin(MilliSec / 25.0) * 3.0
-										e\room\NPC[0]\EnemyY = EntityY(e\room\Objects[6], True) + Cos(MilliSec / 85.0) + 9.0
-										e\room\NPC[0]\EnemyZ = EntityZ(e\room\Objects[6], True) + Cos(MilliSec / 25.0) * 3.0
+										TargetX = EntityX(e\room\Objects[4], True)
+										TargetY = EntityY(e\room\Objects[4], True)
+										TargetZ = EntityZ(e\room\Objects[4], True)
 										
-										e\room\NPC[2]\EnemyX = EntityX(e\room\Objects[6], True) + Sin(MilliSec / 23.0) * 3.0
-										e\room\NPC[2]\EnemyY = EntityY(e\room\Objects[6], True) + Cos(MilliSec / 83.0) + 5.0
-										e\room\NPC[2]\EnemyZ = EntityZ(e\room\Objects[6], True) + Cos(MilliSec / 23.0) * 3.0
+										e\room\NPC[0]\EnemyX = TargetX + Sin(MilliSec / 25.0) * 3.0
+										e\room\NPC[0]\EnemyY = TargetY + Cos(MilliSec / 85.0) + 9.0
+										e\room\NPC[0]\EnemyZ = TargetZ + Cos(MilliSec / 25.0) * 3.0
+										
+										e\room\NPC[2]\EnemyX = TargetX + Sin(MilliSec / 23.0) * 3.0
+										e\room\NPC[2]\EnemyY = TargetY + Cos(MilliSec / 83.0) + 5.0
+										e\room\NPC[2]\EnemyZ = TargetZ + Cos(MilliSec / 23.0) * 3.0
 										
 										For i = 4 To 5
 											e\room\NPC[i]\EnemyX = EntityX(me\Collider)
@@ -9563,30 +9589,30 @@ Function UpdateEndings%()
 						
 						If e\EventState > 70.0 * 26.5
 							If e\EventState3 = 0.0
-								e\room\Objects[7] = LoadMesh_Strict("GFX\NPCs\scp_682_arm.b3d")
-								ScaleEntity(e\room\Objects[7], 0.15, 0.15, 0.15)
+								e\room\Objects[6] = LoadMesh_Strict("GFX\NPCs\scp_682_arm.b3d")
+								ScaleEntity(e\room\Objects[6], 0.15, 0.15, 0.15)
 								Temp = (Min(((EntityDistance(e\room\NPC[3]\Collider, me\Collider) / RoomScale) - 3000.0) / 4.0, 1000.0) + 1408.0) * RoomScale
-								PositionEntity(e\room\Objects[7], EntityX(e\room\NPC[3]\Collider), e\room\y + 1408.0 * RoomScale, EntityZ(e\room\NPC[3]\Collider))
-								RotateEntity(e\room\Objects[7], 0.0, e\room\Angle + Rnd(-10.0, 10.0), 0.0, True)
-								TurnEntity(e\room\Objects[7], 0.0, 0.0, 180.0)
+								PositionEntity(e\room\Objects[6], EntityX(e\room\NPC[3]\Collider), e\room\y + 1408.0 * RoomScale, EntityZ(e\room\NPC[3]\Collider))
+								RotateEntity(e\room\Objects[6], 0.0, e\room\Angle + Rnd(-10.0, 10.0), 0.0, True)
+								TurnEntity(e\room\Objects[6], 0.0, 0.0, 180.0)
 								e\EventState3 = 1.0
 							Else
-								If e\room\Objects[7] <> 0
-									If WrapAngle(EntityRoll(e\room\Objects[7])) < 340.0 
-										Angle = WrapAngle(EntityRoll(e\room\Objects[7]))
-										TurnEntity(e\room\Objects[7], 0.0, 0.0, (5.0 + Abs(Sin(Angle)) * 2.0) * fps\Factor[0])
-										If Angle < 270.0 And WrapAngle(EntityRoll(e\room\Objects[7])) >= 270.0
+								If e\room\Objects[6] <> 0
+									If WrapAngle(EntityRoll(e\room\Objects[6])) < 340.0 
+										Angle = WrapAngle(EntityRoll(e\room\Objects[6]))
+										TurnEntity(e\room\Objects[6], 0.0, 0.0, (5.0 + Abs(Sin(Angle)) * 2.0) * fps\Factor[0])
+										If Angle < 270.0 And WrapAngle(EntityRoll(e\room\Objects[6])) >= 270.0
 											PlaySound_Strict(LoadTempSound("SFX\Character\Apache\Crash0.ogg"))
 											e\room\NPC[3]\State = 4.0 : e\room\NPC[3]\State2 = 1.0
-											e\room\NPC[3]\EnemyX = EntityX(e\room\Objects[4], True)
-											e\room\NPC[3]\EnemyY = EntityY(e\room\Objects[4], True) - 2.5
-											e\room\NPC[3]\EnemyZ = EntityZ(e\room\Objects[4], True)
+											e\room\NPC[3]\EnemyX = EntityX(e\room\Objects[2], True)
+											e\room\NPC[3]\EnemyY = EntityY(e\room\Objects[2], True) - 2.5
+											e\room\NPC[3]\EnemyZ = EntityZ(e\room\Objects[2], True)
 											
 											emit.Emitter = SetEmitter(Null, EntityX(e\room\NPC[3]\Collider), EntityY(e\room\NPC[3]\Collider), EntityZ(e\room\NPC[3]\Collider), 8)
 											EntityParent(emit\Owner, e\room\NPC[3]\Collider)
 										EndIf
 									Else
-										FreeEntity(e\room\Objects[7]) : e\room\Objects[7] = 0
+										FreeEntity(e\room\Objects[6]) : e\room\Objects[6] = 0
 									EndIf
 								EndIf
 							EndIf
@@ -9604,7 +9630,7 @@ Function UpdateEndings%()
 						EndIf
 						
 						; ~ Below roof or inside catwalk --> Stop shooting
-						If EntityDistanceSquared(e\room\NPC[1]\Collider, me\Collider) < 79.21 Lor EntityDistanceSquared(e\room\Objects[3], me\Collider) < 285.61 Lor chs\NoTarget Lor I_268\InvisibilityOn
+						If EntityDistanceSquared(e\room\NPC[1]\Collider, me\Collider) < 79.21 Lor EntityDistanceSquared(e\room\Objects[1], me\Collider) < 285.61 Lor chs\NoTarget Lor I_268\InvisibilityOn
 							e\room\NPC[1]\State3 = 0.0
 						Else
 							e\room\NPC[1]\State3 = 1.0
