@@ -2151,6 +2151,27 @@ Function LoadGameQuick%(File$)
 				;[Block]
 				SetAnimTime(e\room\Objects[0], 1.0 + 239.0 * (e\EventState = 2.0))
 				;[End Block]
+			Case r_gate_a ; ~ Erase endings stuff
+				;[Block]
+				If e\room\Objects[0] <> 0
+					FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
+					FreeEntity(e\room\Objects[4]) : e\room\Objects[4] = 0
+					FreeEntity(e\room\Objects[5]) : e\room\Objects[5] = 0
+					FreeEntity(e\room\Objects[7]) : e\room\Objects[7] = 0
+					FreeEntity(e\room\Objects[8]) : e\room\Objects[8] = 0
+					FreeEntity(e\room\Objects[13]) : e\room\Objects[13] = 0
+				EndIf
+				If e\room\Objects[9] <> 0
+					FreeEntity(e\room\Objects[12]) : e\room\Objects[12] = 0
+					FreeEntity(e\room\Objects[11]) : e\room\Objects[11] = 0
+					FreeEntity(e\room\Objects[10]) : e\room\Objects[10] = 0
+					FreeEntity(e\room\Objects[9]) : e\room\Objects[9] = 0
+				EndIf
+				;[End Block]
+			Case r_gate_b
+				;[Block]
+				If e\room\Objects[0] <> 0 Then FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
+				;[End Block]
 		End Select
 	Next
 	
@@ -2304,54 +2325,6 @@ Function LoadGameQuick%(File$)
 	If Sky <> 0 Then FreeEntity(Sky) : Sky = 0
 	For r.Rooms = Each Rooms
 		Select r\RoomTemplate\RoomID
-			Case r_gate_a
-				;[Block]
-				If r\Objects[0] <> 0
-					FreeEntity(r\Objects[0]) : r\Objects[0] = 0
-					
-					xTemp = EntityX(r\Objects[9], True)
-					zTemp = EntityZ(r\Objects[9], True)
-					FreeEntity(r\Objects[9]) : r\Objects[9] = 0
-					
-					r\Objects[10] = 0 ; ~ r\Objects[10] is already deleted because it is a parent object to r\Objects[9] which is already deleted a line before
-					
-					; ~ Readding this object, as it is originally inside the "FillRoom" function but gets deleted when it loads Gate A
-					r\Objects[9] = CreatePivot()
-					PositionEntity(r\Objects[9], xTemp, r\y + 992.0 * RoomScale, zTemp, True)
-					EntityParent(r\Objects[9], r\OBJ)
-					
-					; ~ The Gate A wall pieces
-					xTemp = EntityX(r\Objects[13], True)
-					zTemp = EntityZ(r\Objects[13], True)
-					FreeEntity(r\Objects[13]) : r\Objects[13] = 0
-					r\Objects[13] = LoadMesh_Strict("GFX\Map\gateawall1.b3d", r\OBJ)
-					PositionEntity(r\Objects[13], xTemp, r\y - 1045.0 * RoomScale, zTemp, True)
-					EntityColor(r\Objects[13], 25.0, 25.0, 25.0)
-					EntityType(r\Objects[13], HIT_MAP)
-					
-					xTemp = EntityX(r\Objects[14], True)
-					zTemp = EntityZ(r\Objects[14], True)
-					FreeEntity(r\Objects[14]) : r\Objects[14] = 0
-					r\Objects[14] = LoadMesh_Strict("GFX\Map\gateawall2.b3d", r\OBJ)
-					PositionEntity(r\Objects[14], xTemp, r\y - 1045.0 * RoomScale, zTemp, True)
-					EntityColor(r\Objects[14], 25.0, 25.0, 25.0)
-					EntityType(r\Objects[14], HIT_MAP)
-				EndIf
-				If r\Objects[12] <> 0
-					FreeEntity(r\Objects[12]) : r\Objects[12] = 0
-					FreeEntity(r\Objects[17]) : r\Objects[17] = 0
-				EndIf
-				;[End Block]
-			Case r_gate_b
-				;[Block]
-				If r\Objects[0] <> 0
-					xTemp = EntityX(r\Objects[0], True)
-					zTemp = EntityZ(r\Objects[0], True)
-					FreeEntity(r\Objects[0]) : r\Objects[0] = 0
-					r\Objects[0] = CreatePivot(r\OBJ)
-					PositionEntity(r\Objects[0], xTemp, r\y - 1017.0 * RoomScale, zTemp, True)
-				EndIf
-				;[End Block]
 			Case r_cont1_035
 				;[Block]
 				Update035Label(r\Objects[4])
@@ -2359,7 +2332,7 @@ Function LoadGameQuick%(File$)
 		End Select
 	Next
 	
-	; ~ Resetting some stuff (those get changed when going to the endings)
+	; ~ Resetting some stuff (those get changed when going to some areas)
 	HideDistance = 17.0
 	
 	CatchErrors("Uncaught: LoadGameQuick(" + File + ")")

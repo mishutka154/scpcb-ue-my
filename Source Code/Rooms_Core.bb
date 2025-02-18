@@ -3034,55 +3034,22 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 			
 			; ~ SCP-106's spawnpoint
+			r\Objects[1] = CreatePivot()
+			PositionEntity(r\Objects[1], r\x + 1188.0 * RoomScale, r\y, r\z + 1960.0 * RoomScale)
+			EntityParent(r\Objects[1], r\OBJ)
+			
+			; ~ A point where SCP-106 retreats
+			r\Objects[2] = CreatePivot()
+			PositionEntity(r\Objects[2], r\x, r\y + 96.0 * RoomScale, r\z + 6400.0 * RoomScale)
+			EntityParent(r\Objects[2], r\OBJ)
+			
 			r\Objects[3] = CreatePivot()
-			PositionEntity(r\Objects[3], r\x + 1188.0 * RoomScale, r\y, r\z + 1960.0 * RoomScale)
+			PositionEntity(r\Objects[3], r\x - 4064.0 * RoomScale, r\y - 1248.0 * RoomScale, r\z - 1696.0 * RoomScale)
 			EntityParent(r\Objects[3], r\OBJ)
 			
-			r\Objects[4] = CreatePivot()
-			PositionEntity(r\Objects[4], r\x, r\y + 96.0 * RoomScale, r\z + 6400.0 * RoomScale)
-			EntityParent(r\Objects[4], r\OBJ)
-			
-			r\Objects[5] = CreatePivot()
-			PositionEntity(r\Objects[5], r\x + 1784.0 * RoomScale, r\y + 2124.0 * RoomScale, r\z + 4512.0 * RoomScale)
-			EntityParent(r\Objects[5], r\OBJ)
-			
 			r\Objects[6] = CreatePivot()
-			PositionEntity(r\Objects[6], r\x - 5048.0 * RoomScale, r\y + 1912.0 * RoomScale, r\z + 4656.0 * RoomScale)
+			PositionEntity(r\Objects[6], r\x - 3568.0 * RoomScale, r\y - 1089.0 * RoomScale, r\z + 4944.0 * RoomScale)
 			EntityParent(r\Objects[6], r\OBJ)
-			
-			; ~ MTF spawnpoint
-			r\Objects[7] = CreatePivot()
-			PositionEntity(r\Objects[7], r\x + 1824.0 * RoomScale, r\y + 0.22, r\z + 7056.0 * RoomScale)
-			EntityParent(r\Objects[7], r\OBJ)
-			
-			r\Objects[8] = CreatePivot()
-			PositionEntity(r\Objects[8], r\x - 1824.0 * RoomScale, r\y + 0.22, r\z + 7056.0 * RoomScale)
-			EntityParent(r\Objects[8], r\OBJ)
-			
-			r\Objects[11] = CreatePivot()
-			PositionEntity(r\Objects[11], r\x - 4064.0 * RoomScale, r\y - 1248.0 * RoomScale, r\z - 1696.0 * RoomScale)
-			EntityParent(r\Objects[11], r\OBJ)
-			
-			r\Objects[13] = LoadMesh_Strict("GFX\Map\gateawall1.b3d", r\OBJ)
-			PositionEntity(r\Objects[13], r\x - 4308.0 * RoomScale, r\y - 1045.0 * RoomScale, r\z + 544.0 * RoomScale, True)
-			EntityColor(r\Objects[13], 25.0, 25.0, 25.0)
-			EntityType(r\Objects[13], HIT_MAP)
-			
-			r\Objects[14] = LoadMesh_Strict("GFX\Map\gateawall2.b3d", r\OBJ)
-			PositionEntity(r\Objects[14], r\x - 3820.0 * RoomScale, r\y - 1045.0 * RoomScale, r\z + 544.0 * RoomScale, True)
-			EntityColor(r\Objects[14], 25.0, 25.0, 25.5)
-			EntityType(r\Objects[14], HIT_MAP)
-			
-			r\Objects[15] = CreatePivot()
-			PositionEntity(r\Objects[15], r\x - 3568.0 * RoomScale, r\y - 1089.0 * RoomScale, r\z + 4944.0 * RoomScale)
-			EntityParent(r\Objects[15], r\OBJ)
-			
-			; ~ Hit Box
-			r\Objects[16] = LoadMesh_Strict("GFX\Map\gatea_hitbox1.b3d", r\OBJ)
-			r\ScriptedObject[16] = True
-			EntityPickMode(r\Objects[16], 2)
-			EntityType(r\Objects[16], HIT_MAP)
-			EntityAlpha(r\Objects[16], 0.0)
 			;[End Block]
 		Case r_gate_b_entrance
 			;[Block]

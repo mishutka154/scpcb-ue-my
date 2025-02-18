@@ -9658,19 +9658,30 @@ Function UpdateEndings%()
 							RemoveDummy1499_1(du)
 						Next
 						
+						TFormPoint(1784.0, 2124.0, 4512.0, e\room\OBJ, 0)
+						e\room\NPC[0] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
+						e\room\NPC[0]\State = 0.0
+						
+						TFormPoint(-5048.0, 1912.0, 4656.0, e\room\OBJ, 0)
+						e\room\NPC[1] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
+						e\room\NPC[1]\State = 0.0
+						
 						For i = 2 To 4
 							e\room\NPC[i] = CreateNPC(NPCTypeApache, e\room\x, e\room\y + 11.0, e\room\z)
 							e\room\NPC[i]\State = (Not n_I\Curr106\Contained)
 						Next
 						
-						For i = 0 To 1
-							e\room\NPC[i] = CreateNPC(NPCTypeGuard, EntityX(e\room\Objects[i + 5], True), EntityY(e\room\Objects[i + 5], True), EntityZ(e\room\Objects[i + 5], True))
-							e\room\NPC[i]\State = 0.0
-							PointEntity(e\room\NPC[i]\Collider, e\room\Objects[3])
-						Next
+						TFormPoint(1824.0, 200.0, 7056.0, e\room\OBJ, 0)
+						TargetX = TFormedX() : TargetY = TFormedY() : TargetZ = TFormedZ()
+						e\room\NPC[5] = CreateNPC(NPCTypeMTF, TargetX, TargetY, TargetZ)
+						e\room\NPC[6] = CreateNPC(NPCTypeMTF, TargetX + 0.8, TargetY, TargetZ + 0.8)
+						
+						TFormPoint(-1824.0, 200.0, 7056.0, e\room\OBJ, 0)
+						TargetX = TFormedX() : TargetY = TFormedY() : TargetZ = TFormedZ()
+						e\room\NPC[7] = CreateNPC(NPCTypeMTF, TargetX, TargetY, TargetZ)
+						e\room\NPC[8] = CreateNPC(NPCTypeMTF, TargetX + 0.8, TargetY, TargetZ + 0.8)
 						
 						For i = 5 To 8
-							e\room\NPC[i] = CreateNPC(NPCTypeMTF, EntityX(e\room\Objects[i + ((i < 7) * 2)], True) + ((i > 6) * 0.8), EntityY(e\room\Objects[i + ((i < 7) * 2)], True), EntityZ(e\room\Objects[i + ((i < 7) * 2)], True) + ((i > 6) * 0.8))
 							e\room\NPC[i]\EnemyX = EntityX(e\room\OBJ, True)
 							e\room\NPC[i]\EnemyY = EntityY(e\room\OBJ, True)
 							e\room\NPC[i]\EnemyZ = EntityZ(e\room\OBJ, True)
@@ -9680,7 +9691,7 @@ Function UpdateEndings%()
 						If n_I\Curr106\Contained
 							e\room\RoomDoors[0]\Locked = 1
 							
-							PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[15], True), EntityY(e\room\Objects[15], True), EntityZ(e\room\Objects[15], True), True)
+							PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
 							ResetEntity(e\room\NPC[5]\Collider)
 						EndIf
 						
@@ -9698,15 +9709,37 @@ Function UpdateEndings%()
 						EntityPickMode(e\room\Objects[0], 2)
 						EntityParent(e\room\Objects[0], e\room\OBJ)
 						
-						e\room\Objects[9] = LoadMesh_Strict("GFX\Map\Props\lightgunbase.b3d")
-						PositionEntity(e\room\Objects[9], e\room\x + (2850.0 * RoomScale), e\room\y + (1008.0 * RoomScale), e\room\z + (6157.0 * RoomScale))
-						ScaleEntity(e\room\Objects[9], RoomScale, RoomScale, RoomScale)
-						e\room\Objects[10] = LoadMesh_Strict("GFX\Map\Props\lightgun.b3d")
-						PositionEntity(e\room\Objects[10], e\room\x + (2850.0 * RoomScale), e\room\y + (1296.0 * RoomScale), e\room\z + (5981.0 * RoomScale), True)
-						ScaleEntity(e\room\Objects[10], RoomScale, RoomScale, RoomScale)
-						EntityParent(e\room\Objects[10], e\room\Objects[9])
-						RotateEntity(e\room\Objects[9], 0.0, 48.0, 0.0)
-						RotateEntity(e\room\Objects[10], 40.0, 0.0, 0.0)
+						TFormPoint(-4308.0, -1045.0, 544.0, e\room\OBJ, 0)
+						e\room\Objects[4] = LoadMesh_Strict("GFX\Map\gateawall1.b3d", e\room\OBJ)
+						PositionEntity(e\room\Objects[4], TFormedX(), TFormedY(), TFormedZ(), True)
+						EntityColor(e\room\Objects[4], 25.0, 25.0, 25.0)
+						EntityType(e\room\Objects[4], HIT_MAP)
+						
+						TFormPoint(-3820.0, -1045.0, 544.0, e\room\OBJ, 0)
+						e\room\Objects[5] = LoadMesh_Strict("GFX\Map\gateawall2.b3d", e\room\OBJ)
+						PositionEntity(e\room\Objects[5], TFormedX(), TFormedY(), TFormedZ(), True)
+						EntityColor(e\room\Objects[5], 25.0, 25.0, 25.5)
+						EntityType(e\room\Objects[5], HIT_MAP)
+						
+						TFormPoint(2850.0, 1008.0, 6157.0, e\room\OBJ, 0)
+						e\room\Objects[7] = LoadMesh_Strict("GFX\Map\Props\lightgunbase.b3d")
+						PositionEntity(e\room\Objects[7], TFormedX(), TFormedY(), TFormedZ(), True)
+						ScaleEntity(e\room\Objects[7], RoomScale, RoomScale, RoomScale)
+						
+						TFormPoint(2850.0, 1296.0, 5981.0, e\room\OBJ, 0)
+						e\room\Objects[8] = LoadMesh_Strict("GFX\Map\Props\lightgun.b3d")
+						PositionEntity(e\room\Objects[8], TFormedX(), TFormedY(), TFormedZ(), True)
+						ScaleEntity(e\room\Objects[8], RoomScale, RoomScale, RoomScale)
+						EntityParent(e\room\Objects[8], e\room\Objects[7])
+						RotateEntity(e\room\Objects[7], 0.0, 48.0, 0.0)
+						RotateEntity(e\room\Objects[8], 40.0, 0.0, 0.0)
+						
+						; ~ Hit Box
+						e\room\Objects[13] = LoadMesh_Strict("GFX\Map\gatea_hitbox1.b3d", e\room\OBJ)
+						e\room\ScriptedObject[13] = True
+						EntityPickMode(e\room\Objects[13], 2)
+						EntityType(e\room\Objects[13], HIT_MAP)
+						EntityAlpha(e\room\Objects[13], 0.0)
 						
 						RenderLoading(90, GetLocalString("loading", "ending"))
 						
@@ -9744,7 +9777,7 @@ Function UpdateEndings%()
 						For i = 2 To 4
 							If e\room\NPC[i] <> Null
 								If e\room\NPC[i]\State < 2.0
-									PositionEntity(e\room\NPC[i]\Collider, EntityX(e\room\Objects[3], True) + Cos(e\EventState / 10.0 + (120.0 * i)) * 6000.0 * RoomScale, e\room\y + 11.0, EntityZ(e\room\Objects[3], True) + Sin(e\EventState / 10.0 + (120.0 * i)) * 6000.0 * RoomScale)
+									PositionEntity(e\room\NPC[i]\Collider, EntityX(e\room\Objects[1], True) + Cos(e\EventState / 10.0 + (120.0 * i)) * 6000.0 * RoomScale, e\room\y + 11.0, EntityZ(e\room\Objects[1], True) + Sin(e\EventState / 10.0 + (120.0 * i)) * 6000.0 * RoomScale)
 									RotateEntity(e\room\NPC[i]\Collider, 7.0, (e\EventState / 10.0 + (120.0 * i)), 20.0)
 								EndIf
 							EndIf
@@ -9753,7 +9786,7 @@ Function UpdateEndings%()
 						If e\EventState >= 350.0
 							If (Not n_I\Curr106\Contained)
 								If e\EventState - fps\Factor[0] < 350.0
-									n_I\Curr106\EnemyX = EntityX(e\room\Objects[3], True) : n_I\Curr106\EnemyY = EntityY(e\room\Objects[3], True) : n_I\Curr106\EnemyZ = EntityZ(e\room\Objects[3], True)
+									n_I\Curr106\EnemyX = EntityX(e\room\Objects[1], True) : n_I\Curr106\EnemyY = EntityY(e\room\Objects[1], True) : n_I\Curr106\EnemyZ = EntityZ(e\room\Objects[1], True)
 									n_I\Curr106\State = 2.0
 									RotateEntity(n_I\Curr106\Collider, 0.0, e\room\Angle + 90.0, 0.0)
 									
@@ -9774,6 +9807,9 @@ Function UpdateEndings%()
 											e\room\NPC[i]\State = 3.0
 										Next
 										
+										For i = 0 To 1
+											PointEntity(e\room\NPC[i]\Collider, n_I\Curr106\Collider)
+										Next
 										For i = 5 To 8
 											If NPCSeesPlayer(e\room\NPC[i], 4.0 - me\CrouchState + me\SndVolume) = 1
 												e\room\NPC[i]\State = MTF_SHOOTING_AT_PLAYER
@@ -9786,14 +9822,14 @@ Function UpdateEndings%()
 										Next
 										
 										Pvt = CreatePivot()
-										PositionEntity(Pvt, EntityX(e\room\Objects[10], True), EntityY(e\room\Objects[10], True), EntityZ(e\room\Objects[10], True))
+										PositionEntity(Pvt, EntityX(e\room\Objects[8], True), EntityY(e\room\Objects[8], True), EntityZ(e\room\Objects[8], True))
 										PointEntity(Pvt, n_I\Curr106\Collider)
-										RotateEntity(e\room\Objects[9], 0.0, CurveAngle(EntityYaw(Pvt), EntityYaw(e\room\Objects[9], True), 150.0), 0.0, True)
-										RotateEntity(e\room\Objects[10], CurveAngle(EntityPitch(Pvt), EntityPitch(e\room\Objects[10], True), 200.0), EntityYaw(e\room\Objects[9], True), 0.0, True)
+										RotateEntity(e\room\Objects[7], 0.0, CurveAngle(EntityYaw(Pvt), EntityYaw(e\room\Objects[7], True), 150.0), 0.0, True)
+										RotateEntity(e\room\Objects[8], CurveAngle(EntityPitch(Pvt), EntityPitch(e\room\Objects[8], True), 200.0), EntityYaw(e\room\Objects[7], True), 0.0, True)
 										FreeEntity(Pvt) : Pvt = 0
 									EndIf
 									
-									Dist = DistanceSquared(EntityX(n_I\Curr106\Collider), EntityX(e\room\Objects[4], True), EntityZ(n_I\Curr106\Collider), EntityZ(e\room\Objects[4], True))
+									Dist = DistanceSquared(EntityX(n_I\Curr106\Collider), EntityX(e\room\Objects[2], True), EntityZ(n_I\Curr106\Collider), EntityZ(e\room\Objects[2], True))
 									
 									n_I\Curr106\CurrSpeed = CurveValue(0.0, n_I\Curr106\CurrSpeed, Max(5.0 * Sqr(Dist), 2.0))
 									If Dist < 225.0
@@ -9806,7 +9842,7 @@ Function UpdateEndings%()
 												For i = 2 To 4 ; ~ Helicopters attack the player
 													e\room\NPC[i]\State = 2.0
 												Next
-												For i = 5 To 8; ~ MTFs attack the player
+												For i = 5 To 8 ; ~ MTFs attack the player
 													e\room\NPC[i]\Speed = e\room\NPC[i]\Speed * Rnd(1.0, 1.3)
 													e\room\NPC[i]\State = MTF_SEARCHING_PLAYER : e\room\NPC[i]\State2 = 70.0 * 3600.0
 												Next
@@ -9824,14 +9860,14 @@ Function UpdateEndings%()
 															p\Speed = 0.0 : p\Alpha = 1.0
 															EntityParent(p\Pvt, n_I\Curr106\Collider, True)
 															
-															p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[10], True), EntityY(e\room\Objects[10], True), EntityZ(e\room\Objects[10], True), 2.0, 0.0, 470.0)
+															p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[8], True), EntityY(e\room\Objects[8], True), EntityZ(e\room\Objects[8], True), 2.0, 0.0, 470.0)
 															p\Speed = 0.0 : p\Alpha = 1.0
-															RotateEntity(p\Pvt, EntityPitch(e\room\Objects[10], True), EntityYaw(e\room\Objects[10], True), 0.0, True)
+															RotateEntity(p\Pvt, EntityPitch(e\room\Objects[8], True), EntityYaw(e\room\Objects[8], True), 0.0, True)
 															MoveEntity(p\Pvt, 0.0, 92.0 * RoomScale, 512.0 * RoomScale)
-															EntityParent(p\Pvt, e\room\Objects[10], True)
+															EntityParent(p\Pvt, e\room\Objects[8], True)
 														ElseIf e\EventState2 < 70.0 * 14.8
 															me\CameraShake = 0.5
-															me\LightFlash = 0.3 + EntityInView(e\room\Objects[10], Camera) * 0.5
+															me\LightFlash = 0.3 + EntityInView(e\room\Objects[8], Camera) * 0.5
 															LightVolume = TempLightVolume * Rnd(1.0, 2.0)
 															
 															If (Not (me\Terminated Lor chs\GodMode))
@@ -9857,15 +9893,15 @@ Function UpdateEndings%()
 								EndIf
 								
 								If e\EventState3 = 0.0
-									If IsEqual(EntityY(me\Collider, True), EntityY(e\room\Objects[11], True), 1.0)
-										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[11], True), EntityZ(me\Collider), EntityZ(e\room\Objects[11], True)) < 144.0
+									If IsEqual(EntityY(me\Collider, True), EntityY(e\room\Objects[3], True), 1.0)
+										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[3], True), EntityZ(me\Collider), EntityZ(e\room\Objects[3], True)) < 144.0
 											n_I\Curr106\State = 0.0
 											n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
 											If (Not EntityHidden(n_I\Curr106\OBJ)) Then HideEntity(n_I\Curr106\OBJ)
 											
 											; ~ MTF spawns at the tunnel entrance
 											For i = 5 To 8
-												PositionEntity(e\room\NPC[i]\Collider, EntityX(e\room\Objects[15], True) + (i - 6) * 0.3, EntityY(e\room\Objects[15], True), EntityZ(e\room\Objects[15], True) + (i - 6) * 0.3, True)
+												PositionEntity(e\room\NPC[i]\Collider, EntityX(e\room\Objects[6], True) + (i - 6) * 0.3, EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True) + (i - 6) * 0.3, True)
 												ResetEntity(e\room\NPC[i]\Collider)
 												
 												e\room\NPC[i]\EnemyX = EntityX(me\Collider)
@@ -9895,34 +9931,35 @@ Function UpdateEndings%()
 										EndIf
 									Next
 									
-									If IsEqual(EntityY(me\Collider, True), EntityY(e\room\Objects[11], True), 1.0)
-										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[11], True), EntityZ(me\Collider), EntityZ(e\room\Objects[11], True)) < 49.0
+									If IsEqual(EntityY(me\Collider, True), EntityY(e\room\Objects[3], True), 1.0)
+										If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[3], True), EntityZ(me\Collider), EntityZ(e\room\Objects[3], True)) < 49.0
 											For i = 5 To 8
 												e\room\NPC[i]\State = MTF_LOOKING_AT_SOME_TARGET
 											Next
-											e\room\Objects[12] = LoadAnimMesh_Strict("GFX\NPCs\CI.b3d")
 											
-											Local Temp2# = 0.55 / MeshWidth(e\room\Objects[12])
+											e\room\Objects[9] = LoadAnimMesh_Strict("GFX\NPCs\CI.b3d")
 											
-											ScaleEntity(e\room\Objects[12], Temp2, Temp2, Temp2)
-											PositionEntity(e\room\Objects[12], EntityX(e\room\Objects[11], True), EntityY(e\room\Objects[11], True), EntityZ(e\room\Objects[11], True))
+											Local Temp2# = 0.55 / MeshWidth(e\room\Objects[9])
 											
-											e\room\Objects[17] = CopyEntity(e\room\Objects[12])
-											PositionEntity(e\room\Objects[17], EntityX(e\room\OBJ, True) - 3968.0 * RoomScale, EntityY(e\room\Objects[11], True), EntityZ(e\room\OBJ, True) - 1920.0 * RoomScale)
+											ScaleEntity(e\room\Objects[9], Temp2, Temp2, Temp2)
+											PositionEntity(e\room\Objects[9], EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True))
 											
-											OBJ = CopyEntity(e\room\Objects[12])
-											PositionEntity(OBJ, EntityX(e\room\OBJ, True) - 4160.0 * RoomScale, EntityY(e\room\Objects[11], True), EntityZ(e\room\OBJ, True) - 1920.0 * RoomScale)
-											EntityParent(OBJ, e\room\Objects[17])
+											e\room\Objects[10] = CopyEntity(e\room\Objects[9])
+											PositionEntity(e\room\Objects[10], e\room\x - 3968.0 * RoomScale, EntityY(e\room\Objects[3], True), e\room\z - 1920.0 * RoomScale)
 											
-											OBJ = CopyEntity(e\room\Objects[12])
-											PositionEntity(OBJ, EntityX(e\room\OBJ, True) - 4064.0 * RoomScale, EntityY(e\room\Objects[11], True), EntityZ(e\room\OBJ, True) - 2112.0 * RoomScale)
-											EntityParent(OBJ, e\room\Objects[17])
+											e\room\Objects[11] = CopyEntity(e\room\Objects[9])
+											PositionEntity(e\room\Objects[11], e\room\x - 4160.0 * RoomScale, EntityY(e\room\Objects[3], True), e\room\z - 1920.0 * RoomScale)
+											EntityParent(e\room\Objects[11], e\room\Objects[10])
 											
-											e\SoundCHN = PlaySoundEx(LoadTempSound("SFX\Ending\GateA\Bell0.ogg"), Camera, e\room\Objects[12])
+											e\room\Objects[12] = CopyEntity(e\room\Objects[9])
+											PositionEntity(e\room\Objects[12], e\room\x - 4064.0 * RoomScale, EntityY(e\room\Objects[3], True), e\room\z - 2112.0 * RoomScale)
+											EntityParent(e\room\Objects[12], e\room\Objects[10])
 											
-											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[11], True), EntityY(Camera, True), EntityZ(e\room\Objects[11], True), 8.0, 0.0, 50.0)
+											e\SoundCHN = PlaySoundEx(LoadTempSound("SFX\Ending\GateA\Bell0.ogg"), Camera, e\room\Objects[9])
+											
+											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[3], True), EntityY(Camera, True), EntityZ(e\room\Objects[3], True), 8.0, 0.0, 50.0)
 											p\Speed = 0.15 : p\Alpha = 0.5
-											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[11], True), EntityY(Camera, True), EntityZ(e\room\Objects[11], True), 8.0, 0.0, 50.0)
+											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[3], True), EntityY(Camera, True), EntityZ(e\room\Objects[3], True), 8.0, 0.0, 50.0)
 											p\Speed = 0.25 : p\Alpha = 0.5
 											PointEntity(p\Pvt, me\Collider)
 											
@@ -9934,8 +9971,8 @@ Function UpdateEndings%()
 									EndIf
 								Else
 									e\EventState3 = e\EventState3 + fps\Factor[0]
-									PointEntity(e\room\Objects[12], me\Collider)
-									RotateEntity(e\room\Objects[12], 0.0, EntityYaw(e\room\Objects[12]), 0.0)
+									PointEntity(e\room\Objects[9], me\Collider)
+									RotateEntity(e\room\Objects[9], 0.0, EntityYaw(e\room\Objects[9]), 0.0)
 									
 									me\Stamina = -5.0
 									
@@ -9944,18 +9981,18 @@ Function UpdateEndings%()
 									If (Not me\Terminated)
 										CameraZoom(Camera, 1.0 + Sin(e\EventState3 * 0.8) * 0.2)
 										
-										Dist = EntityDistanceSquared(me\Collider, e\room\Objects[11])
+										Dist = EntityDistanceSquared(me\Collider, e\room\Objects[3])
 										If Dist < 42.25
 											SqrValue = Sqr(Dist) * 80.0
-											PositionEntity(me\Collider, CurveValue(EntityX(e\room\Objects[11], True), EntityX(me\Collider), Dist), EntityY(me\Collider), CurveValue(EntityZ(e\room\Objects[0], True), EntityZ(me\Collider), Dist))
+											PositionEntity(me\Collider, CurveValue(EntityX(e\room\Objects[3], True), EntityX(me\Collider), Dist), EntityY(me\Collider), CurveValue(EntityZ(e\room\Objects[0], True), EntityZ(me\Collider), Dist))
 										EndIf
 									EndIf
 									
 									If e\EventState3 > 50.0 And e\EventState3 < 230.0
 										SinValue = Sin(e\EventState3 - 50.0)
 										me\CameraShake = SinValue * 3.0
-										TurnEntity(e\room\Objects[13], 0.0, (SinValue * (-0.85)) * fps\Factor[0], 0.0, True)
-										TurnEntity(e\room\Objects[14], 0.0, (SinValue * 0.85) * fps\Factor[0], 0.0, True)
+										TurnEntity(e\room\Objects[4], 0.0, (SinValue * (-0.85)) * fps\Factor[0], 0.0, True)
+										TurnEntity(e\room\Objects[5], 0.0, (SinValue * 0.85) * fps\Factor[0], 0.0, True)
 									EndIf
 									
 									If e\EventState3 >= 230.0
@@ -9965,8 +10002,8 @@ Function UpdateEndings%()
 										EndIf
 										
 										If e\EventState3 >= 480.0
-											AnimateEx(e\room\Objects[12], AnimTime(e\room\Objects[12]), 176.0, 210.0, 0.2)
-											MoveEntity(e\room\Objects[12], 0.0, 0.0, 0.01 * fps\Factor[0])
+											AnimateEx(e\room\Objects[9], AnimTime(e\room\Objects[9]), 176.0, 210.0, 0.2)
+											MoveEntity(e\room\Objects[9], 0.0, 0.0, 0.01 * fps\Factor[0])
 										EndIf
 										
 										If (Not ChannelPlaying(e\SoundCHN))
@@ -9978,9 +10015,9 @@ Function UpdateEndings%()
 												RemoveNPC(n)
 											Next
 											
-											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[11], True), EntityY(Camera, True), EntityZ(e\room\Objects[11], True), 8.0, 0.0, 50.0)
+											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[3], True), EntityY(Camera, True), EntityZ(e\room\Objects[3], True), 8.0, 0.0, 50.0)
 											p\Speed = 0.15 : p\Alpha = 0.5
-											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[11], True), EntityY(Camera, True), EntityZ(e\room\Objects[11], True), 8.0, 0.0, 50.0)
+											p.Particles = CreateParticle(PARTICLE_SUN, EntityX(e\room\Objects[3], True), EntityY(Camera, True), EntityZ(e\room\Objects[3], True), 8.0, 0.0, 50.0)
 											p\Speed = 0.25 : p\Alpha = 0.5
 											
 											me\CameraShake = CurveValue(2.0, me\CameraShake, 10.0)
