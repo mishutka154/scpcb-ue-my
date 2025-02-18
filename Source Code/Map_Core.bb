@@ -3808,13 +3808,18 @@ Function UpdateShadows%()
 			If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
 		Else
 			If shdw\UpdateTimer <= 0.0
-				If LinePick(x, y, z, 0, -10.0, 0.0) <> 0 Then PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
-				
+				EntityPickMode(me\Collider, 0)
+				If LinePick(x, y, z, 0.0, -10.0, 0.0) <> 0
+					PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
+					RotateEntity(shdw\OBJ, EntityPitch(shdw\ParentOBJ, True), EntityYaw(shdw\ParentOBJ, True), EntityRoll(shdw\ParentOBJ, True), True)
+					AlignToVector(shdw\OBJ, -PickedNX(), -PickedNY(), -PickedNZ(), 3)
+					MoveEntity(shdw\OBJ, 0.0, 0.0, -0.002)
+				EndIf
+				EntityPickMode(me\Collider, 1)
 				shdw\UpdateTimer = 6.0
 			Else
 				shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
 			EndIf
-			RotateEntity(shdw\OBJ, 90.0, EntityYaw(shdw\ParentOBJ, True), 0.0, True)
 			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
 			
 			shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(me\Collider, shdw\OBJ) / fog\FarDist * 0.3), 0.0, 1.0)

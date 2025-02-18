@@ -574,6 +574,8 @@ Type Items
 	Field ID%
 	Field InvSlots%
 	Field Shadow.Shadows
+	Field ItemHeight#
+	Field TargetNX#, TargetNY#, TargetNZ#
 End Type
 
 Dim Inventory.Items(0)
@@ -656,6 +658,7 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 	
 	i\InvSlots = InvSlots
 	
+	i\ItemHeight = MeshHeight(i\OBJ) * i\ItemTemplate\Scale
 	i\Shadow = CreateShadow(i\Collider, MeshWidth(i\OBJ) * i\ItemTemplate\Scale, MeshDepth(i\OBJ) * i\ItemTemplate\Scale)
 	
 	i\ID = LastItemID + 1
@@ -778,15 +781,22 @@ Function UpdateItems%()
 				
 				If EntityCollided(i\Collider, HIT_MAP)
 					i\DropSpeed = 0.0
+					AlignToVector(i\Collider, -i\TargetNX, -i\TargetNY, -i\TargetNZ, 3)
+					TurnEntity(i\Collider, -90.0, 0, 0.0)
 				Else
 					If ShouldEntitiesFall
+						EntityPickMode(me\Collider, 0)
 						Pick = LinePick(EntityX(i\Collider), EntityY(i\Collider), EntityZ(i\Collider), 0.0, -3.0, 0.0)
 						If Pick
 							i\DropSpeed = Max(i\DropSpeed - 0.0004 * fps\Factor[0], -0.03)
+							i\TargetNX = PickedNX()
+							i\TargetNY = PickedNY()
+							i\TargetNZ = PickedNZ()
 							TranslateEntity(i\Collider, 0.0, i\DropSpeed * fps\Factor[0], 0.0)
 						Else
 							i\DropSpeed = 0.0
 						EndIf
+						EntityPickMode(me\Collider, 1)
 					Else
 						i\DropSpeed = 0.0
 					EndIf
