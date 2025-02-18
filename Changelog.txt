@@ -70,7 +70,7 @@
 - Added tesla stun animation for SCP-049.
 - Added special texture for MTF leader.
 
-- Better texture for guards and SCP-049-2.
+- Better texture for guards, Class-D and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.
 - SCP-966 now reduces the player's stamina regeneration.
