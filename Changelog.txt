@@ -55,6 +55,7 @@
 - Added open SCP-427 icon.
 - Added new variations of SCP-005.
 
+- Changed Bloody Key Card textures.
 - Speed up equipping SCP-268 and ballistic helmet.
 - Speed up using cups slightly.
 - Syringes can restore some of the player's stamina.
