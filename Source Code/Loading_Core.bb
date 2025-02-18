@@ -858,11 +858,13 @@ Const NPC_CLASS_D_VICTIM_035_TEXTURE% = 15
 Const NPC_CLASS_D_VICTIM_409_TEXTURE% = 16
 Const NPC_CLASS_D_VICTIM_939_1_TEXTURE% = 17
 Const NPC_CLASS_D_VICTIM_939_2_TEXTURE% = 18
-Const NPC_CLERK_VICTIM_205_TEXTURE% = 19
-Const NPC_CLERK_TESLA_TEXTURE% = 20
+Const NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE% = 19
 
-Const NPC_173_TESLA_TEXTURE% = 21
-Const NPC_999_TESLA_TEXTURE% = 22
+Const NPC_CLERK_VICTIM_205_TEXTURE% = 20
+Const NPC_CLERK_TESLA_TEXTURE% = 21
+
+Const NPC_173_TESLA_TEXTURE% = 22
+Const NPC_999_TESLA_TEXTURE% = 23
 ;[End Block]
 
 Function LoadNPCs%()
@@ -892,12 +894,12 @@ Function LoadNPCs%()
 	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_409_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_409_victim.png", 1, DeleteAllTextures)
 	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_939_victim.png", 1, DeleteAllTextures)
 	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_2_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_939_victim(2).png", 1, DeleteAllTextures)
+	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE] = LoadTexture_Strict("GFX\NPCs\femur_breaker_victim.png", 1, DeleteAllTextures)
 	n_I\NPCTextureID[NPC_CLERK_VICTIM_205_TEXTURE] = LoadTexture_Strict("GFX\NPCs\clerk(2).png", 1, DeleteAllTextures)
 	n_I\NPCTextureID[NPC_CLERK_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\clerk_tesla.png", 1, DeleteAllTextures)
 	
 	n_I\NPCTextureID[NPC_173_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_173_tesla.png", 1, DeleteAllTextures)
 	n_I\NPCTextureID[NPC_999_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_999_tesla.png", 1, DeleteAllTextures)
-	
 	
 	n_I\NPCModelID[NPC_008_1_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_008_1.b3d")
 	

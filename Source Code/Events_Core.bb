@@ -1248,6 +1248,7 @@ Function UpdateEvents%()
 						e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True : e\room\NPC[0]\HideFromNVG = True
 						RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0, True)
 						SetNPCFrame(e\room\NPC[0], 17.0)
+						ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE)
 					EndIf
 					x1 = EntityX(me\Collider, True) : y1 = EntityY(me\Collider, True) : z1 = EntityZ(me\Collider, True)
 					me\InsideElevator = (IsInsideElevator(x1, y1, z1, e\room\Objects[2]) Lor IsInsideElevator(x1, y1, z1, e\room\Objects[3]))
