@@ -2171,6 +2171,7 @@ Function LoadGameQuick%(File$)
 			Case r_gate_b
 				;[Block]
 				If e\room\Objects[0] <> 0 Then FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
+				If e\room\Objects[6] <> 0 Then FreeEntity(e\room\Objects[6]) : e\room\Objects[6] = 0
 				;[End Block]
 		End Select
 	Next

@@ -4052,7 +4052,7 @@ Function UpdateNPCTypeApache%(n.NPCs)
 	
 	If EntityDistanceSquared(me\Collider, n\Collider) < 3600.0
 		If PlayerRoom\RoomTemplate\RoomID = r_gate_b
-			Dist2 = Clamp(EntityDistance(n\Collider, PlayerRoom\Objects[10]) / (8000.0 * RoomScale), 0.0, 1.0)
+			Dist2 = Clamp(EntityDistance(n\Collider, PlayerRoom\Objects[7]) / (8000.0 * RoomScale), 0.0, 1.0)
 		Else
 			Dist2 = 1.0
 		EndIf

@@ -3125,6 +3125,11 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[5], r\x + 3808.0 * RoomScale, r\y + 1536.0 * RoomScale, r\z - 13568.0 * RoomScale)
 			EntityParent(r\Objects[5], r\OBJ)
 			
+			; ~ Apache radius
+			r\Objects[7] = CreatePivot()
+			PositionEntity(r\Objects[7], r\x - 7680.0 * RoomScale, r\y + 208.0 * RoomScale, r\z - 27048.0 * RoomScale)
+			EntityParent(r\Objects[7], r\OBJ)
+			
 			CreateCustomCenter(r, r\x - 5424.0 * RoomScale, r\z - 1700.0 * RoomScale)
 			;[End Block]
 		Case r_room1_lifts
