@@ -182,7 +182,6 @@ Type Options
 	Field ParticleAmount%
 	Field AntiAliasing%
 	Field BumpEnabled%
-	Field SaveTexturesInVRAM%
 	Field AdvancedRoomLights%
 	Field BlobShadows%
 	Field VSync%
@@ -278,8 +277,6 @@ Function LoadOptionsINI%()
 			opt\TextureDetailsLevel = -0.8
 			;[End Block]
 	End Select
-	
-	opt\SaveTexturesInVRAM = IniGetInt(OptionFile, "Graphics", "Save Textures In VRAM", True)
 	
 	opt\FOV = IniGetFloat(OptionFile, "Graphics", "FOV", 60.0)
 	opt\CurrFOV = opt\FOV - 40.0
@@ -461,8 +458,6 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	
 	IniWriteString(OptionFile, "Graphics", "Texture Details", opt\TextureDetails)
 	
-	IniWriteString(OptionFile, "Graphics", "Save Textures In VRAM", opt\SaveTexturesInVRAM)
-	
 	IniWriteString(OptionFile, "Graphics", "FOV", Int(opt\FOV))
 	
 	IniWriteString(OptionFile, "Graphics", "Anisotropic Filtering", opt\Anisotropic)
@@ -583,8 +578,6 @@ Function ResetOptionsINI%()
 	
 	opt\TextureDetails = 4
 	opt\TextureDetailsLevel = -0.8
-	
-	opt\SaveTexturesInVRAM = True
 	
 	opt\FOV = 60.0
 	opt\CurrFOV = opt\FOV - 40.0

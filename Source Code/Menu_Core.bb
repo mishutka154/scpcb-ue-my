@@ -563,10 +563,6 @@ Function UpdateMainMenu%()
 						End Select
 						TextureLodBias(opt\TextureDetailsLevel)
 						
-						y = y + (35 * MenuScale)
-						
-						opt\SaveTexturesInVRAM = UpdateMenuTick(x, y, opt\SaveTexturesInVRAM)
-						
 						y = y + (40 * MenuScale)
 						
 						opt\CurrFOV = (UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\CurrFOV * 2.0, 4) / 2.0)
@@ -1450,7 +1446,7 @@ Function RenderMainMenu%()
 			Select mm\MainMenuTab
 				Case MainMenuTab_Options_Graphics
 					;[Block]
-					Height = 485 * MenuScale
+					Height = 445 * MenuScale
 					RenderFrame(x - (20 * MenuScale), y, Width, Height)
 					
 					y = y + (20 * MenuScale)
@@ -1497,11 +1493,6 @@ Function RenderMainMenu%()
 					
 					TextEx(x, y, GetLocalString("options", "lod"))
 					If (MouseOn(x + (290 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 8.2, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 3 Then RenderOptionsTooltip(tX, tY, tW, tH + (100 * MenuScale), Tooltip_TextureLODBias)
-					
-					y = y + (35 * MenuScale)
-					
-					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "vram"))
-					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SaveTexturesInVRAM)
 					
 					y = y + (40 * MenuScale)
 					
@@ -2924,48 +2915,47 @@ Const Tooltip_BlobShadows% = 4
 Const Tooltip_ScreenGamma% = 5
 Const Tooltip_TextureLODBias% = 6
 Const Tooltip_ParticleAmount% = 7
-Const Tooltip_SaveTexturesInVRAM% = 8
-Const Tooltip_FOV% = 9
-Const Tooltip_AnisotropicFiltering% = 10
-Const Tooltip_SecurityCamRenderInterval% = 11
+Const Tooltip_FOV% = 8
+Const Tooltip_AnisotropicFiltering% = 9
+Const Tooltip_SecurityCamRenderInterval% = 10
 ;[End Block]
 
 ; ~ Audio Tooltips Constants
 ;[Block]
-Const Tooltip_MasterVolume% = 12
-Const Tooltip_MusicVolume% = 13
-Const Tooltip_SoundVolume% = 14
-Const Tooltip_VoiceVolume% = 15
-Const Tooltip_SoundAutoRelease% = 16
-Const Tooltip_UserTracksMode% = 17
-Const Tooltip_UserTrackScan% = 18
-Const Tooltip_Subtitles% = 19
-Const Tooltip_SubtitlesColor% = 20
+Const Tooltip_MasterVolume% = 11
+Const Tooltip_MusicVolume% = 12
+Const Tooltip_SoundVolume% = 13
+Const Tooltip_VoiceVolume% = 14
+Const Tooltip_SoundAutoRelease% = 15
+Const Tooltip_UserTracksMode% = 16
+Const Tooltip_UserTrackScan% = 17
+Const Tooltip_Subtitles% = 18
+Const Tooltip_SubtitlesColor% = 19
 ;[End Block]
 
 ; ~ Controls Tooltips Constants
 ;[Block]
-Const Tooltip_MouseSensitivity% = 21
-Const Tooltip_MouseSmoothing% = 22
-Const Tooltip_MouseInvertX% = 23
-Const Tooltip_MouseInvertY% = 24
-Const Tooltip_ControlConfiguration% = 25
+Const Tooltip_MouseSensitivity% = 20
+Const Tooltip_MouseSmoothing% = 21
+Const Tooltip_MouseInvertX% = 22
+Const Tooltip_MouseInvertY% = 23
+Const Tooltip_ControlConfiguration% = 24
 ;[End Block]
 
 ; ~ Advanced Tooltips Constants
 ;[Block]
-Const Tooltip_HUD% = 26
-Const Tooltip_Console% = 27
-Const Tooltip_ConsoleOnError% = 28
-Const Tooltip_AchievementPopups% = 29
-Const Tooltip_FPS% = 30
-Const Tooltip_FrameLimit% = 31
-Const Tooltip_AutoSave% = 32
-Const Tooltip_SmoothBars% = 33
-Const Tooltip_Vignette% = 34
-Const Tooltip_StartupVideos% = 35
-Const Tooltip_Launcher% = 36
-Const Tooltip_ResetOptions% = 37
+Const Tooltip_HUD% = 25
+Const Tooltip_Console% = 26
+Const Tooltip_ConsoleOnError% = 27
+Const Tooltip_AchievementPopups% = 28
+Const Tooltip_FPS% = 29
+Const Tooltip_FrameLimit% = 30
+Const Tooltip_AutoSave% = 31
+Const Tooltip_SmoothBars% = 32
+Const Tooltip_Vignette% = 33
+Const Tooltip_StartupVideos% = 34
+Const Tooltip_Launcher% = 35
+Const Tooltip_ResetOptions% = 36
 ;[End Block]
 
 Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
@@ -3036,12 +3026,6 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_TextureLODBias
 			;[Block]
 			Txt = GetLocalString("tooltip", "lod")
-			;[End Block]
-		Case Tooltip_SaveTexturesInVRAM
-			;[Block]
-			Txt = GetLocalString("tooltip", "vram")
-			R = 255
-			Txt2 = GetLocalString("tooltip", "cantchange")
 			;[End Block]
 		Case Tooltip_FOV
 			;[Block]

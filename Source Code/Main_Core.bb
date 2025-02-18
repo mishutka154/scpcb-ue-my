@@ -7671,10 +7671,6 @@ Function UpdateMenu%()
 						End Select
 						TextureLodBias(opt\TextureDetailsLevel)
 						
-						y = y + (35 * MenuScale)
-						
-						opt\SaveTexturesInVRAM = UpdateMenuTick(x, y, opt\SaveTexturesInVRAM, True)
-						
 						y = y + (40 * MenuScale)
 						
 						opt\CurrFOV = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\CurrFOV * 2.0, 4) / 2.0
@@ -8314,12 +8310,6 @@ Function RenderMenu%()
 						
 						TextEx(x, y, GetLocalString("options", "lod"))
 						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 3 Then RenderOptionsTooltip(tX, tY, tW, tH + 100 * MenuScale, Tooltip_TextureLODBias)
-						
-						y = y + (35 * MenuScale)
-						
-						Color(100, 100, 100)
-						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "vram"))
-						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SaveTexturesInVRAM)
 						
 						y = y + (40 * MenuScale)
 						

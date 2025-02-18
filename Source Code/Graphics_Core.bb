@@ -251,7 +251,7 @@ Function CreateBlurImage%()
 	ArkBlurImage = SPR
 	
 	; ~ Create blur texture
-	ArkBlurTexture = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO, SMALLEST_POWER_TWO, (256 * opt\SaveTexturesInVRAM))
+	ArkBlurTexture = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO, SMALLEST_POWER_TWO, 1 + 256)
 	EntityTexture(SPR, ArkBlurTexture)
 End Function
 

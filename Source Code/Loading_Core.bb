@@ -675,7 +675,7 @@ Function LoadSecurityCams%()
 		HideEntity(sc_I\CamModelID[i])
 	Next
 	
-	sc_I\ScreenTex = CreateTextureUsingCacheSystem(512, 512, 1 + (256 * opt\SaveTexturesInVRAM))
+	sc_I\ScreenTex = CreateTextureUsingCacheSystem(512, 512, 1 + 256)
 End Function
 
 Function RemoveSecurityCamInstances%()
@@ -739,7 +739,7 @@ Function LoadMonitors%()
 	For i = MONITOR_LOCKDOWN_1_OVERLAY To MONITOR_LOCKDOWN_3_OVERLAY
 		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Map\Textures\lockdown_screen(" + i + ").png", 1, DeleteAllTextures, False)
 	Next
-	mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY] = CreateTextureUsingCacheSystem(1, 1, 1 + (256 * opt\SaveTexturesInVRAM))
+	mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY] = CreateTextureUsingCacheSystem(1, 1, 1 + 256)
 	SetBuffer(TextureBuffer(mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY]))
 	ClsColor(0, 0, 0)
 	Cls()
@@ -1049,7 +1049,7 @@ Function LoadMaterials%(File$)
 			If opt\BumpEnabled
 				StrTemp = IniGetString(File, Loc, "bump")
 				If StrTemp <> ""
-					mat\Bump = LoadTexture_Strict(StrTemp, 1 + (256 * opt\SaveTexturesInVRAM), DeleteMapTextures, False)
+					mat\Bump = LoadTexture_Strict(StrTemp, 1 + 256, DeleteMapTextures, False)
 					ApplyBumpMap(mat\Bump)
 				EndIf
 			EndIf
@@ -2511,7 +2511,7 @@ Function LoadEntities%()
 	
 	LoadMissingTexture()
 	
-	AmbientLightRoomTex = CreateTextureUsingCacheSystem(2, 2, 1 + (256 * opt\SaveTexturesInVRAM))
+	AmbientLightRoomTex = CreateTextureUsingCacheSystem(1, 1, 1 + 256)
 	TextureBlend(AmbientLightRoomTex, 2)
 	SetBuffer(TextureBuffer(AmbientLightRoomTex))
 	ClsColor(0, 0, 0)
@@ -2571,7 +2571,7 @@ Function LoadEntities%()
 	EntityOrder(t\OverlayID[4], -1003)
 	MoveEntity(t\OverlayID[4], 0.0, 0.0, 1.0)
 	
-	t\OverlayTextureID[2] = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO_HALF, SMALLEST_POWER_TWO_HALF, 1 + 2 + (256 * opt\SaveTexturesInVRAM)) ; ~ DARK
+	t\OverlayTextureID[2] = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO_HALF, SMALLEST_POWER_TWO_HALF, 1 + 2 + 256) ; ~ DARK
 	SetBuffer(TextureBuffer(t\OverlayTextureID[2]))
 	Cls()
 	SetBuffer(BackBuffer())
@@ -2583,7 +2583,7 @@ Function LoadEntities%()
 	MoveEntity(t\OverlayID[5], 0.0, 0.0, 1.0)
 	EntityAlpha(t\OverlayID[5], 0.0)
 	
-	Tex = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO_HALF, SMALLEST_POWER_TWO_HALF, 1 + 2 + (256 * opt\SaveTexturesInVRAM), 1, DeleteMapTextures) ; ~ LIGHT
+	Tex = CreateTextureUsingCacheSystem(SMALLEST_POWER_TWO_HALF, SMALLEST_POWER_TWO_HALF, 1 + 2 + 256, 1, DeleteMapTextures) ; ~ LIGHT
 	SetBuffer(TextureBuffer(Tex))
 	ClsColor(255, 255, 255)
 	Cls()
