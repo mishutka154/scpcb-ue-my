@@ -3338,7 +3338,7 @@ Function UpdateEvents%()
 						
 						If e\EventState > 70.0 * 7.5 And e\EventState - fps\Factor[0] <= 70.0 * 7.5
 							e\room\NPC[0]\IsDead = True
-							If wi\NightVision > 0 Then me\BlinkTimer = -10.0
+							If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then me\BlinkTimer = -10.0
 							
 							PlaySoundEx(snd_I\NeckSnapSFX[0], Camera, e\room\NPC[0]\Collider, 8.0)
 							
@@ -3348,7 +3348,7 @@ Function UpdateEvents%()
 							n_I\Curr173\Idle = 1
 						ElseIf e\EventState > 70.0 * 8.0 And e\EventState - fps\Factor[0] <= 70.0 * 8.0
 							e\room\NPC[1]\IsDead = True
-							If wi\NightVision > 0 Then me\BlinkTimer = -10.0
+							If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then me\BlinkTimer = -10.0
 							
 							PlaySoundEx(snd_I\NeckSnapSFX[1], Camera, e\room\NPC[1]\Collider, 8.0)
 							
@@ -6283,7 +6283,7 @@ Function UpdateEvents%()
 						PositionEntity(n_I\Curr173\Collider, EntityX(e\room\OBJ), 0.6, EntityZ(e\room\OBJ))
 						ResetEntity(n_I\Curr173\Collider)
 						n_I\Curr173\Idle = 1
-						If wi\NightVision > 0 Then me\BlinkTimer = -10.0
+						If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then me\BlinkTimer = -10.0
 					EndIf
 					e\EventState = e\EventState + fps\Factor[0]
 				ElseIf e\EventState > 0.0 And me\LightBlink < 0.25
