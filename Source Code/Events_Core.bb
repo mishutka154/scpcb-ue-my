@@ -9734,13 +9734,6 @@ Function UpdateEndings%()
 						RotateEntity(e\room\Objects[7], 0.0, 48.0, 0.0)
 						RotateEntity(e\room\Objects[8], 40.0, 0.0, 0.0)
 						
-						; ~ Hit Box
-						e\room\Objects[13] = LoadMesh_Strict("GFX\Map\gatea_hitbox1.b3d", e\room\OBJ)
-						e\room\ScriptedObject[13] = True
-						EntityPickMode(e\room\Objects[13], 2)
-						EntityType(e\room\Objects[13], HIT_MAP)
-						EntityAlpha(e\room\Objects[13], 0.0)
-						
 						RenderLoading(90, GetLocalString("loading", "ending"))
 						
 						ResetEntity(me\Collider)
