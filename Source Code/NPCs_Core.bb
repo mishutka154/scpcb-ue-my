@@ -554,6 +554,9 @@ Function CreateNPCAsset%(n.NPCs)
 			Temp = (Temp + 1.68) / MeshWidth(n\OBJ2)
 			ScaleEntity(n\OBJ2, Temp, Temp, Temp)
 			HideEntity(n\OBJ2)
+			
+			RemoveShadow(n\Shadow)
+			n\Shadow = CreateShadow(n\OBJ2, MeshWidth(n\OBJ2) * Temp, MeshDepth(n\OBJ2) * Temp)
 			;[End Block]
 		Case NPCTypeD
 			;[Block]
