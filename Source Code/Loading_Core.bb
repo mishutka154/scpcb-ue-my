@@ -2100,11 +2100,11 @@ Function LoadWayPoints%(LoadingStart% = 55)
 		
 		w2.WayPoints = After(w)
 		
-		Local CanCreateWayPoint% = False
-		
 		While w2 <> Null
 			If w\room = w2\room Lor w\door <> Null Lor w2\door <> Null
 				Dist = EntityDistance(w\OBJ, w2\OBJ)
+				
+				Local CanCreateWayPoint% = False
 				
 				If w\room\MaxWayPointY = 0.0 Lor w2\room\MaxWayPointY = 0.0
 					CanCreateWayPoint = True
