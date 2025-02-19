@@ -962,11 +962,17 @@ Const PATH_STATUS_NO_SEARCH% = 0
 Const PATH_STATUS_FOUND% = 1
 Const PATH_STATUS_NOT_FOUND% = 2
 ;[End Block]
+; ~ Waypoint state constants
+;[Block]
+Const WAYPOINT_NOT_VISITED% = 0
+Const WAYPOINT_IN_LIST% = 1
+Const WAYPOINT_VISITED% = 2
+;[End Block]
 
 Function FindPath%(n.NPCs, x#, y#, z#)
 	Local StartDist#, EndDist#, Dist#
 	Local w.WayPoints, StartPoint.WayPoints, EndPoint.WayPoints, Smallest.WayPoints
-	Local i%, gTemp#
+	Local i%
 	
 	; ~ PathStatus = PATH_STATUS_NO_SEARCH, route hasn't been searched for yet
 	; ~ PathStatus = PATH_STATUS_FOUND, route found
@@ -989,7 +995,7 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 	StartDist = 350.0
 	EndDist = 400.0
 	For w.WayPoints = Each WayPoints
-		w\State = 0
+		w\State = WAYPOINT_NOT_VISITED
 		w\Fcost = 0
 		w\Gcost = 0
 		w\Hcost = 0
@@ -1015,7 +1021,7 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 	FreeEntity(Temp) : Temp = 0
 	
 	If StartPoint = Null Lor EndPoint = Null Then Return(PATH_STATUS_NOT_FOUND)
-	StartPoint\State = 1
+	StartPoint\State = WAYPOINT_IN_LIST
 	
 	If EndPoint = StartPoint
 		If EndDist < 0.4 Then Return(PATH_STATUS_NO_SEARCH)
@@ -1030,7 +1036,7 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 		Smallest.WayPoints = Null
 		Dist = 10000.0
 		For w.WayPoints = Each WayPoints
-			If w\State = 1
+			If w\State = WAYPOINT_IN_LIST
 				Temp2 = True
 				If w\Fcost < Dist
 					Dist = w\Fcost
@@ -1041,51 +1047,43 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 		
 		If Smallest <> Null
 			w = Smallest
-			w\State = 2
+			w\State = WAYPOINT_VISITED
 			
 			For i = 0 To 4
 				If w\connected[i] <> Null
-					If w\connected[i]\State < 2
-						If w\connected[i]\State = 1
-							gTemp = w\Gcost + w\Dist[i]
-							If n\NPCType = NPCTypeMTF
-								If w\connected[i]\door = Null Then gTemp = gTemp + 0.5
-							EndIf
-							If gTemp < w\connected[i]\Gcost
-								w\connected[i]\Gcost = gTemp
+					If w\connected[i]\State < WAYPOINT_VISITED
+						Local GcostEx# = w\Gcost + w\Dist[i]
+						
+						If n\NPCType = NPCTypeMTF
+							If w\connected[i]\door = Null Then GcostEx = GcostEx + 0.5
+						EndIf
+						
+						If w\connected[i]\State = WAYPOINT_IN_LIST
+							If GcostEx < w\connected[i]\Gcost
+								w\connected[i]\Gcost = GcostEx
 								w\connected[i]\Fcost = w\connected[i]\Gcost + w\connected[i]\Hcost
 								w\connected[i]\parent = w
 							EndIf
 						Else
+							w\connected[i]\Gcost = GcostEx
 							w\connected[i]\Hcost = Abs(EntityX(w\connected[i]\OBJ, True) - EntityX(EndPoint\OBJ, True)) + Abs(EntityZ(w\connected[i]\OBJ, True) - EntityZ(EndPoint\OBJ, True))
-							gTemp = w\Gcost + w\Dist[i]
-							If n\NPCType = NPCTypeMTF
-								If w\connected[i]\door = Null Then gTemp = gTemp + 0.5
-							EndIf
-							w\connected[i]\Gcost = gTemp
-							w\connected[i]\Fcost = w\Gcost + w\Hcost
+							w\connected[i]\Fcost = w\connected[i]\Gcost + w\connected[i]\Hcost
 							w\connected[i]\parent = w
-							w\connected[i]\State = 1
+							w\connected[i]\State = WAYPOINT_IN_LIST
 						EndIf
 					EndIf
 				EndIf
 			Next
-		Else
-			If EndPoint\State > 0
-				StartPoint\parent = Null
-				EndPoint\State = 2
-				Exit
-			EndIf
 		EndIf
 		
-		If EndPoint\State > 0
+		If EndPoint\State > WAYPOINT_NOT_VISITED
 			StartPoint\parent = Null
-			EndPoint\State = 2
+			EndPoint\State = WAYPOINT_VISITED
 			Exit
 		EndIf
 	Until (Not Temp2)
 	
-	If EndPoint\State > 0
+	If EndPoint\State > WAYPOINT_NOT_VISITED
 		Local CurrPoint.WayPoints = EndPoint
 		Local TwentiethPoint.WayPoints = EndPoint
 		Local Length% = 0
