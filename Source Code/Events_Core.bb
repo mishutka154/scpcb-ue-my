@@ -8608,7 +8608,7 @@ Function UpdateIntro%()
 							; ~ Slow the player down to match his speed to the guards
 							me\CurrSpeed = Min(me\CurrSpeed - (me\CurrSpeed * (0.008 / EntityDistance(e\room\NPC[3]\Collider, me\Collider)) * fps\Factor[0]), me\CurrSpeed)
 							; ~ Speed up the second guard to match his speed to the player
-							e\room\NPC[4]\CurrSpeed = Min(e\room\NPC[4]\CurrSpeed + (e\room\NPC[4]\CurrSpeed * (0.006 * EntityDistance(e\room\NPC[4]\Collider, me\Collider)) * fps\Factor[0]), e\room\NPC[4]\Speed * 1.3)
+							If e\room\NPC[4]\State = 3.0 Then e\room\NPC[4]\CurrSpeed = Min(e\room\NPC[4]\CurrSpeed + (e\room\NPC[4]\CurrSpeed * (0.006 * EntityDistance(e\room\NPC[4]\Collider, me\Collider)) * fps\Factor[0]), e\room\NPC[4]\Speed * 1.3)
 							
 							Dist = DistanceSquared(EntityX(me\Collider), EntityX(e\room\NPC[3]\Collider), EntityZ(me\Collider), EntityZ(e\room\NPC[3]\Collider))
 							
@@ -9291,7 +9291,7 @@ Function UpdateIntro%()
 								EndIf
 							EndIf
 							For i = 3 To 4 + (e\room\NPC[5] <> Null)
-								UpdateSoundOrigin(e\room\NPC[i]\SoundCHN, Camera, e\room\NPC[i]\OBJ, 10.0, 1.0, True)
+								UpdateSoundOrigin(e\room\NPC[i]\SoundCHN, Camera, e\room\NPC[i]\Collider, 10.0, 1.0, True)
 							Next
 						Else
 							ShouldPlay = 66
