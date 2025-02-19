@@ -179,11 +179,6 @@
 			"image": "Achv1499.png",
 			"scp": true
 		},
-  		{
-			"id": "console",
-			"image": "AchvConsole.png",
-			"scp": false
-		},
 		{
 			"id": "gears",
 			"image": "AchvGears.png",
@@ -199,6 +194,11 @@
 			"image": "AchvMaynard.png",
 			"scp": false
 		},
+		{
+			"id": "o5",
+			"image": "AchvO5.png",
+			"scp": false
+		},
   		{
 			"id": "keycard6",
 			"image": "AchvKeyCard6.png",
@@ -210,8 +210,8 @@
 			"scp": false
 		},
    		{
-			"id": "o5",
-			"image": "AchvO5.png",
+			"id": "snav",
+			"image": "AchvSNAV.png",
 			"scp": false
 		},
   		{
@@ -219,14 +219,14 @@
 			"image": "AchvPD.png",
 			"scp": false
 		},
-   		{
-			"id": "snav",
-			"image": "AchvSNAV.png",
-			"scp": false
-		},
 		{
 			"id": "tesla",
 			"image": "AchvTesla.png",
+			"scp": false
+		},
+		{
+			"id": "console",
+			"image": "AchvConsole.png",
 			"scp": false
 		},
 		{
