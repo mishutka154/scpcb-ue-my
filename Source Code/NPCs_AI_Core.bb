@@ -240,7 +240,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 	Else
 		AnimateNPC(n, 344.0, 363.0, 0.5, False)
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
+	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 	RotateEntity(n\OBJ, 0.0, n\Angle - 180.0, 0.0, True)
 End Function
 
@@ -780,7 +780,7 @@ Function UpdateNPCType049%(n.NPCs)
 		n\LastSeen = Max(n\LastSeen - fps\Factor[0], 0.0)
 	EndIf
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.22, EntityZ(n\Collider, True), True)
+	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 	RotateEntity(n\OBJ, 0.0, n\Angle, 0.0, True)
 End Function
 
@@ -1034,7 +1034,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 	Else
 		AnimateNPC(n, 944.0, 982.0, 0.2, False)
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
+	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 End Function
 
@@ -1213,8 +1213,7 @@ Function UpdateNPCType066%(n.NPCs)
 	UpdateSoundOrigin(n\SoundCHN2, Camera, n\Collider, 20.0, 1.0, False)
 	If ChannelPlaying(n\SoundCHN2) Then me\BlurTimer = Max((5.0 - (Sqr(Dist)) * 300.0), 0.0)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
-	
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, EntityPitch(n\Collider) - 90.0, EntityYaw(n\Collider), 0.0)
 End Function
 
@@ -1616,7 +1615,6 @@ Function UpdateNPCType096%(n.NPCs)
 	EndIf
 	
 	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
-	
 	RotateEntity(n\OBJ, EntityPitch(n\Collider), EntityYaw(n\Collider), 0.0)
 End Function
 
@@ -2017,10 +2015,10 @@ Function UpdateNPCType173%(n.NPCs)
 		
 		n\State3 = 1.0
 		
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.32, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - (n\CollRadius + 0.12), EntityZ(n\Collider))
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
 		
-		PositionEntity(n\OBJ2, EntityX(n\Collider), EntityY(n\Collider) - 0.32, EntityZ(n\Collider))
+		PositionEntity(n\OBJ2, EntityX(n\Collider), EntityY(n\Collider) - (n\CollRadius + 0.12), EntityZ(n\Collider))
 		RotateEntity(n\OBJ2, 0.0, (EntityYaw(n\Collider) - 180.0) + n\Angle, 0.0)
 		
 		If n\Idle < 2
@@ -2311,7 +2309,6 @@ Function UpdateNPCType372%(n.NPCs)
 	EndIf
 	n\DropSpeed = 0.0
 	ResetEntity(n\Collider)
-		
 End Function
 
 Function UpdateNPCType513_1%(n.NPCs)
@@ -2453,7 +2450,7 @@ Function UpdateNPCType513_1%(n.NPCs)
 				EndIf
 			EndIf
 		EndIf
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2 + Sin((MilliSec / 8) Mod 360) * 0.1, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius + Sin((MilliSec / 8) Mod 360) * 0.1, EntityZ(n\Collider))
 		
 		Select n\State
 			Case 1.0
@@ -2805,7 +2802,7 @@ Function UpdateNPCType860_2%(n.NPCs)
 	If n\State <> 0.0
 		RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
 		
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.43, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		RotateEntity(n\OBJ, EntityPitch(n\Collider) - 90.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 		
 		If Dist > 64.0
@@ -2991,7 +2988,7 @@ Function UpdateNPCType939%(n.NPCs)
 	
 	RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.41, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.41, EntityZ(n\Collider)) ; ~ TODO: n\CollRadius instead of 0.41
 	RotateEntity(n\OBJ, EntityPitch(n\Collider) - 90.0, EntityYaw(n\Collider), EntityRoll(n\Collider), True)
 End Function
 
@@ -3318,7 +3315,7 @@ Function UpdateNPCType966%(n.NPCs)
 				EndIf
 				;[End Block]
 		End Select
-		PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
+		PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 		RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 	Else
 		If (Not EntityHidden(n\OBJ)) Then HideEntity(n\OBJ)
@@ -3344,7 +3341,6 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 		n\LastSeen = 0
 		If n\State < 4.0
 			If (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
-				DebugLog("I'm scared: State = 4.0")
 				n\State = 4.0
 				Return
 			EndIf
@@ -3356,7 +3352,6 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Case 0.0 ; ~ Idle
 				;[Block]
 				If Visible
-					DebugLog("I see you: State = 0.0")
 					n\State = 2.0
 					Return
 				EndIf
@@ -3372,7 +3367,6 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Case 1.0 ; ~ Wandering around
 				;[Block]
 				If Visible
-					DebugLog("I see you: State = 1.0")
 					n\State = 2.0
 					Return
 				EndIf
@@ -3447,14 +3441,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
 					EndIf
 				Else
-					DebugLog("Switch to State = 3.0 from State = 2.0")
 					n\State = 3.0
 				EndIf
 				;[End Block]
 			Case 3.0, 4.0 ; ~ Following a path
 				;[Block]
 				If n\State = 3.0 And Visible
-					DebugLog("Switch to State = 0.0 from State = 3.0")
 					n\EnemyX = 0.0
 					n\EnemyY = 0.0
 					n\EnemyZ = 0.0
@@ -3480,7 +3472,6 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 							Next
 						EndIf
 						If DistanceSquared(n\EnemyX, EntityX(n\Collider, True), n\EnemyY, EntityY(n\Collider, True), n\EnemyZ, EntityZ(n\Collider, True)) < 9.0
-							DebugLog("Switch to State = 0.0 from State = 4.0")
 							n\EnemyX = 0.0
 							n\EnemyY = 0.0
 							n\EnemyZ = 0.0
@@ -3557,7 +3548,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Next
 		EndIf
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.15, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, 0.0, n\Angle + 90.0, 0.0)
 End Function
 
@@ -3631,7 +3622,7 @@ Function UpdateNPCType1048%(n.NPCs)
 			EndIf
 			;[End Block]
 	End Select
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.08, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0)
 End Function
 
@@ -3699,7 +3690,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 	End Select
 	UpdateSoundOrigin(n\SoundCHN, Camera, n\Collider, 8.0, 1.0, True)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - (n\CollRadius + 0.13), EntityZ(n\Collider))
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0)
 	
 	If n\HP =< 0
@@ -4069,7 +4060,7 @@ Function UpdateNPCType1499_1%(n.NPCs)
 		MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 		
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.26, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		
 		If EntityHidden(n\OBJ) Then ShowEntity(n\OBJ)
 	Else
@@ -4289,7 +4280,7 @@ Function UpdateNPCTypeD_Clerk%(n.NPCs)
 				;[End Block]
 		End Select
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 	RotateEntity(n\OBJ, EntityPitch(n\Collider), EntityYaw(n\Collider) - 180.0, 0.0)
 End Function
 
@@ -4737,13 +4728,13 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 	n\Reload = Max(0.0, n\Reload - fps\Factor[0])
 	
 	If n\OBJ2 <> 0
-		PositionEntity(n\OBJ2, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+		PositionEntity(n\OBJ2, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		RotateEntity(n\OBJ2, 0.0, EntityYaw(n\Collider), 0.0)
 		
 		PositionEntity(n\OBJ, EntityX(n\OBJ2) + 1.75, EntityY(n\OBJ2) + 0.33, EntityZ(n\OBJ2) + 0.42)
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\OBJ2) + 180.0, 0.0)
 	Else
-		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.2, EntityZ(n\Collider))
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider) + 180.0, 0.0)
 	EndIf
 End Function
@@ -6312,7 +6303,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 			n\IsDead = True
 		EndIf
 	EndIf
-	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - 0.2, EntityZ(n\Collider, True), True)
+	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 End Function
 

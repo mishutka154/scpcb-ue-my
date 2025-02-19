@@ -128,6 +128,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\NVGName = GetLocalString("npc", "human")
 			n\Speed = IniGetFloat(NPCsFile, "SCP-049-2", "Speed") / 100.0
 			n\HP = 150
+			n\CollRadius = 0.26
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, n\CollRadius)
@@ -212,7 +213,6 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = IniGetFloat(NPCsFile, "SCP-173", "Speed") / 100.0
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.2
 			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.12)
 			EntityType(n\Collider, HIT_PLAYER)
 			
@@ -495,6 +495,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = GetLocalString("npc", "human")
 			n\Speed = IniGetFloat(NPCsFile, "Guard", "Speed") / 100.0
+			n\CollRadius = 0.26
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, n\CollRadius)
@@ -512,6 +513,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = IniGetFloat(NPCsFile, "MTF", "Speed") / 100.0
 			n\HP = 100
 			n\MaxGravity = 0.03
+			n\CollRadius = 0.26
 			
 			n\Collider = CreatePivot()
 			EntityRadius(n\Collider, n\CollRadius)
