@@ -462,6 +462,7 @@ Type DoorInstance
 	Field ElevatorPanelTextureID%[MaxElevatorPanelTextureIDAmount%]
 	Field SelectedDoor.Doors, ClosestDoor.Doors, AnimDoor.Doors
 	Field ClosestButton%, AnimButton%
+	Field DoorColl%, BigDoorColl%
 End Type
 
 Global d_I.DoorInstance
@@ -543,6 +544,9 @@ Function LoadDoors%()
 	d_I\DoorFrameModelID[DOOR_OFFICE_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\officedoorframe.b3d")
 	
 	d_I\DoorFrameModelID[DOOR_WOODEN_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorWoodenFrame.b3d")
+	
+	d_I\DoorColl = LoadMesh_Strict("GFX\Map\Props\DoorColl.b3d")
+	d_I\BigDoorColl = LoadMesh_Strict("GFX\Map\Props\BigDoorColl.b3d")
 	
 	For i = 0 To MaxDoorFrameModelIDAmount - 1
 		HideEntity(d_I\DoorFrameModelID[i])
@@ -2052,6 +2056,18 @@ Function LoadWayPoints%(LoadingStart% = 55)
 	Local Dist#, Dist2#
 	
 	For d.Doors = Each Doors
+		If (Not d\DisableWaypoint)
+			If d\DoorType = BIG_DOOR
+				d\DoorColl = CopyEntity(d_I\BigDoorColl)
+			Else
+				d\DoorColl = CopyEntity(d_I\DoorColl)
+			EndIf
+			ScaleEntity(d\DoorColl, RoomScale, RoomScale, RoomScale)
+			PositionEntity(d\DoorColl, EntityX(d\FrameOBJ, True), EntityY(d\FrameOBJ, True), EntityZ(d\FrameOBJ, True), True)
+			RotateEntity(d\DoorColl, 0.0, EntityYaw(d\FrameOBJ, True), 0.0)
+			EntityPickMode(d\DoorColl, 2)
+		EndIf
+		
 		HideEntity(d\OBJ)
 		If d\OBJ2 <> 0 Then HideEntity(d\OBJ2)
 		HideEntity(d\FrameOBJ)
@@ -2139,10 +2155,14 @@ Function LoadWayPoints%(LoadingStart% = 55)
 	Next
 	
 	For d.Doors = Each Doors
+		If (Not d\DisableWaypoint) Then FreeEntity(d\DoorColl) : d\DoorColl = 0
 		ShowEntity(d\OBJ)
 		If d\OBJ2 <> 0 Then ShowEntity(d\OBJ2)
 		ShowEntity(d\FrameOBJ)
 	Next
+	; ~ We don't need this anymore
+	FreeEntity(d_I\DoorColl) : d_I\DoorColl = 0
+	FreeEntity(d_I\BigDoorColl) : d_I\BigDoorColl = 0
 	
 	For w.WayPoints = Each WayPoints
 		EntityRadius(w\OBJ, 0.0)

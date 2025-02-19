@@ -2549,6 +2549,7 @@ Type Doors
 	Field PlayCautionSFX%
 	Field ButtonsUpdateTimer#
 	Field IsAffected% = False
+	Field DoorColl%
 End Type
 
 ; ~ Door ID Constants
