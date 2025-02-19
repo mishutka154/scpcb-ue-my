@@ -3516,7 +3516,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				;[End Block]
 		End Select
 		If Rand(160) = 1
-			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 5.0, 0.3)
+			If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\999\Gurgling" + Rand(0, 3) + ".ogg"), Camera, n\Collider, 4.0, 0.25)
 		EndIf
 		; ~ TODO: Need a jelly sound when 999 moves
 		; ~ Spawn jelly decals
