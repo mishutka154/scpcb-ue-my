@@ -1018,12 +1018,9 @@ Function FindPath%(n.NPCs, x#, y#, z#)
 	StartPoint\State = 1
 	
 	If EndPoint = StartPoint
-		If EndDist < 0.4
-			Return(PATH_STATUS_NO_SEARCH)
-		Else
-			n\Path[0] = EndPoint
-			Return(PATH_STATUS_FOUND)
-		EndIf
+		If EndDist < 0.4 Then Return(PATH_STATUS_NO_SEARCH)
+		n\Path[0] = EndPoint
+		Return(PATH_STATUS_FOUND)
 	EndIf
 	
 	Local Temp2%
