@@ -5010,7 +5010,7 @@ Function UpdateGUI%()
 				Case it_veryfinefirstaid
 					;[Block]
 					If CanUseItem(True)
-						Select Rand(5)
+						Select Rand(6)
 							Case 1
 								;[Block]
 								me\Injuries = 3.5
@@ -5031,7 +5031,6 @@ Function UpdateGUI%()
 							Case 4
 								;[Block]
 								me\BlurTimer = 10000.0
-								me\Bloodloss = 0.0
 								CreateMsg(GetLocalString("msg", "nausea"))
 								;[End Block]
 							Case 5
@@ -5045,6 +5044,11 @@ Function UpdateGUI%()
 									MoveToPocketDimension()
 									CreateMsg(GetLocalString("msg", "aid.106"))
 								EndIf
+								;[End Block]
+							Case 6
+								;[Block]
+								chs\SuperMan = True
+								CreateMsg(GetLocalString("msg", "aid.super"))
 								;[End Block]
 						End Select
 						RemoveItem(SelectedItem)
@@ -5097,7 +5101,7 @@ Function UpdateGUI%()
 									EndIf
 									
 									If SelectedItem\ItemTemplate\ID = it_firstaid2
-										Select Rand(6)
+										Select Rand(7)
 											Case 1
 												;[Block]
 												chs\SuperMan = True
@@ -5116,16 +5120,21 @@ Function UpdateGUI%()
 												;[End Block]
 											Case 4
 												;[Block]
-												me\BlinkEffect = 0.6
+												me\BlinkEffect = 0.5
 												me\BlinkEffectTimer = Rnd(20.0, 30.0)
 												;[End Block]
 											Case 5
+												;[Block]
+												me\StaminaEffect = 0.3
+												me\StaminaEffectTimer = Rnd(25.0, 35.0)
+												;[End Block]
+											Case 6
 												;[Block]
 												me\Bloodloss = 0.0
 												me\Injuries = 0.0
 												CreateMsg(GetLocalString("msg", "aid.stopall"))
 												;[End Block]
-											Case 6
+											Case 7
 												;[Block]
 												CreateMsg(GetLocalString("msg", "aid.through"))
 												me\Injuries = 3.5
