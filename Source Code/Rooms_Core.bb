@@ -3859,6 +3859,10 @@ Function FillRoom%(r.Rooms)
 			de.Decals = CreateDecal(DECAL_WATER, r\x + 236.0 * RoomScale, r\y + 0.005, r\z - 68.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.5, 0.7), 1.0)
 			EntityParent(de\OBJ, r\OBJ)
 			;[End Block]
+		Case r_room4_ez
+			;[Block]
+			CreateCustomCenter(r, r\x - 472.0 * RoomScale, r\z)
+			;[End Block]
 		Case r_room4_2_ez
 			;[Block]
 			CreateDoor(r, r\x + 605.0 * RoomScale, r\y, r\z - 234.0 * RoomScale, 0.0, (Rand(5) = 1), OFFICE_DOOR)
