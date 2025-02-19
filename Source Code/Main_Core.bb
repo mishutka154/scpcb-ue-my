@@ -1940,7 +1940,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			If opt\DebugMode = 1 ; ~ Allow using infinite value for debugging
 				fog\FarDist = StrTemp
 			Else
-				fog\FarDist = Clamp(StrTemp, 6.0, 17.0)
+				fog\FarDist = Clamp(StrTemp, 1.0, 17.0)
 			EndIf
 			CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
 			;[End Block]
