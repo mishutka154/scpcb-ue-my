@@ -4063,7 +4063,10 @@ Function UpdateEvents%()
 											Case NPCType999
 												;[Block]
 												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
-												n\State = 3.0
+												n\EnemyX = 0.0
+												n\EnemyY = 0.0
+												n\EnemyZ = 0.0
+												n\State = 4.0
 												;[End Block]
 											Case NPCTypeClerk
 												;[Block]

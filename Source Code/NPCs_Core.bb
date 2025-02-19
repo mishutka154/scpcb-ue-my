@@ -364,6 +364,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = "SCP-999"
 			n\Speed = IniGetFloat(NPCsFile, "SCP-999", "Speed") / 100.0
+			n\State2 = 1.0
 			
 			n\Collider = CreatePivot()
 			n\CollRadius = 0.15

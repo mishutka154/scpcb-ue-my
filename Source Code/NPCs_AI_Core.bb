@@ -3334,22 +3334,29 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
 	Local de.Decals
 	
+	; ~ n\State: Main state
+	
+	; ~ n\State2: Boost factor
+	
 	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
 		
 		n\LastSeen = 0
-		If n\State < 3.0
+		If n\State < 4.0
 			If (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
-				n\State = 3.0
+				DebugLog("I'm scared: State = 4.0")
+				n\State = 4.0
 				Return
 			EndIf
-			n\PrevState = 0
-			Visible = EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+			Visible = (Dist < 36.0 And EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn)))
 		EndIf
+		
+		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * 2.0)
 		Select n\State
 			Case 0.0 ; ~ Idle
 				;[Block]
 				If Visible
+					DebugLog("I see you: State = 0.0")
 					n\State = 2.0
 					Return
 				EndIf
@@ -3365,20 +3372,22 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Case 1.0 ; ~ Wandering around
 				;[Block]
 				If Visible
+					DebugLog("I see you: State = 1.0")
 					n\State = 2.0
 					Return
 				EndIf
 				
 				Local Temp% = False
 				
-				If MilliSecs() > n\State3
+				; ~ Check for obstacles
+				If MilliSecs() > n\LastDist
 					HideEntity(n\Collider) 
 					EntityPick(n\Collider, 1.5)
 					If PickedEntity() <> 0 Then Temp = True
 					ShowEntity(n\Collider)
 					
 					If Rand(5) = 1 Then n\State = 0.0
-					n\State3 = MilliSecs() + 1000
+					n\LastDist = MilliSecs() + 1000
 				EndIf
 				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True) + (Temp * Rnd(80.0, 110.0)), 0.0, True)
 				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
@@ -3414,7 +3423,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 					n\State3 = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
-						; ~ TODO: Give a buff for 999?
+						n\State2 = 2.0
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
@@ -3438,31 +3447,53 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
 					EndIf
 				Else
-					n\State = 0.0
+					DebugLog("Switch to State = 3.0 from State = 2.0")
+					n\State = 3.0
 				EndIf
 				;[End Block]
-			Case 3.0 ; ~ Return to the playing room
+			Case 3.0, 4.0 ; ~ Following a path
 				;[Block]
-				; ~ TODO: Find the way to switch state to 0.0 after reaching the playing room
-				If n\PrevState = 0
-					CreateHintMsg(GetLocalString("msg", "999_follow"))
-					n\PrevState = 1
+				If n\State = 3.0 And Visible
+					DebugLog("Switch to State = 0.0 from State = 3.0")
+					n\EnemyX = 0.0
+					n\EnemyY = 0.0
+					n\EnemyZ = 0.0
+					n\State = 0.0
+					Return
 				EndIf
 				
 				If n\PathTimer <= 0.0
-					Local r.Rooms
-					Local x# = 0.0, y# = 0.0, z# = 0.0
-					
-					For r.Rooms = Each Rooms
-						If r\RoomTemplate\RoomID = r_room2_office
-							x = EntityX(r\OBJ)
-							y = 0.2
-							z = EntityZ(r\OBJ)
-							Exit
+					If n\State = 4.0
+						If n\EnemyX = 0.0 And n\EnemyY = 0.0 And n\EnemyZ = 0.0
+							CreateHintMsg(GetLocalString("msg", "999_follow"))
+							
+							Local r.Rooms
+							
+							For r.Rooms = Each Rooms
+								If r\RoomTemplate\RoomID = r_room2_office
+									TFormPoint(590.0, -352.0, 0.0, r\OBJ, 0)
+									n\EnemyX = TFormedX()
+									n\EnemyY = TFormedY()
+									n\EnemyZ = TFormedZ()
+									Exit
+								EndIf
+							Next
 						EndIf
-					Next
-					n\PathStatus = FindPath(n, x, y, z)
-					n\PathTimer = 70.0 * 10.0
+						If DistanceSquared(n\EnemyX, EntityX(n\Collider, True), n\EnemyY, EntityY(n\Collider, True), n\EnemyZ, EntityZ(n\Collider, True)) < 9.0
+							DebugLog("Switch to State = 0.0 from State = 4.0")
+							n\EnemyX = 0.0
+							n\EnemyY = 0.0
+							n\EnemyZ = 0.0
+							n\State = 0.0
+							Return
+						EndIf
+					Else
+						n\EnemyX = EntityX(me\Collider, True)
+						n\EnemyY = EntityY(me\Collider, True) + 0.1
+						n\EnemyZ = EntityZ(me\Collider, True)
+					EndIf
+					n\PathStatus = FindPath(n, n\EnemyX, n\EnemyY, n\EnemyZ)
+					n\PathTimer = 70.0 * 6.0
 				Else
 					If n\PathStatus = PATH_STATUS_FOUND
 						If n\Path[n\PathLocation] = Null
@@ -3499,7 +3530,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 		; ~ TODO: Need a jelly sound when 999 moves
 		; ~ Spawn jelly decals
 		If n\CurrSpeed > 0.0
-			If MilliSecs() > n\State2
+			If MilliSecs() > n\Reload
 				Pvt = CreatePivot()
 				PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
 				TurnEntity(Pvt, 90.0, 0.0, 0.0)
@@ -3510,20 +3541,20 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				EndIf
 				FreeEntity(Pvt) : Pvt = 0
 				
-				n\State2 = MilliSecs() + 1000
+				n\Reload = MilliSecs() + 1000
 			EndIf
 		EndIf
 	Else
 		If n\LastSeen = 0
 			For r.Rooms = Each Rooms
 				If r\RoomTemplate\RoomID = r_room2_office
-					TFormPoint(820.0, -256.0, 0.0, r\OBJ, 0)
+					TFormPoint(590.0, -256.0, 0.0, r\OBJ, 0)
+					TeleportEntity(n\Collider, TFormedX(), TFormedY(), TFormedZ())
+					n\LastSeen = 1
+					n\State = 0.0
 					Exit
 				EndIf
 			Next
-			TeleportEntity(n\Collider, TFormedX(), TFormedY(), TFormedZ())
-			n\LastSeen = 1
-			n\State = 0.0
 		EndIf
 	EndIf
 	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - 0.15, EntityZ(n\Collider))
