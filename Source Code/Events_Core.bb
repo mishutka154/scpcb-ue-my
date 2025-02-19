@@ -683,6 +683,8 @@ Function UpdateEvents%()
 							ChangeNPCTextureID(e\room\NPC[1], NPC_CLASS_D_FRANKLIN_TEXTURE)
 						EndIf
 						SetNPCFrame(e\room\NPC[1], 210.0)
+						; ~ Preload this sound cause of huge file size
+						e\room\NPC[1]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0a.ogg")
 						
 						If e\room\NPC[2] <> Null
 							PositionEntity(e\room\NPC[2]\Collider, e\room\x, e\room\y + 0.5, e\room\z + 2576.0 * RoomScale, True)
@@ -691,6 +693,9 @@ Function UpdateEvents%()
 							e\room\NPC[2] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y + 0.5, e\room\z + 2576.0 * RoomScale)
 						EndIf
 						e\room\NPC[2]\State = 7.0
+						; ~ Preload this sound cause of huge file size
+						e\room\NPC[2]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0b.ogg")
+						
 						PointEntity(e\room\NPC[2]\Collider, e\room\NPC[1]\Collider)
 						PointEntity(e\room\NPC[1]\Collider, e\room\NPC[2]\Collider)
 						
@@ -755,10 +760,8 @@ Function UpdateEvents%()
 									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3120.0 * RoomScale, True)
 									ResetEntity(n_I\Curr173\Collider)
 									
-									e\room\NPC[1]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0a.ogg")
 									e\room\NPC[1]\SoundCHN = PlaySoundEx(e\room\NPC[1]\Sound, Camera, e\room\NPC[1]\Collider, 10.0, 1.0, True)
 									e\room\NPC[1]\State = 1.0 : e\room\NPC[1]\Speed = -0.008
-									e\room\NPC[2]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0b.ogg")
 									e\room\NPC[2]\SoundCHN = PlaySoundEx(e\room\NPC[2]\Sound, Camera, e\room\NPC[2]\Collider, 10.0, 1.0, True)
 								EndIf
 								e\room\NPC[1]\CurrSpeed = CurveValue(e\room\NPC[1]\Speed, e\room\NPC[1]\CurrSpeed, 5.0)
