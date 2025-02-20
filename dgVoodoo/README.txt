@@ -2,3 +2,8 @@ If you experience a MAV error during loading/launching the game (or low FPS), an
 move these three files to the game folder (the one where the .exe file is located). This should help.
 After these adjustments, the game may run properly but with some minor issues (e.g., gamma problems). Please, contact us if you have any questions (links are available in the game launcher).
 Thanks for understanding.
+
+If you wish to use more than 2GB of VRAM then edit dgVoodoo.conf and find the line under [DirectX] called VRAM and change the value from 2048 to 4096. Line 194
+
+You can choose to use a better form of anti-aliasing than the one in-game then you can use dgvoodoo instead. Edit the dgVoodoo.conf and find the line under [DirectX] called Antialiasing
+and change it from "off" to either 2x, 4x, or 8x. Line 199
