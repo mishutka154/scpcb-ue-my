@@ -35,6 +35,7 @@
 - Changed SCP-005 in «cont2_409» to a crystallized variant.
 
 - Lowered clearance access of «room1_storage» to level 1.
+- Slowed down the speed of SCP-106's spawn timer in «room1_storage».
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Updated SCP-008's label.
 - Improved «Keyboard.b3d» prop.
@@ -58,12 +59,15 @@
 - Changed Bloody Key Card textures.
 - Speed up equipping SCP-268 and ballistic helmet.
 - Speed up using cups slightly.
-- Syringes can restore some of the player's stamina.
+- Syringes will restore some of the player's stamina.
+- Syringes increases the player's stamina regeneration.
 - Very Fine Eyedrops blur and blindness effects take longer before affecting the player and are shorter in duration.
 - Fine SCRAMBLE GEAR gives some useful information about NPCs.
+- SCRAMBLE GEAR allows players to see in the dark.
 - Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visited.
 - SCP-500 always spawns now.
+- Player can't use strange bottle to escape SCP-049's chamber which would cause issues with that room later.
 
 [NPCs]
 - Added SCP-999.
