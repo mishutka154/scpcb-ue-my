@@ -2646,38 +2646,46 @@ End Function
 Function RefillCup%()
 	Local p.Props
 	
-	For p.Props = Each Props
-		If p\IsCooler
-			If PlayerRoom = p\room
-				If InteractObject(p\OBJ, 0.8)
-					Local EmptyCup.Items = Null
-					Local i%
-					
-					For i = 0 To MaxItemAmount - 1
-						If Inventory(i) <> Null
-							If Inventory(i)\ItemTemplate\ID = it_emptycup
-								EmptyCup = Inventory(i)
-								Exit
-							EndIf
-						EndIf
-					Next
-					If EmptyCup <> Null
-						RemoveItem(EmptyCup)
-						EmptyCup.Items = CreateItem("Cup", it_cup, 0.0, 0.0, 0.0, 200, 200, 200, 0.2)
-						EmptyCup\Name = "WATER"
-						EmptyCup\DisplayName = Format(GetLocalString("items", "cupof"), GetLocalString("misc", "water"))
-						EntityType(EmptyCup\Collider, HIT_ITEM)
-						PickItem(EmptyCup)
-						PlaySound_Strict(LoadTempSound("SFX\SCP\294\Dispense1.ogg"))
-						CreateMsg(GetLocalString("msg", "refill"))
-					Else
-						CreateMsg(GetLocalString("msg", "cup.needed"))
-					EndIf
-					Exit
-				EndIf
+	me\CoolerTimer = me\CoolerTimer - fps\Factor[0]
+	If me\CoolerTimer <= 0.0
+		me\PickedCooler = Null
+		For p.Props = Each Props
+			If p\IsCooler And PlayerRoom = p\room And InteractObject(p\OBJ, 0.8)
+				me\PickedCooler = p
+				Exit
 			EndIf
+		Next
+		me\CoolerTimer = 35.0
+	EndIf
+	
+	If me\PickedCooler <> Null
+		If InteractObject(me\PickedCooler\OBJ, 0.8)
+			Local EmptyCup.Items = Null
+			Local i%
+			
+			For i = 0 To MaxItemAmount - 1
+				If Inventory(i) <> Null
+					If Inventory(i)\ItemTemplate\ID = it_emptycup
+						EmptyCup = Inventory(i)
+						Exit
+					EndIf
+				EndIf
+			Next
+			If EmptyCup <> Null
+				RemoveItem(EmptyCup)
+				EmptyCup.Items = CreateItem("Cup", it_cup, 0.0, 0.0, 0.0, 200, 200, 200, 0.2)
+				EmptyCup\Name = "WATER"
+				EmptyCup\DisplayName = Format(GetLocalString("items", "cupof"), GetLocalString("misc", "water"))
+				EntityType(EmptyCup\Collider, HIT_ITEM)
+				PickItem(EmptyCup)
+				PlaySound_Strict(LoadTempSound("SFX\SCP\294\Dispense1.ogg"))
+				CreateMsg(GetLocalString("msg", "refill"))
+			Else
+				CreateMsg(GetLocalString("msg", "cup.needed"))
+			EndIf
+			Return	
 		EndIf
-	Next
+	EndIf
 End Function
 
 ; ~ Player body animation constants
@@ -2966,9 +2974,12 @@ Function UpdateMoving%()
 				me\DropSpeed = 0.0
 			Else
 				If PlayerFallingPickDistance <> 0.0
-					Local Pick% = LinePick(EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 0.0, -PlayerFallingPickDistance, 0.0)
+					If me\PickTimer <= 0.0
+						me\LastPicked = LinePick(EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 0.0, -PlayerFallingPickDistance, 0.0)
+						me\PickTimer = 8.0
+					EndIf
 					
-					If Pick
+					If me\LastPicked
 						me\DropSpeed = Clamp(me\DropSpeed - (0.006 * fps\Factor[0]), -2.0, 0.0)
 					Else
 						me\DropSpeed = 0.0
@@ -2977,6 +2988,8 @@ Function UpdateMoving%()
 					me\DropSpeed = Clamp(me\DropSpeed - (0.006 * fps\Factor[0]), -2.0, 0.0)
 				EndIf
 			EndIf
+			me\PickTimer = me\PickTimer - fps\Factor[0]
+			
 			PlayerFallingPickDistance = 10.0
 			If me\Playable And ShouldEntitiesFall Then TranslateEntity(me\Collider, 0.0, me\DropSpeed * fps\Factor[0], 0.0)
 		EndIf

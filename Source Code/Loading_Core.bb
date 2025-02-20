@@ -2247,6 +2247,8 @@ Type Player
 	Field StopHidingTimer#
 	Field CurrFunds%, UsedMastercard%
 	Field InsideElevator%
+	Field PickTimer#, LastPicked%
+	Field PickedCooler.Props, CoolerTimer#
 End Type
 
 Global me.Player

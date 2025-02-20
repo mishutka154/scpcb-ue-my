@@ -57,9 +57,10 @@ Function UpdateParticles%()
 	CatchErrors("UpdateParticles()")
 	
 	Local p.Particles
+	Local HideDist# = PowTwo(HideDistance)
 	
 	For p.Particles = Each Particles
-		If EntityDistanceSquared(p\OBJ, me\Collider) <= PowTwo(HideDistance)
+		If EntityDistanceSquared(p\OBJ, me\Collider) <= HideDist
 			MoveEntity(p\Pvt, 0.0, 0.0, (p\Speed * fps\Factor[0]))
 			If p\Gravity <> 0.0 Then p\ySpeed = p\ySpeed - (p\Gravity * fps\Factor[0])
 			TranslateEntity(p\Pvt, 0.0, (p\ySpeed * fps\Factor[0]), 0.0, True)

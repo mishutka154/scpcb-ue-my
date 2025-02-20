@@ -4860,13 +4860,15 @@ Function UpdateEvents%()
 								n_I\Curr106\State = 2.0
 							EndIf
 							
+							Local GridSizeEx# = PowTwo(MTGridSize)
+							
 							For i = 0 To 1
 								Local spawnPoint.WayPoints = Null
 								
-								For x2 = i * (PowTwo(MTGridSize) / 5.0) To (PowTwo(MTGridSize) - 1)
+								For x2 = i * (GridSizeEx / 5.0) To (GridSizeEx - 1)
 									If Rand(2) = 1 And e\room\mt\waypoints[x2] <> Null 
 										spawnPoint = e\room\mt\waypoints[x2]
-										x2 = PowTwo(MTGridSize)
+										x2 = GridSizeEx
 									EndIf
 								Next 
 								If spawnPoint <> Null Then CreateNPC(NPCType966, EntityX(spawnPoint\OBJ, True), EntityY(spawnPoint\OBJ, True), EntityZ(spawnPoint\OBJ, True))
@@ -6649,9 +6651,10 @@ Function UpdateEvents%()
 				If e\EventState = 1.0
 					If e\EventState2 < 0.0
 						If e\EventState2 = (-70.0) * 5.0
+							Dist = PowTwo(fog\FarDist * LightVolume * 1.2)
 							For sc.SecurityCams = Each SecurityCams
 								If sc\room = e\room
-									If sc\InSight And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < PowTwo(fog\FarDist * LightVolume * 1.2) Then e\EventState2 = Min(e\EventState2 + fps\Factor[0], 0.0)
+									If sc\InSight And EntityDistanceSquared(me\Collider, sc\ScrOBJ) < Dist Then e\EventState2 = Min(e\EventState2 + fps\Factor[0], 0.0)
 									Exit
 								EndIf
 							Next
@@ -10190,11 +10193,12 @@ Function UpdateForest%()
 	ShowRoomsColl(forest_event\room)
 	
 	Local tX%, tY%
+	Local HideDist# = PowTwo(HideDistance)
 	
 	For tX = 0 To ForestGridSize - 1
 		For tY = 0 To ForestGridSize - 1
 			If forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)] <> 0
-				If DistanceSquared(EntityX(me\Collider, True), EntityX(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True), EntityZ(me\Collider, True), EntityZ(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True)) < PowTwo(HideDistance)
+				If DistanceSquared(EntityX(me\Collider, True), EntityX(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True), EntityZ(me\Collider, True), EntityZ(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)], True)) < HideDist
 					If EntityHidden(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)]) Then ShowEntity(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])
 				Else
 					If (Not EntityHidden(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])) Then HideEntity(forest_event\room\fr\TileEntities[tX + (tY * ForestGridSize)])

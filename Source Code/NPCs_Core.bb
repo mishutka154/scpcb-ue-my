@@ -915,18 +915,19 @@ Function UpdateNPCs%()
 End Function
 
 Function TeleportCloser%(n.NPCs)
+	If InFacility > UpperFloor Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Then Return
+	
 	Local ClosestDist# = 0.0
 	Local ClosestWaypoint.WayPoints
 	Local w.WayPoints
 	Local Dist#
-	
-	If InFacility > UpperFloor Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Then Return
+	Local Dist2# = PowTwo(16.0 - (6.0 * SelectedDifficulty\AggressiveNPCs))
 	
 	For w.WayPoints = Each WayPoints
 		If w\door = Null
 			Dist = DistanceSquared(EntityX(w\OBJ, True), EntityX(n\Collider, True), EntityZ(w\OBJ, True), EntityZ(n\Collider, True))
 			If Dist > 1.0 And Dist < 100.0
-				If EntityDistanceSquared(me\Collider, w\OBJ) > PowTwo(16.0 - (6.0 * SelectedDifficulty\AggressiveNPCs))
+				If EntityDistanceSquared(me\Collider, w\OBJ) > Dist2
 					; ~ Teleports to the nearby waypoint that takes it closest to the player
 					Local NewDist# = EntityDistanceSquared(me\Collider, w\OBJ)
 					

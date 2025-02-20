@@ -144,12 +144,14 @@ Function UpdateLightVolume%()
 		If UpdateLightsTimer < 8.0
 			UpdateLightsTimer = UpdateLightsTimer + fps\Factor[0]
 		Else
+			Local HideDist# = PowTwo(HideDistance)
+			
 			For l.Lights = Each Lights
 				If l\room <> Null
 					If l\room\Dist < 8.0 Lor l\room = PlayerRoom
 						Local Dist# = EntityDistanceSquared(Camera, l\OBJ)
 						
-						If Dist < PowTwo(HideDistance) Then TempLightVolume = Max((TempLightVolume + PowTwo(l\Intensity) * ((HideDistance - Sqr(Dist)) / HideDistance)) / 4.5, 1.0)
+						If Dist < HideDist Then TempLightVolume = Max((TempLightVolume + PowTwo(l\Intensity) * ((HideDistance - Sqr(Dist)) / HideDistance)) / 4.5, 1.0)
 					EndIf
 				EndIf
 			Next
@@ -164,91 +166,92 @@ End Function
 
 Function UpdateLights%(Cam%)
 	Local l.Lights, i%, Random#, Alpha#
+	Local TotalAmbientColor# = 3.0 * (((fog\AmbientR + fog\AmbientG + fog\AmbientB) / 3) / 255.0)
 	
 	For l.Lights = Each Lights
 		If SecondaryLightOn > 0.3
-			If l\room <> Null
-				If l\room\Dist < 8.0 Lor l\room = PlayerRoom
-					Local LightOBJHidden%
-					
-					If l\Sprite <> 0
-						If Cam = Camera ; ~ The lights are rendered by player's cam
-							EntityOrder(l\AdvancedSprite, -1)
-							If UpdateLightsTimer = 0.0
-								Local Dist# = EntityDistanceSquared(Cam, l\OBJ)
-								Local LightSpriteHidden% = EntityHidden(l\Sprite)
-								Local LightAdvancedSpriteHidden% = EntityHidden(l\AdvancedSprite)
+			If l\room <> Null And (l\room\Dist < 8.0 Lor l\room = PlayerRoom)
+				Local LightOBJHidden%
+				
+				If l\Sprite <> 0
+					If Cam = Camera ; ~ The lights are rendered by player's cam
+						EntityOrder(l\AdvancedSprite, -1)
+						If UpdateLightsTimer = 0.0
+							Local Dist# = EntityDistanceSquared(Cam, l\OBJ)
+							Local LightSpriteHidden% = EntityHidden(l\Sprite)
+							Local LightAdvancedSpriteHidden% = EntityHidden(l\AdvancedSprite)
+							
+							LightOBJHidden = EntityHidden(l\OBJ)
+							If Dist < LightRenderDistance * LightVolume
+								EntityAutoFade(l\Sprite, 0.1 * LightVolume, fog\FarDist * LightVolume)
 								
-								LightOBJHidden = EntityHidden(l\OBJ)
-								If Dist < LightRenderDistance * LightVolume
-									EntityAutoFade(l\Sprite, 0.1 * LightVolume, fog\FarDist * LightVolume)
-									
-									Local LightVisible% = EntityVisible(Cam, l\OBJ)
-									Local LightInView% = EntityInView(l\OBJ, Cam)
-									
-									If LightOBJHidden Then ShowEntity(l\OBJ)
-									If l\Flickers And Rand(13) = 1 And LightVisible
-										If (Not LightOBJHidden) Then HideEntity(l\OBJ)
-										PlaySoundEx(snd_I\LightSFX[Rand(0, 2)], Cam, l\OBJ, 4.0)
-										If LightInView
-											If (Not LightSpriteHidden) Then HideEntity(l\Sprite)
-											If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
-										EndIf
-										Random = Rnd(0.35, 0.8)
-										SecondaryLightOn = Clamp(SecondaryLightOn - Random, 0.301, 1.0)
-										TempLightVolume = Clamp(TempLightVolume - Random, 0.5, 1.0)
-										SetEmitter(Null, EntityX(l\OBJ, True), EntityY(l\OBJ, True), EntityZ(l\OBJ, True), 20)
-									EndIf
-									If LightInView And LightVisible
-										If LightSpriteHidden Then ShowEntity(l\Sprite)
-										If opt\AdvancedRoomLights
-											Alpha = 1.0 - Clamp((Sqr(Dist) + 0.5) / 7.5, 0.0, 1.0)
-											If Alpha > 0.0
-												If LightAdvancedSpriteHidden Then ShowEntity(l\AdvancedSprite)
-												EntityAlpha(l\AdvancedSprite, Max(3.0 * (((fog\AmbientR + fog\AmbientG + fog\AmbientB) / 3) / 255.0) * (l\Intensity / 2.0), 1.0) * Alpha)
-												
-												Random = Rnd(0.36, 0.4)
-												ScaleSprite(l\AdvancedSprite, Random, Random)
-											Else
-												; ~ Instead of rendering the sprite invisible, just hiding it if the player is far away from it
-												If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
-											EndIf
-										Else
-											; ~ The additional sprites option is disabled, hide the sprites
-											If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
-										EndIf
-									Else
-										; ~ Hide the sprites because they aren't visible
+								Local LightVisible%
+								Local LightInView% = EntityInView(l\OBJ, Cam)
+								Local ShouldFlickering% = (l\Flickers And Rand(50) = 1)
+								
+								If LightInView Lor ShouldFlickering Then LightVisible = EntityVisible(Cam, l\OBJ)
+								If LightOBJHidden Then ShowEntity(l\OBJ)
+								If ShouldFlickering And LightVisible
+									If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+									PlaySoundEx(snd_I\LightSFX[Rand(0, 2)], Cam, l\OBJ, 4.0)
+									If LightInView
 										If (Not LightSpriteHidden) Then HideEntity(l\Sprite)
 										If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
 									EndIf
-								Else
-									; ~ Hide the light emitter because it is too far
-									If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+									Random = Rnd(0.35, 0.8)
+									SecondaryLightOn = Clamp(SecondaryLightOn - Random, 0.301, 1.0)
+									TempLightVolume = Clamp(TempLightVolume - Random, 0.5, 1.0)
+									SetEmitter(Null, EntityX(l\OBJ, True), EntityY(l\OBJ, True), EntityZ(l\OBJ, True), 20)
 								EndIf
-							EndIf
-						Else
-							; ~ This will make the lightsprites not glitch through the wall when they are rendered by the cameras
-							EntityOrder(l\AdvancedSprite, 0)
-						EndIf
-					Else
-						If Cam = Camera ; ~ The lights are rendered by player's cam
-							If UpdateLightsTimer = 0.0
-								LightOBJHidden = EntityHidden(l\OBJ)
-								
-								If EntityDistanceSquared(Cam, l\OBJ) < LightRenderDistance * LightVolume
-									If LightOBJHidden Then ShowEntity(l\OBJ)
-									If l\Flickers And Rand(13) = 1 And EntityVisible(Cam, l\OBJ)
-										If (Not LightOBJHidden) Then HideEntity(l\OBJ)
-										PlaySoundEx(snd_I\LightSFX[Rand(0, 2)], Cam, l\OBJ, 4.0)
-										Random = Rnd(0.35, 0.8)
-										SecondaryLightOn = Clamp(SecondaryLightOn - Random, 0.301, 1.0)
-										TempLightVolume = Clamp(TempLightVolume - Random, 0.5, 1.0)
+								If LightInView And LightVisible
+									If LightSpriteHidden Then ShowEntity(l\Sprite)
+									If opt\AdvancedRoomLights
+										Alpha = 1.0 - Clamp((Sqr(Dist) + 0.5) / 7.5, 0.0, 1.0)
+										If Alpha > 0.0
+											If LightAdvancedSpriteHidden Then ShowEntity(l\AdvancedSprite)
+											EntityAlpha(l\AdvancedSprite, Max(TotalAmbientColor * (l\Intensity / 2.0), 1.0) * Alpha)
+											
+											Random = Rnd(0.36, 0.4)
+											ScaleSprite(l\AdvancedSprite, Random, Random)
+										Else
+											; ~ Instead of rendering the sprite invisible, just hiding it if the player is far away from it
+											If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
+										EndIf
+									Else
+										; ~ The additional sprites option is disabled, hide the sprites
+										If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
 									EndIf
 								Else
-									; ~ Hide the light emitter because it is too far
-									If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+									; ~ Hide the sprites because they aren't visible
+									If (Not LightSpriteHidden) Then HideEntity(l\Sprite)
+									If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
 								EndIf
+							Else
+								; ~ Hide the light emitter because it is too far
+								If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+							EndIf
+						EndIf
+					Else
+						; ~ This will make the lightsprites not glitch through the wall when they are rendered by the cameras
+						EntityOrder(l\AdvancedSprite, 0)
+					EndIf
+				Else
+					If Cam = Camera ; ~ The lights are rendered by player's cam
+						If UpdateLightsTimer = 0.0
+							LightOBJHidden = EntityHidden(l\OBJ)
+							
+							If EntityDistanceSquared(Cam, l\OBJ) < LightRenderDistance * LightVolume
+								If LightOBJHidden Then ShowEntity(l\OBJ)
+								If l\Flickers And Rand(50) = 1 And EntityVisible(Cam, l\OBJ)
+									If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+									PlaySoundEx(snd_I\LightSFX[Rand(0, 2)], Cam, l\OBJ, 4.0)
+									Random = Rnd(0.35, 0.8)
+									SecondaryLightOn = Clamp(SecondaryLightOn - Random, 0.301, 1.0)
+									TempLightVolume = Clamp(TempLightVolume - Random, 0.5, 1.0)
+								EndIf
+							Else
+								; ~ Hide the light emitter because it is too far
+								If (Not LightOBJHidden) Then HideEntity(l\OBJ)
 							EndIf
 						EndIf
 					EndIf
@@ -2130,11 +2133,12 @@ Function UpdateMT%(mt.MTGrid)
 	CatchErrors("UpdateMT()")
 	
 	Local tX%, tY%
+	Local HideDist# = PowTwo(fog\FarDist * LightVolume * 1.3)
 	
 	For tX = 0 To MTGridSize - 1
 		For tY = 0 To MTGridSize - 1
 			If mt\Entities[tX + (tY * MTGridSize)] <> 0
-				If DistanceSquared(EntityX(me\Collider, True), EntityX(mt\Entities[tX + (tY * MTGridSize)], True), EntityZ(me\Collider, True), EntityZ(mt\Entities[tX + (tY * MTGridSize)], True)) < PowTwo(fog\FarDist * LightVolume * 1.3)
+				If DistanceSquared(EntityX(me\Collider, True), EntityX(mt\Entities[tX + (tY * MTGridSize)], True), EntityZ(me\Collider, True), EntityZ(mt\Entities[tX + (tY * MTGridSize)], True)) < HideDist
 					If EntityHidden(mt\Entities[tX + (tY * MTGridSize)]) Then ShowEntity(mt\Entities[tX + (tY * MTGridSize)])
 				Else
 					If (Not EntityHidden(mt\Entities[tX + (tY * MTGridSize)])) Then HideEntity(mt\Entities[tX + (tY * MTGridSize)])
@@ -2733,26 +2737,25 @@ Function UpdateDoors%()
 	Local x#, z#, Dist#, i%
 	Local SinValue#
 	Local FPSFactorEx#
+	Local HideDist# = PowTwo(HideDistance * 1.75)
 	
 	ButtonDirection = (Not me\InsideElevator) Lor (me\InsideElevator And (InFacility = LowerFloor Lor (InFacility <> UpperFloor And ToElevatorFloor = UpperFloor)))
 	d_I\ClosestButton = 0
 	d_I\ClosestDoor = Null
 	For d.Doors = Each Doors
-		If (EntityDistanceSquared(d\FrameOBJ, me\Collider) <= PowTwo(HideDistance * 1.75)) Lor (d\IsElevatorDoor > 0) ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
+		If (EntityDistanceSquared(d\FrameOBJ, me\Collider) <= HideDist) Lor (d\IsElevatorDoor > 0) ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
 			Local OfficeWooden% = ((d\DoorType = OFFICE_DOOR) Lor (d\DoorType = WOODEN_DOOR))
 			Local FindButton% = (1 - (d\Open And OfficeWooden))
 			
 			If ((d\OpenState >= 180.0 Lor d\OpenState <= 0.0) And FindButton) And GrabbedEntity = 0
 				For i = 0 To 1
 					If d\Buttons[i] <> 0
-						If IsEqual(EntityX(me\Collider), EntityX(d\Buttons[i], True), 1.0) And IsEqual(EntityZ(me\Collider, True), EntityZ(d\Buttons[i], True), 1.0)
-							If UpdateButton(d\Buttons[i])
-								d_I\ClosestDoor = d
-								; ~ Determine and save animate door and button
-								If d\DoorType = OFFICE_DOOR Then d_I\AnimDoor = d
-								If d\KeyCard = KEY_MISC And d\Code = 0 And (Not OfficeWooden) Then d_I\AnimButton = d_I\ClosestButton
-								Exit
-							EndIf
+						If IsEqual(EntityX(me\Collider), EntityX(d\Buttons[i], True), 1.0) And IsEqual(EntityZ(me\Collider, True), EntityZ(d\Buttons[i], True), 1.0) And UpdateButton(d\Buttons[i])
+							d_I\ClosestDoor = d
+							; ~ Determine and save animate door and button
+							If d\DoorType = OFFICE_DOOR Then d_I\AnimDoor = d
+							If d\KeyCard = KEY_MISC And d\Code = 0 And (Not OfficeWooden) Then d_I\AnimButton = d_I\ClosestButton
+							Exit
 						EndIf
 					EndIf
 				Next
@@ -2910,19 +2913,15 @@ Function UpdateDoors%()
 			UpdateSoundOrigin(d\SoundCHN, Camera, d\FrameOBJ)
 			
 			If d\DoorType = BIG_DOOR
-				If d\Locked = 2
-					If d\OpenState > 48.0
-						d\Open = False
-						d\OpenState = Min(d\OpenState, 48.0)
-					EndIf
+				If d\Locked = 2 And d\OpenState > 48.0
+					d\Open = False
+					d\OpenState = Min(d\OpenState, 48.0)
 				EndIf
-				If EntityDistanceSquared(me\Collider, d\FrameOBJ) < 0.1225
-					If d\OpenState > 6.0 And d\OpenState < 48.0 And (Not d\Open)
-						If (Not me\Terminated) And (Not chs\GodMode)
-							PlaySound_Strict(snd_I\Death914SFX)
-							msg\DeathMsg = Format(GetLocalString("death", "door"), SubjectName)
-							Kill(True)
-						EndIf
+				If EntityDistanceSquared(me\Collider, d\FrameOBJ) < 0.1225 And d\OpenState > 6.0 And d\OpenState < 48.0 And (Not d\Open)
+					If (Not me\Terminated) And (Not chs\GodMode)
+						PlaySound_Strict(snd_I\Death914SFX)
+						msg\DeathMsg = Format(GetLocalString("death", "door"), SubjectName)
+						Kill(True)
 					EndIf
 				EndIf
 			EndIf
@@ -3793,42 +3792,46 @@ Function UpdateShadows%()
 	If (Not opt\BlobShadows) Then Return
 	
 	Local shdw.Shadows
+	Local Dist#, UpdateDist# = PowTwo(fog\FarDist)
 	
 	For shdw.Shadows = Each Shadows
-		Local x# = EntityX(shdw\ParentOBJ, True), y# = EntityY(shdw\ParentOBJ, True), z# = EntityZ(shdw\ParentOBJ, True)
-		
-		If shdw\Remove
-			; ~ Simplify the code and remove the shadow when NPC is dead
-			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
-			If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+		Dist = EntityDistanceSquared(me\Collider, shdw\ParentOBJ)
+		If Dist < UpdateDist
+			Local x# = EntityX(shdw\ParentOBJ, True), y# = EntityY(shdw\ParentOBJ, True), z# = EntityZ(shdw\ParentOBJ, True)
 			
-			shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
-			EntityAlpha(shdw\OBJ, shdw\Alpha)
-			If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
-		ElseIf EntityHidden(shdw\ParentOBJ)
-			If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
-		Else
-			If shdw\UpdateTimer <= 0.0
-				EntityPickMode(me\Collider, 0)
-				If LinePick(x, y, z, 0.0, -10.0, 0.0) <> 0
-					PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
-					RotateEntity(shdw\OBJ, EntityPitch(shdw\ParentOBJ, True), EntityYaw(shdw\ParentOBJ, True), EntityRoll(shdw\ParentOBJ, True), True)
-					AlignToVector(shdw\OBJ, -PickedNX(), -PickedNY(), -PickedNZ(), 3)
-					MoveEntity(shdw\OBJ, 0.0, 0.0, -0.002)
-				EndIf
-				EntityPickMode(me\Collider, 1)
-				shdw\UpdateTimer = 6.0
-			Else
-				shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
-			EndIf
-			PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
-			
-			shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(me\Collider, shdw\OBJ) / fog\FarDist * 0.3), 0.0, 1.0)
-			If shdw\Alpha > 0.0
-				EntityAlpha(shdw\OBJ, shdw\Alpha)
+			If shdw\Remove
+				; ~ Simplify the code and remove the shadow when NPC is dead
+				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
 				If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
-			Else
+				
+				shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
+				EntityAlpha(shdw\OBJ, shdw\Alpha)
+				If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
+			ElseIf EntityHidden(shdw\ParentOBJ)
 				If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
+			Else
+				If shdw\UpdateTimer <= 0.0
+					EntityPickMode(me\Collider, 0)
+					If LinePick(x, y, z, 0.0, -10.0, 0.0) <> 0
+						PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
+						RotateEntity(shdw\OBJ, EntityPitch(shdw\ParentOBJ, True), EntityYaw(shdw\ParentOBJ, True), EntityRoll(shdw\ParentOBJ, True), True)
+						AlignToVector(shdw\OBJ, -PickedNX(), -PickedNY(), -PickedNZ(), 3)
+						MoveEntity(shdw\OBJ, 0.0, 0.0, -0.002)
+					EndIf
+					EntityPickMode(me\Collider, 1)
+					shdw\UpdateTimer = 6.0
+				Else
+					shdw\UpdateTimer = shdw\UpdateTimer - fps\Factor[0]
+				EndIf
+				PositionEntity(shdw\OBJ, x, EntityY(shdw\OBJ, True), z, True)
+				
+				shdw\Alpha = Clamp(1.0 - (EntityDistanceSquared(me\Collider, shdw\OBJ) / fog\FarDist * 0.3), 0.0, 1.0)
+				If shdw\Alpha > 0.0
+					EntityAlpha(shdw\OBJ, shdw\Alpha)
+					If EntityHidden(shdw\OBJ) Then ShowEntity(shdw\OBJ)
+				Else
+					If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
+				EndIf
 			EndIf
 		EndIf
 	Next
@@ -3897,9 +3900,10 @@ End Function
 
 Function UpdateDecals%()
 	Local de.Decals
+	Local HideDist# = PowTwo(HideDistance)
 	
 	For de.Decals = Each Decals
-		If EntityDistanceSquared(de\OBJ, me\Collider) < PowTwo(HideDistance)
+		If EntityDistanceSquared(de\OBJ, me\Collider) < HideDist
 			If EntityHidden(de\OBJ) Then ShowEntity(de\OBJ)
 			
 			Local DecalPosY# = EntityY(de\OBJ, True)
@@ -4921,17 +4925,14 @@ Function UpdateRooms%()
 		
 		r\Dist = Max(x, z)
 		
-		If x < 4.0 And z < 4.0
-			If (Not FoundNewPlayerRoom) And PlayerRoom <> r
-				If IsEqual(PlayerY, EntityY(r\OBJ), 1.5) Then PlayerRoom = r
-				FoundNewPlayerRoom = True
-			EndIf
+		If (x < 4.0 And z < 4.0) And (Not FoundNewPlayerRoom) And PlayerRoom <> r
+			If IsEqual(PlayerY, EntityY(r\OBJ), 1.5) Then PlayerRoom = r
+			FoundNewPlayerRoom = True
 		EndIf
 		
 		Local Hide% = True
 		
-		If r = PlayerRoom Then Hide = False
-		If IsRoomAdjacent(PlayerRoom, r) Then Hide = False
+		If r = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, r) Then Hide = False
 		For i = 0 To MaxRoomAdjacents - 1
 			If IsRoomAdjacent(PlayerRoom\Adjacent[i], r)
 				Hide = False
@@ -6172,7 +6173,7 @@ Function UpdateChunks%(ChunkPartAmount%, SpawnNPCs% = True)
 	Local PlayerRoomY# = y + 0.5
 	Local x# = (-ChunkMaxDistance) + (ChunkX * 40.0)
 	Local z# = (-ChunkMaxDistance) + (ChunkZ * 40.0)
-	
+	Local ChunkMaxDistEx# = PowTwo(ChunkMaxDistance)
 	Local CurrChunkData% = 0, MaxChunks% = JsonGetArraySize(SCP1499Chunks)
 	
 	Repeat
@@ -6198,9 +6199,7 @@ Function UpdateChunks%(ChunkPartAmount%, SpawnNPCs% = True)
 	
 	For ch.Chunk = Each Chunk
 		If (Not ch\IsSpawnChunk)
-			If DistanceSquared(PlayerPosX, EntityX(ch\ChunkPivot), PlayerPosZ, EntityZ(ch\ChunkPivot)) > PowTwo(ChunkMaxDistance)
-				RemoveChunk(ch)
-			EndIf
+			If DistanceSquared(PlayerPosX, EntityX(ch\ChunkPivot), PlayerPosZ, EntityZ(ch\ChunkPivot)) > ChunkMaxDistEx Then RemoveChunk(ch)
 		EndIf
 	Next
 	
@@ -6264,7 +6263,7 @@ Function UpdateChunks%(ChunkPartAmount%, SpawnNPCs% = True)
 			If n\NPCType = NPCType1499_1
 				If n\PrevState = 0
 					; ~ This will be updated like this so that new NPCs can spawn for the player
-					If EntityDistanceSquared(n\Collider, me\Collider) > PowTwo(ChunkMaxDistance) Lor EntityY(n\Collider) < y - 5.0 Then RemoveNPC(n)
+					If EntityDistanceSquared(n\Collider, me\Collider) > ChunkMaxDistEx Lor EntityY(n\Collider) < y - 5.0 Then RemoveNPC(n)
 				EndIf
 			EndIf
 		Next

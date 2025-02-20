@@ -17,6 +17,8 @@ End Function
 
 Const MaxChannelsAmount% = 16 ; ~ 32
 
+Global AutoReleaseSoundTime%
+
 Type Sound
 	Field InternalHandle%
 	Field Name$
@@ -28,29 +30,32 @@ Function AutoReleaseSounds%()
 	Local snd.Sound
 	Local CurrTime% = MilliSecs()
 	
-	For snd.Sound = Each Sound
-		Local TryRelease% = True
-		Local i%
-		
-		For i = 0 To MaxChannelsAmount - 1
-			If snd\Channels[i] <> 0
-				If ChannelPlaying(snd\Channels[i])
-					TryRelease = False
-					snd\ReleaseTime = CurrTime + 5000 ; ~ Release after 5 seconds
-					Exit
+	If AutoReleaseSoundTime < MilliSecs()
+		For snd.Sound = Each Sound
+			Local TryRelease% = True
+			Local i%
+			
+			For i = 0 To MaxChannelsAmount - 1
+				If snd\Channels[i] <> 0
+					If ChannelPlaying(snd\Channels[i])
+						TryRelease = False
+						snd\ReleaseTime = CurrTime + 5000 ; ~ Release after 5 seconds
+						Exit
+					EndIf
+				EndIf
+			Next
+			
+			If TryRelease
+				If snd\ReleaseTime < CurrTime
+					If snd\InternalHandle <> 0
+						FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
+						RemoveSubtitlesToken(snd)
+					EndIf
 				EndIf
 			EndIf
 		Next
-		
-		If TryRelease
-			If snd\ReleaseTime < CurrTime
-				If snd\InternalHandle <> 0
-					FreeSound(snd\InternalHandle) : snd\InternalHandle = 0
-					RemoveSubtitlesToken(snd)
-				EndIf
-			EndIf
-		EndIf
-	Next
+		AutoReleaseSoundTime = MilliSecs() + 1000
+	EndIf
 End Function
 
 Function PlaySound_Strict%(SoundHandle%, IsVoice% = False, SetVolume% = True)
