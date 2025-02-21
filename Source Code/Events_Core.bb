@@ -10235,18 +10235,15 @@ Function UpdateForest%()
 		EndIf
 	EndIf
 	
-	If forest_event\room\NPC[0] <> Null
-		If forest_event\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, forest_event\room\NPC[0]\Collider) > 400.0
-			forest_event\EventState3 = forest_event\EventState3 + (1.0 + me\CurrSpeed) * fps\Factor[0]
-			If (forest_event\EventState3 Mod 500.0) < 10.0 And ((forest_event\EventState3 - (1.0 + me\CurrSpeed) * fps\Factor[0]) Mod 500.0) > 490.0
-				If forest_event\EventState3 > 3000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs) And Rnd(10000 + (500.0 * SelectedDifficulty\AggressiveNPCs)) < forest_event\EventState3
-					forest_event\room\NPC[0]\State = 2.0
-					PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-					forest_event\EventState3 = forest_event\EventState3 - Rnd(1000.0, 2000.0 - (500.0 * SelectedDifficulty\AggressiveNPCs))
-				Else
-					forest_event\room\NPC[0]\State = 1.0
-					PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
-				EndIf
+	If forest_event\room\NPC[0] <> Null 
+		If forest_event\room\NPC[0]\State = 0.0 Lor EntityDistanceSquared(me\Collider, forest_event\room\NPC[0]\Collider) > HideDist
+			forest_event\EventState3 = forest_event\EventState3 + fps\Factor[0] * (1.0 + (3.5 * (me\CurrSpeed > 0.02)))
+			If forest_event\EventState3 > 7000.0 - (2000.0 * SelectedDifficulty\AggressiveNPCs)
+				forest_event\room\NPC[0]\State = 2.0
+				PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
+			ElseIf Rnd(40000 + (3000.0 * SelectedDifficulty\AggressiveNPCs)) < forest_event\EventState3 And (forest_event\EventState3 Mod 500.0) > 490.0
+				forest_event\room\NPC[0]\State = 1.0
+				PositionEntity(forest_event\room\NPC[0]\Collider, 0.0, -110.0, 0.0)
 			EndIf
 		EndIf
 	EndIf
