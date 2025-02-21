@@ -2538,6 +2538,8 @@ Function UpdateEvents%()
 					If e\room\RoomDoors[0]\Open
 						If EntityHidden(fr\Forest_Pivot) Then ShowEntity(fr\Forest_Pivot)
 						
+						GiveAchievement("860")
+						
 						me\BlinkTimer = -10.0
 						
 						; ~ Reset monster to the (hidden) idle state
