@@ -1461,8 +1461,7 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 			;[End Block]
 		Case "apache", "helicopter"
 			;[Block]
-			n.NPCs = CreateNPC(NPCTypeApache, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
-			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "apache"))
+			CreateConsoleMsg(Format(GetLocalString("console", "spawn.nope"), "Apache"), 255, 0, 0)
 			;[End Block]
 		Case "class-d", "classd", "d"
 			;[Block]

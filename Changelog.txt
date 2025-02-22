@@ -21,7 +21,7 @@
 - Slightly increase stamina regeneration when standing still.
 - Now the anomalous clock smoothly changes alpha.
 - Changed auto save timer from 2 mins to 1 min.
-- You can move the items from clipboard\wallet directly to the inventory.
+- Player can move the items from clipboard\wallet directly to the inventory.
 
 [Launcher]
 - Added wiki button.
@@ -81,6 +81,7 @@
 - SCP-513-1 reduces sanity and increases the heart rate.
 - SCP-966 now reduces the player's stamina regeneration.
 - SCP-966's height is now randomized.
+- Player cannot spawn Apache anymore.
 
 [Bug Fixes]
 - Fixed SCP-789-J trigger distance.
