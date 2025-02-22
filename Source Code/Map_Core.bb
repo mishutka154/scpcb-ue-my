@@ -3573,7 +3573,7 @@ Function UseDoor%(PlaySFX% = True)
 							d_I\ClosestDoor\Locked = 0
 							If forest_event <> Null
 								If forest_event\room = PlayerRoom
-									If InFacility = NullFloor
+									If forest_event\EventState = 0.0
 										forest_event\EventState4 = 0.0
 										If SelectedItem\ItemTemplate\ID = it_fine860
 											forest_event\EventState4 = 1.0
