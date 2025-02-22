@@ -85,7 +85,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_008_1_MODEL])
 			Temp = IniGetFloat(NPCsFile, "SCP-008-1", "Scale") / MeshWidth(n\OBJ)
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
-			MeshCullBox(n\OBJ, -MeshWidth(n\OBJ), -MeshHeight(n\OBJ), -MeshDepth(n\OBJ), MeshWidth(n\OBJ) * 2.0, MeshHeight(n\OBJ) * 2.0, MeshDepth(n\OBJ) * 2.0)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
 			SetNPCFrame(n, 11.0)
 			
 			If NPCSound[SOUND_NPC_008_1_BREATH] = 0 Then NPCSound[SOUND_NPC_008_1_BREATH] = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
@@ -94,7 +95,6 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = GetLocalString("npc", "undefine")
 			n\MaxGravity = 0.0
-			n\CollRadius = 0.2
 			n\HP = 500
 			
 			n\Collider = CreatePivot()
