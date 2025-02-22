@@ -638,20 +638,12 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 			EntityAlpha(Liquid, Abs(Alpha))
 			EntityShininess(Liquid, 1.0)
 			;[End Block]
-		Case it_clipboard
+		Case it_clipboard, it_wallet, it_scp500
 			;[Block]
 			If InvSlots = 0
 				InvSlots = 10
-				SetAnimTime(i\OBJ, 17.0)
-				i\InvImg = i\ItemTemplate\InvImg2
-			EndIf
-			;[End Block]
-		Case it_wallet
-			;[Block]
-			If InvSlots = 0
-				InvSlots = 10
-				SetAnimTime(i\OBJ, 0.0)
-				i\InvImg = i\ItemTemplate\InvImg2
+				SetAnimTime(i\OBJ, (i\ItemTemplate\ID = it_clipboard) * 17.0 + (i\ItemTemplate\ID = it_wallet) * 0.0 + (i\ItemTemplate\ID = it_scp500) * 11.0)
+				If i\ItemTemplate\InvImg2 <> 0 Then i\InvImg = i\ItemTemplate\InvImg2
 			EndIf
 			;[End Block]
 	End Select
@@ -1018,6 +1010,27 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 		Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
 			;[Block]
 			SetAnimTime(item\OBJ, 4.0)
+			;[End Block]
+		Case it_clipboard, it_wallet, it_scp500
+			;[Block]
+			Local IsEmpty% = True
+			
+			For n = 0 To item\InvSlots - 1
+				If item\SecondInv[n] <> Null
+					IsEmpty = False
+					Exit
+				EndIf
+			Next
+			
+			Local ID% = item\ItemTemplate\ID
+			Local PillsAmount% = 0
+			
+			If ID = it_scp500 And (Not IsEmpty)
+				For n = 0 To item\InvSlots - 1
+					If item\SecondInv[n] <> Null Then PillsAmount = PillsAmount + 1
+				Next
+			EndIf
+			SetAnimTime(item\OBJ, (IsEmpty * ((ID = it_clipboard) * 17.0 + (ID = it_wallet) * 0.0 + (ID = it_scp500) * 11.0)) + ((Not IsEmpty) * ((ID = it_clipboard) * 0.0 + (ID = it_wallet) * 4.0 + (ID = it_scp500) * (11.0 - PillsAmount))))
 			;[End Block]
 		Case it_scp1123
 			;[Block]

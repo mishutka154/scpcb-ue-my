@@ -92,8 +92,6 @@ Function SaveGame%(File$)
 	
 	WriteByte(f, I_005\ChanceToSpawn)
 	
-	WriteByte(f, I_500\Taken)
-	
 	For i = 0 To 6
 		WriteFloat(f, I_1025\State[i])
 	Next
@@ -632,8 +630,6 @@ Function LoadGame%(File$)
 	me\RefinedItems = ReadInt(f)
 	
 	I_005\ChanceToSpawn = ReadByte(f)
-	
-	I_500\Taken = ReadByte(f)
 	
 	For i = 0 To 6
 		I_1025\State[i] = ReadFloat(f)
@@ -1572,8 +1568,6 @@ Function LoadGameQuick%(File$)
 	me\RefinedItems = ReadInt(f)
 	
 	I_005\ChanceToSpawn = ReadByte(f)
-	
-	I_500\Taken = ReadByte(f)
 	
 	For i = 0 To 6
 		I_1025\State[i] = ReadFloat(f)

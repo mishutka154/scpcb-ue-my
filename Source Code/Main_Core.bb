@@ -3433,7 +3433,6 @@ Function UpdateZoneColor%()
 		End Select
 	EndIf
 	
-	
 	; ~ Save the current backbuffer
 	Local OldBuffer% = BackBuffer()
 	
@@ -3559,15 +3558,7 @@ Function NullSecondINV%()
 			Exit
 		EndIf
 	Next
-	If IsEmpty
-		If OtherOpen\ItemTemplate\ID = it_clipboard
-			OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
-			SetAnimTime(OtherOpen\OBJ, 17.0)
-		ElseIf OtherOpen\ItemTemplate\ID = it_wallet
-			OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
-			SetAnimTime(OtherOpen\OBJ, 0.0)
-		EndIf
-	EndIf
+	If IsEmpty And OtherOpen\ItemTemplate\InvImg2 <> 0 Then OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
 End Function
 
 Function UpdateGUI%()
@@ -4104,7 +4095,6 @@ Function UpdateGUI%()
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 														Inventory(MouseSlot)\State = 1.0
-														SetAnimTime(Inventory(MouseSlot)\OBJ, 0.0)
 														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 														
 														For ri = 0 To MaxItemAmount - 1
@@ -4172,7 +4162,6 @@ Function UpdateGUI%()
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 														Inventory(MouseSlot)\State = 1.0
-														SetAnimTime(Inventory(MouseSlot)\OBJ, 4.0)
 														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 														
 														For ri = 0 To MaxItemAmount - 1
@@ -4194,6 +4183,50 @@ Function UpdateGUI%()
 											Else
 												CreateMsg(Format(GetLocalString("msg", "wallet.add"), added\ItemTemplate\DisplayName))
 											EndIf
+											;[End Block]
+									End Select
+								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_scp500
+									; ~ Add an item to SCP-500
+									added.Items = Null
+									
+									Select SelectedItem\ItemTemplate\ID
+										Case it_scp500pill, it_scp500pilldeath, it_pill
+											;[Block]
+											For c = 0 To Inventory(MouseSlot)\InvSlots - 1
+												If Inventory(MouseSlot)\SecondInv[c] = Null
+													If SelectedItem <> Null
+														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
+														Inventory(MouseSlot)\State = 1.0
+														
+														For ri = 0 To MaxItemAmount - 1
+															If Inventory(ri) = SelectedItem
+																Inventory(ri) = Null
+																ItemAmount = ItemAmount - 1
+																PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+																Exit
+															EndIf
+														Next
+														added = SelectedItem
+														SelectedItem = Null
+														Exit
+													EndIf
+												EndIf
+											Next
+											If SelectedItem <> Null
+												CreateMsg(GetLocalString("msg", "scp500.full"))
+											Else
+												CreateMsg(Format(GetLocalString("msg", "scp500.add"), added\ItemTemplate\DisplayName))
+											EndIf
+											;[End Block]
+										Default
+											;[Block]
+											For z = 0 To MaxItemAmount - 1
+												If Inventory(z) = SelectedItem
+													Inventory(z) = PrevItem
+													Exit
+												EndIf
+											Next
+											Inventory(MouseSlot) = SelectedItem
 											;[End Block]
 									End Select
 								Else
@@ -6075,26 +6108,6 @@ Function UpdateGUI%()
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]
-				Case it_scp500
-					;[Block]
-					If I_500\Taken < Rand(20)
-						If ItemAmount < MaxItemAmount
-							it.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
-							EntityType(it\Collider, HIT_ITEM)
-							PickItem(it, False)
-							
-							CreateMsg(GetLocalString("msg", "500"))
-							PlaySound_Strict(LoadTempSound("SFX\SCP\500\OpenBottle.ogg"))
-							I_500\Taken = I_500\Taken + 1
-						Else
-							CreateMsg(GetLocalString("msg", "cantcarry"))
-						EndIf
-						SelectedItem = Null
-					Else
-						I_500\Taken = 0
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
 				Case it_scp1123
 					;[Block]
 					Use1123()
@@ -6190,6 +6203,7 @@ Function UpdateGUI%()
 					;[Block]
 					; ~ Check if the item is an inventory-type object
 					If SelectedItem\InvSlots > 0 Then OtherOpen = SelectedItem
+					If SelectedItem\ItemTemplate\ID = it_scp500 Then PlaySound_Strict(LoadTempSound("SFX\Interact\OpenBottle.ogg"))
 					SelectedItem = Null
 					;[End Block]
 			End Select
@@ -6504,18 +6518,16 @@ Function RenderDebugHUD%()
 			TextEx(x, y + (240 * MenuScale), Format(GetLocalString("console", "debug_3.173idle"), n_I\Curr173\Idle))
 			TextEx(x, y + (260 * MenuScale), Format(GetLocalString("console", "debug_3.173state"), n_I\Curr173\State))
 			
-			TextEx(x, y + (300 * MenuScale), Format(GetLocalString("console", "debug_3.pill"), I_500\Taken))
-			
-			TextEx(x, y + (340 * MenuScale), Format(GetLocalString("console", "debug_3.008"), I_008\Timer))
-			TextEx(x, y + (360 * MenuScale), Format(GetLocalString("console", "debug_3.409"), I_409\Timer))
-			TextEx(x, y + (380 * MenuScale), Format(GetLocalString("console", "debug_3.427"), I_427\Timer / 70.0))
-			TextEx(x, y + (400 * MenuScale), Format(GetLocalString("console", "debug_3.966"), I_966\InsomniaEffectTimer / 70.0))
-			TextEx(x, y + (420 * MenuScale), Format(GetLocalString("console", "debug_3.1048a"), I_1048A\EarGrowTimer))
+			TextEx(x, y + (320 * MenuScale), Format(GetLocalString("console", "debug_3.008"), I_008\Timer))
+			TextEx(x, y + (340 * MenuScale), Format(GetLocalString("console", "debug_3.409"), I_409\Timer))
+			TextEx(x, y + (360 * MenuScale), Format(GetLocalString("console", "debug_3.427"), I_427\Timer / 70.0))
+			TextEx(x, y + (380 * MenuScale), Format(GetLocalString("console", "debug_3.966"), I_966\InsomniaEffectTimer / 70.0))
+			TextEx(x, y + (400 * MenuScale), Format(GetLocalString("console", "debug_3.1048a"), I_1048A\EarGrowTimer))
 			For i = 0 To 6
-				TextEx(x, y + ((440 + (20 * i)) * MenuScale), Format(Format(GetLocalString("console", "debug_3.1025"), i, "{0}"), I_1025\State[i], "{1}"))
+				TextEx(x, y + ((420 + (20 * i)) * MenuScale), Format(Format(GetLocalString("console", "debug_3.1025"), i, "{0}"), I_1025\State[i], "{1}"))
 			Next
 			For i = 0 To 4
-				TextEx(x, y + ((580 + (20 * i)) * MenuScale), Format(Format(GetLocalString("console", "debug_3.f.1025"), i, "{0}"), I_1025\FineState[i], "{1}"))
+				TextEx(x, y + ((560 + (20 * i)) * MenuScale), Format(Format(GetLocalString("console", "debug_3.f.1025"), i, "{0}"), I_1025\FineState[i], "{1}"))
 			Next
 			
 			x = x + (700 * MenuScale)
@@ -9276,12 +9288,6 @@ Type SCP035
 End Type
 
 Global I_035.SCP035
-
-Type SCP500
-	Field Taken%
-End Type
-
-Global I_500.SCP500
 
 Type SCP714
 	Field Using%

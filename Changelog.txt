@@ -68,6 +68,7 @@
 - Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visited.
 - SCP-500 always spawns now.
+- SCP-500 has an inventory.
 - Player can't use strange bottle to escape SCP-049's chamber which would cause issues with that room later.
 
 [NPCs]

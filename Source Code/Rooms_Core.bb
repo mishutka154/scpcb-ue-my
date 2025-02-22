@@ -1470,6 +1470,14 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ) : RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			
 			it.Items = CreateItem("SCP-500", it_scp500, r\x + 1147.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 345.0 * RoomScale)
+			For i = 0 To it\InvSlots - 1
+				it2.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+				it2\Picked = True : it2\Dropped = -1 : it\SecondInv[i] = it2
+				HideEntity(it2\Collider)
+				k = k + 1
+				If Rand(10) = 1 Then Exit
+			Next
+			SetAnimTime(it\OBJ, 11.0 - k)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case r_cont2_1123
