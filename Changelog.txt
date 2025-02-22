@@ -21,6 +21,7 @@
 - Slightly increase stamina regeneration when standing still.
 - Now the anomalous clock smoothly changes alpha.
 - Changed auto save timer from 2 mins to 1 min.
+- You can move the items from clipboard\wallet directly to the inventory.
 
 [Launcher]
 - Added wiki button.

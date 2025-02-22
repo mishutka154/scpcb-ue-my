@@ -588,8 +588,13 @@ Function UpdateGame%()
 						mo\DoubleClickSlot = -1
 					EndIf
 					InvOpen = (Not InvOpen)
+					If OtherOpen = Null
+						SelectedItem = Null
+					ElseIf SelectedItem <> Null
+						PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+						NullSecondINV()
+					EndIf
 					OtherOpen = Null
-					SelectedItem = Null
 				EndIf
 			EndIf
 			
@@ -3536,6 +3541,35 @@ Function UpdateNVG%()
 	EndIf
 End Function
 
+Function NullSecondINV%()
+	Local i%
+	
+	For i = 0 To OtherOpen\InvSlots - 1
+		If OtherOpen\SecondInv[i] = SelectedItem
+			OtherOpen\SecondInv[i] = Null
+			Exit
+		EndIf
+	Next
+	
+	Local IsEmpty% = True
+	
+	For i = 0 To OtherOpen\InvSlots - 1
+		If OtherOpen\SecondInv[i] <> Null
+			IsEmpty = False
+			Exit
+		EndIf
+	Next
+	If IsEmpty
+		If OtherOpen\ItemTemplate\ID = it_clipboard
+			OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
+			SetAnimTime(OtherOpen\OBJ, 17.0)
+		ElseIf OtherOpen\ItemTemplate\ID = it_wallet
+			OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
+			SetAnimTime(OtherOpen\OBJ, 0.0)
+		EndIf
+	EndIf
+End Function
+
 Function UpdateGUI%()
 	CatchErrors("UpdateGUI()")
 	
@@ -3765,6 +3799,7 @@ Function UpdateGUI%()
 	
 	If OtherOpen <> Null
 		PrevOtherOpen = OtherOpen
+		
 		Local OtherSize% = OtherOpen\InvSlots
 		Local OtherAmount%
 		
@@ -3846,30 +3881,7 @@ Function UpdateGUI%()
 					ResetEntity(SelectedItem\Collider)
 					SelectedItem\Dropped = 1
 					SelectedItem\Picked = False
-					For z = 0 To OtherSize - 1
-						If OtherOpen\SecondInv[z] = SelectedItem
-							OtherOpen\SecondInv[z] = Null
-							Exit
-						EndIf
-					Next
-					
-					Local IsEmpty% = True
-					
-					For z = 0 To OtherSize - 1
-						If OtherOpen\SecondInv[z] <> Null
-							IsEmpty = False
-							Exit
-						EndIf
-					Next
-					If IsEmpty
-						If OtherOpen\ItemTemplate\ID = it_clipboard
-							OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
-							SetAnimTime(OtherOpen\OBJ, 17.0)
-						ElseIf OtherOpen\ItemTemplate\ID = it_wallet
-							OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
-							SetAnimTime(OtherOpen\OBJ, 0.0)
-						EndIf
-					EndIf
+					NullSecondINV()
 					SelectedItem = Null
 					
 					If (Not mo\MouseHit2)
@@ -4160,13 +4172,8 @@ Function UpdateGUI%()
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
 														Inventory(MouseSlot)\State = 1.0
-														Select SelectedItem\ItemTemplate\ID
-															Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_burntbadge, it_harnbadge
-																;[Block]
-																SetAnimTime(Inventory(MouseSlot)\OBJ, 4.0)
-																Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
-																;[End Block]
-														End Select
+														SetAnimTime(Inventory(MouseSlot)\OBJ, 4.0)
+														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 														
 														For ri = 0 To MaxItemAmount - 1
 															If Inventory(ri) = SelectedItem
