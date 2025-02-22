@@ -3673,7 +3673,7 @@ Function UseDoor%(PlaySFX% = True)
 	OpenCloseDoor(d_I\ClosestDoor, PlaySFX)
 	If BreakTheDoor
 		d_I\ClosestDoor\FastOpen = True
-		If d_I\ClosestDoor\Open Then d_I\ClosestDoor\Locked = 1
+		If d_I\ClosestDoor\Open And d_I\ClosestDoor\LinkedDoor = Null Then d_I\ClosestDoor\Locked = 1
 		me\BigCameraShake = 3.0
 		
 		Local emit.Emitter = SetEmitter(Null, EntityX(d_I\ClosestDoor\OBJ, True), EntityY(d_I\ClosestDoor\OBJ, True), EntityZ(d_I\ClosestDoor\OBJ, True), 16)
