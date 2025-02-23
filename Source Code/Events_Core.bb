@@ -6549,7 +6549,7 @@ Function UpdateEvents%()
 				If PlayerRoom = e\room
 					e\SoundCHN = LoopSoundEx(snd_I\AlarmSFX[2], e\SoundCHN, Camera, e\room\OBJ, 5.0)
 					
-					If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 25.0
+					If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 9.0
 						If Rand(50) = 1
 							SetTemplateVelocity(ParticleEffect[19], -0.007, -0.008, -0.001, 0.0012, -0.007, 0.008)
 							SetEmitter(e\room, EntityX(e\room\Objects[0], True), EntityY(e\room\Objects[0], True), EntityZ(e\room\Objects[0], True), 19)
