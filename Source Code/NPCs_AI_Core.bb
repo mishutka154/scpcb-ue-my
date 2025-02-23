@@ -4759,6 +4759,12 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 		Local r.Rooms, p.Particles, n2.NPCs, w.WayPoints, de.Decals, e.Events, emit.Emitter
 		Local i%
 		
+		; ~ n\State: Main state
+		
+		; ~ n\State2: Trigger time
+		
+		; ~ n\State3: Step back timer
+		
 		UpdateNPCBlinking(n)
 		
 		n\Reload = Max(n\Reload - fps\Factor[0], 0.0)
@@ -4784,7 +4790,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 		
 		Local MyBossIsNotDead% = (MyBoss <> Null And (Not MyBoss\IsDead))
 		
-		Select n\State ; ~ What is this MTF doing
+		Select n\State
 			Case MTF_WANDERING_AROUND
 				;[Block]
 				n\Speed = 0.015
@@ -4836,76 +4842,8 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 									EndIf
 								EndIf
 							Next
-;						ElseIf (Not n_I\Curr106\Contained) And n_I\Curr173\Idle = 3 And PlayerRoom\RoomTemplate\RoomID <> r_cont1_106
-;							For r.Rooms = Each Rooms
-;								If r\RoomTemplate\RoomID = r_cont1_106
-;									If n\IdleTimer = 0.0
-;										FoundChamber = False
-;										Pvt = CreatePivot()
-;										
-;										PositionEntity(Pvt, EntityX(r\RoomDoors[0]\FrameOBJ), r\y + 0.1, EntityZ(r\RoomDoors[0]\FrameOBJ), True)
-;										
-;										If DistanceSquared(EntityX(Pvt), EntityX(n\Collider), EntityZ(Pvt), EntityZ(n\Collider)) < 12.25 Then FoundChamber = True
-;										
-;										FreeEntity(Pvt) : Pvt = 0
-;										
-;										If DistanceSquared(EntityX(n\Collider), EntityX(r\RoomDoors[0]\FrameOBJ), EntityZ(n\Collider), EntityZ(r\RoomDoors[0]\FrameOBJ)) > 2.56 And (Not FoundChamber)
-;											x = EntityX(r\RoomDoors[0]\FrameOBJ)
-;											y = 0.1
-;											z = EntityZ(r\RoomDoors[0]\FrameOBJ)
-;											Exit
-;										ElseIf DistanceSquared(EntityX(n\Collider), EntityX(r\RoomDoors[0]\FrameOBJ), EntityZ(n\Collider), EntityZ(r\RoomDoors[0]\FrameOBJ)) > 2.56 And FoundChamber
-;											n\EnemyX = EntityX(r\RoomDoors[0]\FrameOBJ)
-;											n\EnemyY = 0.1
-;											n\EnemyZ = EntityZ(r\RoomDoors[0]\FrameOBJ)
-;											Exit
-;										Else
-;											LoadNPCSound(n, "SFX\Character\MTF\106\FoundChamber.ogg")
-;											PlayMTFSound(n\Sound, n)
-;											PositionEntity(n\Collider, 0.0, -500.0, 0.0, True)
-;											ResetEntity(n\Collider)
-;											n\IdleTimer = 3.0
-;											Exit
-;										EndIf
-;									Else
-;										If n\IdleTimer > 0.0
-;											If n\IdleTimer = 2.0
-;												LoadNPCSound(n, "SFX\Character\MTF\106\Protocol.ogg")
-;												PlayMTFSound(n\Sound, n)
-;											EndIf
-;											n\IdleTimer = n\IdleTimer - 1.0
-;											Exit
-;										Else
-;											LoadNPCSound(n, "SFX\Character\MTF\106\Cont.ogg")
-;											PlayMTFSound(n\Sound, n)
-;											PlayAnnouncement("SFX\Character\MTF\Announc106Contain.ogg")
-;											
-;											UpdateLever(r\RoomLevers[0]\OBJ)
-;											RotateEntity(r\RoomLevers[0]\OBJ, -80.0, EntityYaw(r\RoomLevers[0]\OBJ), 0.0)
-;											
-;											de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(r\RoomSecurityCams[0]\CameraOBJ, True), EntityY(r\RoomSecurityCams[0]\CameraOBJ, True), EntityZ(r\RoomSecurityCams[0]\CameraOBJ, True), 0.0, 0.0, 0.0, 0.05, 0.01) 
-;											de\Timer = 90000.0 : de\AlphaChange = 0.005 : de\SizeChange = 0.002
-;											RotateEntity(de\OBJ, EntityPitch(r\RoomSecurityCams[0]\CameraOBJ, True) + Rnd(10.0, 20.0), EntityYaw(r\RoomSecurityCams[0]\CameraOBJ, True) + 30.0, EntityRoll(de\OBJ))
-;											MoveEntity(de\OBJ, 0.0, 0.05, 0.2) 
-;											RotateEntity(de\OBJ, EntityPitch(r\RoomSecurityCams[0]\CameraOBJ, True), EntityYaw(r\RoomSecurityCams[0]\CameraOBJ, True), EntityRoll(de\OBJ))
-;											EntityParent(de\OBJ, r\RoomSecurityCams[0]\CameraOBJ)
-;											
-;											For e.Events = Each Events
-;												If r = e\room
-;													e\EventState = 1.0
-;													e\EventState2 = 1.0
-;													e\EventState3 = 4000.0
-;													Exit
-;												EndIf
-;											Next
-;											PositionEntity(n\Collider, EntityX(r\RoomCenter, True), r\y + 0.3, EntityZ(r\RoomCenter, True), True)
-;											ResetEntity(n\Collider)
-;											n_I\Curr106\Contained = True
-;											Exit
-;										EndIf
-;									EndIf
-;								EndIf
-;							Next
+;						ElseIf
+;							TODO: Contain 106
 						Else
 							For r.Rooms = Each Rooms
 								If ((Not IsEqual(r\x, EntityX(n\Collider, True), 12.0)) Lor (Not IsEqual(r\z, EntityZ(n\Collider, True), 12.0))) And Rand(Max(4 - Int(Abs(r\z - EntityZ(n\Collider, True) / RoomSpacing)), 2)) = 1
@@ -4940,7 +4878,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 						EndIf
 						UseDoorNPC(n)
 					EndIf
-					n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
+					n\PathTimer = 70.0 * (Rnd(6.0, 10.0) - 2.0 * MyBossIsNotDead) ; ~ Search again after 6-10 seconds
 				ElseIf n\PathTimer <= 70.0 * 2.5 And MyBoss = Null
 					n\CurrSpeed = 0.0
 					If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
@@ -4976,13 +4914,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 							If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 							FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 						Else
-							If Dist >= 1.0 And n\State3 =< 0.0
-								n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
-								PointEntity(n\Collider, MyBoss\Collider)
-								RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-								TranslateEntity(n\Collider, Cos(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], 0.0, Sin(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], True)
-								AnimateNPC(n, 488.0, 522.0, n\CurrSpeed * 26.0)
-							ElseIf n\State3 =< 0.0
+							If n\State3 =< 0.0
 								n\CurrSpeed = 0.0
 								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -6061,7 +5993,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 							EndIf
 							UseDoorNPC(n)
 						EndIf
-						n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
+						n\PathTimer = 70.0 * (Rnd(6.0, 10.0) - 2.0 * MyBossIsNotDead) ; ~ Search again after 6-10 seconds
 					ElseIf n\PathTimer <= 70.0 * 2.5 And MyBoss = Null
 						n\CurrSpeed = 0.0
 						FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
@@ -6095,13 +6027,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 								If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 								FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
 							Else
-								If Dist >= 1.0 And n\State3 =< 0.0
-									n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
-									PointEntity(n\Collider, MyBoss\Collider)
-									RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-									TranslateEntity(n\Collider, Cos(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], 0.0, Sin(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], True)
-									AnimateNPC(n, 488.0, 522.0, n\CurrSpeed * 26.0)
-								ElseIf n\State3 =< 0.0
+								If n\State3 =< 0.0
 									n\CurrSpeed = 0.0
 									If Rand(35) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 									FinishWalking(n, 488.0, 522.0, n\Speed * 26.0)
