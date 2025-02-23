@@ -110,7 +110,7 @@ PlayStartupVideos()
 fps\LoopDelay = MilliSecs()
 
 Global CursorIMG%
-If opt\DisplayMode = 0 Then CursorIMG = ScaleImageEx(LoadImage_Strict("GFX\Menu\cursor.png"), MenuScale, MenuScale)
+If opt\DisplayMode = 0 Then CursorIMG = ResizeImageEx(LoadImage_Strict("GFX\Menu\cursor.png"), MenuScale, MenuScale)
 
 InitLoadingScreens(LoadingScreensFile)
 
@@ -127,7 +127,7 @@ LoadFonts()
 
 SetFontEx(fo\FontID[Font_Default_Big])
 
-Global BlinkMeterIMG% = ScaleImageEx(LoadImage_Strict("GFX\HUD\blink_meter(1).png"), MenuScale, MenuScale)
+Global BlinkMeterIMG% = ResizeImageEx(LoadImage_Strict("GFX\HUD\blink_meter(1).png"), MenuScale, MenuScale)
 
 RenderLoading(0, GetLocalString("loading", "core.main"))
 
@@ -3601,7 +3601,7 @@ Function UpdateGUI%()
 						PlaySound_Strict(snd_I\HorrorSFX[12])
 						;[End Block]
 				End Select
-				PD_event\Img = ScaleImageEx(LoadImage_Strict("GFX\Overlays\scp_106_face_overlay.png"), MenuScale, MenuScale)
+				PD_event\Img = ResizeImageEx(LoadImage_Strict("GFX\Overlays\scp_106_face_overlay.png"), MenuScale, MenuScale)
 			Else
 				wi\IsNVGBlinking = True
 				If Rand(30) = 1
@@ -3619,7 +3619,7 @@ Function UpdateGUI%()
 					If PD_event\Img2 = 0
 						StopChannel(PD_event\SoundCHN) : PD_event\SoundCHN = 0
 						PlaySound_Strict(PD_event\Sound2, True)
-						PD_event\Img2 = ScaleImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
+						PD_event\Img2 = ResizeImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
 					Else
 						If (Not ChannelPlaying(PD_event\SoundCHN)) Then PD_event\SoundCHN = PlaySound_Strict(PD_event\Sound, True)
 					EndIf
@@ -5250,7 +5250,7 @@ Function UpdateGUI%()
 						SelectedItem\State3 = 1.0
 					EndIf
 					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
@@ -5287,7 +5287,7 @@ Function UpdateGUI%()
 						SelectedItem\State3 = 1.0
 					EndIf
 					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_fine_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_fine_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
@@ -6016,7 +6016,7 @@ Function UpdateGUI%()
 				Case it_badge, it_burntbadge, it_harnbadge
 					;[Block]
 					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						AdaptScreenGamma()
@@ -6046,7 +6046,7 @@ Function UpdateGUI%()
 				Case it_oldpaper
 					;[Block]
 					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
 						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
 						AdaptScreenGamma()
@@ -6737,7 +6737,7 @@ Function RenderGUI%()
 	If PD_event <> Null And PD_event\room = PlayerRoom
 		If (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) And PD_event\EventState2 <> PD_FakeTunnelRoom
 			If PD_event\Img = 0
-				PD_event\Img = ScaleImageEx(LoadImage_Strict("GFX\Overlays\scp_106_face_overlay.png"), MenuScale, MenuScale)
+				PD_event\Img = ResizeImageEx(LoadImage_Strict("GFX\Overlays\scp_106_face_overlay.png"), MenuScale, MenuScale)
 			Else
 				DrawBlock(PD_event\Img, mo\Viewport_Center_X - (Rand(310, 390) * MenuScale), mo\Viewport_Center_Y - (Rand(290, 310) * MenuScale))
 			EndIf
@@ -6745,7 +6745,7 @@ Function RenderGUI%()
 			If PD_event\EventState2 = PD_ThroneRoom
 				If me\BlinkTimer > -16.0 And me\BlinkTimer < -6.0
 					If PD_event\Img2 = 0
-						PD_event\Img2 = ScaleImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
+						PD_event\Img2 = ResizeImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
 					Else
 						DrawBlock(PD_event\Img2, mo\Viewport_Center_X - (Rand(310, 390) * MenuScale), mo\Viewport_Center_Y - (Rand(290, 310) * MenuScale))
 					EndIf
@@ -6758,7 +6758,7 @@ Function RenderGUI%()
 				me\BlinkTimer = -10.0
 				If (Not scribe_event\Img)
 					PlaySound_Strict(snd_I\HorrorSFX[11])
-					scribe_event\Img = ScaleImageEx(LoadImage_Strict("GFX\Overlays\scp_012_overlay.png"), MenuScale, MenuScale)
+					scribe_event\Img = ResizeImageEx(LoadImage_Strict("GFX\Overlays\scp_012_overlay.png"), MenuScale, MenuScale)
 				Else
 					DrawBlock(scribe_event\Img, mo\Viewport_Center_X - (Rand(310, 390) * MenuScale), mo\Viewport_Center_Y - (Rand(290, 310) * MenuScale))
 				EndIf
@@ -7237,7 +7237,7 @@ Function RenderGUI%()
 				Case it_paper, it_oldpaper
 					;[Block]
 					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
 						Select SelectedItem\ItemTemplate\Name
 							Case "Burnt Note" 
 								;[Block]
@@ -8726,7 +8726,7 @@ Function UpdateEnding%()
 		StopBreathSound() : me\Stamina = 100.0
 		
 		If me\EndingScreen = 0
-			me\EndingScreen = ScaleImageEx(LoadImage_Strict("GFX\Menu\ending_screen.png"), MenuScale, MenuScale)
+			me\EndingScreen = ResizeImageEx(LoadImage_Strict("GFX\Menu\ending_screen.png"), MenuScale, MenuScale)
 			
 			ShouldPlay = 22
 			opt\CurrMusicVolume = opt\MusicVolume
@@ -8921,7 +8921,7 @@ Function InitCredits%()
 	fo\FontID[Font_Credits] = LoadFont_Strict(FontsPath + GetFileLocalString(FontsFile, "Credits", "File"), GetFileLocalString(FontsFile, "Credits", "Size"))
 	fo\FontID[Font_Credits_Big] = LoadFont_Strict(FontsPath + GetFileLocalString(FontsFile, "Credits_Big", "File"), GetFileLocalString(FontsFile, "Credits_Big", "Size"))
 	
-	If me\CreditsScreen = 0 Then me\CreditsScreen = ScaleImageEx(LoadImage_Strict("GFX\Menu\credits_screen.png"), MenuScale, MenuScale)
+	If me\CreditsScreen = 0 Then me\CreditsScreen = ResizeImageEx(LoadImage_Strict("GFX\Menu\credits_screen.png"), MenuScale, MenuScale)
 	
 	Repeat
 		l = ReadLine(File)

@@ -247,14 +247,14 @@ Function CreateItemTemplate.ItemTemplates(DisplayName$, Name$, ID%, OBJPath$, In
 		EndIf
 	Next
 	If it\InvImg = 0
-		it\InvImg = ScaleImageEx(LoadImage_Strict(InvImgPath), MenuScale, MenuScale)
+		it\InvImg = ResizeImageEx(LoadImage_Strict(InvImgPath), MenuScale, MenuScale)
 		it\InvImgPath = InvImgPath
 	EndIf
 	
 	If InvImgPath2 <> ""
 		If it\InvImg2 = 0
 			InvImgPath2 = ItemINVIconPath + InvImgPath2
-			it\InvImg2 = ScaleImageEx(LoadImage_Strict(InvImgPath2), MenuScale, MenuScale)
+			it\InvImg2 = ResizeImageEx(LoadImage_Strict(InvImgPath2), MenuScale, MenuScale)
 		EndIf
 	EndIf
 	

@@ -2491,41 +2491,41 @@ Function LoadEntities%()
 	
 	RenderLoading(5, GetLocalString("loading", "icons"))
 	
-	t\IconID[0] = ScaleImageEx(LoadImage_Strict("GFX\HUD\walk_icon.png"), MenuScale, MenuScale)
-	t\IconID[1] = ScaleImageEx(LoadImage_Strict("GFX\HUD\sprint_icon.png"), MenuScale, MenuScale)
-	t\IconID[2] = ScaleImageEx(LoadImage_Strict("GFX\HUD\crouch_icon.png"), MenuScale, MenuScale)
+	t\IconID[0] = ResizeImageEx(LoadImage_Strict("GFX\HUD\walk_icon.png"), MenuScale, MenuScale)
+	t\IconID[1] = ResizeImageEx(LoadImage_Strict("GFX\HUD\sprint_icon.png"), MenuScale, MenuScale)
+	t\IconID[2] = ResizeImageEx(LoadImage_Strict("GFX\HUD\crouch_icon.png"), MenuScale, MenuScale)
 	For i = 3 To 4
 		t\IconID[i] = LoadImage_Strict("GFX\HUD\blink_icon(" + (i - 2) + ").png")
-		t\IconID[i] = ScaleImageEx(t\IconID[i], MenuScale, MenuScale)
+		t\IconID[i] = ResizeImageEx(t\IconID[i], MenuScale, MenuScale)
 	Next
 	For i = 5 To 6
-		t\IconID[i] = ScaleImageEx(LoadImage_Strict("GFX\HUD\hand_symbol(" + (i - 4) + ").png"), MenuScale, MenuScale)
+		t\IconID[i] = ResizeImageEx(LoadImage_Strict("GFX\HUD\hand_symbol(" + (i - 4) + ").png"), MenuScale, MenuScale)
 	Next
-	t\IconID[7] = ScaleImageEx(LoadImage_Strict("GFX\HUD\shield_icon.png"), MenuScale, MenuScale)
+	t\IconID[7] = ResizeImageEx(LoadImage_Strict("GFX\HUD\shield_icon.png"), MenuScale, MenuScale)
 	
-	t\IconID[8] = ScaleImageEx(LoadImage_Strict("GFX\HUD\scp_268_icon.png"), MenuScale, MenuScale)
+	t\IconID[8] = ResizeImageEx(LoadImage_Strict("GFX\HUD\scp_268_icon.png"), MenuScale, MenuScale)
 	
-	t\IconID[9] = ScaleImageEx(LoadImage_Strict("GFX\Menu\QuickLoading.png"), MenuScale, MenuScale)
+	t\IconID[9] = ResizeImageEx(LoadImage_Strict("GFX\Menu\QuickLoading.png"), MenuScale, MenuScale)
 	
 	For i = 0 To 3
-		t\IconID[i + 10] = ScaleImageEx(LoadImage_Strict("GFX\HUD\arrow_symbol.png"), MenuScale, MenuScale)
+		t\IconID[i + 10] = ResizeImageEx(LoadImage_Strict("GFX\HUD\arrow_symbol.png"), MenuScale, MenuScale)
 		RotateImage(t\IconID[i + 10], i * 90.0)
 		HandleImage(t\IconID[i + 10], 0, 0)
 	Next
 	
-	t\ImageID[0] = ScaleImageEx(LoadImage_Strict("GFX\Menu\pause_menu.png"), MenuScale, MenuScale)
+	t\ImageID[0] = ResizeImageEx(LoadImage_Strict("GFX\Menu\pause_menu.png"), MenuScale, MenuScale)
 	
-	t\ImageID[1] = ScaleImageEx(LoadImage_Strict("GFX\HUD\blink_meter(2).png"), MenuScale, MenuScale)
+	t\ImageID[1] = ResizeImageEx(LoadImage_Strict("GFX\HUD\blink_meter(2).png"), MenuScale, MenuScale)
 	
 	For i = 2 To 3
-		t\ImageID[i] = ScaleImageEx(LoadImage_Strict("GFX\HUD\stamina_meter(" + (i - 1) + ").png"), MenuScale, MenuScale)
+		t\ImageID[i] = ResizeImageEx(LoadImage_Strict("GFX\HUD\stamina_meter(" + (i - 1) + ").png"), MenuScale, MenuScale)
 	Next
 	
-	t\ImageID[4] = ScaleImageEx(LoadImage_Strict("GFX\HUD\keypad_HUD.png"), MenuScale, MenuScale)
+	t\ImageID[4] = ResizeImageEx(LoadImage_Strict("GFX\HUD\keypad_HUD.png"), MenuScale, MenuScale)
 	
-	t\ImageID[5] = ScaleImageEx(LoadImage_Strict("GFX\Overlays\scp_294_overlay.png"), MenuScale, MenuScale)
+	t\ImageID[5] = ResizeImageEx(LoadImage_Strict("GFX\Overlays\scp_294_overlay.png"), MenuScale, MenuScale)
 	
-	t\ImageID[6] = ScaleImageEx(LoadAnimImage_Strict("GFX\HUD\NVG_batteries.png", 64, 64, 0, 3), MenuScale, MenuScale, 3)
+	t\ImageID[6] = ResizeImageEx(LoadAnimImage_Strict("GFX\HUD\NVG_batteries.png", 64, 64, 0, 3), MenuScale, MenuScale, 3)
 	MaskImage(t\ImageID[6], 255, 0, 255)
 	
 	t\ImageID[7] = CreateImage(opt\GraphicWidth, opt\GraphicHeight)

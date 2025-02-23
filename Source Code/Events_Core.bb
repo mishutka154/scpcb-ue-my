@@ -10176,7 +10176,7 @@ Function Update035Label%(OBJ%)
 		If itt\Name = "Document SCP-035"
 			If itt\Img <> 0 Then FreeImage(itt\Img) : itt\Img = 0
 			itt\ImgPath = ItemHUDTexturePath + "doc_" + CurrTex + ".png"
-			itt\Img = ScaleImageEx(LoadImage_Strict(itt\ImgPath), MenuScale, MenuScale)
+			itt\Img = ResizeImageEx(LoadImage_Strict(itt\ImgPath), MenuScale, MenuScale)
 			itt\ImgWidth = ImageWidth(itt\Img) / 2
 			itt\ImgHeight = ImageHeight(itt\Img) / 2
 			itt\TexPath = itt\ImgPath
@@ -10194,7 +10194,7 @@ Function Update035Label%(OBJ%)
 	Next
 	
 	FreeImage(S2IMapGet(AchievementsImages, "035"))
-	S2IMapSet(AchievementsImages, "035", ScaleImageEx(LoadImage_Strict("GFX\Menu\achievements\Achv" + CurrTex + ".png"), MenuScale, MenuScale))
+	S2IMapSet(AchievementsImages, "035", ResizeImageEx(LoadImage_Strict("GFX\Menu\achievements\Achv" + CurrTex + ".png"), MenuScale, MenuScale))
 End Function
 
 Function UpdateForest%()

@@ -22,9 +22,9 @@ Function InitAchievements%()
 		Local Image$ = JsonGetString(JsonGetValue(JsonGetArrayValue(Defines, i), "image"))
 		
 		S2IMapSet(AchievementsIndex, ID, i)
-		S2IMapSet(AchievementsImages, ID, ScaleImageEx(LoadImage_Strict("GFX\Menu\Achievements\" + Image), MenuScale, MenuScale))
+		S2IMapSet(AchievementsImages, ID, ResizeImageEx(LoadImage_Strict("GFX\Menu\Achievements\" + Image), MenuScale, MenuScale))
 	Next
-	S2IMapSet(AchievementsImages, "locked", ScaleImageEx(LoadImage_Strict("GFX\Menu\Achievements\AchvLocked.png"), MenuScale, MenuScale))
+	S2IMapSet(AchievementsImages, "locked", ResizeImageEx(LoadImage_Strict("GFX\Menu\Achievements\AchvLocked.png"), MenuScale, MenuScale))
 End Function
 
 Global SNAVUnlocked% = False, EReaderUnlocked% = False

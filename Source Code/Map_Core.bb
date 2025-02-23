@@ -4493,7 +4493,7 @@ Function UpdateScreens%()
 		If s\room = PlayerRoom
 			If InteractObject(s\OBJ, 1.0, 2)
 				SelectedScreen = s
-				s\Img = ScaleImageEx(LoadImage_Strict("GFX\Map\Screens\" + s\ImgPath), MenuScale, MenuScale)
+				s\Img = ResizeImageEx(LoadImage_Strict("GFX\Map\Screens\" + s\ImgPath), MenuScale, MenuScale)
 				PlaySound_Strict(ButtonSFX[0])
 				mo\MouseUp1 = False
 				Exit

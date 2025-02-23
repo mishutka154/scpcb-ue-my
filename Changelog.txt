@@ -22,6 +22,7 @@
 - Now the anomalous clock smoothly changes alpha.
 - Changed auto save timer from 2 mins to 1 min.
 - Player can move the items from clipboard\wallet directly to the inventory.
+- Images now have better quality.
 
 [Launcher]
 - Added wiki button.

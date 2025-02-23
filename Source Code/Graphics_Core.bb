@@ -61,28 +61,25 @@ Function Graphics3DEx%(Width%, Height%, Depth% = 32, Mode% = 2)
 End Function
 
 Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
-	Local SrcWidth%, SrcHeight%
-	Local DestWidth%, DestHeight%
-	Local ScratchImage%, DestImage%
-	Local SrcBuffer%, ScratchBuffer%, DestBuffer%
-	Local X1%, Y1%, X2%, Y2%, Frame%
-	
 	; ~ Get the width and height of the source image
-	SrcWidth = ImageWidth(SrcImage)
-	SrcHeight = ImageHeight(SrcImage)
+	Local SrcWidth% = ImageWidth(SrcImage)
+	Local SrcHeight% = ImageHeight(SrcImage)
 	
 	; ~ Calculate the width and height of the dest image, or the scale
-	DestWidth = Floor(SrcWidth * ScaleX)
-	DestHeight = Floor(SrcHeight * ScaleY)
+	Local DestWidth% = Floor(SrcWidth * ScaleX)
+	Local DestHeight% = Floor(SrcHeight * ScaleY)
 	
 	; ~ If the image does not need to be scaled, just copy the image and exit the function
 	If SrcWidth = DestWidth And SrcHeight = DestHeight Then Return(SrcImage)
 	
 	; ~ Create a scratch image that is as tall as the source image, and as wide as the destination image
-	ScratchImage = CreateImage(DestWidth, SrcHeight, Frames)
+	Local ScratchImage% = CreateImage(DestWidth, SrcHeight, Frames)
 	
 	; ~ Create the destination image
-	DestImage = CreateImage(DestWidth, DestHeight, Frames)
+	Local DestImage% = CreateImage(DestWidth, DestHeight, Frames)
+	
+	Local SrcBuffer%, ScratchBuffer%, DestBuffer%
+	Local X1%, Y1%, X2%, Y2%, Frame%
 	
 	For Frame = 0 To Frames - 1
 		; ~ Get pointers to the image buffers for each frame
@@ -113,22 +110,33 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	Return(DestImage)
 End Function
 
-Function ResizeImageEx%(SrcImage%, ScaleX#, ScaleY#)
+Function ResizeImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
+	; ~ Get the width and height of the source image
 	Local SrcWidth% = ImageWidth(SrcImage)
 	Local SrcHeight% = ImageHeight(SrcImage)
+	
+	; ~ Calculate the width and height of the dest image, or the scale
 	Local DestWidth% = Floor(SrcWidth * ScaleX)
 	Local DestHeight% = Floor(SrcHeight * ScaleY)
 	
+	; ~ If the image does not need to be scaled, just copy the image and exit the function
 	If SrcWidth = DestWidth And SrcHeight = DestHeight Then Return(SrcImage)
 	
-	Local DestImage% = CreateImage(DestWidth, DestHeight)
+	; ~ Create the destination image
+	Local DestImage% = CreateImage(DestWidth, DestHeight, Frames)
+	
+	Local Frame%
+	Local Pixel# = 1.0 / SMALLEST_POWER_TWO * 8.0
 	Local BufferBack% = BackBuffer()
 	
-	CopyRect(0, 0, SrcWidth, SrcHeight, SMALLEST_POWER_TWO_HALF - SrcWidth / 2, SMALLEST_POWER_TWO_HALF - SrcHeight / 2, ImageBuffer(SrcImage), TextureBuffer(FresizeTexture))
-	SetBuffer(BufferBack)
-	ScaleRender(0, 0, SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestWidth) / Float(SrcWidth), SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestHeight) / Float(SrcHeight))
-	CopyRect(mo\Viewport_Center_X - DestWidth / 2, mo\Viewport_Center_Y - DestHeight / 2, DestWidth, DestHeight, 0, 0, BufferBack, ImageBuffer(DestImage))
-	
+	; ~ Duplicate image
+	For Frame = 0 To Frames - 1
+		CopyRect(0, 0, SrcWidth, SrcHeight, SMALLEST_POWER_TWO_HALF - SrcWidth / 2, SMALLEST_POWER_TWO_HALF - SrcHeight / 2, ImageBuffer(SrcImage, Frame), TextureBuffer(FresizeTexture))
+		SetBuffer(BufferBack)
+		ScaleRender(0, 0, SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestWidth) / Float(SrcWidth) + Pixel, SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestHeight) / Float(SrcHeight) + Pixel)
+		CopyRect(mo\Viewport_Center_X - DestWidth / 2, mo\Viewport_Center_Y - DestHeight / 2, DestWidth, DestHeight, 0, 0, BufferBack, ImageBuffer(DestImage, Frame))
+	Next
+	; ~ Free the source image
 	FreeImage(SrcImage) : SrcImage = 0
 	
 	; ~ Return the new image
