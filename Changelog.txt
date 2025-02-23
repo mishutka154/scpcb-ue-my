@@ -27,6 +27,8 @@
 - Added wiki button.
 
 [Rooms]
+- Gate A is now accessible by disabling remote door controls without talking with SCP-079.
+
 - Added penny in «room1_storage».
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
 - Added picture frame of Mark Sibly in «room2_scientists_2».
