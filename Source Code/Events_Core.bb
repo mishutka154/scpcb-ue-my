@@ -1581,6 +1581,7 @@ Function UpdateEvents%()
 									
 									LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardRadio.ogg")
 								ElseIf e\room\NPC[0]\Frame > 285.9
+									e\room\NPC[0]\GravityMult = 1.0
 									e\room\NPC[0]\IsDead = True
 									e\room\NPC[0]\PrevState = 2
 								EndIf
