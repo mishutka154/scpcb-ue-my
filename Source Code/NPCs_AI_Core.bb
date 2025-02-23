@@ -4729,9 +4729,6 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 	If n\OBJ2 <> 0
 		PositionEntity(n\OBJ2, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		RotateEntity(n\OBJ2, 0.0, EntityYaw(n\Collider), 0.0)
-		
-		PositionEntity(n\OBJ, EntityX(n\OBJ2) + 1.75, EntityY(n\OBJ2) + 0.33, EntityZ(n\OBJ2) + 0.42)
-		RotateEntity(n\OBJ, 0.0, EntityYaw(n\OBJ2) + 180.0, 0.0)
 	Else
 		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider) + 180.0, 0.0)

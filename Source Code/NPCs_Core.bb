@@ -548,15 +548,31 @@ End Function
 
 Function CreateNPCAsset%(n.NPCs)
 	Local Temp#
+	Local PrevYaw#, PrevFrame#, PrevX#, PrevY#, PrevZ#
 	
 	Select n\NPCType
 		Case NPCTypeGuard
 			;[Block]
+			PrevYaw = EntityYaw(n\OBJ)
+			PrevX = EntityX(n\OBJ)
+			PrevY = EntityY(n\OBJ)
+			PrevZ = EntityZ(n\OBJ)
+			
+			RotateEntity(n\OBJ, 0.0, -180.0, 0.0)
+			PositionEntity(n\OBJ, 0.0, 0.0, 0.0)
+			
 			n\OBJ2 = CopyEntity(n_I\NPCModelID[NPC_VEHICLE_MODEL])
 			Temp = IniGetFloat(NPCsFile, "Guard", "Scale") / 2.5
 			Temp = (Temp + 1.68) / MeshWidth(n\OBJ2)
 			ScaleEntity(n\OBJ2, Temp, Temp, Temp)
+			
+			PositionEntity(n\OBJ, -0.42, 0.3, 1.75, True)
+			RotateEntity(n\OBJ, 0.0, EntityYaw(n\OBJ2, True) + 180.0, 0.0, True)
+			EntityParent(n\OBJ, n\OBJ2)
 			HideEntity(n\OBJ2)
+			
+			PositionEntity(n\OBJ2, PrevX, PrevY, PrevZ)
+			RotateEntity(n\OBJ2, 0.0, PrevYaw + 180.0, 0.0)
 			
 			RemoveShadow(n\Shadow)
 			n\Shadow = CreateShadow(n\OBJ2, MeshWidth(n\OBJ2) * Temp, MeshDepth(n\OBJ2) * Temp)
@@ -565,16 +581,15 @@ Function CreateNPCAsset%(n.NPCs)
 			;[Block]
 			If n\OBJ2 <> 0
 				EntityParent(n\OBJ2, 0)
-				
 				FreeEntity(n\OBJ2) : n\OBJ2 = 0
 			EndIf
 			
 			; ~ Save model parameters
-			Local PrevYaw# = EntityYaw(n\OBJ)
-			Local PrevX# = EntityX(n\OBJ)
-			Local PrevY# = EntityY(n\OBJ)
-			Local PrevZ# = EntityZ(n\OBJ)
-			Local PrevFrame# = AnimTime(n\OBJ)
+			PrevYaw = EntityYaw(n\OBJ)
+			PrevX = EntityX(n\OBJ)
+			PrevY = EntityY(n\OBJ)
+			PrevZ = EntityZ(n\OBJ)
+			PrevFrame = AnimTime(n\OBJ)
 			
 			; ~ Reset parameters
 			RotateEntity(n\OBJ, 0.0, 0.0, 0.0)
@@ -625,6 +640,7 @@ Function RemoveNPC%(n.NPCs)
 	If n\Sound2 <> 0 Then FreeSound_Strict(n\Sound2) : n\Sound2 = 0
 	
 	If n\Shadow <> Null Then RemoveShadow(n\Shadow)
+	EntityParent(n\OBJ, 0)
 	If n\OBJ2 <> 0 Then FreeEntity(n\OBJ2) : n\OBJ2 = 0
 	If n\OBJ3 <> 0 Then FreeEntity(n\OBJ3) : n\OBJ3 = 0
 	FreeEntity(n\Collider) : n\Collider = 0
