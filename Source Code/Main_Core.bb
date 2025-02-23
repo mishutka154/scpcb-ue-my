@@ -6113,7 +6113,42 @@ Function UpdateGUI%()
 					Use1123()
 					SelectedItem = Null
 					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden, it_paper
+				Case it_paper
+					;[Block]
+					If SelectedItem\ItemTemplate\Img = 0
+						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
+						Select SelectedItem\ItemTemplate\Name
+							Case "Burnt Note" 
+								;[Block]
+								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
+								Color(0, 0, 0)
+								SetFontEx(fo\FontID[Font_Default])
+								TextEx(277 * MenuScale, 469 * MenuScale, CODE_DR_MAYNARD, True, True)
+								SetBuffer(BackBuffer())
+								;[End Block]
+							Case "Unknown Note"
+								;[Block]
+								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
+								Color(85, 85, 140)
+								SetFontEx(fo\FontID[Font_Journal])
+								TextEx(300 * MenuScale, 275 * MenuScale, CODE_O5_COUNCIL, True, True)
+								SetBuffer(BackBuffer())
+								;[End Block]
+							Case "Document SCP-372"
+								;[Block]
+								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
+								Color(37, 45, 137)
+								SetFontEx(fo\FontID[Font_Journal])
+								TextEx(383 * MenuScale, 734 * MenuScale, CODE_MAINTENANCE_TUNNELS, True, True)
+								SetBuffer(BackBuffer())
+								;[End Block]
+						End Select
+						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
+						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
+						AdaptScreenGamma()
+					EndIf
+					;[End Block]
+				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden
 					;[Block]
 					; ~ Skip this line
 					;[End Block]
@@ -7234,47 +7269,7 @@ Function RenderGUI%()
 						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\State3)
 					EndIf
 					;[End Block]
-				Case it_paper, it_oldpaper
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						Select SelectedItem\ItemTemplate\Name
-							Case "Burnt Note" 
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(0, 0, 0)
-								SetFontEx(fo\FontID[Font_Default])
-								TextEx(277 * MenuScale, 469 * MenuScale, CODE_DR_MAYNARD, True, True)
-								SetBuffer(BackBuffer())
-								;[End Block]
-							Case "Unknown Note"
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(85, 85, 140)
-								SetFontEx(fo\FontID[Font_Journal])
-								TextEx(300 * MenuScale, 275 * MenuScale, CODE_O5_COUNCIL, True, True)
-								SetBuffer(BackBuffer())
-								;[End Block]
-							Case "Document SCP-372"
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(37, 45, 137)
-								SetFontEx(fo\FontID[Font_Journal])
-								TextEx(383 * MenuScale, 734 * MenuScale, CODE_MAINTENANCE_TUNNELS, True, True)
-								SetBuffer(BackBuffer())
-								;[End Block]
-						End Select
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						AdaptScreenGamma()
-					EndIf
-					If me\BlinkTimer > -6.0 Then DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
-					;[End Block]
-				Case it_scp1025
-					;[Block]
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
-					;[End Block]
-				Case it_fine1025
+				Case it_paper, it_oldpaper, it_scp1025, it_fine1025
 					;[Block]
 					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
