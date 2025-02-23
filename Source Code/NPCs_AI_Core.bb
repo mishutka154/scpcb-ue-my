@@ -4312,7 +4312,7 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 					DetectDistance = 484.0
 					
 					; ~ Increase accuracy if the player is going slow
-					ShootAccuracy = 0.5 - (12.0 * me\CurrSpeed)
+					ShootAccuracy = 0.6 - (12.0 * me\CurrSpeed)
 				EndIf
 				
 				If Dist < DetectDistance

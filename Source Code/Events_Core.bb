@@ -3475,10 +3475,8 @@ Function UpdateEvents%()
 					Next
 					If (Not RoomExists) Then e\EventState3 = 1.0
 					
-					If (Not RemoteDoorOn)
+					If (Not RemoteDoorOn) Lor (RemoteDoorOn And e\EventState3 = 0.0)
 						e\room\RoomDoors[1]\Locked = 1
-					ElseIf RemoteDoorOn And e\EventState3 = 0.0
-						e\room\RoomDoors[1]\Locked = 2
 					Else
 						e\room\RoomDoors[1]\Locked = 0
 						
@@ -3516,9 +3514,7 @@ Function UpdateEvents%()
 					Next
 					If (Not RoomExists) Then e\EventState3 = 1.0
 					
-					If (Not RemoteDoorOn)
-						e\room\RoomDoors[1]\Locked = 1
-					ElseIf RemoteDoorOn And e\EventState3 = 0.0
+					If RemoteDoorOn And e\EventState3 = 0.0
 						e\room\RoomDoors[1]\Locked = 2
 					Else
 						e\room\RoomDoors[1]\Locked = 0
@@ -9704,6 +9700,7 @@ Function UpdateEndings%()
 						
 						If n_I\Curr106\Contained
 							e\room\RoomDoors[0]\Locked = 1
+							e\room\RoomDoors[0]\DisableWaypoint = True
 							
 							PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
 							ResetEntity(e\room\NPC[5]\Collider)
@@ -10072,8 +10069,6 @@ Function UpdateEndings%()
 										EndIf
 									ElseIf e\EventState2 = 2.0
 										MakeMeUnplayable()
-										me\SelectedEnding = Ending_A2
-										
 										e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\Ending\GateA\STOPRIGHTTHERE.ogg"), True)
 										e\EventState2 = 3.0
 									ElseIf e\EventState2 = 3.0
@@ -10082,7 +10077,25 @@ Function UpdateEndings%()
 										If (Not ChannelPlaying(e\SoundCHN))
 											ClearCheats()
 											
-											PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
+											If (S2IMapSize(UnlockedAchievements) - 1 - S2IMapContains(UnlockedAchievements, "apollyon") - S2IMapContains(UnlockedAchievements, "keter")) => (S2IMapSize(AchievementsIndex) - 4)
+												me\SelectedEnding = Ending_A2
+												PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
+												msg\DeathMsg = ""
+											Else
+												PlaySound_Strict(LoadTempSound("SFX\Ending\GateB\Gunshot.ogg"))
+												Local Tex% = LoadTexture_Strict("GFX\Overlays\blood_overlay.png", 1, DeleteMapTextures, False)
+			
+												t\OverlayID[10] = CreateSprite(ArkBlurCam)
+												ScaleSprite(t\OverlayID[10], 1.001, GraphicHeightFloat / GraphicWidthFloat)
+												EntityTexture(t\OverlayID[10], Tex)
+												EntityBlend(t\OverlayID[10], 2)
+												EntityFX(t\OverlayID[10], 1)
+												EntityOrder(t\OverlayID[10], -1003)
+												MoveEntity(t\OverlayID[10], 0.0, 0.0, 1.0)
+												DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+												
+												msg\DeathMsg = Format(GetLocalString("death", "ntf.gatea"), SubjectName)
+											EndIf
 											
 											For n.NPCs = Each NPCs
 												RemoveNPC(n)
@@ -10090,7 +10103,6 @@ Function UpdateEndings%()
 											
 											me\LightFlash = 1.0
 											me\Terminated = True
-											msg\DeathMsg = ""
 											me\BlinkTimer = -10.0
 											
 											RemoveEvent(e)
