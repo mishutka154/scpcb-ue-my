@@ -2966,20 +2966,20 @@ Function FillRoom%(r.Rooms)
 		Case r_gate_a_entrance
 			;[Block]
 			; ~ Elevator door
-			d.Doors = CreateDoor(r, r\x + 720.0 * RoomScale, r\y, r\z + 512.0 * RoomScale, -90.0, True, ELEVATOR_DOOR)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z + 1815.0 * RoomScale, -180.0, True, ELEVATOR_DOOR)
 			r\RoomDoors.Doors[0] = d
 			
-			d.Doors = CreateDoor(r, r\x, r\y, r\z - 360.0 * RoomScale, 0.0, False, BIG_DOOR, KEY_CARD_5)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z + 1008.0 * RoomScale, 0.0, False, BIG_DOOR, KEY_CARD_5)
 			d\DisableWaypoint = True : d\MTFClose = False
-			PositionEntity(d\Buttons[1], r\x + 422.0 * RoomScale, EntityY(d\Buttons[1], True), r\z - 576.0 * RoomScale, True)
-			RotateEntity(d\Buttons[1], 0.0, -90.0, 0.0, True)
-			PositionEntity(d\Buttons[0], r\x - 541.0 * RoomScale, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
-			RotateEntity(d\Buttons[0], 0.0, -220.0, 0.0, True)
+			;PositionEntity(d\Buttons[1], r\x + 422.0 * RoomScale, EntityY(d\Buttons[1], True), r\z - 576.0 * RoomScale, True)
+			;RotateEntity(d\Buttons[1], 0.0, -90.0, 0.0, True)
+			;PositionEntity(d\Buttons[0], r\x - 541.0 * RoomScale, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			;RotateEntity(d\Buttons[0], 0.0, -220.0, 0.0, True)
 			r\RoomDoors.Doors[1] = d
 			
 			; ~ Elevator pivot
 			r\Objects[0] = CreatePivot()
-			PositionEntity(r\Objects[0], r\x + 1024.0 * RoomScale, r\y, r\z + 512.0 * RoomScale)
+			PositionEntity(r\Objects[0], r\x, r\y, r\z + 2120.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
 			
 			CreateCustomCenter(r, r\x, r\z - 720.0 * RoomScale)
