@@ -700,7 +700,7 @@ Function UpdateEvents%()
 						PointEntity(e\room\NPC[1]\Collider, e\room\NPC[2]\Collider)
 						
 						If e\room\NPC[0] = Null
-							TFormPoint(3512.0, 827.0, 4682.0, e\room\OBJ, 0)
+							TFormPoint(3512.0, 842.0, 4682.0, e\room\OBJ, 0)
 							e\room\NPC[3] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 							e\room\NPC[3]\State = 8.0 : e\room\NPC[3]\IsDead = True
 							SetNPCFrame(e\room\NPC[3], 286.0)
@@ -981,7 +981,7 @@ Function UpdateEvents%()
 					If e\room\Dist < 7.0
 						e\room\RoomTemplate\DisableDecals = 1
 						If I_005\ChanceToSpawn = 3
-							TFormPoint(375.0, 52.0, -875.0, e\room\OBJ, 0)
+							TFormPoint(375.0, 71.0, -875.0, e\room\OBJ, 0)
 							n.NPCs = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 							n\State = 8.0 : n\IsDead = True
 							SetNPCFrame(n, 287.0)
@@ -991,7 +991,7 @@ Function UpdateEvents%()
 							de.Decals = CreateDecal(DECAL_BLOOD_2, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 270.0, 0.0, 0.3)
 							EntityParent(de\OBJ, e\room\OBJ)
 						Else
-							TFormPoint(-296.0, 52.0, -240.0, e\room\OBJ, 0)
+							TFormPoint(-296.0, 71.0, -240.0, e\room\OBJ, 0)
 							n.NPCs = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 							n\State = 8.0 : n\IsDead = True
 							SetNPCFrame(n, 288.0)
@@ -1006,7 +1006,7 @@ Function UpdateEvents%()
 				If PlayerRoom = e\room
 					If EntityY(me\Collider) < (-9500.0) * RoomScale
 						If e\EventState = 0.0
-							TFormPoint(-2260.0, -10632.0, 1000.0, e\room\OBJ, 0)
+							TFormPoint(-2260.0, -10617.0, 1000.0, e\room\OBJ, 0)
 							n.NPCs = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 							n\State = 8.0 : n\IsDead = True
 							SetNPCFrame(n, 288.0)
@@ -3070,7 +3070,7 @@ Function UpdateEvents%()
 					Case 0.0
 						;[Block]
 						If e\room\Dist < 6.0 And e\room\Dist > 0.0
-							TFormPoint(1322.0, 54.0, 491.0, e\room\OBJ, 0)
+							TFormPoint(1322.0, 71.0, 491.0, e\room\OBJ, 0)
 							e\room\NPC[0] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 							e\room\NPC[0]\State = 8.0 : e\room\NPC[0]\IsDead = True
 							SetNPCFrame(e\room\NPC[0], 287.0)
@@ -5839,7 +5839,7 @@ Function UpdateEvents%()
 			Case e_room3_2_hcz_guard
 				;[Block]
 				If e\room\Dist < 8.0
-					TFormPoint(-190.0, 60.0, 190.0, e\room\OBJ, 0)
+					TFormPoint(-190.0, 75.0, 190.0, e\room\OBJ, 0)
 					n.NPCs = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 					n\State = 8.0 : n\IsDead = True
 					SetNPCFrame(n, 288.0)
@@ -6538,7 +6538,7 @@ Function UpdateEvents%()
 				;[Block]
 				If e\room\Dist < 6.0
 					If e\room\NPC[0] = Null
-						TFormPoint(-156.0, 55.0, 121.0, e\room\OBJ, 0)
+						TFormPoint(-156.0, 71.0, 121.0, e\room\OBJ, 0)
 						e\room\NPC[0] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 						e\room\NPC[0]\State = 8.0 : e\room\NPC[0]\IsDead = True
 						SetNPCFrame(e\room\NPC[0], 288.0)
@@ -7100,7 +7100,7 @@ Function UpdateEvents%()
 			Case e_room2_shaft
 				;[Block]
 				If e\room\NPC[0] = Null
-					TFormPoint(1344.0, -743.0, -384.0, e\room\OBJ, 0)
+					TFormPoint(1344.0, -728.0, -384.0, e\room\OBJ, 0)
 					e\room\NPC[0] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 					e\room\NPC[0]\State = 8.0 : e\room\NPC[0]\IsDead = True
 					SetNPCFrame(e\room\NPC[0], 286.0)
