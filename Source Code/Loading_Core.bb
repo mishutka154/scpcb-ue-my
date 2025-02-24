@@ -546,7 +546,10 @@ Function LoadDoors%()
 	d_I\DoorFrameModelID[DOOR_WOODEN_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorWoodenFrame.b3d")
 	
 	d_I\DoorColl = LoadMesh_Strict("GFX\Map\Props\DoorColl.b3d")
+	HideEntity(d_I\DoorColl)
+	
 	d_I\BigDoorColl = LoadMesh_Strict("GFX\Map\Props\BigDoorColl.b3d")
+	HideEntity(d_I\BigDoorColl)
 	
 	For i = 0 To MaxDoorFrameModelIDAmount - 1
 		HideEntity(d_I\DoorFrameModelID[i])
