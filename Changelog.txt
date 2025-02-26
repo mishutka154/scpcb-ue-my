@@ -11,6 +11,7 @@
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
 - Removed leaning.
 - Removed buttons glowing.
+- Removed Dr. Maynard and Franklin's loading screens.
 
 - SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
 - Partially reverted SCP-079 increased chances to hack monitors with SCP-895.
