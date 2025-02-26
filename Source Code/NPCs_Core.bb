@@ -931,7 +931,7 @@ Function UpdateNPCs%()
 End Function
 
 Function TeleportCloser%(n.NPCs)
-	If InFacility > UpperFloor Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Then Return
+	If PlayerInReachableRoom(True) Then Return
 	
 	Local ClosestDist# = 0.0
 	Local ClosestWaypoint.WayPoints
