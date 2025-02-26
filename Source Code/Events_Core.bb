@@ -893,6 +893,10 @@ Function UpdateEvents%()
 						If i = 0
 							PlaySound_Strict(LoadTempSound("SFX\Room\Intro\IA\Scripted\Scripted5.ogg"))
 							CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
+						ElseIf i = 2
+							CreateHintMsg(GetLocalString("msg", "item.combine.swap"), 6.0, True)
+						ElseIf i = 3
+							CreateHintMsg(GetLocalString("msg", "right.click"), 6.0, True)
 						EndIf
 						If i > 0 And i < 26
 							If (Not CommotionState[i]) ; ~ Prevents the same commotion file from playing more then once
@@ -8545,7 +8549,10 @@ Function UpdateIntro%()
 							;[End Block]
 						Case INTRO_CELL_REQUESTING
 							;[Block]
-							LightRenderDistance = 16.0
+							If LightRenderDistance <> 16.0
+								CreateHintMsg(GetLocalString("msg", "doc.drop"))
+								LightRenderDistance = 16.0
+							EndIf
 							
 							If (Not ChannelPlaying(e\room\NPC[3]\SoundCHN))
 								LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\ExitCell.ogg")
@@ -10084,8 +10091,9 @@ Function UpdateEndings%()
 												msg\DeathMsg = ""
 											Else
 												PlaySound_Strict(LoadTempSound("SFX\Ending\GateB\Gunshot.ogg"))
+												
 												Local Tex% = LoadTexture_Strict("GFX\Overlays\blood_overlay.png", 1, DeleteMapTextures, False)
-			
+												
 												t\OverlayID[10] = CreateSprite(ArkBlurCam)
 												ScaleSprite(t\OverlayID[10], 1.001, GraphicHeightFloat / GraphicWidthFloat)
 												EntityTexture(t\OverlayID[10], Tex)
