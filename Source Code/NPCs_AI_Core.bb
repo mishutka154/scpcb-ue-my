@@ -1575,7 +1575,7 @@ Function UpdateNPCType096%(n.NPCs)
 											PlaySoundEx(snd_I\OpenDoorFastSFX, Camera, n\Path[n\PathLocation]\door\FrameOBJ)
 										EndIf
 									EndIf
-									If Dist2 < PathLocationDist Then n\PathLocation = n\PathLocation + 1
+									If Dist2 < (PathLocationDist + 0.03) Then n\PathLocation = n\PathLocation + 1
 								EndIf
 							EndIf
 							n\PathTimer = Max(0.0, n\PathTimer - fps\Factor[0])
@@ -1587,8 +1587,8 @@ Function UpdateNPCType096%(n.NPCs)
 					EndIf
 				EndIf
 				
-				If Rand(50) = 1
-					If Dist > 400.0 Then TeleportCloser(n)
+				If Rand(25) = 1
+					If Dist > 225.0 Then TeleportCloser(n)
 				EndIf
 			Else
 				AnimateNPC(n, Min(27.0, AnimTime(n\OBJ)), 193.0, 0.5)
@@ -5289,7 +5289,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 							Else
 								PositionEntity(n\OBJ, n\EnemyX, n\EnemyY, n\EnemyZ, True)
 								If DistanceSquared(EntityX(n\Collider, True), n\EnemyX, EntityZ(n\Collider, True), n\EnemyZ) < PathLocationDist Lor (Not EntityVisible(n\OBJ, n\Collider))
-									If Rand(35) = 1 Then
+									If Rand(35) = 1
 										RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 										
 										For w.WayPoints = Each WayPoints
