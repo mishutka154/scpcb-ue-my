@@ -16,11 +16,7 @@ Function CreateParticle.Particles(ID%, x#, y#, z#, Size#, Gravity# = 1.0, LifeTi
 	p.Particles = New Particles
 	p\OBJ = CreateSprite()
 	PositionEntity(p\OBJ, x, y, z, True)
-	If ID = PARTICLE_WHITE_SMOKE
-		EntityTexture(p\OBJ, p_I\ParticleTextureID[ID], Rand(0, 3))
-	Else
-		EntityTexture(p\OBJ, p_I\ParticleTextureID[ID])
-	EndIf
+	EntityTexture(p\OBJ, p_I\ParticleTextureID[ID])
 	RotateEntity(p\OBJ, 0.0, 0.0, Rnd(360.0))
 	SpriteViewMode(p\OBJ, 3)
 	
