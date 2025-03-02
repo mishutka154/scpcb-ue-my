@@ -1137,7 +1137,7 @@ Function FillRoom%(r.Rooms)
 					EndIf
 				EndIf
 			Next
-			If r\Objects[2] = 0 Then r\Objects[2] = LoadRMesh("GFX\Map\room2_tesla_lcz_blinds.rmesh", Null, False)
+			If r\Objects[2] = 0 Then r\Objects[2] = LoadRMesh("GFX\Map\room2_tesla_blinds.rmesh", Null, False)
 			ScaleEntity(r\Objects[2], RoomScale, RoomScale, RoomScale)
 			EntityParent(r\Objects[2], r\OBJ)
 			HideEntity(r\Objects[2])

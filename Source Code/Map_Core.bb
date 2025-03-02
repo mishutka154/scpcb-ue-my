@@ -1238,8 +1238,8 @@ Function PlaceMapCreatorForest%(fr.Forest, x#, y#, z#, r.Rooms)
 	fr\Forest_Pivot = CreatePivot()
 	PositionEntity(fr\Forest_Pivot, x, y, z, True)
 	
-	Local hMap%[5], Mask%[5]
 	; ~ Load assets
+	Local hMap%[5], Mask%[5]
 	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.png")
 	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.png")
 	
