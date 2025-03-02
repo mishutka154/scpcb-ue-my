@@ -274,6 +274,9 @@ Function UpdateGame%()
 	CatchErrors("UpdateGame()")
 	
 	While fps\Accumulator > 0.0
+		fps\Accumulator = fps\Accumulator - TICK_DURATION
+		If fps\Accumulator <= 0.0 Then CaptureWorld()
+		
 		If MenuOpen Lor ConsoleOpen Then fps\Factor[0] = 0.0
 		
 		UpdateMouseInput()
@@ -666,9 +669,6 @@ Function UpdateGame%()
 		Else
 			If me\SelectedEnding = -1 Then UpdateMenu()
 		EndIf
-		
-		fps\Accumulator = fps\Accumulator - TICK_DURATION
-		If fps\Accumulator <= 0.0 Then CaptureWorld()
 	Wend
 	
 	; ~ Go out of function immediately if the game has been quit
