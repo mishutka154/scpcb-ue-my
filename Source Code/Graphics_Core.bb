@@ -1,8 +1,24 @@
 Global FresizeImage%, FresizeTexture%, FresizeTexture2%
 Global FresizeCam%
 
+Global ResizeQuad%, ResizeTexture%, ResizeImageCamera%
+
 Global SMALLEST_POWER_TWO#
 Global SMALLEST_POWER_TWO_HALF#
+
+Function CreateQuad%()
+	Local Quad% = CreateMesh()
+	Local SF% = CreateSurface(Quad)
+	Local v0% = AddVertex(SF, -1.0,  1.0, 0.0, 0.0, 0.0)
+	Local v1% = AddVertex(SF,  1.0,  1.0, 0.0, 1.0, 0.0)
+	Local v2% = AddVertex(SF,  1.0, -1.0, 0.0, 1.0, 1.0)
+	Local v3% = AddVertex(SF, -1.0, -1.0, 0.0, 0.0, 1.0)
+	
+	AddTriangle(SF, v0, v1, v2)
+	AddTriangle(SF, v0, v2, v3)
+	UpdateNormals(Quad)
+	Return(Quad)
+End Function
 
 Function InitFastResize%()
 	; ~ Create and configure a camera
@@ -46,6 +62,20 @@ Function InitFastResize%()
 	
 	; ~ Hide the camera until needed
 	HideEntity(FresizeCam)
+	
+	; ~ Create another texture for image scaling
+	ResizeTexture = CreateTexture(Max(SMALLEST_POWER_TWO, 2048.0), Max(SMALLEST_POWER_TWO, 2048.0), 16 + 32 + 256)
+	
+	ResizeImageCamera = CreateCamera()
+	CameraRange(ResizeImageCamera, 0.1, 1.5)
+	TranslateEntity(ResizeImageCamera, (1.0 / Float(TextureWidth(ResizeTexture))), -(1.0 / Float(TextureHeight(ResizeTexture))), -1.0)
+	
+	ResizeQuad = CreateQuad()
+	EntityTexture(ResizeQuad, ResizeTexture)
+	EntityFX(ResizeQuad, 1)
+	EntityParent(ResizeQuad, ResizeImageCamera)
+	MoveEntity(ResizeImageCamera, 0.0, 0.0, -10000.0)
+	HideEntity(ResizeImageCamera)
 End Function
 
 Function Graphics3DEx%(Width%, Height%, Depth% = 32, Mode% = 2)
@@ -68,7 +98,7 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	; ~ Calculate the width and height of the dest image, or the scale
 	Local DestWidth% = Floor(SrcWidth * ScaleX)
 	Local DestHeight% = Floor(SrcHeight * ScaleY)
-	
+
 	; ~ If the image does not need to be scaled, just copy the image and exit the function
 	If SrcWidth = DestWidth And SrcHeight = DestHeight Then Return(SrcImage)
 	
@@ -98,6 +128,7 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 			Y1 = Floor(Y2 / ScaleY)
 			CopyRect(0, Y1, DestWidth, 1, 0, Y2, ScratchBuffer, DestBuffer)
 		Next
+		;BufferDirty(ImageBuffer(DestImage, Frame))
 	Next
 	
 	; ~ Free the scratch image
@@ -106,18 +137,28 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	FreeImage(SrcImage) : SrcImage = 0
 	
 	; ~ Return the new image
-	If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(DestImage))
 	Return(DestImage)
+End Function
+
+Function RenderImage(WidthScale#, HeightScale#)
+	If Camera <> 0 Then HideEntity(Camera)
+	WireFrame(0)
+	ScaleEntity(ResizeQuad, WidthScale, HeightScale, 0.01)
+	ShowEntity(ResizeImageCamera)
+	RenderWorld()
+	HideEntity(ResizeImageCamera)
+	WireFrame(WireFrameState)
+	If Camera <> 0 Then ShowEntity(Camera)
 End Function
 
 Function ResizeImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	; ~ Get the width and height of the source image
-	Local SrcWidth% = ImageWidth(SrcImage)
-	Local SrcHeight% = ImageHeight(SrcImage)
+	Local SrcWidth# = ImageWidth(SrcImage)
+	Local SrcHeight# = ImageHeight(SrcImage)
 	
 	; ~ Calculate the width and height of the dest image, or the scale
-	Local DestWidth% = Floor(SrcWidth * ScaleX)
-	Local DestHeight% = Floor(SrcHeight * ScaleY)
+	Local DestWidth# = SrcWidth * ScaleX
+	Local DestHeight# = SrcHeight * ScaleY
 	
 	; ~ If the image does not need to be scaled, just copy the image and exit the function
 	If SrcWidth = DestWidth And SrcHeight = DestHeight Then Return(SrcImage)
@@ -125,30 +166,84 @@ Function ResizeImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	; ~ Create the destination image
 	Local DestImage% = CreateImage(DestWidth, DestHeight, Frames)
 	
-	Local Frame%
-	Local Pixel# = 1.0 / SMALLEST_POWER_TWO * 8.0
+	; ~ Get rescale texture size and scale
+	Local RenderTextureSize# = TextureWidth(ResizeTexture)
+	Local RenderTextureSizeHalf# = RenderTextureSize * 0.5
+	Local RenderScale# = RenderTextureSize / GraphicWidthFloat
 	Local BufferBack% = BackBuffer()
+	Local Frame%
 	
-	; ~ Duplicate image
 	For Frame = 0 To Frames - 1
-		CopyRect(0, 0, SrcWidth, SrcHeight, SMALLEST_POWER_TWO_HALF - SrcWidth / 2, SMALLEST_POWER_TWO_HALF - SrcHeight / 2, ImageBuffer(SrcImage, Frame), TextureBuffer(FresizeTexture))
+		SetBuffer(TextureBuffer(ResizeTexture))
+		ClsColor(0, 0, 0)
+		Cls()
 		SetBuffer(BufferBack)
-		ScaleRender(0, 0, SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestWidth) / Float(SrcWidth) + Pixel, SMALLEST_POWER_TWO / GraphicWidthFloat * Float(DestHeight) / Float(SrcHeight) + Pixel)
-		CopyRect(mo\Viewport_Center_X - DestWidth / 2, mo\Viewport_Center_Y - DestHeight / 2, DestWidth, DestHeight, 0, 0, BufferBack, ImageBuffer(DestImage, Frame))
+		CopyRect(0, 0, SrcWidth, SrcHeight, RenderTextureSizeHalf - (SrcWidth / 2.0), RenderTextureSizeHalf - (SrcHeight / 2.0), ImageBuffer(SrcImage, Frame), TextureBuffer(ResizeTexture))
+		RenderImage((DestWidth / SrcWidth) * RenderScale, (DestHeight / SrcHeight) * RenderScale)
+		CopyRect((GraphicWidthFloat / 2.0) - (DestWidth / 2.0), (GraphicHeightFloat / 2.0) - (DestHeight / 2.0), DestWidth, DestHeight, 0, 0, BufferBack, ImageBuffer(DestImage, Frame))
+		;BufferDirty(ImageBuffer(DestImage, Frame))
 	Next
 	; ~ Free the source image
 	FreeImage(SrcImage) : SrcImage = 0
 	
 	; ~ Return the new image
-	If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(DestImage))
 	Return(DestImage)
 End Function
 
-Function ScaleRender%(x#, y#, hScale# = 1.0, vScale# = 1.0)
+Function RescaleTexture%(SrcTexture%, ScaleX#, ScaleY#, Flags% = 1)
+	; ~ Get the width and height of the source texture
+	Local SrcWidth# = TextureWidth(SrcTexture)
+	Local SrcHeight# = TextureHeight(SrcTexture)
+	
+	; ~ Create the Scratch image
+	Local ScratchImage% = CreateImage(SrcWidth, SrcHeight)
+	; ~ Create the destination texture
+	Local DestTexture% = CreateTexture(SrcWidth * ScaleX, SrcHeight * ScaleY, Flags)
+	
+	; ~ Get the width and height of the destination texture
+	Local DestWidth% = TextureWidth(DestTexture)
+	Local DestHeight% = TextureHeight(DestTexture)
+	
+	; ~ Copy rects of the source texture
+	CopyRect(0, 0, SrcWidth, SrcHeight, 0, 0, TextureBuffer(SrcTexture), ImageBuffer(ScratchImage))
+	
+	; ~ Resize scratch image
+	ResizeImage(ScratchImage, DestWidth, DestHeight)
+	
+	; ~ Copy rects of the destination texture
+	CopyRect(0, 0, DestWidth, DestHeight, 0, 0, ImageBuffer(ScratchImage), TextureBuffer(DestTexture))
+	
+	; ~ Free the scratch image
+	FreeImage(ScratchImage) : ScratchImage = 0
+	; ~ Free the source texture
+	FreeTexture(SrcTexture) : SrcTexture = 0
+	
+	; ~ Return the new texture
+	Return(DestTexture)
+End Function
+
+Function GetLightingSize#(Quality%)
+	Select Quality
+		Case 2
+			;[Block]
+			Return(1.0)
+			;[End Block]
+		Case 1
+			;[Block]
+			Return(0.5)
+			;[End Block]
+		Case 0
+			;[Block]
+			Return(0.25)
+			;[End Block]
+	End Select
+End Function
+
+Function ScaleRender%(x#, y#, HeightScale# = 1.0, WidthScale# = 1.0)
 	If Camera <> 0 Then HideEntity(Camera)
 	WireFrame(0)
 	ShowEntity(FresizeImage)
-	ScaleEntity(FresizeImage, hScale, vScale, 1.0)
+	ScaleEntity(FresizeImage, HeightScale, WidthScale, 1.0)
 	PositionEntity(FresizeImage, x, y, 1.0001)
 	ShowEntity(FresizeCam)
 	RenderWorld()

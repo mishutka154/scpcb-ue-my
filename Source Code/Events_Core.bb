@@ -5045,7 +5045,7 @@ Function UpdateEvents%()
 								If itt\Img <> 0 Then FreeImage(itt\Img) : itt\Img = 0
 								itt\ImgPath = ItemHUDTexturePath + DrawingName
 								itt\TexPath = itt\ImgPath
-								Tex = GetRescaledTexture(itt\TexPath, 1, 256, 256)
+								Tex = LoadTexture_Strict(itt\TexPath, 1, DeleteMapTextures, True, 0.25)
 								EntityTexture(itt\OBJ, Tex)
 								DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 								Exit

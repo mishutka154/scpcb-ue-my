@@ -7743,7 +7743,7 @@ Function UpdateMenu%()
 						
 						y = y + (45 * MenuScale)
 						
-						opt\SecurityCamRenderInterval = UpdateMenuSlider5(x, y, 100 * MenuScale, opt\SecurityCamRenderInterval, 17, "24.0", "18.0", "12.0", "6.0", "0.0")
+						opt\SecurityCamRenderInterval = UpdateMenuSlider5(x, y, 100 * MenuScale, opt\SecurityCamRenderInterval, 6, "24.0", "18.0", "12.0", "6.0", "0.0")
 						Select opt\SecurityCamRenderInterval
 							Case 0
 								;[Block]
@@ -7769,6 +7769,10 @@ Function UpdateMenu%()
 						For sc.SecurityCams = Each SecurityCams
 							If sc\Screen Then sc\RenderInterval = opt\SecurityCamRenderIntervalLevel
 						Next
+						
+						y = y + (45 * MenuScale)
+						
+						opt\LightingQuality = UpdateMenuSlider3(x, y, 100 * MenuScale, opt\LightingQuality, 7, GetLocalString("options", "slider.low"), GetLocalString("options", "slider.medium"), GetLocalString("options", "slider.high"))
 						;[End Block]
 					Case MenuTab_Options_Audio
 						;[Block]
@@ -7785,7 +7789,7 @@ Function UpdateMenu%()
 						
 						y = y + (40 * MenuScale)
 						
-						opt\VoiceVolume = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\VoiceVolume * 100.0, 18) / 100.0
+						opt\VoiceVolume = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\VoiceVolume * 100.0, 4) / 100.0
 						
 						y = y + (40 * MenuScale)
 						
@@ -8364,7 +8368,12 @@ Function RenderMenu%()
 						
 						Color(255, 255, 255)
 						TextEx(x, y, GetLocalString("options", "screnderinterval"))
-						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 17 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SecurityCamRenderInterval)
+						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 6 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SecurityCamRenderInterval)
+						
+						y = y + (45 * MenuScale)
+						
+						TextEx(x, y, GetLocalString("options", "lightingquality"))
+						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 7 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_LightingQuality)
 						
 						RenderMenuButtons()
 						RenderMenuTicks()
@@ -8389,7 +8398,7 @@ Function RenderMenu%()
 						y = y + (40 * MenuScale)
 						
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "voicevolume"))
-						If (MouseOn(x + (250 * MenuScale), y, MouseOnCoord * 5.7, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 18 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_VoiceVolume, opt\VoiceVolume)
+						If (MouseOn(x + (250 * MenuScale), y, MouseOnCoord * 5.7, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 4 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_VoiceVolume, opt\VoiceVolume)
 						
 						y = y + (40 * MenuScale)
 						

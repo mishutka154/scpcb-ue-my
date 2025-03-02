@@ -365,12 +365,12 @@ Function LoadAnimMesh_Strict%(File$, Parent% = 0)
 End Function
 
 ; ~ Don't use in LoadRMesh, as Reg does this manually there. If you wanna fuck around with the logic in that function, be my guest 
-Function LoadTexture_Strict%(File$, Flags% = 1, TexDeleteType% = DeleteMapTextures, Blend5% = True)
+Function LoadTexture_Strict%(File$, Flags% = 1, TexDeleteType% = DeleteMapTextures, Blend5% = True, Scale# = 1.0)
 	Local Tmp%
 	
 	If Tmp = 0
 		If FileType(File) <> 1 Then RuntimeErrorEx(Format(GetLocalString("runerr", "texture.notfound"), File))
-		Tmp = LoadTextureCheckingIfInCache(File, Flags, TexDeleteType)
+		Tmp = LoadTextureCheckingIfInCache(File, Flags, TexDeleteType, Scale)
 		If Tmp <> 0 And Blend5 Then TextureBlend(Tmp, 5)
 		If Tmp = 0 Then RuntimeErrorEx(Format(GetLocalString("runerr", "texture.failed.load"), File))
 	EndIf
@@ -461,7 +461,7 @@ Function LoadImage_Strict%(File$)
 		If FileType(File) <> 1 Then RuntimeErrorEx(Format(GetLocalString("runerr", "image.notfound"), File))
 		Tmp = LoadImage(File)
 		If Tmp = 0 Then RuntimeErrorEx(Format(GetLocalString("runerr", "image.failed.load"), File))
-		If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(Tmp))
+		;BufferDirty(ImageBuffer(Tmp))
 	EndIf
 	Return(Tmp)
 End Function
@@ -474,7 +474,7 @@ Function LoadAnimImage_Strict%(File$, Width%, Height%, FirstFrame%, Count%)
 		If FileType(File) <> 1 Then RuntimeErrorEx(Format(GetLocalString("runerr", "animimage.notfound"), File))
 		Tmp = LoadAnimImage(File, Width, Height, FirstFrame, Count)
 		If Tmp = 0 Then RuntimeErrorEx(Format(GetLocalString("runerr", "animimage.failed.load"), File))
-		If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(Tmp))
+		;BufferDirty(ImageBuffer(Tmp))
 	EndIf
 	Return(Tmp)
 End Function

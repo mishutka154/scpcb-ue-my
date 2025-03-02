@@ -386,7 +386,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 				If FileType(FilePath + Temp1s) = 1 ; ~ Check if texture is existing in original path
 					If Temp1i < 3
 						If Instr(Lower(Temp1s), "_lm") <> 0
-							Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s, 1 + 256)
+							Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s, 1 + 256, DeleteMapTextures, GetLightingSize(opt\LightingQuality))
 						Else
 							Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s)
 						EndIf
@@ -396,7 +396,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 				ElseIf FileType(MapTexturesFolder + Temp1s) = 1 ; ~ If not, check the MapTexturesFolder
 					If Temp1i < 3
 						If Instr(Lower(Temp1s), "_lm") <> 0
-							Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 1 + 256)
+							Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 1 + 256, DeleteMapTextures, GetLightingSize(opt\LightingQuality))
 						Else
 							Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s)
 						EndIf
@@ -3845,7 +3845,7 @@ Function RemoveShadow%(shdw.Shadows)
 End Function
 
 Type Decals
-	Field OBJ%, Surf%, ID%
+	Field OBJ%, ID%
 	Field Size#, SizeChange#, MaxSize#
 	Field Alpha#, AlphaChange#
 	Field BlendMode%, FX%
@@ -3864,17 +3864,7 @@ Function CreateDecal.Decals(ID%, x#, y#, z#, Pitch#, Yaw#, Roll#, Size# = 1.0, A
 	de\R = R : de\G = G : de\B = B
 	de\MaxSize = 1.0
 	
-	de\OBJ = CreateMesh()
-	de\Surf = CreateSurface(de\OBJ)
-	
-	Local v0% = AddVertex(de\Surf, -1.0, 1.0, 0.0, 0.0, 0.0)
-	Local v1% = AddVertex(de\Surf, 1.0, 1.0, 0.0, 1.0, 0.0)
-	Local v2% = AddVertex(de\Surf, 1.0, -1.0, 0.0, 1.0, 1.0)
-	Local v3% = AddVertex(de\Surf, -1.0, -1.0, 0.0, 0.0, 1.0)
-	
-	AddTriangle(de\Surf, v0, v1, v2)
-	AddTriangle(de\Surf, v0, v2, v3)
-	
+	de\OBJ = CreateQuad()
 	PositionEntity(de\OBJ, x, y, z, True)
 	ScaleEntity(de\OBJ, Size, Size, 1.0, True)
 	RotateEntity(de\OBJ, Pitch, Yaw, Roll, True)
@@ -3883,8 +3873,6 @@ Function CreateDecal.Decals(ID%, x#, y#, z#, Pitch#, Yaw#, Roll#, Size# = 1.0, A
 	EntityFX(de\OBJ, FX)
 	EntityBlend(de\OBJ, BlendMode)
 	If R <> 0 Lor G <> 0 Lor B <> 0 Then EntityColor(de\OBJ, R, G, B)
-	
-	UpdateNormals(de\OBJ)
 	HideEntity(de\OBJ)
 	
 	If de_I\DecalTextureID[ID] = 0 Then RuntimeErrorEx(Format(GetLocalString("runerr", "decals"), ID))
@@ -3894,7 +3882,6 @@ End Function
 
 Function RemoveDecal%(de.Decals)
 	FreeEntity(de\OBJ) : de\OBJ = 0
-	de\Surf = 0 
 	Delete(de)
 End Function
 
@@ -4395,7 +4382,7 @@ Function UpdateCheckpointMonitors%(LCZ% = True)
 					EndIf
 					PaintSurface(SF, b)
 				EndIf
-				If Name <> "" Then FreeTexture(t1) : t1 = 0
+				FreeTexture(t1) : t1 = 0
 			EndIf
 			FreeBrush(b) : b = 0
 		EndIf
@@ -4424,7 +4411,7 @@ Function TurnCheckpointMonitorsOff%(LCZ% = True)
 						BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY], 0, 0)
 						PaintSurface(SF, b)
 					EndIf
-					If Name <> "" Then FreeTexture(t1) : t1 = 0
+					FreeTexture(t1) : t1 = 0
 				EndIf
 				FreeBrush(b) : b = 0
 			EndIf
