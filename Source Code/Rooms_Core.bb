@@ -825,10 +825,10 @@ Function FillRoom%(r.Rooms)
 					r\Objects[1] = CopyEntity(d_I\DoorModelID[DOOR_DEFAULT_MODEL])
 					ScaleEntity(r\Objects[1], (204.0 * RoomScale) / MeshWidth(r\Objects[1]), 313.0 * RoomScale / MeshHeight(r\Objects[1]), 16.0 * RoomScale / MeshDepth(r\Objects[1]))
 					EntityType(r\Objects[1], HIT_MAP)
-					PositionEntity(r\Objects[1], r\x + 336.0 * RoomScale, r\y, r\z + 461.0 * RoomScale)
+					PositionEntity(r\Objects[1], r\x + 339.0 * RoomScale, r\y, r\z + 461.0 * RoomScale)
 					RotateEntity(r\Objects[1], 0.0, 0.0, 0.0)
 					EntityParent(r\Objects[1], r\OBJ)
-					MoveEntity(r\Objects[1], 120.0, 0.0, 5.0)
+					MoveEntity(r\Objects[1], 150.0, 0.0, 5.0)
 					
 					bk\IsBroken = True
 					bk\x = r\x

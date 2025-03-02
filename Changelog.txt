@@ -107,6 +107,7 @@
 - Fixed trigger area for transferring items/player in SCP-914.
 - Fixed SCP-106's eyes not hiding properly.
 - Fixed a lot of waypoints. The pathfinding should be good now.
+- Fixed position of the broken door in «room2gw» which caused some NPCs to get stuck.
 
 [Known issues]
 - Rooms can overlap and block the way.
