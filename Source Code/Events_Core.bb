@@ -1996,7 +1996,7 @@ Function UpdateEvents%()
 							EndIf
 							
 							If EntityPitch(e\room\Objects[1], True) < 40.0
-								PlaySound_Strict(snd_I\LeverSFX)
+								PlaySoundEx(snd_I\LeverSFX, Camera, e\room\Objects[1], 2.0)
 								FreeEmitter(e\room\RoomEmitters[0])
 								e\EventState = 2.0
 							Else
@@ -2044,7 +2044,7 @@ Function UpdateEvents%()
 										GiveAchievement("012")
 										
 										PlaySound_Strict(snd_I\HorrorSFX[7])
-										PlaySoundEx(snd_I\LeverSFX, Camera, e\room\RoomLevers[0]\OBJ)
+										PlaySoundEx(snd_I\LeverSFX, Camera, e\room\RoomLevers[0]\OBJ, 2.0)
 										
 										SetTemplateVelocity(ParticleEffect[19], 0.007, 0.008, -0.001, 0.0012, -0.007, 0.008)
 										For i = 0 To 1
