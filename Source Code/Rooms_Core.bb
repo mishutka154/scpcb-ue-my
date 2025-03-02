@@ -2554,7 +2554,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[10], r\OBJ)
 			HideEntity(r\Objects[10])
 			
-			it.Items = CreateItem("Hazmat Suit", it_hazmatsuit, r\x - 537.0 * RoomScale, r\y - 4895.0 * RoomScale, r\z - 66.0 * RoomScale)
+			it.Items = CreateItem("Hazmat Suit", it_hazmatsuit, r\x - 558.0 * RoomScale, r\y - 4895.0 * RoomScale, r\z - 64.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
