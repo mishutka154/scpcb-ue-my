@@ -1039,7 +1039,7 @@ Function UpdateEvents%()
 									GiveAchievement("079")
 									
 									If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-									e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Speech.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+									e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Speech.ogg", opt\VoiceVolume * opt\MasterVolume)
 									e\SoundCHN_IsStream = True
 									
 									e\EventState = 2.0
@@ -1050,7 +1050,7 @@ Function UpdateEvents%()
 								If e\EventState > 5000.0
 									If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25
 										If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-										e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Refuse.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+										e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Refuse.ogg", opt\VoiceVolume * opt\MasterVolume)
 										e\SoundCHN_IsStream = True
 										
 										e\EventState = 1.5
@@ -1087,7 +1087,7 @@ Function UpdateEvents%()
 				If e\EventState2 = 1.0
 					If RemoteDoorOn
 						If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-						e\SoundCHN = StreamSound_Strict("SFX\SCP\079\GateB.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+						e\SoundCHN = StreamSound_Strict("SFX\SCP\079\GateB.ogg", opt\VoiceVolume * opt\MasterVolume)
 						e\SoundCHN_IsStream = True
 						
 						For e2.Events = Each Events
@@ -8224,7 +8224,7 @@ Function UpdateDimension1499%()
 							If NowPlaying = 66
 								If e\SoundCHN = 0
 									e\Sound2 = LoadSound_Strict("SFX\Music\HaveMercyOnMe(Choir).ogg")
-									e\SoundCHN = StreamSound_Strict("SFX\Music\HaveMercyOnMe(NoChoir).ogg", opt\MusicVolume * opt\MasterVolume)
+									e\SoundCHN = StreamSound_Strict("SFX\Music\HaveMercyOnMe(NoChoir).ogg", opt\MusicVolume * opt\MasterVolume, ModeLoop)
 									e\SoundCHN_IsStream = True
 								EndIf
 							EndIf
@@ -9427,7 +9427,7 @@ Function UpdateEndings%()
 								e\room\NPC[0]\State = 3.0
 								
 								RemoveNPC(e\room\NPC[1])
-								e\SoundCHN = StreamSound_Strict("SFX\Ending\GateB\682Battle.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+								e\SoundCHN = StreamSound_Strict("SFX\Ending\GateB\682Battle.ogg", opt\VoiceVolume * opt\MasterVolume)
 								e\SoundCHN_IsStream = True
 								
 								e\EventState = 2.0
@@ -9482,7 +9482,7 @@ Function UpdateEndings%()
 							ElseIf e\EventState > 70.0 * 35.0 And e\EventState < 70.0 * 36.5
 								me\CameraShake = 1.5
 								If e\EventState - fps\Factor[0] <= 70.0 * 35.0
-									e\SoundCHN = StreamSound_Strict("SFX\Ending\GateB\DetonatingAlphaWarheads.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+									e\SoundCHN = StreamSound_Strict("SFX\Ending\GateB\DetonatingAlphaWarheads.ogg", opt\VoiceVolume * opt\MasterVolume)
 									e\SoundCHN_IsStream = True
 								EndIf
 							ElseIf e\EventState > 70.0 * 39.5 And e\EventState < 70.0 * 39.8
@@ -9508,7 +9508,7 @@ Function UpdateEndings%()
 						If e\EventState >= 70.0 * 45.0
 							If e\EventState < 70.0 * 75.0
 								If e\SoundCHN2 = 0
-									e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\Siren.ogg", opt\SFXVolume * opt\MasterVolume)
+									e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\Siren.ogg", opt\SFXVolume * opt\MasterVolume, ModeLoop)
 									e\SoundCHN2_IsStream = True
 								EndIf
 							Else
@@ -9531,7 +9531,7 @@ Function UpdateEndings%()
 									Else
 										SelectedItem = Null
 										
-										e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\AlphaWarheadsFail.ogg", opt\VoiceVolume * opt\MasterVolume, False)
+										e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\AlphaWarheadsFail.ogg", opt\VoiceVolume * opt\MasterVolume)
 										e\SoundCHN2_IsStream = True
 										
 										TFormPoint(3600.0, -830.0, 6623.0, e\room\OBJ, 0)

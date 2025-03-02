@@ -58,13 +58,12 @@ Function AutoReleaseSounds%()
 	EndIf
 End Function
 
-Function PlaySound_Strict%(SoundHandle%, IsVoice% = False, SetVolume% = True)
+Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
 	Local snd.Sound = Object.Sound(SoundHandle)
 	Local CurrTime% = MilliSecs()
 	
 	If snd <> Null
 		Local i%
-		Local TargetVolume# = 0.0
 		
 		For i = 0 To MaxChannelsAmount - 1
 			If snd\Channels[i] <> 0
@@ -80,9 +79,8 @@ Function PlaySound_Strict%(SoundHandle%, IsVoice% = False, SetVolume% = True)
 						EndIf
 						If snd\InternalHandle = 0 Then OpenConsoleOnError(Format(GetLocalString("runerr", "sound.failed.load"), snd\Name))
 					EndIf
-					If SetVolume Then TargetVolume = ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume
-					SoundVolume(snd\InternalHandle, TargetVolume)
 					snd\Channels[i] = PlaySound(snd\InternalHandle)
+					ChannelVolume(snd\Channels[i], ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 					snd\ReleaseTime = CurrTime + 5000 ; ~ Release after 5 seconds
 					Return(snd\Channels[i])
 				EndIf
@@ -98,9 +96,8 @@ Function PlaySound_Strict%(SoundHandle%, IsVoice% = False, SetVolume% = True)
 					EndIf
 					If snd\InternalHandle = 0 Then OpenConsoleOnError(Format(GetLocalString("runerr", "sound.failed.load"), snd\Name))
 				EndIf
-				If SetVolume Then TargetVolume = ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume
-				SoundVolume(snd\InternalHandle, TargetVolume)
 				snd\Channels[i] = PlaySound(snd\InternalHandle)
+				ChannelVolume(snd\Channels[i], ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 				snd\ReleaseTime = CurrTime + 5000 ; ~ Release after 5 seconds
 				Return(snd\Channels[i])
 			EndIf
@@ -143,7 +140,10 @@ Type Stream
 	Field CHN%
 End Type
 
-Function StreamSound_Strict%(File$, Volume# = 1.0, Loop% = True)
+Const ModeStandart% = 0
+Const ModeLoop% = 2
+
+Function StreamSound_Strict%(File$, Volume# = 1.0, Mode% = ModeStandart)
 	If FileType(lang\LanguagePath + File) = 1 Then File = lang\LanguagePath + File
 	If FileType(File) <> 1
 		OpenConsoleOnError(Format(GetLocalString("runerr", "sound.notfound"), File))
@@ -152,14 +152,14 @@ Function StreamSound_Strict%(File$, Volume# = 1.0, Loop% = True)
 	
 	Local st.Stream = New Stream
 	
-	st\CHN = PlayMusic(File, Volume)
+	st\CHN = PlayMusic(File, Mode + 8192.0)
 	
 	If st\CHN = -1
 		OpenConsoleOnError(Format(Format(GetLocalString("runerr", "sound.stream.failed.n1"), File, "{0}"), st\CHN, "{1}"))
 		Return(-1)
 	EndIf
-
-	ChannelLoop(st\CHN, Loop)
+	ChannelVolume(st\CHN, Volume)
+	
 	CreateSubtitlesToken(File, Null)
 	
 	Return(Handle(st))

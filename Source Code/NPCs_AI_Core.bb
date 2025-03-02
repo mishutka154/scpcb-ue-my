@@ -1262,7 +1262,7 @@ Function UpdateNPCType096%(n.NPCs)
 			;[Block]
 			If Dist < 64.0
 				If n\SoundCHN = 0
-					n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0)
+					n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0.0, ModeLoop)
 					n\SoundCHN_IsStream = True
 				EndIf
 				
@@ -1312,7 +1312,7 @@ Function UpdateNPCType096%(n.NPCs)
 			;[Block]
 			If Dist < 256.0
 				If n\SoundCHN = 0
-					n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0)
+					n\SoundCHN = StreamSound_Strict("SFX\Music\096.ogg", 0.0, ModeLoop)
 					n\SoundCHN_IsStream = True
 				EndIf
 				
@@ -1394,7 +1394,7 @@ Function UpdateNPCType096%(n.NPCs)
 		Case 2.0, 3.0, 4.0 ; ~ Triggered
 			;[Block]
 			If n\SoundCHN = 0
-				n\SoundCHN = StreamSound_Strict("SFX\Music\096Angered.ogg", 0)
+				n\SoundCHN = StreamSound_Strict("SFX\Music\096Angered.ogg", 0.0, ModeLoop)
 				n\SoundCHN_IsStream = True
 			EndIf
 			UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 10.0, 1.0, True)
@@ -1438,13 +1438,13 @@ Function UpdateNPCType096%(n.NPCs)
 			
 			If n\Target = Null
 				If n\SoundCHN = 0
-					n\SoundCHN = StreamSound_Strict("SFX\SCP\096\Scream.ogg", 0)
+					n\SoundCHN = StreamSound_Strict("SFX\SCP\096\Scream.ogg", 0.0, ModeLoop)
 					n\SoundCHN_IsStream = True
 				EndIf
 				UpdateStreamSoundOrigin(n\SoundCHN, Camera, n\Collider, 7.5, 1.0, True)
 				
 				If n\SoundCHN2 = 0
-					n\SoundCHN2 = StreamSound_Strict("SFX\Music\096Chase.ogg", 0)
+					n\SoundCHN2 = StreamSound_Strict("SFX\Music\096Chase.ogg", 0.0, ModeLoop)
 					n\SoundCHN2_IsStream = True
 				Else
 					SetStreamVolume_Strict(n\SoundCHN2, Clamp(8.0 - Sqr(Dist), 0.6, 1.0) * opt\VoiceVolume * opt\MasterVolume)

@@ -1401,7 +1401,7 @@ Music[33] = "860_1_Red"
 ;[End Block]
 
 Global MusicCHN%
-MusicCHN = StreamSound_Strict("SFX\Music\" + Music[2] + ".ogg", opt\MusicVolume)
+MusicCHN = StreamSound_Strict("SFX\Music\" + Music[2] + ".ogg", opt\MusicVolume, ModeLoop)
 
 Global NowPlaying% = 2, ShouldPlay% = 11
 Global CurrMusic% = True

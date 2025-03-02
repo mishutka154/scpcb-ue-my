@@ -1,8 +1,6 @@
 {v1.5}
 
 [Global]
-- Use SoLoud instead of FMod for audio engine.
-
 - Added more hint messages.
 - Added decay sound for corroded doors.
 - Added a tiny camera zoom which creates the effect of moving leaves.

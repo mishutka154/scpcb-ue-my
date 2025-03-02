@@ -2806,7 +2806,7 @@ Function UpdateMoving%()
 			If (Not ChannelPlaying(BreathCHN))
 				Temp3 = 0
 				If wi\GasMask > 0 Lor I_1499\Using > 0 Lor wi\HazmatSuit > 0 Then Temp3 = 1
-				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)), True, False)
+				BreathCHN = PlaySound_Strict(BreathSFX((Temp3), Rand(3)), True)
 				ChannelVolume(BreathCHN, Min((70.0 - me\Stamina) / 70.0, 1.0) * opt\VoiceVolume * opt\MasterVolume)
 			EndIf
 		EndIf
@@ -3044,7 +3044,7 @@ Function UpdateMoving%()
 				de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.03, 0.08) * Min(me\Injuries, 2.5))
 				de\SizeChange = Rnd(0.001, 0.0015) : de\MaxSize = de\Size + Rnd(0.008, 0.009)
 				EntityParent(de\OBJ, PlayerRoom\OBJ)
-				TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)], False, False)
+				TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)])
 				ChannelVolume(TempCHN, Rnd(0.3, 0.6) * opt\SFXVolume * opt\MasterVolume)
 				ChannelPitch(TempCHN, Rand(20000, 30000))
 				
@@ -3082,7 +3082,7 @@ Function UpdateMoving%()
 	
 	If me\HeartBeatVolume > 0.0
 		If me\HeartBeatTimer <= 0.0
-			TempCHN = PlaySound_Strict(snd_I\HeartBeatSFX, False, False)
+			TempCHN = PlaySound_Strict(snd_I\HeartBeatSFX)
 			ChannelVolume(TempCHN, me\HeartBeatVolume * opt\SFXVolume * opt\MasterVolume)
 			
 			me\HeartBeatTimer = 70.0 * (60.0 / Max(me\HeartBeatRate, 1.0))
@@ -8735,7 +8735,7 @@ Function UpdateEnding%()
 			ShouldPlay = 22
 			opt\CurrMusicVolume = opt\MusicVolume
 			StopStream_Strict(MusicCHN) : MusicCHN = 0
-			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[22] + ".ogg", opt\CurrMusicVolume * opt\MasterVolume, False)
+			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[22] + ".ogg", opt\CurrMusicVolume * opt\MasterVolume)
 			NowPlaying = ShouldPlay
 			
 			PlaySound_Strict(snd_I\LightOffSFX)
@@ -8772,7 +8772,7 @@ Function UpdateEnding%()
 							EndIf
 						Next
 						StopStream_Strict(MusicCHN) : MusicCHN = 0
-						MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0)
+						MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0, ModeLoop)
 						SetStreamVolume_Strict(MusicCHN, opt\MusicVolume * opt\MasterVolume)
 						me\EndingTimer = -2000.0
 						ShouldDeleteGadgets = True
@@ -9736,7 +9736,7 @@ Function Update427%()
 			de.Decals = CreateDecal(DECAL_427, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.03, 0.08) * 2.0)
 			de\SizeChange = Rnd(0.001, 0.0015) : de\MaxSize = de\Size + 0.009
 			EntityParent(de\OBJ, PlayerRoom\OBJ)
-			TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)], False, False)
+			TempCHN = PlaySound_Strict(snd_I\DripSFX[Rand(0, 3)])
 			ChannelVolume(TempCHN, Rnd(0.3, 0.6) * opt\SFXVolume * opt\MasterVolume)
 			ChannelPitch(TempCHN, Rand(20000, 30000))
 			FreeEntity(Pvt) : Pvt = 0

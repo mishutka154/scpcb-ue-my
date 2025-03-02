@@ -1,18 +1,18 @@
-Function PlaySoundEx%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False, IgnoreDistance% = False)
+Function PlaySoundEx%(SoundHandle%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False)
 	Local SoundCHN% = 0
 	
-	If Entity <> 0 And Volume > 0.0
+	If Volume > 0.0
 		Range = Max(Range, 1.0)
 		
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		
-		If ((1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)) Lor IgnoreDistance
+		If (1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)
 			Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 			
-			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice, False)
+			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice)
 			
+			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 			ChannelPan(SoundCHN, PanValue)
-			ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume, 0.0, 1.0))
 		EndIf
 	EndIf
 	Return(SoundCHN)
@@ -25,14 +25,12 @@ Function LoopSoundEx%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Vol
 		Local Dist# = EntityDistance(Cam, Entity) / Range
 		Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 		
-		If (Not ChannelPlaying(SoundCHN)) Then
-			SoundCHN = PlaySound_Strict(SoundHandle, IsVoice, False)
-		EndIf
+		If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle, IsVoice)
 		
+		ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
 		ChannelPan(SoundCHN, PanValue)
-		ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume, 0.0, 1.0))
 	Else
-		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
+		ChannelVolume(SoundCHN, 0.0)
 	EndIf
 	Return(SoundCHN)
 End Function
@@ -48,13 +46,13 @@ Function UpdateSoundOrigin%(SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1
 		If (1.0 - Dist > 0.0) And (1.0 - Dist < 1.0)
 			Local PanValue# = Sin(-DeltaYaw(Cam, Entity))
 			
+			ChannelVolume(SoundCHN, Volume * (1.0 - Dist) * ((Not SFXVolume) + (SFXVolume * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)))
 			ChannelPan(SoundCHN, PanValue)
-			ChannelVolume(SoundCHN, Clamp(Volume * (1.0 - Dist) * ((Not SFXVolume) + (SFXVolume * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)), 0.0, 1.0))
 		Else
-			If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
+			ChannelVolume(SoundCHN, 0.0)
 		EndIf
 	Else
-		If ChannelPlaying(SoundCHN) Then ChannelVolume(SoundCHN, 0.0)
+		ChannelVolume(SoundCHN, 0.0)
 	EndIf
 End Function
 
@@ -121,7 +119,7 @@ Function UpdateMusic%()
 	
 	If NowPlaying < 66
 		If (Not CurrMusic)
-			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0)
+			MusicCHN = StreamSound_Strict("SFX\Music\" + Music[NowPlaying] + ".ogg", 0.0, ModeLoop)
 			CurrMusic = True
 		EndIf
 		SetStreamVolume_Strict(MusicCHN, opt\CurrMusicVolume * opt\MasterVolume)
@@ -451,13 +449,13 @@ Function PlayStepSound%(IncludeSprint% = True)
 			;[End Block]
 	End Select
 	
-	TempCHN = PlaySound_Strict(StepSFX(Temp, (IncludeSprint And SoundHasSprint), SoundRand), False, False)
+	TempCHN = PlaySound_Strict(StepSFX(Temp, (IncludeSprint And SoundHasSprint), SoundRand))
 	
 	Local SoundVol# = (1.0 - (me\Crouch * 0.7)) * opt\SFXVolume * opt\MasterVolume
 	
 	ChannelVolume(TempCHN, SoundVol)
 	If DecalStep = 2 And Temp <> 5
-		TempCHN2 = PlaySound_Strict(StepSFX(5, 0, Rand(0, 1)), False, False)
+		TempCHN2 = PlaySound_Strict(StepSFX(5, 0, Rand(0, 1)))
 		ChannelVolume(TempCHN2, SoundVol)
 	EndIf
 	me\SndVolume = Max(4.0 * IncludeSprint + (1 - IncludeSprint) * (2.5 - me\Crouch * 0.7), me\SndVolume)
@@ -467,7 +465,7 @@ Function PlayAnnouncement%(File$) ; ~ This function streams the announcement cur
 	If (Not PlayerInReachableRoom(True, True)) Then Return
 	
 	If IntercomStreamCHN <> 0 Then StopStream_Strict(IntercomStreamCHN) : IntercomStreamCHN = 0
-	IntercomStreamCHN = StreamSound_Strict(File, opt\VoiceVolume * opt\MasterVolume, False)
+	IntercomStreamCHN = StreamSound_Strict(File, opt\VoiceVolume * opt\MasterVolume)
 End Function
 
 Function UpdateStreamSounds%()
