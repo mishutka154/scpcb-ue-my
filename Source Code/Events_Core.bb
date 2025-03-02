@@ -2044,8 +2044,12 @@ Function UpdateEvents%()
 										GiveAchievement("012")
 										
 										PlaySound_Strict(snd_I\HorrorSFX[7])
-										PlaySoundEx(snd_I\LeverSFX, Camera, e\room\RoomDoors[0]\OBJ)
+										PlaySoundEx(snd_I\LeverSFX, Camera, e\room\RoomLevers[0]\OBJ)
 										
+										SetTemplateVelocity(ParticleEffect[19], 0.007, 0.008, -0.001, 0.0012, -0.007, 0.008)
+										For i = 0 To 1
+											SetEmitter(e\room, EntityX(e\room\RoomLevers[0]\OBJ, True), EntityY(e\room\RoomLevers[0]\OBJ, True), EntityZ(e\room\RoomLevers[0]\OBJ, True), 19)
+										Next
 										If (Not e\room\RoomDoors[0]\Open) Then OpenCloseDoor(e\room\RoomDoors[0])
 										
 										e\EventState = 1.0
