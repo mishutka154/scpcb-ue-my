@@ -641,12 +641,12 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[7], r\OBJ)
 			
 			it.Items = CreateItem("Addendum: 5/14 Test Log", it_paper, r\x + 538.0 * RoomScale, r\y + 178.0 * RoomScale, r\z + 127.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("First Aid Kit", it_firstaid, r\x - 1376.0 * RoomScale, r\y + 112.0 * RoomScale, r\z - 686.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			RotateEntity(it\Collider, 0.0, 270.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Dr. L's Note #1", it_paper, r\x - 538.0 * RoomScale, r\y + 250.0 * RoomScale, r\z - 365.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -1467,7 +1467,8 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Document SCP-500", it_paper, r\x + 891.0 * RoomScale, r\y + 228.0 * RoomScale, r\z + 485.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ) : RotateEntity(it\Collider, 0.0, 90.0, 0.0)
+			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-500", it_scp500, r\x + 1147.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 345.0 * RoomScale)
 			For i = 0 To it\InvSlots - 1
@@ -1687,8 +1688,8 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Document SCP-066", it_paper, r\x + 340.0 * RoomScale, r\y + 152.0 * RoomScale, r\z - 235.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			RotateEntity(it\Collider, 0.0, 240.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Incident Report SCP-066-2", it_paper, r\x - 21.0 * RoomScale, r\y + 224.0 * RoomScale, r\z + 827.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -1697,8 +1698,8 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Gas Mask", it_gasmask, r\x + 590.0 * RoomScale, r\y + 50.0 * RoomScale, r\z - 313.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			RotateEntity(it\Collider, 0.0, 30.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateRandomBattery(r\x + 652.0 * RoomScale, r\y + 50.0 * RoomScale, r\z - 340.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -2005,6 +2006,10 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Document SCP-035", it_paper, r\x + 1168.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 408.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Hazmat Suit", it_hazmatsuit, r\x + 90.0 * RoomScale, r\y + 150.0 * RoomScale, r\z - 396.0 * RoomScale)
+			RotateEntity(it\Collider, 0.0, 270.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
 			CreateCustomCenter(r, r\x, r\z - 848.0 * RoomScale)
@@ -2569,8 +2574,8 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("First Aid Kit", it_firstaid, r\x - 57.0 * RoomScale, r\y - 4873.0 * RoomScale, r\z - 935.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
 			
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 384.0 * RoomScale, r\y - 4654.0 * RoomScale, r\z + 1168.0 * RoomScale, 20.0)
 			sc\Angle = 135.0 : sc\Turn = 45.0

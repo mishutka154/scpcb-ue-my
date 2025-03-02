@@ -36,6 +36,7 @@
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - Added Revision Eyedrops in «room2_closets».
 - Added a truck in the Gate B area.
+- Added hazmat suit in SCP-035's containment chamber.
 
 - Changed SCP-005 in «cont2_409» to a crystallized variant.
 
