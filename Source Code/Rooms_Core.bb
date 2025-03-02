@@ -1069,7 +1069,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			r\RoomDoors.Doors[5] = d
 			
-			r\Objects[0] = LoadRMesh("GFX\Map\room2_storage_fake_hall.rmesh", Null)
+			r\Objects[0] = LoadRMesh("GFX\Map\room2_storage_fake_hall.rmesh", Null, False)
 			ScaleEntity(r\Objects[0], RoomScale, RoomScale, RoomScale)
 			PositionEntity(r\Objects[0], r\x - 1024.0 * RoomScale, r\y, r\z)
 			EntityParent(r\Objects[0], r\OBJ)
