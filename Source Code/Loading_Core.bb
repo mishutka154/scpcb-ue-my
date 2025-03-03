@@ -86,8 +86,6 @@ Function LoadDecals%()
 	de_I\DecalTextureID[DECAL_SHADOW] = LoadTexture_Strict("GFX\Decals\shadow_decal.png", 1 + 2, DeleteAllTextures, False)
 End Function
 
-Const MaxParticleTextureIDAmount% = 10
-
 Function RemoveDecalInstances%()
 	Local i%
 	
@@ -96,6 +94,8 @@ Function RemoveDecalInstances%()
 	Next
 	Delete(de_I) : de_I = Null
 End Function
+
+Const MaxParticleTextureIDAmount% = 11
 
 Type ParticleInstance
 	Field ParticleTextureID%[MaxParticleTextureIDAmount]
@@ -122,7 +122,11 @@ Const PARTICLE_SPARK% = 7
 
 Const PARTICLE_WATER_DROP% = 8
 Const PARTICLE_WATER_RING% = 9
+
+Const PARTICLE_LEAF% = 10
 ;[End Block]
+
+Global ParticleEffect%[25]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -144,6 +148,8 @@ Function LoadParticles%()
 	
 	p_I\ParticleTextureID[PARTICLE_WATER_DROP] = LoadTexture_Strict("GFX\Particles\water_drop.png", 1 + 2, DeleteAllTextures, False)
 	p_I\ParticleTextureID[PARTICLE_WATER_RING] = LoadTexture_Strict("GFX\Particles\water_ring.png", 1 + 2, DeleteAllTextures, False)
+	
+	p_I\ParticleTextureID[PARTICLE_LEAF] = LoadTexture_Strict("GFX\Particles\leaf.png", 1 + 2, DeleteAllTextures, False)
 	
 	; ~ Black smoke in "room2c_gw_lcz"/"room2_6_hcz"/"cont1_035"
 	ParticleEffect[0] = CreateTemplate()
@@ -436,6 +442,17 @@ Function LoadParticles%()
 	SetTemplateSizeVel(ParticleEffect[23], 0.001, 1.001)
 	SetTemplateFixAngles(ParticleEffect[23], 90, 0)
 	SetTemplateAlphaVel(ParticleEffect[23], True)
+	
+	; ~ Leafs in the forest
+	ParticleEffect[24] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[24], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[24], 1)
+	SetTemplateParticlesPerInterval(ParticleEffect[24], 5)
+	SetTemplateParticleLifeTime(ParticleEffect[24], 360, 380)
+	SetTemplateTexture(ParticleEffect[24], PARTICLE_LEAF)
+	SetTemplateOffset(ParticleEffect[24], -4.0, 4.0, 2.5, 2.5, -4.0, 4.0)
+	SetTemplateVelocity(ParticleEffect[24], 0.03, 0.01, -0.012, -0.01, 0.001, 0.001)
+	SetTemplateSize(ParticleEffect[24], 0.02, 0.02, 0.9, 1.1)
 End Function
 
 Function RemoveParticleInstances%()
