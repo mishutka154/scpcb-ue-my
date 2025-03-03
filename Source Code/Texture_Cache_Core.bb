@@ -35,7 +35,7 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	If tic\Tex = 0 Then tic\Tex = LoadTexture(CurrPath, TexFlags)
 	If tic\Tex <> 0
 		If Scale <> 1.0 Then tic\Tex = RescaleTexture(tic\Tex, Scale, Scale, TexFlags)
-	If opt\DisplayMode = 0 Then TextureBuffer(tic\Tex) <> 0 Then BufferDirty(TextureBuffer(tic\Tex))
+		If opt\DisplayMode = 0 And TextureBuffer(tic\Tex) <> 0 Then BufferDirty(TextureBuffer(tic\Tex))
 	EndIf
 	Return(tic\Tex)
 End Function
