@@ -10,9 +10,7 @@
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Local InitErrorStr$ = ""
-
 Global ErrorMessageInitialized% = False
-Global StartedWithDxWrapper% = (FileSize("d3d9.dll") > 0) Lor (FileSize(SystemProperty("appdir") + "d3d9.dll") > 0)
 
 If FileSize("BlitzToolbox.dll") = 0 Then InitErrorStr = InitErrorStr + "BlitzToolbox.dll" + Chr(13) + Chr(10)
 If FileSize("FMod.dll") = 0 Then InitErrorStr = InitErrorStr + "FMod.dll" + Chr(13) + Chr(10)
