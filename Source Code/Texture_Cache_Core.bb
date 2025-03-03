@@ -15,6 +15,10 @@ End Type
 Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = DeleteMapTextures, Scale# = 1.0)
 	If TexName = "" Then Return(0)
 	
+	If StartedWithDxWrapper ; ~ DirectX9 wrapper manages memory well via DDSCAPS2_TEXTUREMANAGE without 256 flag
+		If (TexFlags And 256) Then TexFlags = TexFlags - 256
+	EndIf
+	
 	Local tic.TextureInCache
 	
 	For tic.TextureInCache = Each TextureInCache
@@ -42,6 +46,10 @@ End Function
 
 Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Height%, FirstFrame%, Count%, DeleteType% = DeleteMapTextures)
 	If TexName = "" Then Return(0)
+	
+	If StartedWithDxWrapper ; ~ DirectX9 wrapper manages memory well via DDSCAPS2_TEXTUREMANAGE without 256 flag
+		If (TexFlags And 256) Then TexFlags = TexFlags - 256
+	EndIf
 	
 	Local tic.TextureInCache
 	
@@ -93,6 +101,10 @@ End Function
 Function CreateTextureUsingCacheSystem%(Width%, Height%, TexFlags% = 1, Frames% = 1, DeleteType% = DeleteAllTextures)
 	Local tic.TextureInCache
 	
+	If StartedWithDxWrapper ; ~ DirectX9 wrapper manages memory well via DDSCAPS2_TEXTUREMANAGE without 256 flag
+		If (TexFlags And 256) Then TexFlags = TexFlags - 256
+	EndIf
+	
 	tic.TextureInCache = New TextureInCache
 	tic\TexName = "CTUCS"
 	tic\TexDeleteType = DeleteType
@@ -128,7 +140,7 @@ End Function
 Global MissingTexture%
 
 Function LoadMissingTexture%()
-	MissingTexture = CreateTexture(1, 1, 1 + 256)
+	MissingTexture = CreateTexture(1, 1, 1 + (256 * StartedWithDxWrapper))
 	TextureBlend(MissingTexture, 3)
 	SetBuffer(TextureBuffer(MissingTexture))
 	ClsColor(0, 0, 0)
