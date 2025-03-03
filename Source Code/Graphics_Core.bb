@@ -128,7 +128,7 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 			Y1 = Floor(Y2 / ScaleY)
 			CopyRect(0, Y1, DestWidth, 1, 0, Y2, ScratchBuffer, DestBuffer)
 		Next
-		;BufferDirty(ImageBuffer(DestImage, Frame))
+		If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(DestImage, Frame))
 	Next
 	
 	; ~ Free the scratch image
@@ -181,7 +181,7 @@ Function ResizeImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 		CopyRect(0, 0, SrcWidth, SrcHeight, RenderTextureSizeHalf - (SrcWidth / 2.0), RenderTextureSizeHalf - (SrcHeight / 2.0), ImageBuffer(SrcImage, Frame), TextureBuffer(ResizeTexture))
 		RenderImage((DestWidth / SrcWidth) * RenderScale, (DestHeight / SrcHeight) * RenderScale)
 		CopyRect((GraphicWidthFloat / 2.0) - (DestWidth / 2.0), (GraphicHeightFloat / 2.0) - (DestHeight / 2.0), DestWidth, DestHeight, 0, 0, BufferBack, ImageBuffer(DestImage, Frame))
-		;BufferDirty(ImageBuffer(DestImage, Frame))
+		If opt\DisplayMode = 0 Then BufferDirty(ImageBuffer(DestImage, Frame))
 	Next
 	; ~ Free the source image
 	FreeImage(SrcImage) : SrcImage = 0
