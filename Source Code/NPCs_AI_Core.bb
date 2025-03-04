@@ -2181,6 +2181,8 @@ Function UpdateNPCType173%(n.NPCs)
 									Else
 										TurnEntity(Camera, 0.0, Rnd(-100.0, -80.0), 0.0)
 									EndIf
+									StopChannel(I_1048A\SoundCHN) : I_1048A\SoundCHN = 0
+									StopChannel(CoughCHN) : CoughCHN = 0
 									Kill()
 								EndIf
 							Else
