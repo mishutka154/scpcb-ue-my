@@ -20,7 +20,7 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, 20.0)
 			sc\Angle = 180.0 : sc\Turn = 45.0
 			
-			; Clock
+			; ~ Clock
 			r\Objects[0] = LoadMesh_Strict("GFX\Map\Props\watches.b3d")
 			ScaleEntity(r\Objects[0], RoomScale, RoomScale, RoomScale)
 			RotateEntity(r\Objects[0], 0.0, 128.0, 270.0)
@@ -863,7 +863,7 @@ Function FillRoom%(r.Rooms)
 			SetEmitter(r, xTemp, r\y + 704.0 * RoomScale, zTemp, 22)
 			SetEmitter(r, xTemp, r\y + 0.01, zTemp, 23)
 			
-			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 607.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 938.0 * RoomScale)
+			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 941.0 * RoomScale, r\y + 110.0 * RoomScale, r\z - 763.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Origami", it_origami, r\x + 945.0 * RoomScale, r\y + 200.0 * RoomScale, r\z -679.0 * RoomScale)
