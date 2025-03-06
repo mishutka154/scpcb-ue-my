@@ -4091,14 +4091,41 @@ Function UpdateGUI%()
 					ElseIf Inventory(MouseSlot) <> SelectedItem
 						PrevItem = Inventory(MouseSlot)
 						
+						Local c%, ri%
+						Local added.Items = Null
+						
 						Select SelectedItem\ItemTemplate\ID
 							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill
 								;[Block]
-								If Inventory(MouseSlot)\ItemTemplate\ID = it_clipboard
+								If (Inventory(MouseSlot)\State > 0.0 And Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader) Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader20 Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader30
+									Select SelectedItem\ItemTemplate\ID
+										Case it_paper, it_oldpaper
+											;[Block]
+											; ~ Do not add the same document
+											; ~ TODO: FIX GENERAL DATA BASE
+											If SelectedItem\ItemTemplate\Name = "Note from Maynard" Lor SelectedItem\ItemTemplate\Name = "SCP-085"
+												CreateMsg(GetLocalString("msg", "e.reader.scan.fail"))
+												PlaySound_Strict(snd_I\ScannerSFX[1])
+												SelectedItem = Null
+												Return
+											EndIf
+											For Inventory(MouseSlot)\EReader.EReaderItem = Each EReaderItem
+												If SelectedItem\ItemTemplate\ImgPath = Inventory(MouseSlot)\EReader\StoredDocPath
+													CreateMsg(GetLocalString("msg", "e.reader.scan.already"))
+													PlaySound_Strict(snd_I\ScannerSFX[1])
+													SelectedItem = Null
+													Return
+												EndIf
+											Next
+											Inventory(MouseSlot)\EReader.EReaderItem = New EReaderItem
+											Inventory(MouseSlot)\EReader\StoredDocPath = SelectedItem\ItemTemplate\ImgPath
+											CreateMsg(GetLocalString("msg", "e.reader.scan.succ"))
+											PlaySound_Strict(snd_I\ScannerSFX[0])
+											SelectedItem = Null
+											;[End Block]
+									End Select
+								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_clipboard
 									; ~ Add an item to clipboard
-									Local added.Items = Null
-									Local c%, ri%
-									
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket
 											;[Block]
@@ -4148,8 +4175,6 @@ Function UpdateGUI%()
 									End Select
 								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_wallet
 									; ~ Add an item to wallet
-									added.Items = Null
-									
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper, it_origami
 											;[Block]
@@ -6176,6 +6201,7 @@ Function UpdateGUI%()
 					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_reader30)
 					If SelectedItem\ItemTemplate\Img = 0
 						StrTemp = "_off"
+						; ~ TODO: CHANGE GREEN LIGHTING!
 						If SelectedItem\State > 0.0 Lor Temp Then StrTemp = "_on"
 						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader" + StrTemp + ".png"
 						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
@@ -6187,45 +6213,77 @@ Function UpdateGUI%()
 					
 					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
 					
+					EReaderPageAmount = 0
+					For SelectedItem\EReader.EReaderItem = Each EReaderItem
+						If SelectedItem\EReader.EReaderItem <> Null Then EReaderPageAmount = EReaderPageAmount + 1
+					Next
+					
 					i = GetKey()
 					Select i
-						Case 49 ; ~ 1
+						Case 49 ; ~ 1, Left
 							;[Block]
-							SelectedItem\State2 = Max(1.0, SelectedItem\State2 - Temp) ; ~ Left
+							If SelectedItem\State2 > 1.0 Then CurrEReaderPage = Before CurrEReaderPage
+							SelectedItem\State2 = Max(0.0, SelectedItem\State2 - 1.0)
 							PlaySound_Strict(ButtonSFX[0])
 							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 							;[End Block]
-						Case 50 ; ~ 2
+						Case 50 ; ~ 2, Right
 							;[Block]
-							SelectedItem\State2 = Min(SelectedItem\State2 + Temp, TotalSCPDocumentsAmount) ; ~ Right
+							If SelectedItem\State2 = 0.0
+								CurrEReaderPage = First EReaderItem
+							ElseIf SelectedItem\State2 < EReaderPageAmount
+								CurrEReaderPage = After CurrEReaderPage
+							EndIf
+							SelectedItem\State2 = Min(EReaderPageAmount, SelectedItem\State2 + 1.0)
 							PlaySound_Strict(ButtonSFX[0])
 							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 							;[End Block]
-						Case 51 ; ~ 3
+						Case 51 ; ~ 3, Home
 							;[Block]
-							SelectedItem\State2 = 0.0 ; ~ Home
+							CurrEReaderPage = Null
+							SelectedItem\State2 = 0.0
 							PlaySound_Strict(ButtonSFX[0])
 							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 							;[End Block]
 					End Select
 					If Temp
 						SelectedItem\State3 = 0.0
-						StrTemp = GetEReaderDocument(SelectedItem\State2)
-						If SelectedItem\ItemTemplate\Img2 = 0 And StrTemp <> ""
-							Local itt.ItemTemplates
-							
-							For itt.ItemTemplates = Each ItemTemplates
-								If StripPath(itt\ImgPath) = StrTemp + ".png"
-									itt\Found = True
-									Exit
-								EndIf
-							Next
-							Scale = MenuScale * 0.745
-							SelectedItem\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict("GFX\Items\HUD Textures\" + StrTemp + ".png"), Scale, Scale)
-							SelectedItem\ItemTemplate\Img2Width = ImageWidth(SelectedItem\ItemTemplate\Img2) / 2
-							SelectedItem\ItemTemplate\Img2Height = ImageHeight(SelectedItem\ItemTemplate\Img2) / 2
-							AdaptScreenGamma()
+						If CurrEReaderPage <> Null
+							If SelectedItem\ItemTemplate\Img2 = 0
+								Scale = 0.748 * MenuScale
+								SelectedItem\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict(CurrEReaderPage\StoredDocPath), Scale, Scale)
+								Select StripPath(CurrEReaderPage\StoredDocPath)
+									Case "note_Maynard.png"
+										;[Block]
+										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
+										Color(0, 0, 0)
+										SetFontEx(fo\FontID[Font_Default])
+										TextEx(277 * Scale, 469 * Scale, CODE_DR_MAYNARD, True, True)
+										SetBuffer(BackBuffer())
+										;[End Block]
+									Case "note_unknown.png"
+										;[Block]
+										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
+										Color(85, 85, 140)
+										SetFontEx(fo\FontID[Font_Journal])
+										TextEx(300 * Scale, 275 * Scale, CODE_O5_COUNCIL, True, True)
+										SetBuffer(BackBuffer())
+										;[End Block]
+									Case "doc_372.png"
+										;[Block]
+										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
+										Color(37, 45, 137)
+										SetFontEx(fo\FontID[Font_Journal])
+										TextEx(383 * Scale, 734 * Scale, CODE_MAINTENANCE_TUNNELS, True, True)
+										SetBuffer(BackBuffer())
+										;[End Block]
+								End Select
+								SelectedItem\ItemTemplate\Img2Width = ImageWidth(SelectedItem\ItemTemplate\Img2) / 2
+								SelectedItem\ItemTemplate\Img2Height = ImageHeight(SelectedItem\ItemTemplate\Img2) / 2
+								AdaptScreenGamma()
+							EndIf
 						EndIf
+						
 						If SelectedItem\State < 20.0 And SelectedItem\ItemTemplate\ID <> it_e_reader30
 							If BatMsgTimer >= 70.0
 								If (Not ChannelPlaying(LowBatteryCHN[0]))
@@ -6278,6 +6336,8 @@ Function UpdateGUI%()
 					Case it_e_reader, it_e_reader20, it_e_reader30
 						;[Block]
 						SelectedItem\State2 = 0.0
+						EReaderPageAmount = 0
+						CurrEReaderPage = Null
 						;[End Block]
 				End Select
 				If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
@@ -7543,6 +7603,7 @@ Function RenderGUI%()
 							EndIf
 							
 							Color(30, 30, 30)
+							Rect(x + (58 * MenuScale), y + (114 * MenuScale), 434 * MenuScale, MenuScale, False)
 							If SelectedItem\State2 = 0.0
 								If (MilliSec Mod 800) < 200
 									SetFont(fo\FontID[Font_Digital])
@@ -7550,7 +7611,7 @@ Function RenderGUI%()
 									SetFont(fo\FontID[Font_Default])
 								EndIf
 							Else
-								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + Str(TotalSCPDocumentsAmount))
+								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + EReaderPageAmount)
 								If SelectedItem\ItemTemplate\Img2 <> 0 Then DrawBlock(SelectedItem\ItemTemplate\Img2, mo\Viewport_Center_X - SelectedItem\ItemTemplate\Img2Width, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\Img2Height - 12 * MenuScale)
 							EndIf
 						EndIf
@@ -8871,8 +8932,7 @@ Function RenderEnding%()
 					
 					For itt.ItemTemplates = Each ItemTemplates
 						If itt\ID = it_paper
-							i = True
-							If itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor (itt\Name = "Note from Maynard" And I_005\ChanceToSpawn <> 3.0) Then i = False
+							i = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor (itt\Name = "Note from Maynard" And I_005\ChanceToSpawn <> 3.0)))
 							If i
 								DocsAmount = DocsAmount + 1
 								DocsFound = DocsFound + itt\Found

@@ -476,6 +476,8 @@ Function SaveGame%(File$)
 		
 		WriteByte(f, SelectedItem = it)
 		
+		; ~ TODO: SAVE E-READER
+		
 		Local ItemFound% = False
 		
 		For i = 0 To MaxItemAmount - 1
@@ -1312,6 +1314,8 @@ Function LoadGame%(File$)
 		Local nt% = ReadByte(f)
 		
 		If nt = True Then SelectedItem = it
+		
+		; ~ TODO: LOAD E-READER
 		
 		nt = ReadByte(f)
 		If nt < 66
@@ -2215,6 +2219,8 @@ Function LoadGameQuick%(File$)
 		Local nt% = ReadByte(f)
 		
 		If nt = True Then SelectedItem = it
+		
+		; ~ TODO: LOAD E-READER
 		
 		nt = ReadByte(f)
 		If nt < 66

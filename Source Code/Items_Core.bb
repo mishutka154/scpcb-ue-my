@@ -378,184 +378,12 @@ Function GetRandDocument$()
 	End Select
 End Function
 
-Const TotalSCPDocumentsAmount% = 41
+Type EReaderItem
+	Field StoredDocPath$
+End Type
 
-Function GetEReaderDocument$(State%)
-	Select State
-		Case 0
-			;[Block]
-			Return("")
-			;[End Block]
-		Case 1
-			;[Block]
-			Return("doc_OBJC")
-			;[End Block]
-		Case 2
-			;[Block]
-			Return("doc_SCL")
-			;[End Block]
-		Case 3
-			;[Block]
-			Return("doc_O5(2)")
-			;[End Block]
-		Case 4
-			;[Block]
-			Return("doc_MTF")
-			;[End Block]
-		Case 5
-			;[Block]
-			Return("doc_MSP")
-			;[End Block]
-		Case 6
-			;[Block]
-			Return("doc_NDP")
-			;[End Block]
-		Case 7
-			;[Block]
-			Return("doc_005")
-			;[End Block]
-		Case 8
-			;[Block]
-			Return("doc_008")
-			;[End Block]
-		Case 9
-			;[Block]
-			Return("doc_012")
-			;[End Block]
-		Case 10
-			;[Block]
-			If I_035\Sad = 0
-				Return("doc_035_smile")
-			Else
-				Return("doc_035_sad")
-			EndIf
-			;[End Block]
-		Case 11
-			;[Block]
-			Return("doc_049")
-			;[End Block]
-		Case 12
-			;[Block]
-			Return("doc_066")
-			;[End Block]
-		Case 13
-			;[Block]
-			Return("doc_IR_066")
-			;[End Block]
-		Case 14
-			;[Block]
-			Return("doc_079")
-			;[End Block]
-		Case 15
-			;[Block]
-			Return("doc_093_rm")
-			;[End Block]
-		Case 16
-			;[Block]
-			Return("doc_096")
-			;[End Block]
-		Case 17
-			;[Block]
-			Return("doc_106")
-			;[End Block]
-		Case 18
-			;[Block]
-			Return("doc_IR_106")
-			;[End Block]
-		Case 19
-			;[Block]
-			Return("doc_RP")
-			;[End Block]
-		Case 20
-			;[Block]
-			Return("doc_173")
-			;[End Block]
-		Case 21
-			;[Block]
-			Return("doc_205")
-			;[End Block]
-		Case 22
-			;[Block]
-			Return("doc_372")
-			;[End Block]
-		Case 23
-			;[Block]
-			Return("doc_409")
-			;[End Block]
-		Case 24
-			;[Block]
-			Return("doc_427")
-			;[End Block]
-		Case 25
-			;[Block]
-			Return("doc_500")
-			;[End Block]
-		Case 26
-			;[Block]
-			Return("doc_513")
-			;[End Block]
-		Case 27
-			;[Block]
-			Return("doc_682")
-			;[End Block]
-		Case 28
-			;[Block]
-			Return("doc_714")
-			;[End Block]
-		Case 29
-			;[Block]
-			Return("doc_860")
-			;[End Block]
-		Case 30
-			;[Block]
-			Return("doc_860_1")
-			;[End Block]
-		Case 31
-			;[Block]
-			Return("doc_895")
-			;[End Block]
-		Case 32
-			;[Block]
-			Return("doc_939")
-			;[End Block]
-		Case 33
-			;[Block]
-			Return("doc_966")
-			;[End Block]
-		Case 34
-			;[Block]
-			Return("doc_970")
-			;[End Block]
-		Case 35
-			;[Block]
-			Return("doc_999")
-			;[End Block]
-		Case 36
-			;[Block]
-			Return("doc_1025")
-			;[End Block]
-		Case 37
-			;[Block]
-			Return("doc_1048")
-			;[End Block]
-		Case 38
-			;[Block]
-			Return("doc_IR_1048_a")
-			;[End Block]
-		Case 39
-			;[Block]
-			Return("doc_1123")
-			;[End Block]
-		Case 40
-			;[Block]
-			Return("doc_1162_ARC")
-			;[End Block]
-		Case 41
-			;[Block]
-			Return("doc_1499")
-			;[End Block]
-	End Select
-End Function
+Global CurrEReaderPage.EReaderItem
+Global EReaderPageAmount%
 
 Type Items
 	Field DisplayName$
@@ -574,6 +402,7 @@ Type Items
 	Field Shadow.Shadows
 	Field ItemHeight#
 	Field TargetNX#, TargetNY#, TargetNZ#
+	Field EReader.EReaderItem
 End Type
 
 Dim Inventory.Items(0)
@@ -858,6 +687,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 	CatchErrors("PickItem()")
 	
 	Local n%, z%
+	Local itt.ItemTemplates, EReader.EReaderItem
 	
 	If ItemAmount < MaxItemAmount
 		Local CanPickItem% = 1
@@ -962,6 +792,20 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 						Else
 							SelectedItem = item
 						EndIf
+						;[End Block]
+					Case it_e_reader30
+						;[Block]
+						For itt.ItemTemplates = Each ItemTemplates
+							If itt\ID = it_paper Lor itt\ID = it_oldpaper
+								Local i% = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor itt\Name = "Note from Maynard" Lor itt\Name = "SCP-085"))
+								
+								If i
+									item\EReader.EReaderItem = New EReaderItem
+									item\EReader\StoredDocPath = itt\ImgPath
+									itt\Found = True
+								EndIf
+							EndIf
+						Next
 						;[End Block]
 				End Select
 				
