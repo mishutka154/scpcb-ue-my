@@ -875,7 +875,7 @@ Function UpdateNPCs%()
 									EndIf
 								Next
 								
-								If (forest_event <> Null And forest_event\room = PlayerRoom And EntityY(me\Collider) > 20.0) Lor (n\CurrentRoom <> Null And (n\CurrentRoom = PlayerRoom Lor IsRoomAdjacent(n\CurrentRoom, PlayerRoom)))
+								If (forest_event <> Null And forest_event\room = PlayerRoom And forest_event\EventState = 1.0) Lor (n\CurrentRoom <> Null And (n\CurrentRoom = PlayerRoom Lor IsRoomAdjacent(n\CurrentRoom, PlayerRoom)))
 									UpdateGravity = True
 								EndIf
 							Else
