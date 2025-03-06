@@ -2763,7 +2763,9 @@ Function UpdateMoving%()
 	Local Pvt%, i%, Angle#
 	Local Temp3%
 	
-	If (Not EntityHidden(t\OverlayID[0])) And (Not opt\VignetteEnabled) Then HideEntity(t\OverlayID[0])
+	If (Not EntityHidden(t\OverlayID[0]))
+		If (Not opt\VignetteEnabled) Lor (IsPlayerOutsideFacility() Lor PlayerRoom\RoomTemplate\ID = r_cont1_173_intro Lor (forest_event <> Null And forest_event\room = PlayerRoom And forest_event\EventState = 1.0)) Then HideEntity(t\OverlayID[0])
+	EndIf
 	If chs\SuperMan
 		CanSave = 0
 		
