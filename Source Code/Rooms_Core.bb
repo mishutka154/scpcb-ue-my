@@ -2880,7 +2880,7 @@ Function FillRoom%(r.Rooms)
 			it\SecondInv[0] = it2
 			HideEntity(it2\Collider)
 			
-			it2.Items = CreateItem("Asav Harn's Badge", it_harnbadge, 0.0, 0.0, 0.0)
+			it2.Items = CreateItem("Asav Harn's Badge", it_badge, 0.0, 0.0, 0.0)
 			it2\Picked = True : it2\Dropped = -1
 			it\SecondInv[1] = it2
 			HideEntity(it2\Collider)
@@ -3408,6 +3408,9 @@ Function FillRoom%(r.Rooms)
 			EntityParent(de\OBJ, r\OBJ)
 			
 			it.Items = CreateItem("Bloody Level 0 Key Card", it_key0, r\x - 1300.0 * RoomScale, r\y + 140.0 * RoomScale, r\z + 25.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Jim Gonzales' Badge", it_badge, r\x - 1102.0 * RoomScale, r\y + 32.0 * RoomScale, r\z + 189.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Cup", it_cup, r\x - 75.0 * RoomScale, r\y + 230.0 * RoomScale, r\z - 24.0 * RoomScale, 200, 200, 200)
@@ -4168,7 +4171,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[25], r\OBJ)
 			
 			it.Items = CreateItem("Burnt Note", it_paper, r\x, r\y + 0.5, r\z + 896.0 * RoomScale)
-			it.Items = CreateItem("George Maynard's Badge", it_burntbadge, r\x - 1300 * RoomScale, r\y + 0.5, r\z + 8700 * RoomScale)
+			it.Items = CreateItem("George Maynard's Badge", it_badge, r\x - 1300 * RoomScale, r\y + 0.5, r\z + 8700 * RoomScale)
 			;[End Block]
 		Case r_dimension_1499
 			;[Block]

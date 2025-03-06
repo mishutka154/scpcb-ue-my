@@ -1197,8 +1197,9 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "origami"), "Origami", it_origami, "origami.b3d", "INV_origami.png", "", 0.003, 0)
 	
 	CreateItemTemplate(GetLocalString("items", "badge"), "Emily Ross' Badge", it_badge, "badge.b3d", "INV_Emily_badge.png", "Emily_badge.png", 0.0001, 1)
-	CreateItemTemplate(GetLocalString("items", "burntbadge"), "George Maynard's Badge", it_burntbadge, "badge.b3d", "INV_Maynard_badge.png", "Maynard_badge.png", 0.0001, 1, "Maynard_badge.png")
-	CreateItemTemplate(GetLocalString("items", "harnbadge"), "Asav Harn's Badge", it_harnbadge, "badge.b3d", "INV_harn_badge.png", "harn_badge.png", 0.0001, 1, "harn_badge.png")
+	CreateItemTemplate(GetLocalString("items", "burntbadge"), "George Maynard's Badge", it_badge, "badge.b3d", "INV_Maynard_badge.png", "Maynard_badge.png", 0.0001, 1, "Maynard_badge.png")
+	CreateItemTemplate(GetLocalString("items", "harnbadge"), "Asav Harn's Badge", it_badge, "badge.b3d", "INV_harn_badge.png", "harn_badge.png", 0.0001, 1, "harn_badge.png")
+	CreateItemTemplate(GetLocalString("items", "gonzalesbadge"), "Jim Gonzales' Badge", it_badge, "badge.b3d", "INV_Gonzales_badge.png", "Gonzales_badge.png", 0.0001, 1, "Gonzales_badge.png")
 	CreateItemTemplate(GetLocalString("items", "oldbadge"), "Old Badge", it_oldbadge, "badge.b3d", "INV_D_9341_badge.png", "D_9341_badge.png", 0.0001, 1, "D_9341_badge.png", "", False, 1 + 2 + 8)
 	
 	CreateItemTemplate(GetLocalString("items", "ticket"), "Movie Ticket", it_ticket, "badge.b3d", "INV_ticket.png", "ticket.png", 0.0001, 0, "ticket.png", "", False, 1 + 2 + 8)
