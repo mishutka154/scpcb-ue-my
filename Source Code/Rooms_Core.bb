@@ -845,8 +845,8 @@ Function FillRoom%(r.Rooms)
 			; ~ Janitorial Lockers
 			CreateDoor(r, r\x - 96.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_0)
 			
-			sc.SecurityCams = CreateSecurityCam(r, r\x + 1646.0 * RoomScale, r\y + 435.0 * RoomScale, r\z + 193.0 * RoomScale, 20.0)
-			sc\Angle = 30.0 : sc\Turn = 30.0
+			sc.SecurityCams = CreateSecurityCam(r, r\x + 940.0 * RoomScale, r\y + 435.0 * RoomScale, r\z - 940.0 * RoomScale, 20.0)
+			sc\Angle = 45.0 : sc\Turn = 30.0
 			
 			; ~ Water leak needs placement fix ~ Snoe
 			
@@ -873,6 +873,8 @@ Function FillRoom%(r.Rooms)
 			
 			it.Items = CreateRandomBattery(r\x + 885.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 923.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
+			
+			CreateCustomCenter(r, r\x - 384.0 * RoomScale, r\z)
 			;[End Block]
 		Case r_room2_sl
 			;[Block]
