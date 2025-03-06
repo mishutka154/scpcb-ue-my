@@ -566,7 +566,7 @@ Type Items
 	Field ItemTemplate.ItemTemplates
 	Field DropSpeed#
 	Field R%, G%, B%, Alpha#
-	Field Dist#, DistTimer#
+	Field Dist#, Nearby%
 	Field State#, State2#, State3#
 	Field Picked%, Dropped%
 	Field InvImg%
@@ -615,6 +615,7 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 	
 	i\Dist = EntityDistanceSquared(me\Collider, i\Collider)
 	i\DropSpeed = 0.0
+	i\Nearby = True
 	
 	i\InvImg = i\ItemTemplate\InvImg
 	
@@ -750,19 +751,23 @@ Function UpdateItems%()
 	Local DeletedItem% = False
 	Local RandomVal# = Rnd(-0.002, 0.002)
 	
+	opttimer\ItemsTimer = opttimer\ItemsTimer - fps\Factor[0]
+	If opttimer\ItemsTimer <= 0.0
+		For i.Items = Each Items
+			If (Not i\Picked)
+				i\Dist = EntityDistanceSquared(Camera, i\Collider)
+				i\Nearby = (i\Dist < HideDist)
+			EndIf
+		Next
+		opttimer\ItemsTimer = 35.0
+	EndIf
+	
 	ClosestItem = Null
 	For i.Items = Each Items
 		i\Dropped = 0
 		
 		If (Not i\Picked)
-			If i\DistTimer <= 0.0
-				i\Dist = EntityDistanceSquared(Camera, i\Collider)
-				i\DistTimer = 35.0
-			Else
-				i\DistTimer = i\DistTimer - fps\Factor[0]
-			EndIf
-			
-			If i\Dist < HideDist
+			If i\Nearby
 				If EntityHidden(i\Collider) Then ShowEntity(i\Collider)
 				
 				If i\Dist < 1.44
@@ -996,6 +1001,7 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 	If item\ItemTemplate\SoundID <> 66 And PlayDropSound Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 	
 	item\Dropped = 1
+	item\Nearby = True
 	
 	ShowEntity(item\Collider)
 	PositionEntity(item\Collider, EntityX(Camera), EntityY(Camera), EntityZ(Camera))

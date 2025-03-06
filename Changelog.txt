@@ -111,9 +111,9 @@
 - Fixed position of the broken door in «room2gw» which caused some NPCs to get stuck.
 - Fixed rocks position in the forest.
 - Fixed a visual bug related to SCP-106 and Class D not being visible in SCP-106's containment box when using blue NVG.
+- Fixed rooms overlapping.
 
 [Known issues]
-- Rooms can overlap and block the way.
 - Tabbing out of the game and tabbing back in freezes the game view/turning off monitor freezes the game.
 - Battery issues caused by having multiple night vision devices.
 - Corrosive door textures not saving correctly.

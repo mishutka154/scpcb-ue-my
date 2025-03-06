@@ -134,16 +134,14 @@ End Function
 Global IsBlackOut%, PrevIsBlackOut%
 Global SecondaryLightOn#
 
-Global UpdateLightsTimer#
 Global LightRenderDistance#
 
 Function UpdateLightVolume%()
 	Local l.Lights
 	
 	If SecondaryLightOn > 0.3
-		If UpdateLightsTimer < 8.0
-			UpdateLightsTimer = UpdateLightsTimer + fps\Factor[0]
-		Else
+		opttimer\LightsTimer = opttimer\LightsTimer + fps\Factor[0]
+		If opttimer\LightsTimer >= 8.0
 			Local HideDist# = PowTwo(HideDistance)
 			
 			For l.Lights = Each Lights
@@ -155,12 +153,12 @@ Function UpdateLightVolume%()
 					EndIf
 				EndIf
 			Next
-			UpdateLightsTimer = 0.0
+			opttimer\LightsTimer = 0.0
 		EndIf
 		LightVolume = CurveValue(TempLightVolume, LightVolume, 50.0)
 	Else
 		LightVolume = 1.0
-		UpdateLightsTimer = 0.0
+		opttimer\LightsTimer = 0.0
 	EndIf
 End Function
 
@@ -176,7 +174,7 @@ Function UpdateLights%(Cam%)
 				If l\Sprite <> 0
 					If Cam = Camera ; ~ The lights are rendered by player's cam
 						EntityOrder(l\AdvancedSprite, -1)
-						If UpdateLightsTimer = 0.0
+						If opttimer\LightsTimer = 0.0
 							Local Dist# = EntityDistanceSquared(Cam, l\OBJ)
 							Local LightSpriteHidden% = EntityHidden(l\Sprite)
 							Local LightAdvancedSpriteHidden% = EntityHidden(l\AdvancedSprite)
@@ -237,7 +235,7 @@ Function UpdateLights%(Cam%)
 					EndIf
 				Else
 					If Cam = Camera ; ~ The lights are rendered by player's cam
-						If UpdateLightsTimer = 0.0
+						If opttimer\LightsTimer = 0.0
 							LightOBJHidden = EntityHidden(l\OBJ)
 							
 							If EntityDistanceSquared(Cam, l\OBJ) < LightRenderDistance * LightVolume
@@ -1443,6 +1441,7 @@ Type RoomTemplates
 	;Field TempTriggerBoxName$[8]
 	Field DisableOverlapCheck% = True
 	Field MinX#, MinY#, MinZ#
+	Field MidX#, MidY#, MidZ#
 	Field MaxX#, MaxY#, MaxZ#
 End Type
 
@@ -2057,6 +2056,7 @@ End Function
 ;	Field OBJ%
 ;	Field Name$
 ;	Field MinX#, MinY#, MinZ#
+;	Field MidX#, MidY#, MidZ#
 ;	Field MaxX#, MaxY#, MaxZ#
 ;End Type
 
@@ -2097,7 +2097,9 @@ Type Rooms
 	;Field TriggerBoxes.TriggerBox[MaxRoomTriggerBoxes]
 	Field MaxWayPointY#
 	Field MinX#, MinY#, MinZ#
+	Field MidX#, MidY#, MidZ#
 	Field MaxX#, MaxY#, MaxZ#
+	Field BoundingBox%
 	Field HiddenAlpha% = True
 	Field RoomCenter%
 End Type
@@ -2366,6 +2368,11 @@ Function CreateRoom.Rooms(Zone%, RoomShape%, x#, y#, z#, RoomID% = -1, Angle# = 
 				If rt\OBJ = 0 Then LoadRoomMesh(rt)
 				
 				r\OBJ = CopyEntity(rt\OBJ)
+				
+				r\BoundingBox = CreatePivot(r\OBJ)
+				PositionEntity(r\BoundingBox, r\RoomTemplate\MidX, r\RoomTemplate\MidY, r\RoomTemplate\MidZ)
+				ScaleEntity(r\BoundingBox, (r\RoomTemplate\MaxX - r\RoomTemplate\MinX), (r\RoomTemplate\MaxY - r\RoomTemplate\MinY), (r\RoomTemplate\MaxZ - r\RoomTemplate\MinZ))
+				
 				ScaleEntity(r\OBJ, RoomScale, RoomScale, RoomScale)
 				EntityType(r\OBJ, HIT_MAP)
 				EntityPickMode(r\OBJ, 2)
@@ -2410,6 +2417,11 @@ Function CreateRoom.Rooms(Zone%, RoomShape%, x#, y#, z#, RoomID% = -1, Angle# = 
 					If rt\OBJ = 0 Then LoadRoomMesh(rt)
 					
 					r\OBJ = CopyEntity(rt\OBJ)
+					
+					r\BoundingBox = CreatePivot(r\OBJ)
+					PositionEntity(r\BoundingBox, r\RoomTemplate\MidX, r\RoomTemplate\MidY, r\RoomTemplate\MidZ)
+					ScaleEntity(r\BoundingBox, (r\RoomTemplate\MaxX - r\RoomTemplate\MinX), (r\RoomTemplate\MaxY - r\RoomTemplate\MinY), (r\RoomTemplate\MaxZ - r\RoomTemplate\MinZ))
+					
 					ScaleEntity(r\OBJ, RoomScale, RoomScale, RoomScale)
 					EntityType(r\OBJ, HIT_MAP)
 					EntityPickMode(r\OBJ, 2)
@@ -2536,7 +2548,7 @@ Global bk.BrokenDoor
 Type Doors
 	Field OBJ%, OBJ2%, FrameOBJ%, Buttons%[2]
 	Field Locked%, LockedUpdated%, Open%, Angle%, OpenState#, FastOpen%
-	Field DoorType%, Dist#
+	Field DoorType%, Dist#, Nearby%
 	Field Timer%, TimerState#
 	Field KeyCard%
 	Field room.Rooms
@@ -2740,8 +2752,17 @@ Function UpdateDoors%()
 	ButtonDirection = (Not me\InsideElevator) Lor (me\InsideElevator And (InFacility = LowerFloor Lor (InFacility <> UpperFloor And ToElevatorFloor = UpperFloor)))
 	d_I\ClosestButton = 0
 	d_I\ClosestDoor = Null
+	
+	opttimer\DoorsTimer = opttimer\DoorsTimer - fps\Factor[0]
+	If opttimer\DoorsTimer <= 0.0
+		For d.Doors = Each Doors
+			d\Nearby = (EntityDistanceSquared(d\FrameOBJ, me\Collider) <= HideDist)
+		Next
+		opttimer\DoorsTimer = 35.0
+	EndIf
+	
 	For d.Doors = Each Doors
-		If (EntityDistanceSquared(d\FrameOBJ, me\Collider) <= HideDist) Lor (d\IsElevatorDoor > 0) ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
+		If d\Nearby Lor (d\IsElevatorDoor > 0) ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
 			Local OfficeWooden% = ((d\DoorType = OFFICE_DOOR) Lor (d\DoorType = WOODEN_DOOR))
 			Local FindButton% = (1 - (d\Open And OfficeWooden))
 			
@@ -3132,7 +3153,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 							
 							TeleportEntity(me\Collider, SecondPivotX + x, FPSFactor01 + SecondPivotY + (PlayerY - FirstPivotY), SecondPivotZ + z, 0.3, True)
 							me\DropSpeed = 0.0
-							UpdateLightsTimer = 0.0
+							opttimer\LightsTimer = 0.0
 							UpdateLightVolume()
 							UpdateDoors()
 							UpdateRooms()
@@ -3175,7 +3196,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 									z = Clamp(OBJPosZ - FirstPivotZ, Plus022, Minus022)
 								EndIf
 								TeleportEntity(it\Collider, SecondPivotX + x, FPSFactor01 + SecondPivotY + (OBJPosY - FirstPivotY), SecondPivotZ + z, 0.01, True)
-								it\DistTimer = 0.0
+								opttimer\ItemsTimer = 0.0
 								UpdateItems()
 							EndIf
 						Next
@@ -3196,6 +3217,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 									z = Clamp(OBJPosZ - FirstPivotZ, Plus022, Minus022)
 								EndIf
 								TeleportEntity(de\OBJ, SecondPivotX + x, FPSFactor01 + SecondPivotY + (OBJPosY - FirstPivotY), SecondPivotZ + z, -0.01, True)
+								opttimer\DecalsTimer = 0.0
 								UpdateDecals()
 							EndIf
 						Next
@@ -3262,7 +3284,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 							EndIf
 							TeleportEntity(me\Collider, FirstPivotX + x, FPSFactor01 + FirstPivotY + (PlayerY - SecondPivotY), FirstPivotZ + z, 0.3, True)
 							me\DropSpeed = 0.0
-							UpdateLightsTimer = 0.0
+							opttimer\LightsTimer = 0.0
 							UpdateLightVolume()
 							UpdateDoors()
 							UpdateRooms()
@@ -3303,7 +3325,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 									z = Clamp(OBJPosZ - SecondPivotZ, Plus022, Minus022)
 								EndIf
 								TeleportEntity(it\Collider, FirstPivotX + x, FPSFactor01 + FirstPivotY + (OBJPosY - SecondPivotY), FirstPivotZ + z, 0.01, True)
-								it\DistTimer = 0.0
+								opttimer\ItemsTimer = 0.0
 								UpdateItems()
 							EndIf
 						Next
@@ -3323,6 +3345,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 									z = Clamp(OBJPosZ - SecondPivotZ, Plus022, Minus022)
 								EndIf
 								TeleportEntity(de\OBJ, FirstPivotX + x, FPSFactor01 + FirstPivotY + (OBJPosY - SecondPivotY), FirstPivotZ + z, -0.01, True)
+								opttimer\DecalsTimer = 0.0
 								UpdateDecals()
 							EndIf
 						Next
@@ -3849,6 +3872,7 @@ Type Decals
 	Field BlendMode%, FX%
 	Field R%, G%, B%
 	Field Timer#, LifeTime#
+	Field Nearby%
 End Type
 
 Function CreateDecal.Decals(ID%, x#, y#, z#, Pitch#, Yaw#, Roll#, Size# = 1.0, Alpha# = 1.0, FX% = 0, BlendMode% = 1, R% = 0, G% = 0, B% = 0)
@@ -3861,6 +3885,7 @@ Function CreateDecal.Decals(ID%, x#, y#, z#, Pitch#, Yaw#, Roll#, Size# = 1.0, A
 	de\FX = FX : de\BlendMode = BlendMode
 	de\R = R : de\G = G : de\B = B
 	de\MaxSize = 1.0
+	de\Nearby = True
 	
 	de\OBJ = CreateQuad()
 	PositionEntity(de\OBJ, x, y, z, True)
@@ -3887,8 +3912,16 @@ Function UpdateDecals%()
 	Local de.Decals
 	Local HideDist# = PowTwo(HideDistance)
 	
+	opttimer\DecalsTimer = opttimer\DecalsTimer - fps\Factor[0]
+	If opttimer\DecalsTimer =< 0.0
+		For de.Decals = Each Decals
+			de\Nearby = EntityDistanceSquared(de\OBJ, me\Collider) < HideDist
+		Next
+		opttimer\DecalsTimer = 35.0
+	EndIf
+	
 	For de.Decals = Each Decals
-		If EntityDistanceSquared(de\OBJ, me\Collider) < HideDist
+		If de\Nearby
 			If EntityHidden(de\OBJ) Then ShowEntity(de\OBJ)
 			
 			Local DecalPosY# = EntityY(de\OBJ, True)
@@ -4600,22 +4633,27 @@ Include "Source Code\Rooms_Core.bb"
 Function ResetRender%()
 	Local it.Items, n.NPCs
 	
-	UpdateLightsTimer = 0.0
+	me\DropSpeed = 0.0
+	ShouldEntitiesFall = False
+	opttimer\LightsTimer = 0.0
 	UpdateLightVolume()
 	UpdateLights(Camera)
+	opttimer\DoorsTimer = 0.0
 	UpdateDoors()
+	opttimer\DecalsTimer = 0.0
 	UpdateDecals()
+	opttimer\RoomsTimer = 0.0
 	UpdateRooms()
+	opttimer\ItemsTimer = 0.0
 	For it.Items = Each Items
-		it\DistTimer = 0.0
 		it\DropSpeed = 0.0
 	Next
+	UpdateItems()
 	For n.NPCs = Each NPCs
 		n\AnimTimer = 0.0
 		n\DropSpeed = 0.0
 	Next
-	me\DropSpeed = 0.0
-	ShouldEntitiesFall = False
+	UpdateNPCs()
 End Function
 
 Function TeleportToRoom%(r.Rooms)
@@ -4887,64 +4925,57 @@ Function UpdateRooms%()
 		me\Zone = 1
 	EndIf
 	
-	Local FoundNewPlayerRoom% = False
-	
-	If IsEqual(PlayerY, EntityY(PlayerRoom\OBJ), 1.5)
-		If IsEqual(PlayerRoom\x, PlayerX, 4.0) And IsEqual(PlayerRoom\z, PlayerZ, 4.0) Then FoundNewPlayerRoom = True
-		If (Not FoundNewPlayerRoom) ; ~ It's likely that an adjacent room is the new player room, check for that
-			For i = 0 To MaxRoomAdjacents - 1
-				If PlayerRoom\Adjacent[i] <> Null
-					If IsEqual(PlayerRoom\Adjacent[i]\x, PlayerX, 4.0) And IsEqual(PlayerRoom\Adjacent[i]\z, PlayerZ, 4.0) And IsEqual(PlayerRoom\Adjacent[i]\y, PlayerY, 4.0)
-						FoundNewPlayerRoom = True
-						PlayerRoom = PlayerRoom\Adjacent[i]
-						Exit
-					EndIf
+	opttimer\RoomsTimer = opttimer\RoomsTimer - fps\Factor[0]
+	If opttimer\RoomsTimer <= 0.0
+		Local MaxRoomDistance# = 1000000.0
+		Local BoundingBoxDistance#
+		
+		For r.Rooms = Each Rooms ; ~ Find player room
+			If IsInsideBox(me\Collider, r\BoundingBox)
+				BoundingBoxDistance = Abs(PlayerY - r\MinY)
+				If BoundingBoxDistance < MaxRoomDistance
+					PlayerRoom = r
+					MaxRoomDistance = BoundingBoxDistance
 				EndIf
-			Next
-		EndIf
-	EndIf
-	
-	For r.Rooms = Each Rooms
-		Local x# = Abs(r\x - PlayerX)
-		Local z# = Abs(r\z - PlayerZ)
-		
-		r\Dist = Max(x, z)
-		
-		If (x < 4.0 And z < 4.0) And (Not FoundNewPlayerRoom) And PlayerRoom <> r
-			If IsEqual(PlayerY, EntityY(r\OBJ), 1.5) Then PlayerRoom = r
-			FoundNewPlayerRoom = True
-		EndIf
-		
-		Local Hide% = True
-		
-		If r = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, r) Then Hide = False
-		For i = 0 To MaxRoomAdjacents - 1
-			If IsRoomAdjacent(PlayerRoom\Adjacent[i], r)
-				Hide = False
-				Exit
 			EndIf
 		Next
 		
-		If Hide
-			HideRoomsNoColl(r)
-		Else
-			ShowRoomsNoColl(r)
-		EndIf
-	Next
+		For r.Rooms = Each Rooms
+			r\Dist = Max(Abs(r\x - PlayerX), Abs(r\z - PlayerZ))
+			
+			Local Hide% = True
+			
+			If r = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, r) Then Hide = False
+			
+			For i = 0 To MaxRoomAdjacents - 1
+				If IsRoomAdjacent(PlayerRoom\Adjacent[i], r)
+					Hide = False
+					Exit
+				EndIf
+			Next
+			
+			If Hide
+				HideRoomsNoColl(r)
+			Else
+				ShowRoomsNoColl(r)
+			EndIf
+		Next
+		opttimer\RoomsTimer = 17.5
+	EndIf
 	
 	CurrMapGrid\Found[Floor(EntityX(PlayerRoom\OBJ) / RoomSpacing) + (Floor(EntityZ(PlayerRoom\OBJ) / RoomSpacing) * MapGridSize)] = MapGrid_Tile
 	PlayerRoom\Found = True
 	
+	Local IsInside% = IsInsideBox(me\Collider, PlayerRoom\BoundingBox)
+	
 	ShowRoomsColl(PlayerRoom)
 	For i = 0 To MaxRoomAdjacents - 1
 		If PlayerRoom\Adjacent[i] <> Null
-			If PlayerRoom\AdjDoor[i] <> Null
-				If PlayerRoom\Adjacent[i] <> PlayerRoom
-					If PlayerRoom\AdjDoor[i]\OpenState = 0.0 Lor (Not EntityInView(PlayerRoom\AdjDoor[i]\FrameOBJ, Camera)) Lor PlayerY > 8.0 Lor PlayerY < -8.0
-						HideRoomsColl(PlayerRoom\Adjacent[i])
-					Else
-						ShowRoomsColl(PlayerRoom\Adjacent[i])
-					EndIf
+			If PlayerRoom\AdjDoor[i] <> Null And PlayerRoom\Adjacent[i] <> PlayerRoom
+				If (PlayerRoom\AdjDoor[i]\OpenState = 0.0 Lor ((Not EntityInView(PlayerRoom\AdjDoor[i]\FrameOBJ, Camera)) And IsInside) Lor PlayerY > 8.0 Lor PlayerY < -8.0)
+					HideRoomsColl(PlayerRoom\Adjacent[i])
+				Else
+					ShowRoomsColl(PlayerRoom\Adjacent[i])
 				EndIf
 			EndIf
 			

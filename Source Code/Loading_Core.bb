@@ -2324,6 +2324,7 @@ Function LoadData%()
 	
 	EscapeSecondsTimer = 70.0
 	
+	opttimer.OptimizationTimer = New OptimizationTimer
 	chs.Cheats = New Cheats
 	me.Player = New Player
 	pm.PlayerModel = New PlayerModel
@@ -3182,6 +3183,8 @@ Function NullGame%(PlayButtonSFX% = True)
 	
 	RandomSeed = ""
 	
+	Delete(opttimer) : opttimer = Null
+	
 	UsedConsole = False
 	Delete(chs) : chs = Null
 	WireFrameState = 0
@@ -3208,7 +3211,6 @@ Function NullGame%(PlayButtonSFX% = True)
 	
 	SecondaryLightOn = 0.0
 	IsBlackOut = False : PrevIsBlackOut = False
-	UpdateLightsTimer = 0.0
 	LightRenderDistance = 0.0
 	
 	RemoteDoorOn = False

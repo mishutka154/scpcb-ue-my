@@ -259,6 +259,16 @@ Repeat
 Forever
 ;[End Block]
 
+Type OptimizationTimer
+	Field RoomsTimer#
+	Field LightsTimer#
+	Field ItemsTimer#
+	Field DoorsTimer#
+	Field DecalsTimer#
+End Type
+
+Global opttimer.OptimizationTimer
+
 Function UpdateGame%()
 	Local e.Events, ev.Events, r.Rooms
 	Local i%, TempStr$

@@ -49,6 +49,7 @@ Type NPCs
 	Field HasAsset% = False
 	Field HasAnim%
 	Field Contained% = False
+	Field CurrentRoom.Rooms
 	Field TargetUpdateTimer#
 	Field Shadow.Shadows
 End Type
@@ -860,50 +861,27 @@ Function UpdateNPCs%()
 					Else
 						If ShouldEntitiesFall
 							Local UpdateGravity% = False
-							Local MaxX#, MinX#, MaxZ#, MinZ#
 							
 							If n\InFacility = NullFloor
-								If PlayerRoom\RoomTemplate\RoomID <> r_cont1_173_intro
-									If forest_event <> Null And forest_event\room = PlayerRoom
-										If forest_event\EventState = 1.0 Then UpdateGravity = True
+								Local Currdist#
+								Local MaxDist# = 1000000.0
+								
+								For r.Rooms = Each Rooms
+									Currdist = Abs(EntityY(n\Collider) - r\MinY)
+									If IsInsideBox(n\Collider, r\BoundingBox) And Currdist < MaxDist
+										MaxDist = Currdist
+										n\CurrentRoom = r
+										Exit
 									EndIf
-								Else
+								Next
+								
+								If (forest_event <> Null And forest_event\room = PlayerRoom And EntityY(me\Collider) > 20.0) Lor (n\CurrentRoom <> Null And (n\CurrentRoom = PlayerRoom Lor IsRoomAdjacent(n\CurrentRoom, PlayerRoom)))
 									UpdateGravity = True
-								EndIf
-								If (Not UpdateGravity)
-									For r.Rooms = Each Rooms
-										If r\MaxX <> 0.0 Lor r\MinX <> 0.0 Lor r\MaxZ <> 0.0 Lor r\MinZ <> 0.0
-											MaxX = r\MaxX
-											MinX = r\MinX
-											MaxZ = r\MaxZ
-											MinZ = r\MinZ
-										Else
-											MaxX = 4.0
-											MinX = 0.0
-											MaxZ = 4.0
-											MinZ = 0.0
-										EndIf
-										If IsEqual(EntityX(n\Collider), EntityX(r\OBJ), Abs(MaxX - MinX)) And IsEqual(EntityZ(n\Collider), EntityZ(r\OBJ), Abs(MaxZ - MinZ))
-											If r = PlayerRoom
-												UpdateGravity = True
-												Exit
-											EndIf
-											If IsRoomAdjacent(PlayerRoom, r)
-												UpdateGravity = True
-												Exit
-											EndIf
-											For i = 0 To MaxRoomAdjacents - 1
-												If IsRoomAdjacent(PlayerRoom\Adjacent[i], r)
-													UpdateGravity = True
-													Exit
-												EndIf
-											Next
-										EndIf
-									Next
 								EndIf
 							Else
 								UpdateGravity = True
 							EndIf
+							
 							If UpdateGravity
 								n\DropSpeed = Max(n\DropSpeed - 0.005 * fps\Factor[0] * n\GravityMult, -n\MaxGravity)
 							Else

@@ -157,6 +157,11 @@ Function IsInsideElevator%(x1#, y1#, z1#, ElevatorPivot%)
 	Return(IsEqual(x1, EntityX(ElevatorPivot, True), Offset) And IsEqual(z1, EntityZ(ElevatorPivot, True), Offset) And IsEqual(y1, EntityY(ElevatorPivot, True), Offset))
 End Function
 
+Function IsInsideBox%(Entity%, Box%)
+	TFormPoint(EntityX(Entity, True), EntityY(Entity, True), EntityZ(Entity, True), 0, Box)
+	Return((Abs(TFormedX()) < 0.5) And (Abs(TFormedY()) < 0.5) And (Abs(TFormedZ()) < 0.5))
+End Function
+
 Function CreateLine%(x1#, y1#, z1#, x2#, y2#, z2#, Mesh% = 0)
 	Local Surf%, Verts%
 	
@@ -184,6 +189,7 @@ Function CreateLine%(x1#, y1#, z1#, x2#, y2#, z2#, Mesh% = 0)
 End Function
 
 Global Mesh_MinX#, Mesh_MinY#, Mesh_MinZ#
+Global Mesh_MidX#, Mesh_MidY#, Mesh_MidZ#
 Global Mesh_MaxX#, Mesh_MaxY#, Mesh_MaxZ#
 Global Mesh_MagX#, Mesh_MagY#, Mesh_MagZ#
 
@@ -220,6 +226,9 @@ Function GetMeshExtents%(Mesh%)
 	Mesh_MinX = MinX
 	Mesh_MinY = MinY
 	Mesh_MinZ = MinZ
+	Mesh_MidX = (MinX + MaxX) / 2.0
+	Mesh_MidY = (MinY + MaxY) / 2.0
+	Mesh_MidZ = (MinZ + MaxZ) / 2.0
 	Mesh_MaxX = MaxX
 	Mesh_MaxY = MaxY
 	Mesh_MaxZ = MaxZ
@@ -245,12 +254,14 @@ Function GetZone%(y%)
 End Function
 
 Function CalculateRoomTemplateExtents%(r.RoomTemplates)
-	If r\DisableOverlapCheck Then Return
-	
 	GetMeshExtents(GetChild(r\OBJ, 2))
+	
 	r\MinX = Mesh_MinX
 	r\MinY = Mesh_MinY
 	r\MinZ = Mesh_MinZ
+	r\MidX = Mesh_MidX
+	r\MidY = Mesh_MidY
+	r\MidZ = Mesh_MidZ
 	r\MaxX = Mesh_MaxX
 	r\MaxY = Mesh_MaxY
 	r\MaxZ = Mesh_MaxZ
@@ -260,13 +271,17 @@ End Function
 Const ShrinkAmount# = 0.05
 
 Function CalculateRoomExtents%(r.Rooms)
-	If r\RoomTemplate\DisableOverlapCheck Then Return
-	
 	; ~ Convert from the rooms local space to world space
 	TFormVector(r\RoomTemplate\MinX, r\RoomTemplate\MinY, r\RoomTemplate\MinZ, r\OBJ, 0)
 	r\MinX = TFormedX()
 	r\MinY = TFormedY()
 	r\MinZ = TFormedZ()
+	
+	; ~ Convert from the rooms local space to world space
+	TFormVector(r\RoomTemplate\MidX, r\RoomTemplate\MidY, r\RoomTemplate\MidZ, r\OBJ, 0)
+	r\MidX = TFormedX()
+	r\MidY = TFormedY()
+	r\MidZ = TFormedZ()
 	
 	; ~ Convert from the rooms local space to world space
 	TFormVector(r\RoomTemplate\MaxX, r\RoomTemplate\MaxY, r\RoomTemplate\MaxZ, r\OBJ, 0)
@@ -287,13 +302,13 @@ Function CalculateRoomExtents%(r.Rooms)
 		r\MinZ = TempZ
 	EndIf
 	
-	r\MinX = r\MinX + ShrinkAmount + r\x
+	r\MinX = r\MinX + ShrinkAmount + r\MidX
 	r\MinY = r\MinY + ShrinkAmount
-	r\MinZ = r\MinZ + ShrinkAmount + r\z
+	r\MinZ = r\MinZ + ShrinkAmount + r\MidZ
 	
-	r\MaxX = r\MaxX - ShrinkAmount - r\x
+	r\MaxX = r\MaxX - ShrinkAmount - r\MidX
 	r\MaxY = r\MaxY - ShrinkAmount
-	r\MaxZ = r\MaxZ - ShrinkAmount - r\z
+	r\MaxZ = r\MaxZ - ShrinkAmount - r\MidZ
 End Function
 
 Function CheckRoomOverlap%(r1.Rooms, r2.Rooms)

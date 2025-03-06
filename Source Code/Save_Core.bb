@@ -2298,8 +2298,6 @@ Function LoadGameQuick%(File$)
 	
 	ClearFogColor()
 	
-	UpdateLightsTimer = 0.0
-	
 	d_I\AnimButton = 0
 	
 	If wi\GasMask = 0 Then HideEntity(t\OverlayID[1])
