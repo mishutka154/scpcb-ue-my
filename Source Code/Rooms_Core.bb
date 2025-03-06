@@ -848,21 +848,20 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 940.0 * RoomScale, r\y + 435.0 * RoomScale, r\z - 940.0 * RoomScale, 20.0)
 			sc\Angle = 45.0 : sc\Turn = 30.0
 			
-			; ~ Water leak needs placement fix ~ Snoe
+			xTemp = r\x - 472.0 * RoomScale : zTemp = r\z - 20.0 * RoomScale
+			de.Decals = CreateDecal(DECAL_WATER, xTemp, r\y + 0.005, zTemp, 90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			de\SizeChange = 0.00005 : de\MaxSize = 7.5
+			EntityParent(de\OBJ, r\OBJ)
 			
-			;de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 0.005, r\z + 161.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
-			;de\SizeChange = 0.00005 : de\MaxSize = 7.5
-			;EntityParent(de\OBJ, r\OBJ)
+			de.Decals = CreateDecal(DECAL_CORROSIVE_2, xTemp, r\y + 704.0 * RoomScale - 0.005, zTemp, -90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.3), 0.7)
+			EntityParent(de\OBJ, r\OBJ)
 			
-			;de.Decals = CreateDecal(DECAL_CORROSIVE_2, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.3), 0.7)
-			;EntityParent(de\OBJ, r\OBJ)
+			de.Decals = CreateDecal(DECAL_WATER, xTemp, r\y + 704.0 * RoomScale - 0.005, zTemp, -90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			de\SizeChange = 0.00005 : de\MaxSize = 7.5
+			EntityParent(de\OBJ, r\OBJ)
 			
-			;de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
-			;de\SizeChange = 0.00005 : de\MaxSize = 7.5
-			;EntityParent(de\OBJ, r\OBJ)
-			
-			;SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 161.0 * RoomScale, 22)
-			;SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 0.01, r\z + 161.0 * RoomScale, 23)
+			SetEmitter(r, xTemp, r\y + 704.0 * RoomScale, zTemp, 22)
+			SetEmitter(r, xTemp, r\y + 0.01, zTemp, 23)
 			
 			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 607.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 938.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
