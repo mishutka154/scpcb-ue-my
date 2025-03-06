@@ -843,33 +843,35 @@ Function FillRoom%(r.Rooms)
 		Case r_room2_js
 			;[Block]
 			; ~ Janitorial Lockers
-			CreateDoor(r, r\x + 288.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_0)
+			CreateDoor(r, r\x - 96.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_0)
 			
 			sc.SecurityCams = CreateSecurityCam(r, r\x + 1646.0 * RoomScale, r\y + 435.0 * RoomScale, r\z + 193.0 * RoomScale, 20.0)
 			sc\Angle = 30.0 : sc\Turn = 30.0
 			
-			de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 0.005, r\z + 161.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
-			de\SizeChange = 0.00005 : de\MaxSize = 7.5
-			EntityParent(de\OBJ, r\OBJ)
+			; ~ Water leak needs placement fix ~ Snoe
 			
-			de.Decals = CreateDecal(DECAL_CORROSIVE_2, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.3), 0.7)
-			EntityParent(de\OBJ, r\OBJ)
+			;de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 0.005, r\z + 161.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			;de\SizeChange = 0.00005 : de\MaxSize = 7.5
+			;EntityParent(de\OBJ, r\OBJ)
 			
-			de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
-			de\SizeChange = 0.00005 : de\MaxSize = 7.5
-			EntityParent(de\OBJ, r\OBJ)
+			;de.Decals = CreateDecal(DECAL_CORROSIVE_2, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.3), 0.7)
+			;EntityParent(de\OBJ, r\OBJ)
 			
-			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 161.0 * RoomScale, 22)
-			SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 0.01, r\z + 161.0 * RoomScale, 23)
+			;de.Decals = CreateDecal(DECAL_WATER, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale - 0.005, r\z + 161.0 * RoomScale, -90.0, Rnd(360.0), 0.0, Rnd(0.7, 0.8), 1.0)
+			;de\SizeChange = 0.00005 : de\MaxSize = 7.5
+			;EntityParent(de\OBJ, r\OBJ)
 			
-			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 980.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 938.0 * RoomScale)
+			;SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 704.0 * RoomScale, r\z + 161.0 * RoomScale, 22)
+			;SetEmitter(r, r\x + 103.0 * RoomScale, r\y + 0.01, r\z + 161.0 * RoomScale, 23)
+			
+			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 607.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 938.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Origami", it_origami, r\x + 1467.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 961.0 * RoomScale)
+			it.Items = CreateItem("Origami", it_origami, r\x + 945.0 * RoomScale, r\y + 200.0 * RoomScale, r\z -679.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateRandomBattery(r\x + 1714.0 * RoomScale, r\y + 200.0 * RoomScale, r\z + 936.0 * RoomScale)
+			it.Items = CreateRandomBattery(r\x + 885.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 923.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case r_room2_sl
