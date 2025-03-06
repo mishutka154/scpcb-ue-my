@@ -866,11 +866,11 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x + 941.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 763.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Origami", it_origami, r\x + 945.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 679.0 * RoomScale)
+			it.Items = CreateItem("Origami", it_origami, r\x + 915.0 * RoomScale, r\y + 256.0 * RoomScale, r\z + 533.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateRandomBattery(r\x + 885.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 923.0 * RoomScale)
+			it.Items = CreateRandomBattery(r\x + 607.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 938.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			CreateCustomCenter(r, r\x - 384.0 * RoomScale, r\z)
