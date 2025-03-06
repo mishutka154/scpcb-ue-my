@@ -1149,6 +1149,12 @@ Function UpdateEvents%()
 								SoundTransmission = Temp
 							EndIf
 							
+							x2 = EntityX(e\room\Objects[1], True) : y2 = EntityY(e\room\Objects[1], True) : z2 = EntityZ(e\room\Objects[1], True)
+							If e\room\NPC[1] <> Null
+								PositionEntity(e\room\NPC[1]\Collider, x2, y2, z2, True)
+								ResetEntity(e\room\NPC[1]\Collider)
+							EndIf
+							
 							If e\EventState = 0.0
 								If SoundTransmission And Rand(100) = 1
 									If (Not ChannelPlaying(e\SoundCHN))
@@ -1179,7 +1185,7 @@ Function UpdateEvents%()
 									AnimateEx(e\room\Objects[5], AnimTime(e\room\Objects[5]), 1.0, 120.0, 0.35, False)
 								ElseIf e\EventState3 >= 2500.0
 									If e\EventState2 = 1.0 And e\EventState3 - fps\Factor[0] < 2500.0
-										PositionEntity(n_I\Curr106\Collider, EntityX(e\room\Objects[1], True), EntityY(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True))
+										PositionEntity(n_I\Curr106\Collider, x2, y2, z2)
 										ResetEntity(n_I\Curr106\Collider)
 										ShowEntity(n_I\Curr106\OBJ)
 										n_I\Curr106\Contained = False
@@ -1194,14 +1200,9 @@ Function UpdateEvents%()
 									
 									ShouldPlay = 10
 									
-									PositionEntity(n_I\Curr106\Collider, EntityX(e\room\NPC[0]\OBJ, True), ((-6628.0) + 108.0 * (Min(e\EventState3 - 2500.0, 800.0) / 320.0)) * RoomScale, EntityZ(e\room\NPC[0]\OBJ, True))
+									PositionEntity(n_I\Curr106\Collider, x2, CurveValue(-8308.0 * RoomScale + Sin(Float(MilliSec) * 0.04) * 0.07, y2, 200.0), z2, True)
 									ResetEntity(n_I\Curr106\Collider)
-									
-									RotateEntity(n_I\Curr106\Collider, 0.0, EntityYaw(e\room\NPC[0]\OBJ, True) + 180.0, 0.0, True)
-									n_I\Curr106\EnemyX = EntityX(e\room\NPC[0]\OBJ, True) : n_I\Curr106\EnemyY = ((-6628.0) + 108.0 * (Min(e\EventState3 - 2500.0, 800.0) / 320.0)) * RoomScale : n_I\Curr106\EnemyZ = EntityZ(e\room\NPC[0]\OBJ, True)
-									n_I\Curr106\State = 2.0
 									n_I\Curr106\Idle = 1
-									AnimateNPC(n_I\Curr106, 206.0, 250.0, 0.1)
 									
 									If e\EventState3 - fps\Factor[0] < 2500.0 
 										de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\NPC[0]\OBJ, True), e\room\y - 6392.0 * RoomScale, EntityZ(e\room\NPC[0]\OBJ, True), 90.0, 0.0, Rnd(360.0), 0.1, 0.01) 
@@ -1220,8 +1221,9 @@ Function UpdateEvents%()
 										MoveEntity(de\OBJ, 0.0, 0.05, 0.2) 
 										EntityParent(de\OBJ, e\room\OBJ)
 									ElseIf e\EventState3 > 3200.0
+										RemoveNPC(e\room\NPC[1])
 										If e\EventState2 = 1.0
-											n_I\Curr106\State = 0.0
+											n_I\Curr106\State = 1.0
 											n_I\Curr106\State2 = Rnd(22000.0, 27000.0)
 											n_I\Curr106\Contained = True
 										Else
@@ -1233,7 +1235,6 @@ Function UpdateEvents%()
 											n_I\Curr106\State = 3.0
 											n_I\Curr106\State2 = 0.0
 											n_I\Curr106\State3 = Rnd(3000.0, 3500.0)
-											
 											e\EventState = 2.0
 											Exit
 										EndIf
@@ -1256,6 +1257,12 @@ Function UpdateEvents%()
 						RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0, True)
 						SetNPCFrame(e\room\NPC[0], 17.0)
 						ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE)
+						
+						; ~ Fake Class-D inside the box
+						e\room\NPC[1] = CreateNPC(NPCTypeD, 0.0, 0.0, 0.0)
+						e\room\NPC[1]\State3 = -1.0 : e\room\NPC[1]\IsDead = True
+						HideEntity(e\room\NPC[1]\Collider)
+						HideEntity(e\room\NPC[1]\OBJ)
 					EndIf
 					x1 = EntityX(me\Collider, True) : y1 = EntityY(me\Collider, True) : z1 = EntityZ(me\Collider, True)
 					me\InsideElevator = (IsInsideElevator(x1, y1, z1, e\room\Objects[2]) Lor IsInsideElevator(x1, y1, z1, e\room\Objects[3]))
