@@ -4101,24 +4101,24 @@ Function UpdateGUI%()
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper
 											;[Block]
-											; ~ Do not add the same document
-											; ~ TODO: FIX GENERAL DATA BASE
+											; ~ Do not add the special or crumpled items
 											If SelectedItem\ItemTemplate\Name = "Note from Maynard" Lor SelectedItem\ItemTemplate\Name = "SCP-085" Lor SelectedItem\ItemTemplate\ID = it_oldpaper
 												CreateMsg(GetLocalString("msg", "e.reader.scan.fail"))
 												PlaySound_Strict(snd_I\ScannerSFX[1])
 												SelectedItem = Null
 												Return
 											EndIf
-											For Inventory(MouseSlot)\EReader.EReaderItem = Each EReaderItem
-												If SelectedItem\ItemTemplate\ImgPath = Inventory(MouseSlot)\EReader\StoredDocPath
+											; ~ Do not add the same document
+											For i = 1 To PossibleEReaderPageAmount - 1
+												If Inventory(MouseSlot)\EReaderPage[i] = SelectedItem\ItemTemplate
 													CreateMsg(GetLocalString("msg", "e.reader.scan.already"))
 													PlaySound_Strict(snd_I\ScannerSFX[1])
 													SelectedItem = Null
 													Return
 												EndIf
 											Next
-											Inventory(MouseSlot)\EReader.EReaderItem = New EReaderItem
-											Inventory(MouseSlot)\EReader\StoredDocPath = SelectedItem\ItemTemplate\ImgPath
+											Inventory(MouseSlot)\EReaderPageAmount = Inventory(MouseSlot)\EReaderPageAmount + 1
+											Inventory(MouseSlot)\EReaderPage[Inventory(MouseSlot)\EReaderPageAmount] = SelectedItem\ItemTemplate
 											CreateMsg(GetLocalString("msg", "e.reader.scan.succ"))
 											PlaySound_Strict(snd_I\ScannerSFX[0])
 											SelectedItem = Null
@@ -6213,28 +6213,19 @@ Function UpdateGUI%()
 					
 					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
 					
-					EReaderPageAmount = 0
-					For SelectedItem\EReader.EReaderItem = Each EReaderItem
-						If SelectedItem\EReader.EReaderItem <> Null Then EReaderPageAmount = EReaderPageAmount + 1
-					Next
-					
 					i = GetKey()
 					Select i
 						Case 49 ; ~ 1, Left
 							;[Block]
-							If SelectedItem\State2 > 1.0 Then CurrEReaderPage = Before CurrEReaderPage
 							SelectedItem\State2 = Max(0.0, SelectedItem\State2 - 1.0)
+							CurrEReaderPage = SelectedItem\EReaderPage[SelectedItem\State2]
 							PlaySound_Strict(ButtonSFX[0])
 							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 							;[End Block]
 						Case 50 ; ~ 2, Right
 							;[Block]
-							If SelectedItem\State2 = 0.0
-								CurrEReaderPage = First EReaderItem
-							ElseIf SelectedItem\State2 < EReaderPageAmount
-								CurrEReaderPage = After CurrEReaderPage
-							EndIf
-							SelectedItem\State2 = Min(EReaderPageAmount, SelectedItem\State2 + 1.0)
+							SelectedItem\State2 = Min(SelectedItem\EReaderPageAmount, SelectedItem\State2 + 1.0)
+							CurrEReaderPage = SelectedItem\EReaderPage[SelectedItem\State2]
 							PlaySound_Strict(ButtonSFX[0])
 							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
 							;[End Block]
@@ -6251,8 +6242,8 @@ Function UpdateGUI%()
 						If CurrEReaderPage <> Null
 							If SelectedItem\ItemTemplate\Img2 = 0
 								Scale = 0.748 * MenuScale
-								SelectedItem\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict(CurrEReaderPage\StoredDocPath), Scale, Scale)
-								Select StripPath(CurrEReaderPage\StoredDocPath)
+								SelectedItem\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict(CurrEReaderPage\ImgPath), Scale, Scale)
+								Select StripPath(CurrEReaderPage\ImgPath)
 									Case "note_Maynard.png"
 										;[Block]
 										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
@@ -6336,7 +6327,6 @@ Function UpdateGUI%()
 					Case it_e_reader, it_e_reader20, it_e_reader30
 						;[Block]
 						SelectedItem\State2 = 0.0
-						EReaderPageAmount = 0
 						CurrEReaderPage = Null
 						;[End Block]
 				End Select
@@ -7611,7 +7601,7 @@ Function RenderGUI%()
 									SetFont(fo\FontID[Font_Default])
 								EndIf
 							Else
-								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + EReaderPageAmount)
+								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + SelectedItem\EReaderPageAmount)
 								If SelectedItem\ItemTemplate\Img2 <> 0 Then DrawBlock(SelectedItem\ItemTemplate\Img2, mo\Viewport_Center_X - SelectedItem\ItemTemplate\Img2Width, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\Img2Height - 12 * MenuScale)
 							EndIf
 						EndIf

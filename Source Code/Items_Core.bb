@@ -378,12 +378,9 @@ Function GetRandDocument$()
 	End Select
 End Function
 
-Type EReaderItem
-	Field StoredDocPath$
-End Type
+Global CurrEReaderPage.ItemTemplates
 
-Global CurrEReaderPage.EReaderItem
-Global EReaderPageAmount%
+Const PossibleEReaderPageAmount% = 78
 
 Type Items
 	Field DisplayName$
@@ -402,7 +399,8 @@ Type Items
 	Field Shadow.Shadows
 	Field ItemHeight#
 	Field TargetNX#, TargetNY#, TargetNZ#
-	Field EReader.EReaderItem
+	Field EReaderPage.ItemTemplates[PossibleEReaderPageAmount] ; ~ 0 is a home page
+	Field EReaderPageAmount%
 End Type
 
 Dim Inventory.Items(0)
@@ -687,7 +685,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 	CatchErrors("PickItem()")
 	
 	Local n%, z%
-	Local itt.ItemTemplates, EReader.EReaderItem
+	Local itt.ItemTemplates
 	
 	If ItemAmount < MaxItemAmount
 		Local CanPickItem% = 1
@@ -796,13 +794,19 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 					Case it_e_reader30
 						;[Block]
 						For itt.ItemTemplates = Each ItemTemplates
-							If itt\ID = it_paper Lor itt\ID = it_oldpaper
-								Local i% = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor itt\Name = "Note from Maynard" Lor itt\Name = "SCP-085" Lor itt\ID = it_oldpaper))
+							If itt\ID = it_paper
+								Local i% = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor itt\Name = "Note from Maynard" Lor itt\Name = "SCP-085"))
+								Local k%
 								
 								If i
-									item\EReader.EReaderItem = New EReaderItem
-									item\EReader\StoredDocPath = itt\ImgPath
-									itt\Found = True
+									For k = 1 To PossibleEReaderPageAmount - 1
+										If item\EReaderPage[k] = Null
+											item\EReaderPage[k] = itt
+											item\EReaderPageAmount = PossibleEReaderPageAmount - 1
+											itt\Found = True
+											Exit
+										EndIf
+									Next
 								EndIf
 							EndIf
 						Next
