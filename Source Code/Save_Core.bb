@@ -476,8 +476,6 @@ Function SaveGame%(File$)
 		
 		WriteByte(f, SelectedItem = it)
 		
-		; ~ TODO: SAVE E-READER
-		
 		Local ItemFound% = False
 		
 		For i = 0 To MaxItemAmount - 1
@@ -502,9 +500,7 @@ Function SaveGame%(File$)
 	For it.Items = Each Items
 		If it\InvSlots > 0 Then Temp = Temp + 1
 	Next
-	
 	WriteInt(f, Temp)
-	
 	For it.Items = Each Items
 		If it\InvSlots > 0
 			WriteInt(f, it\ID)
@@ -514,6 +510,15 @@ Function SaveGame%(File$)
 				Else
 					WriteInt(f, -1)
 				EndIf
+			Next
+		EndIf
+	Next
+	
+	For it.Items = Each Items
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+			WriteByte(f, it\EReaderPageAmount)
+			For i = 1 To it\EReaderPageAmount
+				WriteString(f, it\EReaderPage[i]\Name)
 			Next
 		EndIf
 	Next
@@ -1269,7 +1274,7 @@ Function LoadGame%(File$)
 		End Select
 	Next
 	
-	Local it.Items
+	Local it.Items, itt.ItemTemplates
 	
 	For it.Items = Each Items
 		RemoveItem(it)
@@ -1315,15 +1320,11 @@ Function LoadGame%(File$)
 		
 		If nt = True Then SelectedItem = it
 		
-		; ~ TODO: LOAD E-READER
-		
 		nt = ReadByte(f)
 		If nt < 66
 			Inventory(nt) = it
 			ItemAmount = ItemAmount + 1
 		EndIf
-		
-		Local itt.ItemTemplates
 		
 		For itt.ItemTemplates = Each ItemTemplates
 			If itt\ID = ID And itt\Name = IttName; And itt\DisplayName = DisplayName ; ~ Not sure about that
@@ -1345,13 +1346,12 @@ Function LoadGame%(File$)
 		EndIf
 	Next
 	
+	Local ij.Items
 	Local o_i%
 	
 	Temp = ReadInt(f)
 	For i = 1 To Temp
 		o_i = ReadInt(f)
-		
-		Local ij.Items
 		
 		For ij.Items = Each Items
 			If ij\ID = o_i
@@ -1371,6 +1371,22 @@ Function LoadGame%(File$)
 			EndIf
 		Next
 	Next
+	
+	For it.Items = Each Items
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+			it\EReaderPageAmount = ReadByte(f)
+			For o_i = 1 To it\EReaderPageAmount
+				Name = ReadString(f)
+				For itt.ItemTemplates = Each ItemTemplates
+					If itt\Name = Name
+						it\EReaderPage[o_i] = itt
+						Exit
+					EndIf
+				Next
+			Next
+		EndIf
+	Next
+	
 	For itt.ItemTemplates = Each ItemTemplates
 		itt\Found = ReadByte(f)
 	Next
@@ -2174,7 +2190,7 @@ Function LoadGameQuick%(File$)
 		End Select
 	Next
 	
-	Local it.Items
+	Local it.Items, itt.ItemTemplates
 	
 	For it.Items = Each Items
 		RemoveItem(it)
@@ -2220,15 +2236,11 @@ Function LoadGameQuick%(File$)
 		
 		If nt = True Then SelectedItem = it
 		
-		; ~ TODO: LOAD E-READER
-		
 		nt = ReadByte(f)
 		If nt < 66
 			Inventory(nt) = it
 			ItemAmount = ItemAmount + 1
 		EndIf
-		
-		Local itt.ItemTemplates
 		
 		For itt.ItemTemplates = Each ItemTemplates
 			If itt\ID = ID And itt\Name = IttName; And itt\DisplayName = DisplayName ; ~ Not sure about that
@@ -2250,13 +2262,12 @@ Function LoadGameQuick%(File$)
 		EndIf
 	Next
 	
+	Local ij.Items
 	Local o_i%
 	
 	Temp = ReadInt(f)
 	For i = 1 To Temp
 		o_i = ReadInt(f)
-		
-		Local ij.Items
 		
 		For ij.Items = Each Items
 			If ij\ID = o_i
@@ -2276,6 +2287,22 @@ Function LoadGameQuick%(File$)
 			EndIf
 		Next
 	Next
+	
+	For it.Items = Each Items
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+			it\EReaderPageAmount = ReadByte(f)
+			For o_i = 1 To it\EReaderPageAmount
+				Name = ReadString(f)
+				For itt.ItemTemplates = Each ItemTemplates
+					If itt\Name = Name
+						it\EReaderPage[o_i] = itt
+						Exit
+					EndIf
+				Next
+			Next
+		EndIf
+	Next
+	
 	For itt.ItemTemplates = Each ItemTemplates
 		itt\Found = ReadByte(f)
 	Next
