@@ -1017,7 +1017,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Slurp.ogg",
 		"drink_message": "\"Well, that was refreshing.\"",
-		"energy": 20.0
+		"energy": 40.0
 	},
 	{
 		"name": ["Liquid Hydrogen", "Hydrogen"],
