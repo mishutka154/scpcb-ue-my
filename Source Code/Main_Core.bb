@@ -3842,6 +3842,7 @@ Function UpdateGUI%()
 								ClosedInv = True
 								InvOpen = False
 								mo\DoubleClick = False
+								Exit
 							EndIf
 						EndIf
 					EndIf
@@ -3905,19 +3906,14 @@ Function UpdateGUI%()
 					ElseIf PrevOtherOpen\SecondInv[MouseSlot] <> SelectedItem
 						PrevItem = PrevOtherOpen\SecondInv[MouseSlot]
 						
-						Select SelectedItem\ItemTemplate\ID
-							Default
-								;[Block]
-								For z = 0 To OtherSize - 1
-									If PrevOtherOpen\SecondInv[z] = SelectedItem
-										PrevOtherOpen\SecondInv[z] = PrevItem
-										Exit
-									EndIf
-								Next
-								PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
-								SelectedItem = Null
-								;[End Block]
-						End Select
+						For z = 0 To OtherSize - 1
+							If PrevOtherOpen\SecondInv[z] = SelectedItem
+								PrevOtherOpen\SecondInv[z] = PrevItem
+								Exit
+							EndIf
+						Next
+						PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
+						SelectedItem = Null
 					EndIf
 				EndIf
 				SelectedItem = Null
@@ -3954,6 +3950,7 @@ Function UpdateGUI%()
 								If Inventory(n)\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[Inventory(n)\ItemTemplate\SoundID])
 								InvOpen = False
 								mo\DoubleClick = False
+								Exit
 							EndIf
 						EndIf
 					EndIf
