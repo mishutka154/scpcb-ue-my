@@ -2222,11 +2222,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					Remove = False
 					;[End Block]
-				Case FINE
-					;[Block]
-					it2.Items = CreateItem("18V Battery", it_finebat, x, y, z)
-					;[End Block]
-				Case VERYFINE
+				Case FINE, VERYFINE
 					;[Block]
 					If Rand(3) = 1
 						it2.Items = CreateItem("999V Battery", it_veryfinebat, x, y, z)
