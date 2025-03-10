@@ -2269,7 +2269,7 @@ Type Player
 	Field CurrFunds%, UsedMastercard%
 	Field InsideElevator%
 	Field PickTimer#, LastPicked%
-	Field PickedCooler.Props, CoolerTimer#
+	Field PickedCooler.Props
 End Type
 
 Global me.Player

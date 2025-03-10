@@ -265,6 +265,7 @@ Type OptimizationTimer
 	Field ItemsTimer#
 	Field DoorsTimer#
 	Field DecalsTimer#
+	Field CoolerTimer#
 End Type
 
 Global opttimer.OptimizationTimer
@@ -2661,16 +2662,16 @@ End Function
 Function RefillCup%()
 	Local p.Props
 	
-	me\CoolerTimer = me\CoolerTimer - fps\Factor[0]
-	If me\CoolerTimer <= 0.0
+	opttimer\CoolerTimer = opttimer\CoolerTimer - fps\Factor[0]
+	If opttimer\CoolerTimer <= 0.0
 		me\PickedCooler = Null
 		For p.Props = Each Props
-			If p\IsCooler And PlayerRoom = p\room And InteractObject(p\OBJ, 0.8)
+			If p\IsCooler And PlayerRoom = p\room And (EntityDistanceSquared(p\OBJ, me\Collider) < 0.64 And EntityPick(Camera, 0.8) = p\OBJ)
 				me\PickedCooler = p
 				Exit
 			EndIf
 		Next
-		me\CoolerTimer = 35.0
+		opttimer\CoolerTimer = 35.0
 	EndIf
 	
 	If me\PickedCooler <> Null
