@@ -3804,11 +3804,6 @@ Function UpdateGUI%()
 		PrevOtherOpen = OtherOpen
 		
 		Local OtherSize% = OtherOpen\InvSlots
-		Local OtherAmount%
-		
-		For i = 0 To OtherSize - 1
-			If OtherOpen\SecondInv[i] <> Null Then OtherAmount = OtherAmount + 1
-		Next
 		
 		InvOpen = False
 		d_I\SelectedDoor = Null
@@ -3835,7 +3830,7 @@ Function UpdateGUI%()
 								If SelectedItem\ItemTemplate\ID = it_scp714 Lor SelectedItem\ItemTemplate\ID = it_coarse714 Lor SelectedItem\ItemTemplate\ID = it_fine714 Lor SelectedItem\ItemTemplate\ID = it_ring
 									CreateMsg(GetLocalString("msg", "wallet.714"))
 									SelectedItem = Null
-									Return
+									Exit								
 								EndIf
 								If OtherOpen\SecondInv[n]\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[OtherOpen\SecondInv[n]\ItemTemplate\SoundID])
 								OtherOpen = Null
@@ -6934,13 +6929,8 @@ Function RenderGUI%()
 	
 	If OtherOpen <> Null
 		PrevOtherOpen = OtherOpen
+		
 		Local OtherSize% = OtherOpen\InvSlots
-		Local OtherAmount%
-		
-		For i = 0 To OtherSize - 1
-			If OtherOpen\SecondInv[i] <> Null Then OtherAmount = OtherAmount + 1
-		Next
-		
 		Local TempX% = 0
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
