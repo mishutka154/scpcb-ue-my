@@ -6753,6 +6753,7 @@ Function RenderNVG%()
 			
 			For np.NPCs = Each NPCs
 				If np\NVGName <> "" And (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
+				If (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
 					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
 					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
 						If (Not wi\IsNVGBlinking)
