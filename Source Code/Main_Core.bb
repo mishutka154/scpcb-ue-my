@@ -3793,7 +3793,7 @@ Function UpdateGUI%()
 	
 	UpdateBatteryTimer()
 	
-	Local PrevOtherOpen.Items, PrevItem.Items
+	Local PrevItem.Items
 	Local IsMouseOn%
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
@@ -3801,24 +3801,19 @@ Function UpdateGUI%()
 	Local MaxItemAmountHalf% = MaxItemAmount / 2
 	
 	If OtherOpen <> Null
-		PrevOtherOpen = OtherOpen
-		
-		Local OtherSize% = OtherOpen\InvSlots
-		
 		InvOpen = False
 		d_I\SelectedDoor = Null
 		
 		Local TempX% = 0
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
-		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherSize / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
+		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherOpen\InvSlots / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
 		
 		IsMouseOn = -1
-		For n = 0 To OtherSize - 1
+		For n = 0 To OtherOpen\InvSlots - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
 			If IsMouseOn = n Then MouseSlot = n
-			If OtherOpen = Null Then Exit
 			
 			If OtherOpen\SecondInv[n] <> Null And SelectedItem <> OtherOpen\SecondInv[n]
 				If IsMouseOn = n
@@ -3837,14 +3832,14 @@ Function UpdateGUI%()
 								ClosedInv = True
 								InvOpen = False
 								mo\DoubleClick = False
-								Exit
+								Return
 							EndIf
 						EndIf
 					EndIf
 				EndIf
 			Else
 				If IsMouseOn = n And mo\MouseHit1
-					For z = 0 To OtherSize - 1
+					For z = 0 To OtherOpen\InvSlots - 1
 						If OtherOpen\SecondInv[z] = SelectedItem
 							OtherOpen\SecondInv[z] = Null
 							Exit
@@ -3889,25 +3884,25 @@ Function UpdateGUI%()
 						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 					EndIf
 				Else
-					If PrevOtherOpen\SecondInv[MouseSlot] = Null
-						For z = 0 To OtherSize - 1
-							If PrevOtherOpen\SecondInv[z] = SelectedItem
-								PrevOtherOpen\SecondInv[z] = Null
+					If OtherOpen\SecondInv[MouseSlot] = Null
+						For z = 0 To OtherOpen\InvSlots - 1
+							If OtherOpen\SecondInv[z] = SelectedItem
+								OtherOpen\SecondInv[z] = Null
 								Exit
 							EndIf
 						Next
-						PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
+						OtherOpen\SecondInv[MouseSlot] = SelectedItem
 						SelectedItem = Null
-					ElseIf PrevOtherOpen\SecondInv[MouseSlot] <> SelectedItem
-						PrevItem = PrevOtherOpen\SecondInv[MouseSlot]
+					ElseIf OtherOpen\SecondInv[MouseSlot] <> SelectedItem
+						PrevItem = OtherOpen\SecondInv[MouseSlot]
 						
-						For z = 0 To OtherSize - 1
-							If PrevOtherOpen\SecondInv[z] = SelectedItem
-								PrevOtherOpen\SecondInv[z] = PrevItem
+						For z = 0 To OtherOpen\InvSlots - 1
+							If OtherOpen\SecondInv[z] = SelectedItem
+								OtherOpen\SecondInv[z] = PrevItem
 								Exit
 							EndIf
 						Next
-						PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
+						OtherOpen\SecondInv[MouseSlot] = SelectedItem
 						SelectedItem = Null
 					EndIf
 				EndIf
@@ -3945,7 +3940,7 @@ Function UpdateGUI%()
 								If Inventory(n)\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[Inventory(n)\ItemTemplate\SoundID])
 								InvOpen = False
 								mo\DoubleClick = False
-								Exit
+								Return
 							EndIf
 						EndIf
 					EndIf
@@ -6919,7 +6914,6 @@ Function RenderGUI%()
 		EndIf
 	EndIf
 	
-	Local PrevOtherOpen.Items
 	Local IsMouseOn%
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
@@ -6928,16 +6922,13 @@ Function RenderGUI%()
 	Local MaxItemAmountHalf% = MaxItemAmount / 2
 	
 	If OtherOpen <> Null
-		PrevOtherOpen = OtherOpen
-		
-		Local OtherSize% = OtherOpen\InvSlots
 		Local TempX% = 0
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
-		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherSize / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
+		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherOpen\InvSlots / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
 		
 		IsMouseOn = -1
-		For n = 0 To OtherSize - 1
+		For n = 0 To OtherOpen\InvSlots - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
 			If IsMouseOn = n
@@ -6972,7 +6963,7 @@ Function RenderGUI%()
 		
 		If SelectedItem <> Null
 			If mo\MouseDown1
-				If MouseSlot = 66 Lor SelectedItem <> PrevOtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
+				If MouseSlot = 66 Lor SelectedItem <> OtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
 			EndIf
 		EndIf
 		
