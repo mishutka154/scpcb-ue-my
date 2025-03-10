@@ -4238,9 +4238,9 @@ Function UpdateGUI%()
 												EndIf
 											Next
 											If SelectedItem <> Null
-												CreateMsg(GetLocalString("msg", "scp500.full"))
+												CreateMsg(GetLocalString("msg", "500.full"))
 											Else
-												CreateMsg(Format(GetLocalString("msg", "scp500.add"), added\ItemTemplate\DisplayName))
+												CreateMsg(Format(GetLocalString("msg", "500.add"), added\ItemTemplate\DisplayName))
 											EndIf
 											;[End Block]
 										Default
