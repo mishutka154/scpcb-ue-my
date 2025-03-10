@@ -3553,6 +3553,108 @@ Function UpdateNVG%()
 	EndIf
 End Function
 
+Function RenderNVG%()
+	Local np.NPCs
+	Local i%, k%, l%
+	
+	If wi\NVGPower > 0 And (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0)
+		Local Dist#, ProjX#, ProjY#
+		
+		If wi\SCRAMBLE = 2 ; ~ Show a HUD
+			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			
+			Color(100, 100, 100)
+			
+			SetFontEx(fo\FontID[Font_Digital])
+			If n_I\Curr106\Contained
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
+			Else
+				; ~ Replace with a cool design later lol so don't actually translate anything
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
+			EndIf
+			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
+				If EntityInView(n_I\Curr173\Collider, Camera)
+					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+					
+					ProjX = ProjectedX() : ProjY = ProjectedY()
+					
+					Local MaxRectWidth% = 15 * MenuScale
+					Local MaxRectHeight% = 50 * MenuScale
+					Local ScaleFactor# = 16.0 / Sqr(Dist)
+					Local RectWidth% = MaxRectWidth * ScaleFactor
+					Local RectHeight% = MaxRectHeight * ScaleFactor
+					
+					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+				EndIf
+			EndIf
+		ElseIf wi\NightVision = 2 ; ~ Show a HUD
+			Color(100, 100, 255)
+			
+			SetFontEx(fo\FontID[Font_Digital])
+			
+			Local PlusY% = 0
+			
+			PlusY = 40
+			
+			Local RefreshHint$ = GetLocalString("msg", "refresh")
+			Local InstrRefreshHint% = Instr(RefreshHint, "%s")
+			
+			TextEx(mo\Viewport_Center_X, 60 * MenuScale, Trim(Left(RefreshHint, InstrRefreshHint - 1)), True)
+			TextEx(mo\Viewport_Center_X, 100 * MenuScale, Max(FloatToString(wi\NVGTimer / 60.0, 1), 0.0), True)
+			TextEx(mo\Viewport_Center_X, 140 * MenuScale, Trim(Right(RefreshHint, Len(RefreshHint) - InstrRefreshHint - 1)), True)
+			
+			For np.NPCs = Each NPCs
+				If (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
+					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
+					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
+						If (Not wi\IsNVGBlinking)
+							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
+							
+							ProjX = ProjectedX() : ProjY = ProjectedY()
+							
+							TextEx(ProjX, ProjY, np\NVGName, True, True)
+							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
+						EndIf
+					EndIf
+				EndIf
+			Next
+			
+			Color(0, 0, 55)
+		ElseIf wi\NightVision = 1
+			Color(0, 55, 0)
+		Else ; ~ SCRAMBLE
+			Color(55, 55, 55)
+		EndIf
+		For k = 0 To 10
+			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((k * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
+		Next
+		If wi\NightVision = 2
+			Color(100, 100, 255)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 1)
+		ElseIf wi\NightVision = 1
+			Color(100, 255, 100)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 0)
+		Else ; ~ SCRAMBLE
+			Color(255, 255, 255)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 2)
+		EndIf
+		k = Min(Floor((wi\NVGPower + 50) * 0.01), 11.0)
+		
+		For l = 0 To k
+			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((l * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
+		Next
+		If k < 3
+			If BatMsgTimer >= 70.0
+				Color(255, 0, 0)
+				SetFontEx(fo\FontID[Font_Digital])
+				
+				TextEx(mo\Viewport_Center_X, 20 * MenuScale, GetLocalString("msg", "battery.low"), True)
+			EndIf
+		EndIf
+	EndIf
+	Color(255, 255, 255)
+End Function
+
 Function NullSecondINV%()
 	Local i%
 	
@@ -6699,108 +6801,6 @@ Function Render3DHandIcon%(IconID%, OBJ%, ArrowID% = -1)
 		End Select
 	EndIf
 	DrawBlock(t\IconID[IconID], x, y)
-End Function
-
-Function RenderNVG%()
-	Local np.NPCs
-	Local i%, k%, l%
-	
-	If wi\NVGPower > 0 And (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0)
-		Local Dist#, ProjX#, ProjY#
-		
-		If wi\SCRAMBLE = 2 ; ~ Show a HUD
-			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
-			
-			Color(100, 100, 100)
-			
-			SetFontEx(fo\FontID[Font_Digital])
-			If n_I\Curr106\Contained
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
-			Else
-				; ~ Replace with a cool design later lol so don't actually translate anything
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
-			EndIf
-			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
-				If EntityInView(n_I\Curr173\Collider, Camera)
-					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
-					
-					ProjX = ProjectedX() : ProjY = ProjectedY()
-					
-					Local MaxRectWidth% = 15 * MenuScale
-					Local MaxRectHeight% = 50 * MenuScale
-					Local ScaleFactor# = 16.0 / Sqr(Dist)
-					Local RectWidth% = MaxRectWidth * ScaleFactor
-					Local RectHeight% = MaxRectHeight * ScaleFactor
-					
-					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
-				EndIf
-			EndIf
-		ElseIf wi\NightVision = 2 ; ~ Show a HUD
-			Color(100, 100, 255)
-			
-			SetFontEx(fo\FontID[Font_Digital])
-			
-			Local PlusY% = 0
-			
-			PlusY = 40
-			
-			Local RefreshHint$ = GetLocalString("msg", "refresh")
-			Local InstrRefreshHint% = Instr(RefreshHint, "%s")
-			
-			TextEx(mo\Viewport_Center_X, 60 * MenuScale, Trim(Left(RefreshHint, InstrRefreshHint - 1)), True)
-			TextEx(mo\Viewport_Center_X, 100 * MenuScale, Max(FloatToString(wi\NVGTimer / 60.0, 1), 0.0), True)
-			TextEx(mo\Viewport_Center_X, 140 * MenuScale, Trim(Right(RefreshHint, Len(RefreshHint) - InstrRefreshHint - 1)), True)
-			
-			For np.NPCs = Each NPCs
-				If (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
-					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
-					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
-						If (Not wi\IsNVGBlinking)
-							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
-							
-							ProjX = ProjectedX() : ProjY = ProjectedY()
-							
-							TextEx(ProjX, ProjY, np\NVGName, True, True)
-							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
-						EndIf
-					EndIf
-				EndIf
-			Next
-			
-			Color(0, 0, 55)
-		ElseIf wi\NightVision = 1
-			Color(0, 55, 0)
-		Else ; ~ SCRAMBLE
-			Color(55, 55, 55)
-		EndIf
-		For k = 0 To 10
-			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((k * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
-		Next
-		If wi\NightVision = 2
-			Color(100, 100, 255)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 1)
-		ElseIf wi\NightVision = 1
-			Color(100, 255, 100)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 0)
-		Else ; ~ SCRAMBLE
-			Color(255, 255, 255)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 2)
-		EndIf
-		k = Min(Floor((wi\NVGPower + 50) * 0.01), 11.0)
-		
-		For l = 0 To k
-			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((l * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
-		Next
-		If k < 3
-			If BatMsgTimer >= 70.0
-				Color(255, 0, 0)
-				SetFontEx(fo\FontID[Font_Digital])
-				
-				TextEx(mo\Viewport_Center_X, 20 * MenuScale, GetLocalString("msg", "battery.low"), True)
-			EndIf
-		EndIf
-	EndIf
-	Color(255, 255, 255)
 End Function
 
 Function RenderGUI%()
