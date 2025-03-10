@@ -265,6 +265,7 @@ Type OptimizationTimer
 	Field ItemsTimer#
 	Field DoorsTimer#
 	Field DecalsTimer#
+	Field CoolerTimer#
 End Type
 
 Global opttimer.OptimizationTimer
@@ -2661,16 +2662,16 @@ End Function
 Function RefillCup%()
 	Local p.Props
 	
-	me\CoolerTimer = me\CoolerTimer - fps\Factor[0]
-	If me\CoolerTimer <= 0.0
+	opttimer\CoolerTimer = opttimer\CoolerTimer - fps\Factor[0]
+	If opttimer\CoolerTimer <= 0.0
 		me\PickedCooler = Null
 		For p.Props = Each Props
-			If p\IsCooler And PlayerRoom = p\room And InteractObject(p\OBJ, 0.8)
+			If p\IsCooler And PlayerRoom = p\room And (EntityDistanceSquared(p\OBJ, me\Collider) < 0.64 And EntityPick(Camera, 0.8) = p\OBJ)
 				me\PickedCooler = p
 				Exit
 			EndIf
 		Next
-		me\CoolerTimer = 35.0
+		opttimer\CoolerTimer = 35.0
 	EndIf
 	
 	If me\PickedCooler <> Null
@@ -3552,6 +3553,108 @@ Function UpdateNVG%()
 	EndIf
 End Function
 
+Function RenderNVG%()
+	Local np.NPCs
+	Local i%, k%, l%
+	
+	If wi\NVGPower > 0 And (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0)
+		Local Dist#, ProjX#, ProjY#
+		
+		If wi\SCRAMBLE = 2 ; ~ Show a HUD
+			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
+			
+			Color(100, 100, 100)
+			
+			SetFontEx(fo\FontID[Font_Digital])
+			If n_I\Curr106\Contained
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
+			Else
+				; ~ Replace with a cool design later lol so don't actually translate anything
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
+			EndIf
+			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
+				If EntityInView(n_I\Curr173\Collider, Camera)
+					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+					
+					ProjX = ProjectedX() : ProjY = ProjectedY()
+					
+					Local MaxRectWidth% = 15 * MenuScale
+					Local MaxRectHeight% = 50 * MenuScale
+					Local ScaleFactor# = 16.0 / Sqr(Dist)
+					Local RectWidth% = MaxRectWidth * ScaleFactor
+					Local RectHeight% = MaxRectHeight * ScaleFactor
+					
+					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+				EndIf
+			EndIf
+		ElseIf wi\NightVision = 2 ; ~ Show a HUD
+			Color(100, 100, 255)
+			
+			SetFontEx(fo\FontID[Font_Digital])
+			
+			Local PlusY% = 0
+			
+			PlusY = 40
+			
+			Local RefreshHint$ = GetLocalString("msg", "refresh")
+			Local InstrRefreshHint% = Instr(RefreshHint, "%s")
+			
+			TextEx(mo\Viewport_Center_X, 60 * MenuScale, Trim(Left(RefreshHint, InstrRefreshHint - 1)), True)
+			TextEx(mo\Viewport_Center_X, 100 * MenuScale, Max(FloatToString(wi\NVGTimer / 60.0, 1), 0.0), True)
+			TextEx(mo\Viewport_Center_X, 140 * MenuScale, Trim(Right(RefreshHint, Len(RefreshHint) - InstrRefreshHint - 1)), True)
+			
+			For np.NPCs = Each NPCs
+				If (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
+					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
+					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
+						If (Not wi\IsNVGBlinking)
+							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
+							
+							ProjX = ProjectedX() : ProjY = ProjectedY()
+							
+							TextEx(ProjX, ProjY, np\NVGName, True, True)
+							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
+						EndIf
+					EndIf
+				EndIf
+			Next
+			
+			Color(0, 0, 55)
+		ElseIf wi\NightVision = 1
+			Color(0, 55, 0)
+		Else ; ~ SCRAMBLE
+			Color(55, 55, 55)
+		EndIf
+		For k = 0 To 10
+			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((k * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
+		Next
+		If wi\NightVision = 2
+			Color(100, 100, 255)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 1)
+		ElseIf wi\NightVision = 1
+			Color(100, 255, 100)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 0)
+		Else ; ~ SCRAMBLE
+			Color(255, 255, 255)
+			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 2)
+		EndIf
+		k = Min(Floor((wi\NVGPower + 50) * 0.01), 11.0)
+		
+		For l = 0 To k
+			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((l * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
+		Next
+		If k < 3
+			If BatMsgTimer >= 70.0
+				Color(255, 0, 0)
+				SetFontEx(fo\FontID[Font_Digital])
+				
+				TextEx(mo\Viewport_Center_X, 20 * MenuScale, GetLocalString("msg", "battery.low"), True)
+			EndIf
+		EndIf
+	EndIf
+	Color(255, 255, 255)
+End Function
+
 Function NullSecondINV%()
 	Local i%
 	
@@ -3793,7 +3896,7 @@ Function UpdateGUI%()
 	
 	UpdateBatteryTimer()
 	
-	Local PrevOtherOpen.Items, PrevItem.Items
+	Local PrevItem.Items
 	Local IsMouseOn%
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
@@ -3801,29 +3904,19 @@ Function UpdateGUI%()
 	Local MaxItemAmountHalf% = MaxItemAmount / 2
 	
 	If OtherOpen <> Null
-		PrevOtherOpen = OtherOpen
-		
-		Local OtherSize% = OtherOpen\InvSlots
-		Local OtherAmount%
-		
-		For i = 0 To OtherSize - 1
-			If OtherOpen\SecondInv[i] <> Null Then OtherAmount = OtherAmount + 1
-		Next
-		
 		InvOpen = False
 		d_I\SelectedDoor = Null
 		
 		Local TempX% = 0
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
-		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherSize / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
+		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherOpen\InvSlots / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
 		
 		IsMouseOn = -1
-		For n = 0 To OtherSize - 1
+		For n = 0 To OtherOpen\InvSlots - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
 			If IsMouseOn = n Then MouseSlot = n
-			If OtherOpen = Null Then Exit
 			
 			If OtherOpen\SecondInv[n] <> Null And SelectedItem <> OtherOpen\SecondInv[n]
 				If IsMouseOn = n
@@ -3835,21 +3928,21 @@ Function UpdateGUI%()
 								If SelectedItem\ItemTemplate\ID = it_scp714 Lor SelectedItem\ItemTemplate\ID = it_coarse714 Lor SelectedItem\ItemTemplate\ID = it_fine714 Lor SelectedItem\ItemTemplate\ID = it_ring
 									CreateMsg(GetLocalString("msg", "wallet.714"))
 									SelectedItem = Null
-									Return
+									Exit								
 								EndIf
 								If OtherOpen\SecondInv[n]\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[OtherOpen\SecondInv[n]\ItemTemplate\SoundID])
 								OtherOpen = Null
 								ClosedInv = True
 								InvOpen = False
 								mo\DoubleClick = False
-								Exit
+								Return
 							EndIf
 						EndIf
 					EndIf
 				EndIf
 			Else
 				If IsMouseOn = n And mo\MouseHit1
-					For z = 0 To OtherSize - 1
+					For z = 0 To OtherOpen\InvSlots - 1
 						If OtherOpen\SecondInv[z] = SelectedItem
 							OtherOpen\SecondInv[z] = Null
 							Exit
@@ -3894,25 +3987,25 @@ Function UpdateGUI%()
 						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 					EndIf
 				Else
-					If PrevOtherOpen\SecondInv[MouseSlot] = Null
-						For z = 0 To OtherSize - 1
-							If PrevOtherOpen\SecondInv[z] = SelectedItem
-								PrevOtherOpen\SecondInv[z] = Null
+					If OtherOpen\SecondInv[MouseSlot] = Null
+						For z = 0 To OtherOpen\InvSlots - 1
+							If OtherOpen\SecondInv[z] = SelectedItem
+								OtherOpen\SecondInv[z] = Null
 								Exit
 							EndIf
 						Next
-						PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
+						OtherOpen\SecondInv[MouseSlot] = SelectedItem
 						SelectedItem = Null
-					ElseIf PrevOtherOpen\SecondInv[MouseSlot] <> SelectedItem
-						PrevItem = PrevOtherOpen\SecondInv[MouseSlot]
+					ElseIf OtherOpen\SecondInv[MouseSlot] <> SelectedItem
+						PrevItem = OtherOpen\SecondInv[MouseSlot]
 						
-						For z = 0 To OtherSize - 1
-							If PrevOtherOpen\SecondInv[z] = SelectedItem
-								PrevOtherOpen\SecondInv[z] = PrevItem
+						For z = 0 To OtherOpen\InvSlots - 1
+							If OtherOpen\SecondInv[z] = SelectedItem
+								OtherOpen\SecondInv[z] = PrevItem
 								Exit
 							EndIf
 						Next
-						PrevOtherOpen\SecondInv[MouseSlot] = SelectedItem
+						OtherOpen\SecondInv[MouseSlot] = SelectedItem
 						SelectedItem = Null
 					EndIf
 				EndIf
@@ -3950,7 +4043,7 @@ Function UpdateGUI%()
 								If Inventory(n)\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[Inventory(n)\ItemTemplate\SoundID])
 								InvOpen = False
 								mo\DoubleClick = False
-								Exit
+								Return
 							EndIf
 						EndIf
 					EndIf
@@ -4099,7 +4192,7 @@ Function UpdateGUI%()
 										Case it_paper, it_oldpaper
 											;[Block]
 											; ~ Do not add the special or crumpled items
-											If SelectedItem\ItemTemplate\Name = "Note from Maynard" Lor SelectedItem\ItemTemplate\Name = "SCP-085" Lor SelectedItem\ItemTemplate\ID = it_oldpaper
+											If SelectedItem\ItemTemplate\Name = "Leaflet" Lor SelectedItem\ItemTemplate\Name = "Drawing" Lor SelectedItem\ItemTemplate\Name = "Note from Maynard" Lor SelectedItem\ItemTemplate\Name = "SCP-085" Lor SelectedItem\ItemTemplate\ID = it_oldpaper
 												CreateMsg(GetLocalString("msg", "e.reader.scan.fail"))
 												PlaySound_Strict(snd_I\ScannerSFX[1])
 												SelectedItem = Null
@@ -4247,9 +4340,9 @@ Function UpdateGUI%()
 												EndIf
 											Next
 											If SelectedItem <> Null
-												CreateMsg(GetLocalString("msg", "scp500.full"))
+												CreateMsg(GetLocalString("msg", "500.full"))
 											Else
-												CreateMsg(Format(GetLocalString("msg", "scp500.add"), added\ItemTemplate\DisplayName))
+												CreateMsg(Format(GetLocalString("msg", "500.add"), added\ItemTemplate\DisplayName))
 											EndIf
 											;[End Block]
 										Default
@@ -6710,108 +6803,6 @@ Function Render3DHandIcon%(IconID%, OBJ%, ArrowID% = -1)
 	DrawBlock(t\IconID[IconID], x, y)
 End Function
 
-Function RenderNVG%()
-	Local np.NPCs
-	Local i%, k%, l%
-	
-	If wi\NVGPower > 0 And (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0)
-		Local Dist#, ProjX#, ProjY#
-		
-		If wi\SCRAMBLE = 2 ; ~ Show a HUD
-			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
-			
-			Color(100, 100, 100)
-			
-			SetFontEx(fo\FontID[Font_Digital])
-			If n_I\Curr106\Contained
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
-			Else
-				; ~ Replace with a cool design later lol so don't actually translate anything
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
-			EndIf
-			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
-				If EntityInView(n_I\Curr173\Collider, Camera)
-					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
-					
-					ProjX = ProjectedX() : ProjY = ProjectedY()
-					
-					Local MaxRectWidth% = 15 * MenuScale
-					Local MaxRectHeight% = 50 * MenuScale
-					Local ScaleFactor# = 16.0 / Sqr(Dist)
-					Local RectWidth% = MaxRectWidth * ScaleFactor
-					Local RectHeight% = MaxRectHeight * ScaleFactor
-					
-					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
-				EndIf
-			EndIf
-		ElseIf wi\NightVision = 2 ; ~ Show a HUD
-			Color(100, 100, 255)
-			
-			SetFontEx(fo\FontID[Font_Digital])
-			
-			Local PlusY% = 0
-			
-			PlusY = 40
-			
-			Local RefreshHint$ = GetLocalString("msg", "refresh")
-			Local InstrRefreshHint% = Instr(RefreshHint, "%s")
-			
-			TextEx(mo\Viewport_Center_X, 60 * MenuScale, Trim(Left(RefreshHint, InstrRefreshHint - 1)), True)
-			TextEx(mo\Viewport_Center_X, 100 * MenuScale, Max(FloatToString(wi\NVGTimer / 60.0, 1), 0.0), True)
-			TextEx(mo\Viewport_Center_X, 140 * MenuScale, Trim(Right(RefreshHint, Len(RefreshHint) - InstrRefreshHint - 1)), True)
-			
-			For np.NPCs = Each NPCs
-				If np\NVGName <> "" And (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
-					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
-					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
-						If (Not wi\IsNVGBlinking)
-							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
-							
-							ProjX = ProjectedX() : ProjY = ProjectedY()
-							
-							TextEx(ProjX, ProjY, np\NVGName, True, True)
-							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
-						EndIf
-					EndIf
-				EndIf
-			Next
-			
-			Color(0, 0, 55)
-		ElseIf wi\NightVision = 1
-			Color(0, 55, 0)
-		Else ; ~ SCRAMBLE
-			Color(55, 55, 55)
-		EndIf
-		For k = 0 To 10
-			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((k * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
-		Next
-		If wi\NightVision = 2
-			Color(100, 100, 255)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 1)
-		ElseIf wi\NightVision = 1
-			Color(100, 255, 100)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 0)
-		Else ; ~ SCRAMBLE
-			Color(255, 255, 255)
-			DrawImage(t\ImageID[6], 40 * MenuScale, mo\Viewport_Center_Y + (30 * MenuScale), 2)
-		EndIf
-		k = Min(Floor((wi\NVGPower + 50) * 0.01), 11.0)
-		
-		For l = 0 To k
-			Rect(45 * MenuScale, mo\Viewport_Center_Y - ((l * 20) * MenuScale), 54 * MenuScale, 10 * MenuScale)
-		Next
-		If k < 3
-			If BatMsgTimer >= 70.0
-				Color(255, 0, 0)
-				SetFontEx(fo\FontID[Font_Digital])
-				
-				TextEx(mo\Viewport_Center_X, 20 * MenuScale, GetLocalString("msg", "battery.low"), True)
-			EndIf
-		EndIf
-	EndIf
-	Color(255, 255, 255)
-End Function
-
 Function RenderGUI%()
 	CatchErrors("RenderGUI()")
 	
@@ -6924,7 +6915,6 @@ Function RenderGUI%()
 		EndIf
 	EndIf
 	
-	Local PrevOtherOpen.Items
 	Local IsMouseOn%
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
@@ -6933,21 +6923,13 @@ Function RenderGUI%()
 	Local MaxItemAmountHalf% = MaxItemAmount / 2
 	
 	If OtherOpen <> Null
-		PrevOtherOpen = OtherOpen
-		Local OtherSize% = OtherOpen\InvSlots
-		Local OtherAmount%
-		
-		For i = 0 To OtherSize - 1
-			If OtherOpen\SecondInv[i] <> Null Then OtherAmount = OtherAmount + 1
-		Next
-		
 		Local TempX% = 0
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
-		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherSize / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
+		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherOpen\InvSlots / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
 		
 		IsMouseOn = -1
-		For n = 0 To OtherSize - 1
+		For n = 0 To OtherOpen\InvSlots - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
 			
 			If IsMouseOn = n
@@ -6982,7 +6964,7 @@ Function RenderGUI%()
 		
 		If SelectedItem <> Null
 			If mo\MouseDown1
-				If MouseSlot = 66 Lor SelectedItem <> PrevOtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
+				If MouseSlot = 66 Lor SelectedItem <> OtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
 			EndIf
 		EndIf
 		

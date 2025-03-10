@@ -3341,7 +3341,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 		
 		n\LastSeen = 0
 		If n\State < 4.0
-			If (me\Zone < 2 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
+			If (PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance Lor n_I\Curr106\State > 1.0)
 				n\State = 4.0
 				Return
 			EndIf
@@ -3358,8 +3358,8 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				EndIf
 				
 				n\CurrSpeed = 0.0
-				AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
-				If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+				AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 36.0, 0.3, False)
+				If n\Frame >= 35.9 Then SetNPCFrame(n, 1.0)
 				
 				If Rand(50) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
@@ -3376,7 +3376,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				
 				; ~ Check for obstacles
 				If MilliSecs() > n\LastDist
-					HideEntity(n\Collider) 
+					HideEntity(n\Collider)
 					EntityPick(n\Collider, 1.5)
 					If PickedEntity() <> 0 Then Temp = True
 					ShowEntity(n\Collider)
@@ -3388,7 +3388,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 				n\CurrSpeed = CurveValue(n\Speed * 0.7, n\CurrSpeed, 10.0)
 				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
-				If n\Frame < 10.0 Then AnimateNPC(n, 1.0, 10.0, 0.3, False)
+				If n\Frame < 11.0 Then AnimateNPC(n, 1.0, 11.0, 0.3, False)
 				;[End Block]
 			Case 2.0 ; ~ Following the player
 				;[Block]
@@ -3430,16 +3430,16 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 					If Dist < 0.64
 						MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
 					ElseIf Dist > 1.0
-						If n\Frame < 10.0 Then AnimateNPC(n, 1.0, 10.0, 0.3, False)
+						If n\Frame < 11.0 Then AnimateNPC(n, 1.0, 11.0, 0.3, False)
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
 						n\CurrSpeed = 0.0
 						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5) ; ~ TODO: Check if this works well
 					EndIf
 					If n\CurrSpeed =< 0.001
-						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
+						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 36.0, 0.3, False)
 					Else
-						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+						If n\Frame >= 35.9 Then SetNPCFrame(n, 1.0)
 					EndIf
 				Else
 					n\State = 3.0
@@ -3499,15 +3499,15 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 							RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 							n\CurrSpeed = CurveValue(n\Speed * 1.5, n\CurrSpeed, 40.0)
 							TranslateEntity(n\Collider, Cos(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], 0.0, Sin(EntityYaw(n\Collider, True) + 90.0) * n\CurrSpeed * fps\Factor[0], True)
-							AnimateNPC(n, 488.0, 522.0, n\CurrSpeed * 26.0)
+							AnimateNPC(n, 1.0, 11.0, n\CurrSpeed * 26.0, False)
 							
 							UseDoorNPC(n, True, True)
 						EndIf
 						n\PathTimer = n\PathTimer - fps\Factor[0] ; ~ Timer goes down slow
 					Else
 						n\CurrSpeed = 0.0
-						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 74.0, 0.3, False)
-						If n\Frame >= 73.9 Then SetNPCFrame(n, 1.0)
+						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 36.0, 0.3, False)
+						If n\Frame >= 35.9 Then SetNPCFrame(n, 1.0)
 						
 						If Rand(50) = 1 Then RotateEntity(n\Collider, 0.0, Rnd(360.0), 0.0, True)
 						n\PathTimer = n\PathTimer - (fps\Factor[0] * 2.0) ; ~ Timer goes down fast

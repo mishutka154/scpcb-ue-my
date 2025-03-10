@@ -467,7 +467,7 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 		Case it_clipboard, it_wallet, it_scp500
 			;[Block]
 			If InvSlots = 0
-				InvSlots = 10
+				InvSlots = 10 + (10 * (i\ItemTemplate\ID = it_scp500))
 				SetAnimTime(i\OBJ, (i\ItemTemplate\ID = it_clipboard) * 17.0 + (i\ItemTemplate\ID = it_wallet) * 0.0 + (i\ItemTemplate\ID = it_scp500) * 11.0)
 				If i\ItemTemplate\InvImg2 <> 0 Then i\InvImg = i\ItemTemplate\InvImg2
 			EndIf
@@ -882,7 +882,7 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 					If item\SecondInv[n] <> Null Then PillsAmount = PillsAmount + 1
 				Next
 			EndIf
-			SetAnimTime(item\OBJ, (IsEmpty * ((ID = it_clipboard) * 17.0 + (ID = it_wallet) * 0.0 + (ID = it_scp500) * 11.0)) + ((Not IsEmpty) * ((ID = it_clipboard) * 0.0 + (ID = it_wallet) * 4.0 + (ID = it_scp500) * (11.0 - PillsAmount))))
+			SetAnimTime(item\OBJ, (IsEmpty * ((ID = it_clipboard) * 17.0 + (ID = it_wallet) * 0.0 + (ID = it_scp500) * 11.0)) + ((Not IsEmpty) * ((ID = it_clipboard) * 0.0 + (ID = it_wallet) * 4.0 + (ID = it_scp500) * (Max(0.0, 11.0 - PillsAmount)))))
 			;[End Block]
 		Case it_scp1123
 			;[Block]
@@ -1328,6 +1328,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								If it\ItemTemplate\ID = it_clipboard
 									RemoveItem(it)
 									it2.Items = CreateItem("E-Reader", it_e_reader, x, y, z)
+									it2\State = Rnd(0.0, 100.0)
 									Exit
 								EndIf
 							EndIf
@@ -1366,6 +1367,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								If it\ItemTemplate\ID = it_clipboard
 									RemoveItem(it)
 									it2.Items = CreateItem("E-Reader", it_e_reader, x, y, z)
+									it2\State = Rnd(0.0, 100.0)
 									Exit
 								EndIf
 							EndIf
