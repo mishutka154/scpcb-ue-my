@@ -1328,6 +1328,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								If it\ItemTemplate\ID = it_clipboard
 									RemoveItem(it)
 									it2.Items = CreateItem("E-Reader", it_e_reader, x, y, z)
+									it2\State = Rnd(0.0, 100.0)
 									Exit
 								EndIf
 							EndIf
@@ -1366,6 +1367,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								If it\ItemTemplate\ID = it_clipboard
 									RemoveItem(it)
 									it2.Items = CreateItem("E-Reader", it_e_reader, x, y, z)
+									it2\State = Rnd(0.0, 100.0)
 									Exit
 								EndIf
 							EndIf
