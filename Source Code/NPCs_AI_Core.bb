@@ -2635,7 +2635,6 @@ Function UpdateNPCType860_2%(n.NPCs)
 				If n\State2 = 0.0 ; ~ Don't start moving until the player is looking
 					If EntityInView(n\Collider, Camera)
 						If Rand(8) = 1 Then PlaySoundEx(LoadTempSound("SFX\SCP\860_2\Cancer" + Rand(0, 2) + ".ogg"), Camera, n\Collider, 20.0, 1.0, True)
-						n\State3 = n\State3 + 100.0
 						n\State2 = 1.0
 					EndIf
 				Else
