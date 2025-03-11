@@ -941,7 +941,7 @@ Function IsItemGoodFor1162ARC%(itt.ItemTemplates)
 			Else
 				; ~ If the item is a paper, only allow spawning it if the name contains the word "note" or "log"
 				; ~ (Because those are items created recently, which D-9341 has most likely never seen)
-				Return(((Not Instr(itt\Name, "Note")) And (Not Instr(itt\Name, "Log"))))
+				Return((Not Instr(itt\Name, "Note")) And (Not Instr(itt\Name, "Log")) And (Not Instr(itt\Name, "Blank")))
 			EndIf
 			;[End Block]
 	End Select
