@@ -936,7 +936,7 @@ Function IsItemGoodFor1162ARC%(itt.ItemTemplates)
 			;[Block]
 			If itt\ID <> it_paper
 				Return(False)
-			ElseIf Instr(itt\Name, "Leaflet") Lor Instr(itt\Name, "SCP-085") Lor Instr(itt\Name, "Blank")
+			ElseIf Instr(itt\Name, "Leaflet") Lor Instr(itt\Name, "SCP-085") Lor Instr(itt\Name, "Blank") Lor Instr(itt\Name, "Drawing")
 				Return(False)
 			Else
 				; ~ If the item is a paper, only allow spawning it if the name contains the word "note" or "log"
