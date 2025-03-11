@@ -936,12 +936,12 @@ Function IsItemGoodFor1162ARC%(itt.ItemTemplates)
 			;[Block]
 			If itt\ID <> it_paper
 				Return(False)
-			ElseIf Instr(itt\Name, "Leaflet")
+			ElseIf Instr(itt\Name, "Leaflet") Lor Instr(itt\Name, "SCP-085") Lor Instr(itt\Name, "Blank")
 				Return(False)
 			Else
 				; ~ If the item is a paper, only allow spawning it if the name contains the word "note" or "log"
 				; ~ (Because those are items created recently, which D-9341 has most likely never seen)
-				Return((Not Instr(itt\Name, "Note")) And (Not Instr(itt\Name, "Log")) And (Not Instr(itt\Name, "Blank")))
+				Return((Not Instr(itt\Name, "Note")) And (Not Instr(itt\Name, "Log")))
 			EndIf
 			;[End Block]
 	End Select
