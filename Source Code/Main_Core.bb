@@ -6259,6 +6259,7 @@ Function UpdateGUI%()
 								Color(85, 85, 140)
 								SetFontEx(fo\FontID[Font_Journal])
 								TextEx(300 * MenuScale, 275 * MenuScale, CODE_O5_COUNCIL, True, True)
+								SetFontEx(fo\FontID[Font_Default])
 								SetBuffer(BackBuffer())
 								;[End Block]
 							Case "Document SCP-372"
@@ -6267,6 +6268,7 @@ Function UpdateGUI%()
 								Color(37, 45, 137)
 								SetFontEx(fo\FontID[Font_Journal])
 								TextEx(383 * MenuScale, 734 * MenuScale, CODE_MAINTENANCE_TUNNELS, True, True)
+								SetFontEx(fo\FontID[Font_Default])
 								SetBuffer(BackBuffer())
 								;[End Block]
 						End Select
@@ -6348,6 +6350,7 @@ Function UpdateGUI%()
 										Color(85, 85, 140)
 										SetFontEx(fo\FontID[Font_Journal])
 										TextEx(300 * Scale, 275 * Scale, CODE_O5_COUNCIL, True, True)
+										SetFontEx(fo\FontID[Font_Default])
 										SetBuffer(BackBuffer())
 										;[End Block]
 									Case "doc_372.png"
@@ -6356,6 +6359,7 @@ Function UpdateGUI%()
 										Color(37, 45, 137)
 										SetFontEx(fo\FontID[Font_Journal])
 										TextEx(383 * Scale, 734 * Scale, CODE_MAINTENANCE_TUNNELS, True, True)
+										SetFontEx(fo\FontID[Font_Default])
 										SetBuffer(BackBuffer())
 										;[End Block]
 								End Select
