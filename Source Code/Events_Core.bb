@@ -7352,7 +7352,7 @@ Function UpdateDimension106%()
 											msg\DeathMsg = GetLocalString("death", "106_1")
 											PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
 											me\BlurTimer = 3000.0
-											me\Terminated = True
+											Kill(True)
 										EndIf
 									EndIf
 									e\SoundCHN = LoopSoundEx(e\Sound, e\SoundCHN, Camera, e\room\Objects[i], 6.0)
@@ -7374,7 +7374,7 @@ Function UpdateDimension106%()
 									PlaySound_Strict(snd_I\HorrorSFX[8])
 									msg\DeathMsg = GetLocalString("death", "106_2")
 									me\BlurTimer = 3000.0
-									me\Terminated = True
+									Kill()
 								EndIf
 							EndIf
 						EndIf
