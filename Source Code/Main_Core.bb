@@ -3526,9 +3526,15 @@ Function UpdateNVG%()
 	
 	If wi\NVGPower > 0
 		If wi\SCRAMBLE = 2
-			n_I\Curr173\NVGX = EntityX(n_I\Curr173\Collider, True)
-			n_I\Curr173\NVGY = EntityY(n_I\Curr173\Collider, True)
-			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\Collider, True)
+			n_I\Curr173\NVGX = EntityX(n_I\Curr173\OBJ, True)
+			n_I\Curr173\NVGY = EntityY(n_I\Curr173\OBJ, True) + 0.5
+			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\OBJ, True)
+			
+			If n_I\Curr049 <> Null And (Not n_I\Curr049\HideFromNVG)
+				n_I\Curr049\NVGX = EntityX(n_I\Curr049\OBJ, True)
+				n_I\Curr049\NVGY = EntityY(n_I\Curr049\OBJ, True) + 0.5
+				n_I\Curr049\NVGZ = EntityZ(n_I\Curr049\OBJ, True)
+			EndIf
 		ElseIf wi\NightVision = 2
 			If wi\NVGTimer <= 0.0
 				For np.NPCs = Each NPCs
@@ -3561,8 +3567,6 @@ Function RenderNVG%()
 		Local Dist#, ProjX#, ProjY#
 		
 		If wi\SCRAMBLE = 2 ; ~ Show a HUD
-			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
-			
 			Color(100, 100, 100)
 			
 			SetFontEx(fo\FontID[Font_Digital])
@@ -3572,17 +3576,40 @@ Function RenderNVG%()
 				; ~ Replace with a cool design later lol so don't actually translate anything
 				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
 			EndIf
+			
+			; ~ NPCs box
+			Local MaxRectWidth% = 15 * MenuScale
+			Local MaxRectHeight% = 50 * MenuScale
+			Local ScaleFactor#
+			Local RectWidth#, RectHeight#
+			
+			If n_I\Curr049 <> Null And (Not n_I\Curr049\HideFromNVG)
+				Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr049\NVGX, EntityY(me\Collider, True), n_I\Curr049\NVGY, EntityZ(me\Collider, True), n_I\Curr049\NVGZ)
+				If Dist < 256.0 ; ~ Don't draw box if SCP-049 is too far away
+					If EntityInView(n_I\Curr049\Collider, Camera)
+						CameraProject(Camera, n_I\Curr049\NVGX, n_I\Curr049\NVGY, n_I\Curr049\NVGZ)
+						
+						ProjX = ProjectedX() : ProjY = ProjectedY()
+						
+						ScaleFactor = 16.0 / Sqr(Dist)
+						RectWidth = MaxRectWidth * ScaleFactor
+						RectHeight = MaxRectHeight * ScaleFactor
+						
+						Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
+					EndIf
+				EndIf
+			EndIf
+			
+			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
 			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
 				If EntityInView(n_I\Curr173\Collider, Camera)
-					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY + 0.2, n_I\Curr173\NVGZ)
+					CameraProject(Camera, n_I\Curr173\NVGX, n_I\Curr173\NVGY, n_I\Curr173\NVGZ)
 					
 					ProjX = ProjectedX() : ProjY = ProjectedY()
 					
-					Local MaxRectWidth% = 15 * MenuScale
-					Local MaxRectHeight% = 50 * MenuScale
-					Local ScaleFactor# = 16.0 / Sqr(Dist)
-					Local RectWidth% = MaxRectWidth * ScaleFactor
-					Local RectHeight% = MaxRectHeight * ScaleFactor
+					ScaleFactor = 16.0 / Sqr(Dist)
+					RectWidth = MaxRectWidth * ScaleFactor
+					RectHeight = MaxRectHeight * ScaleFactor
 					
 					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
 				EndIf
