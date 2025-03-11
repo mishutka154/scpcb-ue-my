@@ -10096,7 +10096,7 @@ Function UpdateEndings%()
 										If (Not ChannelPlaying(e\SoundCHN))
 											ClearCheats()
 											
-											If (S2IMapSize(UnlockedAchievements) - 1 - S2IMapContains(UnlockedAchievements, "apollyon") - S2IMapContains(UnlockedAchievements, "keter")) => (S2IMapSize(AchievementsIndex) - 4)
+											If (S2IMapSize(UnlockedAchievements) - S2IMapContains(UnlockedAchievements, "apollyon") - S2IMapContains(UnlockedAchievements, "keter")) => (S2IMapSize(AchievementsIndex) - 4)
 												me\SelectedEnding = Ending_A2
 												PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
 												msg\DeathMsg = ""
