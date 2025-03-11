@@ -1505,19 +1505,34 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r, r\x - 668.0 * RoomScale, r\y + 769.0 * RoomScale, r\z - 704.0 * RoomScale, 0.0, False, WOODEN_DOOR)
 			r\RoomDoors.Doors[3] = d
 			
-			; ~ SCP-1123 Chamber door
-			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 360.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.06, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.031, True)
+			; ~ SCP-1123 chamber doors
+			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 544.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
+			RotateEntity(d\Buttons[0], 0.0, 270.0, 0.0, True)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.015, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.25, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
+			
+			d2.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 360.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
+			PositionEntity(d2\Buttons[0], EntityX(d2\Buttons[0], True) - 0.06, EntityY(d2\Buttons[0], True), EntityZ(d2\Buttons[0], True) + 0.031, True)
+			FreeEntity(d2\Buttons[1]) : d2\Buttons[1] = 0
+			
+			d\LinkedDoor = d2
+			d2\LinkedDoor = d
 			
 			; ~ Observation room door
 			CreateDoor(r, r\x + 352.0 * RoomScale, r\y, r\z - 640.0 * RoomScale, 90.0)
 			
 			; ~ Fake SCP-1123 Chamber door
-			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 360.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
-			d\Locked = 1 : d\AutoClose = False
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.06, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.031, True)
+			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 544.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
+			RotateEntity(d\Buttons[0], 0.0, 270.0, 0.0, True)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.015, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.25, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
+			
+			d2.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 360.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
+			PositionEntity(d2\Buttons[0], EntityX(d2\Buttons[0], True) - 0.06, EntityY(d2\Buttons[0], True), EntityZ(d2\Buttons[0], True) + 0.031, True)
+			FreeEntity(d2\Buttons[1]) : d2\Buttons[1] = 0
+			
+			d\LinkedDoor = d2
+			d2\LinkedDoor = d
 			
 			d.Doors = CreateDoor(r, r\x, r\y + 769.0 * RoomScale, r\z + 416.0 * RoomScale, 0.0, False, WOODEN_DOOR)
 			d\Locked = 2 : d\MTFClose = False
@@ -1584,6 +1599,9 @@ Function FillRoom%(r.Rooms)
 			
 			it.Items = CreateItem("Leaflet", it_paper, r\x - 756.0 * RoomScale, r\y + 920.0 * RoomScale, r\z + 521.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
+			
+			emit.Emitter = SetEmitter(r, r\x + 911.0 * RoomScale, r\y + 382.0 * RoomScale, r\z + 452.0 * RoomScale, 25)
+			emit\State = 2
 			;[End Block]
 		Case r_room2c_2_lcz
 			;[Block]

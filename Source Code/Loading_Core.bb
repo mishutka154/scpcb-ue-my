@@ -126,7 +126,7 @@ Const PARTICLE_WATER_RING% = 9
 Const PARTICLE_LEAF% = 10
 ;[End Block]
 
-Global ParticleEffect%[25]
+Global ParticleEffect%[26]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -453,6 +453,17 @@ Function LoadParticles%()
 	SetTemplateOffset(ParticleEffect[24], -4.0, 4.0, 2.5, 2.5, -4.0, 4.0)
 	SetTemplateVelocity(ParticleEffect[24], 0.03, 0.01, -0.012, -0.01, 0.001, 0.001)
 	SetTemplateSize(ParticleEffect[24], 0.02, 0.02, 0.9, 1.1)
+	
+	; ~ White smoke in "cont2_1123"
+	ParticleEffect[25] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[25], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[25], -1)
+	SetTemplateParticleLifeTime(ParticleEffect[25], 15, 20)
+	SetTemplateTexture(ParticleEffect[25], PARTICLE_WHITE_SMOKE)
+	SetTemplateVelocity(ParticleEffect[25], 0.0, 0.0, -0.008, -0.008, 0.0, 0.0)
+	SetTemplateAlphaVel(ParticleEffect[25], True)
+	SetTemplateSize(ParticleEffect[25], 0.35, 0.35, 0.5, 1.5)
+	SetTemplateSizeVel(ParticleEffect[25], 0.018, 1.01)
 End Function
 
 Function RemoveParticleInstances%()

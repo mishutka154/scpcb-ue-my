@@ -390,7 +390,7 @@ Function UpdateParticles_Devil()
 					;[End Block]
 				Case 2, 3
 					;[Block]
-					emit\SoundCHN = LoopSoundEx(snd_I\HissSFX[1], emit\SoundCHN, Camera, emit\Owner, 5.0 - (3.0 * (emit\State = 3.0)), 1.0 - (0.6 * (emit\State = 3.0)))
+					emit\SoundCHN = LoopSoundEx(snd_I\HissSFX[1], emit\SoundCHN, Camera, emit\Owner, 4.0 - (1.5 * (emit\State = 3.0)), 1.0 - (0.6 * (emit\State = 3.0)))
 					;[End Block]
 			End Select
 		EndIf
