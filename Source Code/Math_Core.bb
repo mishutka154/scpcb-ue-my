@@ -194,7 +194,7 @@ Global Mesh_MaxX#, Mesh_MaxY#, Mesh_MaxZ#
 Global Mesh_MagX#, Mesh_MagY#, Mesh_MagZ#
 
 ; ~ Find mesh extents
-Function GetMeshExtents%(Mesh%)
+Function GetMeshExtents%(Mesh%, Height# = 99999999.0)
 	Local su%, s%, v%, x#, y#, z#
 	Local MinX# = Infinity
 	Local MinY# = Infinity
@@ -214,12 +214,14 @@ Function GetMeshExtents%(Mesh%)
 			y = VertexY(s, v)
 			z = VertexZ(s, v)
 			
-			MinX = Min(MinX, x)
-			MaxX = Max(MaxX, x)
-			MinY = Min(MinY, y)
-			MaxY = Max(MaxY, y)
-			MinZ = Min(MinZ, z)
-			MaxZ = Max(MaxZ, z)
+			If Abs(y) =< Height
+				MinX = Min(MinX, x)
+				MaxX = Max(MaxX, x)
+				MinY = Min(MinY, y)
+				MaxY = Max(MaxY, y)
+				MinZ = Min(MinZ, z)
+				MaxZ = Max(MaxZ, z)
+			EndIf
 		Next
 	Next
 	
@@ -254,6 +256,19 @@ Function GetZone%(y%)
 End Function
 
 Function CalculateRoomTemplateExtents%(r.RoomTemplates)
+	GetMeshExtents(GetChild(r\OBJ, 2), 2000.0) ; ~ Calculate bounding box with limited height
+	r\BoundsMinX = Mesh_MinX
+	r\BoundsMinY = Mesh_MinY
+	r\BoundsMinZ = Mesh_MinZ
+	r\BoundsMaxX = Mesh_MaxX
+	r\BoundsMaxY = Mesh_MaxY
+	r\BoundsMaxZ = Mesh_MaxZ
+	r\BoundsMidX = Mesh_MidX
+	r\BoundsMidY = Mesh_MidY
+	r\BoundsMidZ = Mesh_MidZ
+	
+	If r\DisableOverlapCheck Then Return
+	
 	GetMeshExtents(GetChild(r\OBJ, 2))
 	
 	r\MinX = Mesh_MinX

@@ -1443,6 +1443,9 @@ Type RoomTemplates
 	Field MinX#, MinY#, MinZ#
 	Field MidX#, MidY#, MidZ#
 	Field MaxX#, MaxY#, MaxZ#
+	Field BoundsMinX#, BoundsMinY#, BoundsMinZ#
+	Field BoundsMaxX#, BoundsMaxY#, BoundsMaxZ#
+	Field BoundsMidX#, BoundsMidY#, BoundsMidZ#
 End Type
 
 ; ~ Room ID constants
@@ -2370,8 +2373,8 @@ Function CreateRoom.Rooms(Zone%, RoomShape%, x#, y#, z#, RoomID% = -1, Angle# = 
 				r\OBJ = CopyEntity(rt\OBJ)
 				
 				r\BoundingBox = CreatePivot(r\OBJ)
-				PositionEntity(r\BoundingBox, r\RoomTemplate\MidX, r\RoomTemplate\MidY, r\RoomTemplate\MidZ)
-				ScaleEntity(r\BoundingBox, (r\RoomTemplate\MaxX - r\RoomTemplate\MinX), (r\RoomTemplate\MaxY - r\RoomTemplate\MinY), (r\RoomTemplate\MaxZ - r\RoomTemplate\MinZ))
+				PositionEntity(r\BoundingBox, r\RoomTemplate\BoundsMidX, r\RoomTemplate\BoundsMidY, r\RoomTemplate\BoundsMidZ)
+				ScaleEntity(r\BoundingBox, (r\RoomTemplate\BoundsMaxX - r\RoomTemplate\BoundsMinX), (r\RoomTemplate\BoundsMaxY - r\RoomTemplate\BoundsMinY), (r\RoomTemplate\BoundsMaxZ - r\RoomTemplate\BoundsMinZ))
 				
 				ScaleEntity(r\OBJ, RoomScale, RoomScale, RoomScale)
 				EntityType(r\OBJ, HIT_MAP)
@@ -2419,8 +2422,8 @@ Function CreateRoom.Rooms(Zone%, RoomShape%, x#, y#, z#, RoomID% = -1, Angle# = 
 					r\OBJ = CopyEntity(rt\OBJ)
 					
 					r\BoundingBox = CreatePivot(r\OBJ)
-					PositionEntity(r\BoundingBox, r\RoomTemplate\MidX, r\RoomTemplate\MidY, r\RoomTemplate\MidZ)
-					ScaleEntity(r\BoundingBox, (r\RoomTemplate\MaxX - r\RoomTemplate\MinX), (r\RoomTemplate\MaxY - r\RoomTemplate\MinY), (r\RoomTemplate\MaxZ - r\RoomTemplate\MinZ))
+					PositionEntity(r\BoundingBox, r\RoomTemplate\BoundsMidX, r\RoomTemplate\BoundsMidY, r\RoomTemplate\BoundsMidZ)
+					ScaleEntity(r\BoundingBox, (r\RoomTemplate\BoundsMaxX - r\RoomTemplate\BoundsMinX), (r\RoomTemplate\BoundsMaxY - r\RoomTemplate\BoundsMinY), (r\RoomTemplate\BoundsMaxZ - r\RoomTemplate\BoundsMinZ))
 					
 					ScaleEntity(r\OBJ, RoomScale, RoomScale, RoomScale)
 					EntityType(r\OBJ, HIT_MAP)
@@ -4930,18 +4933,10 @@ Function UpdateRooms%()
 		Local MaxRoomDistance# = 1000000.0
 		Local BoundingBoxDistance#
 		
-		For r.Rooms = Each Rooms ; ~ Find player room
-			If IsInsideBox(me\Collider, r\BoundingBox)
-				BoundingBoxDistance = Abs(PlayerY - r\MinY)
-				If BoundingBoxDistance < MaxRoomDistance
-					PlayerRoom = r
-					MaxRoomDistance = BoundingBoxDistance
-				EndIf
-			EndIf
-		Next
-		
 		For r.Rooms = Each Rooms
 			r\Dist = Max(Abs(r\x - PlayerX), Abs(r\z - PlayerZ))
+			
+			If IsInsideBox(me\Collider, r\BoundingBox) Then PlayerRoom = r
 			
 			Local Hide% = True
 			
@@ -4968,6 +4963,7 @@ Function UpdateRooms%()
 	
 	Local IsInside% = IsInsideBox(me\Collider, PlayerRoom\BoundingBox)
 	
+	ShowRoomsNoColl(PlayerRoom)
 	ShowRoomsColl(PlayerRoom)
 	For i = 0 To MaxRoomAdjacents - 1
 		If PlayerRoom\Adjacent[i] <> Null

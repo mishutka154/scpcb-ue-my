@@ -863,13 +863,8 @@ Function UpdateNPCs%()
 							Local UpdateGravity% = False
 							
 							If n\InFacility = NullFloor
-								Local Currdist#
-								Local MaxDist# = 1000000.0
-								
 								For r.Rooms = Each Rooms
-									Currdist = Abs(EntityY(n\Collider) - r\MinY)
-									If IsInsideBox(n\Collider, r\BoundingBox) And Currdist < MaxDist
-										MaxDist = Currdist
+									If IsInsideBox(n\Collider, r\BoundingBox)
 										n\CurrentRoom = r
 										Exit
 									EndIf
