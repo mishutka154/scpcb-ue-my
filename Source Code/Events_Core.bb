@@ -1826,7 +1826,7 @@ Function UpdateEvents%()
 						e\EventState = e\EventState + fps\Factor[0]
 						CanSave = 0
 						If (Not n_I\Curr106\Contained)
-							If n_I\Curr106\State2 > 0.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * (0.5 + SelectedDifficulty\AggressiveNPCs))
+							If n_I\Curr106\State2 > 0.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * (0.5 + (SelectedDifficulty\AggressiveNPCs * 0.75)))
 						EndIf
 						e\room\RoomDoors[1]\Open = False
 						If e\EventState > 70.0 * 2.0
