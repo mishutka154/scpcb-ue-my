@@ -6236,7 +6236,7 @@ Function UpdateEvents%()
 						Else
 							Temp = -Sgn(TFormedZ())
 						EndIf
-						TFormPoint(-720.0, 25.0, 816.0 * Temp, e\room\OBJ, 0)
+						TFormPoint(-720.0, 57.0, 816.0 * Temp, e\room\OBJ, 0)
 						e\room\NPC[0] = CreateNPC(NPCType1048, TFormedX(), TFormedY(), TFormedZ())
 						e\room\NPC[0]\State = 1.0
 						RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle - 90.0, 0.0)
