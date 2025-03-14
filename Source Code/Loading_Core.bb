@@ -1320,7 +1320,7 @@ Function LoadItems%()
 	
 	CreateItemTemplate(GetLocalString("items", "e.reader"), "E-Reader", it_e_reader, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
 	CreateItemTemplate(GetLocalString("items", "e.reader20"), "E-Reader 20", it_e_reader20, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
-	CreateItemTemplate(GetLocalString("items", "e.reader30"), "E-Reader 30", it_e_reader30, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
+	CreateItemTemplate(GetLocalString("items", "e.readerulti"), "E-Reader Ultimate", it_e_readerulti, "e_reader.b3d", "INV_e_reader.png", "", 0.0012, 1)
 	;[End Block]
 	
 	CreateItemTemplate(GetLocalString("items", "bat"), "9V Battery", it_bat, "battery.b3d", "INV_battery_9v.png", "", 0.0065, 1)

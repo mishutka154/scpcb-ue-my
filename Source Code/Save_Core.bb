@@ -515,7 +515,7 @@ Function SaveGame%(File$)
 	Next
 	
 	For it.Items = Each Items
-		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_readerulti
 			WriteByte(f, it\EReaderPageAmount)
 			For i = 1 To it\EReaderPageAmount
 				WriteString(f, it\EReaderPage[i]\Name)
@@ -1378,7 +1378,7 @@ Function LoadGame%(File$)
 	Next
 	
 	For it.Items = Each Items
-		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_readerulti
 			it\EReaderPageAmount = ReadByte(f)
 			For o_i = 1 To it\EReaderPageAmount
 				Name = ReadString(f)
@@ -2299,7 +2299,7 @@ Function LoadGameQuick%(File$)
 	Next
 	
 	For it.Items = Each Items
-		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_reader30
+		If it\ItemTemplate\ID = it_e_reader Lor it\ItemTemplate\ID = it_e_reader20 Lor it\ItemTemplate\ID = it_e_readerulti
 			it\EReaderPageAmount = ReadByte(f)
 			For o_i = 1 To it\EReaderPageAmount
 				Name = ReadString(f)

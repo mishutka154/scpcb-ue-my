@@ -310,7 +310,7 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			If EReaderUnlocked
-				it.Items = CreateItem("E-Reader 30", it_e_reader30, r\x + 372.0 * RoomScale, r\y + 250.0 * RoomScale, r\z + 235.0 * RoomScale)
+				it.Items = CreateItem("E-Reader Ultimate", it_e_readerulti, r\x + 372.0 * RoomScale, r\y + 250.0 * RoomScale, r\z + 235.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			

@@ -132,7 +132,7 @@ Const it_navulti% = 74
 
 Const it_e_reader% = 75
 Const it_e_reader20% = 76
-Const it_e_reader30% = 77
+Const it_e_readerulti% = 77
 
 Const it_bat% = 78
 Const it_coarsebat% = 79
@@ -791,7 +791,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 							SelectedItem = item
 						EndIf
 						;[End Block]
-					Case it_e_reader30
+					Case it_e_readerulti
 						;[Block]
 						For itt.ItemTemplates = Each ItemTemplates
 							If itt\ID = it_paper
@@ -949,7 +949,7 @@ End Function
 
 Function IsItemInFocus%()
 	Select SelectedItem\ItemTemplate\ID
-		Case it_nav, it_nav300, it_nav310, it_navulti, it_paper, it_oldpaper, it_badge, it_oldbadge, it_scp1025, it_fine1025, it_e_reader, it_e_reader20, it_e_reader30
+		Case it_nav, it_nav300, it_nav310, it_navulti, it_paper, it_oldpaper, it_badge, it_oldbadge, it_scp1025, it_fine1025, it_e_reader, it_e_reader20, it_e_readerulti
 			;[Block]
 			Return(True)
 			;[End Block]
@@ -2664,7 +2664,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case it_e_reader, it_e_reader20, it_e_reader30
+		Case it_e_reader, it_e_reader20, it_e_readerulti
 			;[Block]
 			Select Setting
 				Case ROUGH
@@ -2691,7 +2691,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(15) = 1
-						it2.Items = CreateItem("E-Reader 30", it_e_reader30, x, y, z)
+						it2.Items = CreateItem("E-Reader Ultimate", it_e_readerulti, x, y, z)
 					Else
 						it2.Items = CreateItem("Clipboard", it_clipboard, x, y, z)
 						it2\InvSlots = 20

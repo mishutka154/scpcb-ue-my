@@ -2491,7 +2491,7 @@ Function RenderMessages%()
 	If msg\Timer > 0.0
 		Local Temp%
 		
-		If (Not (InvOpen Lor OtherOpen <> Null)) Then Temp = ((I_294\Using Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null) Lor (SelectedItem <> Null And (SelectedItem\ItemTemplate\ID = it_paper Lor SelectedItem\ItemTemplate\ID = it_scp1025 Lor SelectedItem\ItemTemplate\ID = it_fine1025 Lor SelectedItem\ItemTemplate\ID = it_oldpaper Lor SelectedItem\ItemTemplate\ID = it_e_reader Lor SelectedItem\ItemTemplate\ID = it_e_reader20 Lor SelectedItem\ItemTemplate\ID = it_e_reader30)))
+		If (Not (InvOpen Lor OtherOpen <> Null)) Then Temp = ((I_294\Using Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null) Lor (SelectedItem <> Null And (SelectedItem\ItemTemplate\ID = it_paper Lor SelectedItem\ItemTemplate\ID = it_scp1025 Lor SelectedItem\ItemTemplate\ID = it_fine1025 Lor SelectedItem\ItemTemplate\ID = it_oldpaper Lor SelectedItem\ItemTemplate\ID = it_e_reader Lor SelectedItem\ItemTemplate\ID = it_e_reader20 Lor SelectedItem\ItemTemplate\ID = it_e_readerulti)))
 		
 		Local Temp2% = Min(msg\Timer / 2.0, 255.0)
 		
@@ -4214,7 +4214,7 @@ Function UpdateGUI%()
 						Select SelectedItem\ItemTemplate\ID
 							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill
 								;[Block]
-								If (Inventory(MouseSlot)\State > 0.0 And Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader) Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader20 Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader30
+								If (Inventory(MouseSlot)\State > 0.0 And Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader) Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader20 Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_readerulti
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper
 											;[Block]
@@ -4464,7 +4464,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.notfit"))
 										;[End Block]
-									Case it_e_reader30
+									Case it_e_readerulti
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.no"))
 										;[End Block]
@@ -4551,7 +4551,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.notfit"))
 										;[End Block]
-									Case it_e_reader30
+									Case it_e_readerulti
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.no"))
 										;[End Block]
@@ -4638,7 +4638,7 @@ Function UpdateGUI%()
 										Inventory(MouseSlot)\State = Rnd(500.0, 1000.0)
 										CreateMsg(GetLocalString("msg", "e.reader.bat"))
 										;[End Block]
-									Case it_e_reader30
+									Case it_e_readerulti
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.no"))
 										;[End Block]
@@ -4725,7 +4725,7 @@ Function UpdateGUI%()
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.notfit"))
 										;[End Block]
-									Case it_e_reader30
+									Case it_e_readerulti
 										;[Block]
 										CreateMsg(GetLocalString("msg", "e.reader.bat.no"))
 										;[End Block]
@@ -6315,9 +6315,9 @@ Function UpdateGUI%()
 						I_409\Timer = 0.001
 					EndIf
 					;[End Block]
-				Case it_e_reader, it_e_reader20, it_e_reader30
+				Case it_e_reader, it_e_reader20, it_e_readerulti
 					;[Block]
-					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_reader30)
+					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_readerulti)
 					If SelectedItem\ItemTemplate\Img = 0
 						StrTemp = "_off"
 						; ~ TODO: CHANGE GREEN LIGHTING!
@@ -6396,7 +6396,7 @@ Function UpdateGUI%()
 							EndIf
 						EndIf
 						
-						If SelectedItem\State < 20.0 And SelectedItem\ItemTemplate\ID <> it_e_reader30
+						If SelectedItem\State < 20.0 And SelectedItem\ItemTemplate\ID <> it_e_readerulti
 							If BatMsgTimer >= 70.0
 								If (Not ChannelPlaying(LowBatteryCHN[0]))
 									me\SndVolume = Max(3.0, me\SndVolume)
@@ -6445,7 +6445,7 @@ Function UpdateGUI%()
 						;[Block]
 						SelectedItem\State3 = 0.0
 						;[End Block]
-					Case it_e_reader, it_e_reader20, it_e_reader30
+					Case it_e_reader, it_e_reader20, it_e_readerulti
 						;[Block]
 						SelectedItem\State2 = 0.0
 						CurrEReaderPage = Null
@@ -7584,14 +7584,14 @@ Function RenderGUI%()
 					;[Block]
 					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
 					;[End Block]
-				Case it_e_reader, it_e_reader20, it_e_reader30
+				Case it_e_reader, it_e_reader20, it_e_readerulti
 					;[Block]
 					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
 						x = mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth
 						y = mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight
 						DrawImage(SelectedItem\ItemTemplate\Img, x, y)
 						Temp = (SelectedItem\State > 0.0)
-						If (Temp Lor SelectedItem\ItemTemplate\ID = it_e_reader30) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
+						If (Temp Lor SelectedItem\ItemTemplate\ID = it_e_readerulti) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
 							; ~ Battery
 							If Temp
 								n = Min(Ceil(SelectedItem\State / 10.0), 10)
