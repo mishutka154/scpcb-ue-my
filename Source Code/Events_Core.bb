@@ -9538,10 +9538,9 @@ Function UpdateEndings%()
 									If Temp = 1.0 ; ~ Explode
 										ShouldPlay = 66
 										me\ExplosionTimer = Max(me\ExplosionTimer, 0.1)
+										ResetSelectedStuff()
 										me\SelectedEnding = Ending_B2
 									Else
-										SelectedItem = Null
-										
 										e\SoundCHN2 = StreamSound_Strict("SFX\Ending\GateB\AlphaWarheadsFail.ogg", opt\VoiceVolume * opt\MasterVolume)
 										e\SoundCHN2_IsStream = True
 										
@@ -10021,6 +10020,7 @@ Function UpdateEndings%()
 									If e\EventState3 >= 230.0
 										If e\EventState3 - fps\Factor[0] < 230.0
 											e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\Ending\GateA\CI.ogg"), True)
+											ResetSelectedStuff()
 											me\SelectedEnding = Ending_A1
 										EndIf
 										
