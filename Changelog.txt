@@ -32,6 +32,7 @@
 [Rooms]
 - Gate A is now accessible by disabling remote door controls without talking with SCP-079.
 
+- Added new rooms.
 - Added leaf particles in the forest.
 - Added penny in «room1_storage».
 - Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.

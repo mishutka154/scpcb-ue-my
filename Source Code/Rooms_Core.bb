@@ -2734,6 +2734,11 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x - 3635.0 * RoomScale, r\y - 3840.0 * RoomScale, r\z + 1729.0 * RoomScale, 20.0)
 			sc\Angle = 100.0 : sc\Turn = 45.0
 			;[End Block]
+		Case r_room2c_hcz
+			;[Block]
+			emit.Emitter = SetEmitter(r, r\x + 512.0 * RoomScale, r\y - 76.0 * RoomScale, r\z - 688.0 * RoomScale, 3)
+			emit\State = 1
+			;[End Block]
 		Case r_cont2c_096
 			;[Block]
 			; ~ Observation room doors
