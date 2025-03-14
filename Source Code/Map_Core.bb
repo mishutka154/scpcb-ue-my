@@ -3848,7 +3848,7 @@ Function UpdateShadows%()
 			Else
 				If shdw\UpdateTimer <= 0.0
 					EntityPickMode(me\Collider, 0)
-					If LinePick(x, y, z, 0.0, -10.0, 0.0) <> 0
+					If LinePick(x, y + 0.3, z, 0.0, -10.0, 0.0) <> 0
 						PositionEntity(shdw\OBJ, x, PickedY() + 0.002, z, True)
 						RotateEntity(shdw\OBJ, EntityPitch(shdw\ParentOBJ, True), EntityYaw(shdw\ParentOBJ, True), EntityRoll(shdw\ParentOBJ, True), True)
 						AlignToVector(shdw\OBJ, -PickedNX(), -PickedNY(), -PickedNZ(), 3)
