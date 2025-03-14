@@ -4175,12 +4175,10 @@ Function UpdateSecurityCams%()
 					If (me\BlinkTimer > -6.0 Lor me\BlinkTimer < -11.0) And sc\InSight
 						ParticleCam = sc\Cam
 						
-						Local Temp% = False
 						Local RID% = sc\room\RoomTemplate\RoomID
 						
 						If RID = r_cont1_205 Lor RID = r_cont1_173_intro Lor RID = r_room2_sl
 							sc\CoffinEffect = 0
-							Temp = True
 						Else
 							CameraFogColor(sc\Cam, fog\R, fog\G, fog\B)
 							CameraClsColor(sc\Cam, fog\R, fog\G, fog\B)
@@ -4223,7 +4221,6 @@ Function UpdateSecurityCams%()
 										If sc\PlayerState = 1 Then PlaySound_Strict(snd_I\HorrorSFX[1])
 										sc\PlayerState = 2
 										If (Not ChannelPlaying(sc\SoundCHN)) Then sc\SoundCHN = PlaySound_Strict(snd_I\HorrorSFX[4])
-										If sc\CoffinEffect = 3 And Rand(200) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
 									EndIf
 									me\BlurTimer = 1000.0
 									If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0
@@ -4233,7 +4230,6 @@ Function UpdateSecurityCams%()
 										EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_5)])
 										If sc\PlayerState = 0 Then PlaySound_Strict(snd_I\HorrorSFX[0])
 										sc\PlayerState = Max(sc\PlayerState, 1)
-										If sc\CoffinEffect = 3 And Rand(100) = 1 Then sc\CoffinEffect = 2 : sc\PlayerState = Rand(10000, 20000)
 									EndIf
 								Else
 									EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
@@ -4241,17 +4237,17 @@ Function UpdateSecurityCams%()
 							Else
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 							EndIf
-						ElseIf (Not Temp)
+						ElseIf sc\CoffinEffect = 2
 							If sc\PlayerState = 0 Then sc\PlayerState = Rand(55000, 60000) - (20000 * SelectedDifficulty\AggressiveNPCs)
-							If Rand(500) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
-							If (MilliSec Mod sc\PlayerState) >= Rand(700)
+							Local Temp% = (MilliSec Mod sc\PlayerState)
+							If Rand(500 - (480 * (Temp < 700))) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
+							If Temp >= Rand(700)
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 							Else
 								If (Not ChannelPlaying(sc\SoundCHN))
 									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
-									If sc\CoffinEffect = 2 Then sc\CoffinEffect = 3 : sc\PlayerState = 0
+									sc\CoffinEffect = 3 : sc\PlayerState = 0
 								EndIf
-								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 							EndIf
 						EndIf
 					EndIf

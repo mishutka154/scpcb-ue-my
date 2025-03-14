@@ -537,6 +537,11 @@ Function SaveGame%(File$)
 	
 	WriteInt(f, EscapeTimer)
 	
+	For sc.SecurityCams = Each SecurityCams
+		WriteByte(f, sc\CoffinEffect)
+		WriteInt(f, sc\PlayerState)
+	Next
+	
 	CloseFile(f)
 	
 	If SelectedDifficulty\SaveType = SAVE_ON_SCREENS
@@ -1402,6 +1407,11 @@ Function LoadGame%(File$)
 	Next
 	
 	EscapeTimer = ReadInt(f)
+	
+	For sc.SecurityCams = Each SecurityCams
+		sc\CoffinEffect = ReadByte(f)
+		sc\PlayerState = ReadInt(f)
+	Next
 	
 	CloseFile(f)
 	
@@ -2323,9 +2333,9 @@ Function LoadGameQuick%(File$)
 	Local sc.SecurityCams
 	
 	For sc.SecurityCams = Each SecurityCams
-		sc\PlayerState = 0
+		sc\CoffinEffect = ReadByte(f)
+		sc\PlayerState = ReadInt(f)
 	Next
-	EntityTexture(t\OverlayID[4], t\OverlayTextureID[1])
 	
 	CloseFile(f)
 	
