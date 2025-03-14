@@ -2080,7 +2080,7 @@ End Function
 Const MaxRoomObjects% = 30
 Const MaxRoomLevers% = 4
 Const MaxRoomDoors% = 8
-Const MaxRoomNPCs% = 12
+Const MaxRoomNPCs% = 16
 Const MaxRoomSecurityCams% = 8
 Const MaxRoomEmitters% = 8
 Const MaxRoomAdjacents% = 4

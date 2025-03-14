@@ -409,6 +409,12 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
 			r\RoomDoors.Doors[5] = d
 			
+			; ~ The door in the observation room
+			d.Doors = CreateDoor(r, r\x - 1248.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 767.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_3)
+			d\MTFClose = False
+			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+			r\RoomDoors.Doors[6] = d
+			
 			r\Objects[0] = CreatePivot()
 			PositionEntity(r\Objects[0], r\x + 948.0 * RoomScale, r\y + 0.3, r\z + 526.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)

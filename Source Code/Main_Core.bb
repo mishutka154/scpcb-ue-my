@@ -9451,7 +9451,11 @@ Function Update008%()
 									r\NPC[0] = CreateNPC(NPCTypeD, EntityX(r\Objects[6], True), EntityY(r\Objects[6], True) + 0.2, EntityZ(r\Objects[6], True))
 									r\NPC[0]\State = -1.0
 									SetNPCFrame(r\NPC[0], 357.0)
-									ChangeNPCTextureID(r\NPC[0], NPC_CLASS_D_VICTIM_008_TEXTURE)
+									
+									Local Tex% = LoadTexture_Strict("GFX\NPCs\scientist.png") 
+									
+									EntityTexture(r\NPC[0]\OBJ, Tex)
+									DeleteSingleTextureEntryFromCache(Tex)
 									PlaySound_Strict(LoadTempSound("SFX\SCP\008\KillScientist0.ogg"), True)
 									TeleportToRoom(r)
 									Exit
