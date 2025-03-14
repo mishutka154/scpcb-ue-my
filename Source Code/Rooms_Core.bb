@@ -3127,7 +3127,7 @@ Function FillRoom%(r.Rooms)
 			d\DisableWaypoint = True : d\MTFClose = False  : d\Locked = 1
 			
 			r\Objects[0] = CreatePivot()
-			PositionEntity(r\Objects[0], r\x + 720.0 * RoomScale, r\y, r\z + 1744.0 * RoomScale)
+			PositionEntity(r\Objects[0], r\x, r\y, r\z + 2225.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
 			
 			CreateCustomCenter(r, r\x, r\z - 820.0 * RoomScale)
