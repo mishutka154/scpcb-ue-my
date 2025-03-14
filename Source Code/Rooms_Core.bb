@@ -1115,7 +1115,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomLevers.Levers[1] = CreateLever(r, r\x - 367.0 * RoomScale, r\y + 192.0 * RoomScale, r\z - 132.0 * RoomScale, -90.0, True)
 			
 			sc.SecurityCams = CreateSecurityCam(r, r\x, r\y + 704.0 * RoomScale, r\z - 953.0 * RoomScale, 30.0, True, r\x - 390.0 * RoomScale, r\y + 204.0 * RoomScale, r\z + 34.0 * RoomScale, 0.0, -90.0, 0.0)
-			sc\Turn = 0.0
+			sc\Turn = 0.0 : If Rand(2) = 1 Then sc\PlayerState = Rand(700.0)
 			
 			r\Objects[0] = CreateSprite()
 			r\ScriptedObject[0] = True
