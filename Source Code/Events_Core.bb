@@ -8437,13 +8437,14 @@ Function UpdateIntro%()
 					DeleteSingleTextureEntryFromCache(Tex)
 					HideEntity(e\room\NPC[13]\OBJ)
 					
-					TFormPoint(-897.0, 500.0, 362.0, e\room\OBJ, 0)
+					TFormPoint(-3180.0, -315.0, -687.0, e\room\OBJ, 0)
 					e\room\NPC[14] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 					RotateEntity(e\room\NPC[14]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
+					e\room\NPC[14]\State = -1.0
+					SetNPCFrame(e\room\NPC[14], 182.0)
 					Tex = LoadTexture_Strict("GFX\NPCs\scientist(2).png")
 					EntityTexture(e\room\NPC[14]\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex)
-					HideEntity(e\room\NPC[14]\OBJ)
 					
 					HideEntity(e\room\RoomDoors[6]\OBJ)
 					HideEntity(e\room\RoomDoors[6]\OBJ2)
@@ -8615,6 +8616,7 @@ Function UpdateIntro%()
 									For i = 6 To 12
 										ShowEntity(e\room\NPC[i]\OBJ)
 									Next
+									ShowEntity(e\room\NPC[14]\OBJ)
 									ShowEntity(e\room\NPC[11]\OBJ2)
 									ShowEntity(e\room\Objects[4])
 									
@@ -8890,7 +8892,6 @@ Function UpdateIntro%()
 									ShowEntity(n_I\Curr173\OBJ2)
 									ShowEntity(e\room\NPC[6]\OBJ)
 									ShowEntity(e\room\NPC[13]\OBJ)
-									ShowEntity(e\room\NPC[14]\OBJ)
 									ShowEntity(e\room\RoomDoors[6]\OBJ)
 									ShowEntity(e\room\RoomDoors[6]\OBJ2)
 									ShowEntity(e\room\RoomDoors[6]\FrameOBJ)
@@ -8953,6 +8954,7 @@ Function UpdateIntro%()
 										Next
 										
 										RemoveNPC(e\room\NPC[4])
+										RemoveNPC(e\room\NPC[14])
 										RemoveNPC(e\room\NPC[3])
 									EndIf
 								EndIf
@@ -9131,8 +9133,6 @@ Function UpdateIntro%()
 									If e\EventState3 < 14130.0
 										SetNPCFrame(e\room\NPC[2], 50.0)
 										me\BlinkTimer = -10.0 : me\LightBlink = 1.0
-										
-										RemoveNPC(e\room\NPC[14])
 									Else
 										n_I\Curr173\Idle = 0
 									EndIf
