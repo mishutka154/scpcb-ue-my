@@ -603,7 +603,13 @@ Function UpdateGame%()
 						SelectedItem = Null
 					ElseIf SelectedItem <> Null
 						PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-						NullSecondINV()
+						For i = 0 To OtherOpen\InvSlots - 1
+							If OtherOpen\SecondInv[i] = SelectedItem
+								PrevOtherOpen = OtherOpen
+								SelectedItem = PrevOtherOpen\SecondInv[i]
+								Exit
+							EndIf
+						Next
 					EndIf
 					OtherOpen = Null
 				EndIf
@@ -3471,6 +3477,7 @@ Function ResetSelectedStuff%()
 	sc_I\SelectedMonitor = Null
 	SelectedItem = Null
 	OtherOpen = Null
+	PrevOtherOpen = Null
 	d_I\ClosestButton = 0
 	GrabbedEntity = 0
 End Function
@@ -3682,25 +3689,31 @@ Function RenderNVG%()
 	Color(255, 255, 255)
 End Function
 
-Function NullSecondINV%()
+Function NullSecondINV%(SecondINV.Items)
 	Local i%
 	
-	For i = 0 To OtherOpen\InvSlots - 1
-		If OtherOpen\SecondInv[i] = SelectedItem
-			OtherOpen\SecondInv[i] = Null
+	For i = 0 To SecondINV\InvSlots - 1
+		If SecondINV\SecondInv[i] = SelectedItem
+			SecondINV\SecondInv[i] = Null
 			Exit
 		EndIf
 	Next
 	
 	Local IsEmpty% = True
 	
-	For i = 0 To OtherOpen\InvSlots - 1
-		If OtherOpen\SecondInv[i] <> Null
+	For i = 0 To SecondINV\InvSlots - 1
+		If SecondINV\SecondInv[i] <> Null
 			IsEmpty = False
 			Exit
 		EndIf
 	Next
-	If IsEmpty And OtherOpen\ItemTemplate\InvImg2 <> 0 Then OtherOpen\InvImg = OtherOpen\ItemTemplate\InvImg2
+	If IsEmpty And SecondINV\ItemTemplate\InvImg2 <> 0 Then SecondINV\InvImg = SecondINV\ItemTemplate\InvImg2
+End Function
+
+Function RejectItemSwap%()
+	CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+	OtherOpen = PrevOtherOpen
+	PrevOtherOpen = Null
 End Function
 
 Function UpdateGUI%()
@@ -4005,7 +4018,7 @@ Function UpdateGUI%()
 					ResetEntity(SelectedItem\Collider)
 					SelectedItem\Dropped = 1
 					SelectedItem\Picked = False
-					NullSecondINV()
+					NullSecondINV(OtherOpen)
 					SelectedItem = Null
 					
 					If (Not mo\MouseHit2)
@@ -4204,6 +4217,10 @@ Function UpdateGUI%()
 							EndIf
 						Next
 						Inventory(MouseSlot) = SelectedItem
+						If PrevOtherOpen <> Null
+							NullSecondINV(PrevOtherOpen)
+							PrevOtherOpen = Null
+						EndIf
 						SelectedItem = Null
 					ElseIf Inventory(MouseSlot) <> SelectedItem
 						PrevItem = Inventory(MouseSlot)
@@ -4239,6 +4256,20 @@ Function UpdateGUI%()
 											CreateMsg(GetLocalString("msg", "e.reader.scan.succ"))
 											PlaySound_Strict(snd_I\ScannerSFX[0])
 											SelectedItem = Null
+											;[End Block]
+										Default
+											;[Block]
+											If PrevOtherOpen <> Null
+												RejectItemSwap()
+											Else
+												For z = 0 To MaxItemAmount - 1
+													If Inventory(z) = SelectedItem
+														Inventory(z) = PrevItem
+														Exit
+													EndIf
+												Next
+												Inventory(MouseSlot) = SelectedItem
+											EndIf
 											;[End Block]
 									End Select
 								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_clipboard
@@ -4281,13 +4312,17 @@ Function UpdateGUI%()
 											;[End Block]
 										Default
 											;[Block]
-											For z = 0 To MaxItemAmount - 1
-												If Inventory(z) = SelectedItem
-													Inventory(z) = PrevItem
-													Exit
-												EndIf
-											Next
-											Inventory(MouseSlot) = SelectedItem
+											If PrevOtherOpen <> Null
+												RejectItemSwap()
+											Else
+												For z = 0 To MaxItemAmount - 1
+													If Inventory(z) = SelectedItem
+														Inventory(z) = PrevItem
+														Exit
+													EndIf
+												Next
+												Inventory(MouseSlot) = SelectedItem
+											EndIf
 											;[End Block]
 									End Select
 								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_wallet
@@ -4295,13 +4330,17 @@ Function UpdateGUI%()
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper, it_origami
 											;[Block]
-											For z = 0 To MaxItemAmount - 1
-												If Inventory(z) = SelectedItem
-													Inventory(z) = PrevItem
-													Exit
-												EndIf
-											Next
-											Inventory(MouseSlot) = SelectedItem
+											If PrevOtherOpen <> Null
+												RejectItemSwap()
+											Else
+												For z = 0 To MaxItemAmount - 1
+													If Inventory(z) = SelectedItem
+														Inventory(z) = PrevItem
+														Exit
+													EndIf
+												Next
+												Inventory(MouseSlot) = SelectedItem
+											EndIf
 											;[End Block]
 										Default
 											;[Block]
@@ -4374,23 +4413,31 @@ Function UpdateGUI%()
 											;[End Block]
 										Default
 											;[Block]
-											For z = 0 To MaxItemAmount - 1
-												If Inventory(z) = SelectedItem
-													Inventory(z) = PrevItem
-													Exit
-												EndIf
-											Next
-											Inventory(MouseSlot) = SelectedItem
+											If PrevOtherOpen <> Null
+												RejectItemSwap()
+											Else
+												For z = 0 To MaxItemAmount - 1
+													If Inventory(z) = SelectedItem
+														Inventory(z) = PrevItem
+														Exit
+													EndIf
+												Next
+												Inventory(MouseSlot) = SelectedItem
+											EndIf
 											;[End Block]
 									End Select
 								Else
-									For z = 0 To MaxItemAmount - 1
-										If Inventory(z) = SelectedItem
-											Inventory(z) = PrevItem
-											Exit
-										EndIf
-									Next
-									Inventory(MouseSlot) = SelectedItem
+									If PrevOtherOpen <> Null
+										RejectItemSwap()
+									Else
+										For z = 0 To MaxItemAmount - 1
+											If Inventory(z) = SelectedItem
+												Inventory(z) = PrevItem
+												Exit
+											EndIf
+										Next
+										Inventory(MouseSlot) = SelectedItem
+									EndIf
 								EndIf
 								SelectedItem = Null
 								;[End Block]

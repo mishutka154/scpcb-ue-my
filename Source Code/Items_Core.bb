@@ -408,7 +408,7 @@ Dim Inventory.Items(0)
 Global SelectedItem.Items
 
 Global ClosestItem.Items
-Global OtherOpen.Items = Null
+Global OtherOpen.Items = Null, PrevOtherOpen.Items = Null
 
 Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha# = 1.0, InvSlots% = 0)
 	CatchErrors("CreateItem.Items(" + Name + ", " + ID + ", " + x + ", " + y + ", " + z + ", " + R + ", " + G + ", " + B + ", " + Alpha + ", " + InvSlots + ")")
