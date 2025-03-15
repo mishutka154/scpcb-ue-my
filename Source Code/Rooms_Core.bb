@@ -3296,13 +3296,11 @@ Function FillRoom%(r.Rooms)
 			EntityType(r\Objects[0], HIT_MAP)
 			EntityAlpha(r\Objects[0], 0.0)
 			
-			If Rand(2) = 1
-				it.Items = CreateItem("Mobile Task Forces", it_paper, r\x + 744.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 944.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			Else
-				it.Items = CreateItem("Security Clearance Levels", it_paper, r\x + 680.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 944.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			EndIf
+			it.Items = CreateItem("Mobile Task Forces", it_paper, r\x + 590.0 * RoomScale, r\y + 240.0 * RoomScale, r\z - 944.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Security Clearance Levels", it_paper, r\x + 526.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 960.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Object Classes", it_paper, r\x + 160.0 * RoomScale, r\y + 240.0 * RoomScale, r\z + 568.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
