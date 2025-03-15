@@ -6301,7 +6301,7 @@ Function UpdateGUI%()
 					If CanUseItem(True)
 						If SelectedItem\ItemTemplate\ID = it_scp2022pill
 							If me\Pill2022Used < 2.0
-								me\Pill2022HealTimer = 15.0
+								me\Pill2022HealTimer = 20.0
 								me\Bloodloss = 0.0
 								CreateMsg(GetLocalString("msg", "pill.2022"))
 							Else
