@@ -92,6 +92,8 @@ Function SaveGame%(File$)
 	
 	WriteFloat(f, me\Pill2022Used)
 	
+	WriteFloat(f, me\Pill2022HealTimer)
+	
 	WriteByte(f, I_005\ChanceToSpawn)
 	
 	For i = 0 To 6
@@ -647,6 +649,7 @@ Function LoadGame%(File$)
 	
 	me\Pill2022Used = ReadFloat(f)
 	EntityFX(pm\OBJ, (me\Pill2022Used > 2.0))
+	me\Pill2022HealTimer = ReadFloat(f)
 	
 	I_005\ChanceToSpawn = ReadByte(f)
 	
@@ -1614,6 +1617,7 @@ Function LoadGameQuick%(File$)
 	
 	me\Pill2022Used = ReadFloat(f)
 	EntityFX(pm\OBJ, (me\Pill2022Used > 2.0))
+	me\Pill2022HealTimer = ReadFloat(f)
 	
 	I_005\ChanceToSpawn = ReadByte(f)
 	

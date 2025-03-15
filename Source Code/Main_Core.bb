@@ -2800,8 +2800,6 @@ Function UpdateMoving%()
 		Kill()
 	EndIf
 	
-	If me\Pill2022Used < 2.0 Then me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
-	
 	If me\StaminaEffectTimer > 0.0
 		me\StaminaEffectTimer = Max(0.0, me\StaminaEffectTimer - (fps\Factor[0] / 70.0))
 	Else
@@ -3093,12 +3091,17 @@ Function UpdateMoving%()
 		me\Bloodloss = Max(60.0, me\Bloodloss - fps\Factor[0] / (490.0 * (1.0 + me\Injuries)))
 	EndIf
 	
+	Local FPSFactorEx# = fps\Factor[0] / 70.0
 	If me\HealTimer > 0.0
-		Local FPSFactorEx# = fps\Factor[0] / 70.0
-		
 		me\Bloodloss = Min(me\Bloodloss + FPSFactorEx / 4.0, 100.0)
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 40.0, 0.0)
 		me\HealTimer = Max(me\HealTimer - FPSFactorEx, 0.0)
+	EndIf
+	
+	me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
+	If me\Pill2022HealTimer > 0.0
+		If me\Pill2022Used < 2.0 Then me\Injuries = Max(me\Injuries - FPSFactorEx / 10.0, 0.0)
+		me\Pill2022HealTimer = Max(me\Pill2022HealTimer - FPSFactorEx, 0.0)
 	EndIf
 	
 	If me\HeartBeatVolume > 0.0
@@ -5211,23 +5214,10 @@ Function UpdateGUI%()
 					If n_I\Curr513_1 = Null And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
 					SelectedItem = Null
 					;[End Block]
-				Case it_scp500pill, it_scp2022pill
+				Case it_scp500pill
 					;[Block]
 					If CanUseItem(True)
-						If SelectedItem\ItemTemplate\ID = it_scp2022pill
-							If me\Pill2022Used < 2.0
-								me\Injuries = 0.0
-								me\Bloodloss = 0.0
-							Else
-								me\Injuries = me\Injuries + 3.0
-								me\Bloodloss = me\Bloodloss + 35.0
-								PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
-								EntityFX(pm\OBJ, 1)
-							EndIf
-							me\Pill2022Used = me\Pill2022Used + 1.0
-						Else
-							GiveAchievement("500")
-						EndIf
+						GiveAchievement("500")
 						
 						If I_008\Timer > 0.0
 							CreateMsg(GetLocalString("msg", "pill.nausea"))
@@ -6306,10 +6296,26 @@ Function UpdateGUI%()
 						SelectedItem = Null
 					EndIf
 					;[End Block]
-				Case it_pill
+				Case it_pill, it_scp2022pill
 					;[Block]
 					If CanUseItem(True)
-						CreateMsg(GetLocalString("msg", "pill"))
+						If SelectedItem\ItemTemplate\ID = it_scp2022pill
+							If me\Pill2022Used < 2.0
+								me\Pill2022HealTimer = 20.0
+								me\Bloodloss = 0.0
+								CreateMsg(GetLocalString("msg", "pill.2022"))
+							Else
+								me\Injuries = me\Injuries + 1.2
+								me\Bloodloss = me\Bloodloss + 30.0
+								CreateMsg(GetLocalString("msg", "pill.2022.burn"))
+								I_1025\State[2] = 1.0
+								PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+								EntityFX(pm\OBJ, 1)
+							EndIf
+							me\Pill2022Used = me\Pill2022Used + 1.0
+						Else
+							CreateMsg(GetLocalString("msg", "pill"))
+						EndIf
 						I_1025\State[0] = 0.0
 						RemoveItem(SelectedItem)
 					EndIf

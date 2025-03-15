@@ -2284,6 +2284,7 @@ Type Player
 	Field PickTimer#, LastPicked%
 	Field PickedCooler.Props
 	Field Pill2022Used#
+	Field Pill2022HealTimer#
 End Type
 
 Global me.Player
