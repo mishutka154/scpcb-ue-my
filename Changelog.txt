@@ -116,6 +116,7 @@
 - Fixed rocks position in the forest.
 - Fixed a visual bug related to SCP-106 and Class D not being visible in SCP-106's containment box when using blue NVG.
 - Fixed rooms overlapping.
+- Fixed advanced light sprite.
 
 [Known issues]
 - Tabbing out of the game and tabbing back in freezes the game view/turning off monitor freezes the game.
