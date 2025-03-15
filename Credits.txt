@@ -573,6 +573,9 @@ by "Dedaluminus"
 		SCP-1499 is based on "SCP-1499 - The Gas Mask",
 by "Trasknari"
 
+		SCP-2022 is based on "SCP-2022 - BoraBora",
+by "Bucell"
+
 		The Anomalous Ducks are based on "Log of Anomalous Ducks",
 by "Skara Brae"
 

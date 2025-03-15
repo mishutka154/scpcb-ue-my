@@ -1259,6 +1259,10 @@ Function LoadItems%()
 	
 	CreateItemTemplate("SCP-1499", "SCP-1499", it_scp1499, "scp_1499.b3d", "INV_scp_1499.png", "", 0.022, 2)
 	CreateItemTemplate("SCP-1499", "Fine SCP-1499", it_fine1499, "scp_1499.b3d", "INV_scp_1499.png", "", 0.022, 2)
+	
+	it.ItemTemplates = CreateItemTemplate("SCP-2022-01", "SCP-2022-01", it_scp2022pill, "pill.b3d", "INV_scp_2022_pill.png", "", 0.00007, 2)
+	EntityColor(it\OBJ, 255.0, 255.0, 140.0)
+	EntityFX(it\OBJ, 1)
 	;[End Block]
 	
 	; ~ [MISC ITEMS]
@@ -2279,6 +2283,7 @@ Type Player
 	Field InsideElevator%
 	Field PickTimer#, LastPicked%
 	Field PickedCooler.Props
+	Field Pill2022Used#
 End Type
 
 Global me.Player

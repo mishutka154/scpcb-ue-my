@@ -90,6 +90,8 @@ Function SaveGame%(File$)
 	
 	WriteInt(f, me\RefinedItems)
 	
+	WriteFloat(f, me\Pill2022Used)
+	
 	WriteByte(f, I_005\ChanceToSpawn)
 	
 	For i = 0 To 6
@@ -537,6 +539,8 @@ Function SaveGame%(File$)
 	
 	WriteInt(f, EscapeTimer)
 	
+	Local sc.SecurityCams
+	
 	For sc.SecurityCams = Each SecurityCams
 		WriteByte(f, sc\CoffinEffect)
 		WriteInt(f, sc\PlayerState)
@@ -640,6 +644,9 @@ Function LoadGame%(File$)
 	me\Sanity = ReadFloat(f)
 	
 	me\RefinedItems = ReadInt(f)
+	
+	me\Pill2022Used = ReadFloat(f)
+	EntityFX(pm\OBJ, (me\Pill2022Used > 2.0))
 	
 	I_005\ChanceToSpawn = ReadByte(f)
 	
@@ -835,6 +842,12 @@ Function LoadGame%(File$)
 				n_I\MTFCoLeader = n
 			ElseIf ID = 2
 				n_I\MTFLeader = n
+			EndIf
+		EndIf
+		If n\NPCType = NPCType999
+			If n\State2 = 2.0
+				EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+				EntityFX(n\OBJ, 1)
 			EndIf
 		EndIf
 	Next
@@ -1408,6 +1421,8 @@ Function LoadGame%(File$)
 	
 	EscapeTimer = ReadInt(f)
 	
+	Local sc.SecurityCams
+	
 	For sc.SecurityCams = Each SecurityCams
 		sc\CoffinEffect = ReadByte(f)
 		sc\PlayerState = ReadInt(f)
@@ -1596,6 +1611,9 @@ Function LoadGameQuick%(File$)
 	me\Sanity = ReadFloat(f)
 	
 	me\RefinedItems = ReadInt(f)
+	
+	me\Pill2022Used = ReadFloat(f)
+	EntityFX(pm\OBJ, (me\Pill2022Used > 2.0))
 	
 	I_005\ChanceToSpawn = ReadByte(f)
 	
@@ -1798,6 +1816,12 @@ Function LoadGameQuick%(File$)
 				n_I\MTFCoLeader = n
 			ElseIf ID = 2
 				n_I\MTFLeader = n
+			EndIf
+		EndIf
+		If n\NPCType = NPCType999
+			If n\State2 = 2.0
+				EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+				EntityFX(n\OBJ, 1)
 			EndIf
 		EndIf
 	Next

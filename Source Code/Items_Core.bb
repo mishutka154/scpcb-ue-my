@@ -75,104 +75,106 @@ Const it_scp1123% = 33
 
 Const it_scp1499% = 34
 Const it_fine1499% = 35
+
+Const it_scp2022pill% = 36
 ;[End Block]
 
 ; ~ [MISC ITEMS]
 ;[Block]
-Const it_helmet% = 36
+Const it_helmet% = 37
 
-Const it_vest% = 37
-Const it_corrvest% = 38
-Const it_finevest% = 39
-Const it_veryfinevest% = 40
+Const it_vest% = 38
+Const it_corrvest% = 39
+Const it_finevest% = 40
+Const it_veryfinevest% = 41
 
-Const it_cup% = 41
-Const it_emptycup% = 42
+Const it_cup% = 42
+Const it_emptycup% = 43
 
-Const it_clipboard% = 43
-Const it_wallet% = 44
+Const it_clipboard% = 44
+Const it_wallet% = 45
 
-Const it_electronics% = 45
+Const it_electronics% = 46
 
-Const it_eyedrops% = 46
-Const it_eyedrops2% = 47
-Const it_fineeyedrops% = 48
-Const it_veryfineeyedrops% = 49
+Const it_eyedrops% = 47
+Const it_eyedrops2% = 48
+Const it_fineeyedrops% = 49
+Const it_veryfineeyedrops% = 50
 
-Const it_firstaid% = 50
-Const it_firstaid2% = 51
-Const it_finefirstaid% = 52
-Const it_veryfinefirstaid% = 53
+Const it_firstaid% = 51
+Const it_firstaid2% = 52
+Const it_finefirstaid% = 53
+Const it_veryfinefirstaid% = 54
 
-Const it_gasmask% = 54
-Const it_finegasmask% = 55
-Const it_veryfinegasmask% = 56
-Const it_gasmask148% = 57
+Const it_gasmask% = 55
+Const it_finegasmask% = 56
+Const it_veryfinegasmask% = 57
+Const it_gasmask148% = 58
 
-Const it_hazmatsuit% = 58
-Const it_finehazmatsuit% = 59
-Const it_veryfinehazmatsuit% = 60
-Const it_hazmatsuit148% = 61
+Const it_hazmatsuit% = 59
+Const it_finehazmatsuit% = 60
+Const it_veryfinehazmatsuit% = 61
+Const it_hazmatsuit148% = 62
 
-Const it_nvg% = 62
-Const it_finenvg% = 63
-Const it_veryfinenvg% = 64
-Const it_scramble% = 65
-Const it_finescramble% = 66
+Const it_nvg% = 63
+Const it_finenvg% = 64
+Const it_veryfinenvg% = 65
+Const it_scramble% = 66
+Const it_finescramble% = 67
 
-Const it_radio% = 67
-Const it_18vradio% = 68
-Const it_fineradio% = 69
-Const it_veryfineradio% = 70
+Const it_radio% = 68
+Const it_18vradio% = 69
+Const it_fineradio% = 70
+Const it_veryfineradio% = 71
 
-Const it_nav% = 71
-Const it_nav300% = 72
-Const it_nav310% = 73
-Const it_navulti% = 74
+Const it_nav% = 72
+Const it_nav300% = 73
+Const it_nav310% = 74
+Const it_navulti% = 75
 
-Const it_e_reader% = 75
-Const it_e_reader20% = 76
-Const it_e_readerulti% = 77
+Const it_e_reader% = 76
+Const it_e_reader20% = 77
+Const it_e_readerulti% = 78
 
-Const it_bat% = 78
-Const it_coarsebat% = 79
-Const it_finebat% = 80
-Const it_veryfinebat% = 81
-Const it_killbat% = 82
+Const it_bat% = 79
+Const it_coarsebat% = 80
+Const it_finebat% = 81
+Const it_veryfinebat% = 82
+Const it_killbat% = 83
 
-Const it_syringe% = 83
-Const it_finesyringe% = 84
-Const it_veryfinesyringe% = 85
-Const it_syringeinf% = 86
+Const it_syringe% = 84
+Const it_finesyringe% = 85
+Const it_veryfinesyringe% = 86
+Const it_syringeinf% = 87
 ;[End Block]
 
 ; ~ [KEYCARDS, HANDS, KEYS, CARDS, COINS]
 ;[Block]
-Const it_key0% = 87
-Const it_key1% = 88
-Const it_key2% = 89
-Const it_key3% = 90
-Const it_key4% = 91
-Const it_key5% = 92
-Const it_key6% = 93
-Const it_keyomni% = 94
+Const it_key0% = 88
+Const it_key1% = 89
+Const it_key2% = 90
+Const it_key3% = 91
+Const it_key4% = 92
+Const it_key5% = 93
+Const it_key6% = 94
+Const it_keyomni% = 95
 
-Const it_mastercard% = 95
-Const it_mastercard_golden% = 96
-Const it_playcard% = 97
+Const it_mastercard% = 96
+Const it_mastercard_golden% = 97
+Const it_playcard% = 98
 
-Const it_hand% = 98
-Const it_hand2% = 99
-Const it_hand3% = 100
+Const it_hand% = 99
+Const it_hand2% = 100
+Const it_hand3% = 101
 
-Const it_key_yellow% = 101
-Const it_key_white% = 102
-Const it_lostkey% = 103
+Const it_key_yellow% = 102
+Const it_key_white% = 103
+Const it_lostkey% = 104
 
-Const it_25ct% = 104
-Const it_coin% = 105
+Const it_25ct% = 105
+Const it_coin% = 106
 
-Const it_pizza% = 106
+Const it_pizza% = 107
 ;[End Block]
 ;[End Block]
 
@@ -385,7 +387,7 @@ Const PossibleEReaderPageAmount% = 78
 Type Items
 	Field DisplayName$
 	Field Name$
-	Field Collider%, OBJ%
+	Field Collider%, OBJ%, OBJ2%
 	Field ItemTemplate.ItemTemplates
 	Field DropSpeed#
 	Field R%, G%, B%, Alpha#
@@ -472,12 +474,37 @@ Function CreateItem.Items(Name$, ID%, x#, y#, z#, R% = 0, G% = 0, B% = 0, Alpha#
 				If i\ItemTemplate\InvImg2 <> 0 Then i\InvImg = i\ItemTemplate\InvImg2
 			EndIf
 			;[End Block]
+		Case it_scp2022pill
+			;[Block]
+			Local Light% = CreateLight(2)
+			
+			LightRange(Light, 0.1)
+			LightColor(Light, 255.0, 255.0, 140.0)
+			PositionEntity(Light, x, y, z, True)
+			EntityParent(Light, i\Collider)
+			
+			i\OBJ2 = CreateSprite()
+			PositionEntity(i\OBJ2, x, y, z)
+			ScaleSprite(i\OBJ2, 0.04, 0.04)
+			
+			Local Tex% = LoadTexture_Strict("GFX\Particles\scp_2022_light.png")
+			
+			EntityTexture(i\OBJ2, Tex)
+			DeleteSingleTextureEntryFromCache(Tex)
+			EntityFX(i\OBJ2, 1)
+			EntityBlend(i\OBJ2, 3)
+			EntityColor(i\OBJ2, 255.0, 255.0, 140.0)
+			RotateEntity(i\OBJ2, 0.0, 0.0, Rnd(360.0))
+			EntityAlpha(i\OBJ2, 0.6)
+			SpriteViewMode(i\OBJ2, 1)
+			EntityParent(i\OBJ2, i\Collider)
+			;[End Block]
 	End Select
 	
 	i\InvSlots = InvSlots
 	
 	i\ItemHeight = MeshHeight(i\OBJ) * i\ItemTemplate\Scale
-	i\Shadow = CreateShadow(i\Collider, MeshWidth(i\OBJ) * i\ItemTemplate\Scale, MeshDepth(i\OBJ) * i\ItemTemplate\Scale)
+	If i\ItemTemplate\ID <> it_scp2022pill Then i\Shadow = CreateShadow(i\Collider, MeshWidth(i\OBJ) * i\ItemTemplate\Scale, MeshDepth(i\OBJ) * i\ItemTemplate\Scale)
 	
 	i\ID = LastItemID + 1
 	LastItemID = i\ID
@@ -493,6 +520,7 @@ Function RemoveItem%(i.Items)
 	Local n%
 	
 	If i\Shadow <> Null Then RemoveShadow(i\Shadow)
+	If i\OBJ2 <> 0 Then FreeEntity(i\OBJ2) : i\OBJ2 = 0
 	FreeEntity(i\OBJ) : i\OBJ = 0
 	FreeEntity(i\Collider) : i\Collider = 0
 	
@@ -598,6 +626,10 @@ Function UpdateItems%()
 				If i\Dist < 1.44
 					If ClosestItem = Null Lor i\Dist < EntityDistanceSquared(Camera, ClosestItem\Collider)
 						If EntityInView(i\OBJ, Camera) And EntityVisible(i\Collider, Camera) Then ClosestItem = i
+					EndIf
+					If i\ItemTemplate\ID = it_scp2022pill
+						ed = Rnd(0.038, 0.042)
+						ScaleSprite(i\OBJ2, ed, ed)
 					EndIf
 				EndIf
 				
@@ -2396,7 +2428,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					If NO427Spawn
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(3) = 1
+							it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						Else
+							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						EndIf
 					Else
 						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
 					EndIf
@@ -2406,7 +2442,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					If Rand(10) = 1
 						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
 					Else
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(3) = 1
+							it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						Else
+							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						EndIf
 					EndIf
 					;[End Block]
 			End Select

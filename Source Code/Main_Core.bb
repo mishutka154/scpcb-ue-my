@@ -2800,6 +2800,8 @@ Function UpdateMoving%()
 		Kill()
 	EndIf
 	
+	If me\Pill2022Used < 2.0 Then me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
+	
 	If me\StaminaEffectTimer > 0.0
 		me\StaminaEffectTimer = Max(0.0, me\StaminaEffectTimer - (fps\Factor[0] / 70.0))
 	Else
@@ -4229,7 +4231,7 @@ Function UpdateGUI%()
 						Local added.Items = Null
 						
 						Select SelectedItem\ItemTemplate\ID
-							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill
+							Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket, it_scp420j, it_joint_smelly, it_joint, it_cigarette, it_25ct, it_coin, it_key_white, it_key_yellow, it_lostkey, it_scp860, it_fine860, it_scp714, it_coarse714, it_fine714, it_ring, it_scp500pill, it_scp500pilldeath, it_pill, it_scp2022pill
 								;[Block]
 								If (Inventory(MouseSlot)\State > 0.0 And Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader) Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_reader20 Lor Inventory(MouseSlot)\ItemTemplate\ID = it_e_readerulti
 									Select SelectedItem\ItemTemplate\ID
@@ -4383,7 +4385,7 @@ Function UpdateGUI%()
 									added.Items = Null
 									
 									Select SelectedItem\ItemTemplate\ID
-										Case it_scp500pill, it_scp500pilldeath, it_pill
+										Case it_scp500pill, it_scp500pilldeath, it_pill, it_scp2022pill
 											;[Block]
 											For c = 0 To Inventory(MouseSlot)\InvSlots - 1
 												If Inventory(MouseSlot)\SecondInv[c] = Null
@@ -5209,10 +5211,23 @@ Function UpdateGUI%()
 					If n_I\Curr513_1 = Null And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
 					SelectedItem = Null
 					;[End Block]
-				Case it_scp500pill
+				Case it_scp500pill, it_scp2022pill
 					;[Block]
 					If CanUseItem(True)
-						GiveAchievement("500")
+						If SelectedItem\ItemTemplate\ID = it_scp2022pill
+							If me\Pill2022Used < 2.0
+								me\Injuries = 0.0
+								me\Bloodloss = 0.0
+							Else
+								me\Injuries = me\Injuries + 3.0
+								me\Bloodloss = me\Bloodloss + 35.0
+								PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+								EntityFX(pm\OBJ, 1)
+							EndIf
+							me\Pill2022Used = me\Pill2022Used + 1.0
+						Else
+							GiveAchievement("500")
+						EndIf
 						
 						If I_008\Timer > 0.0
 							CreateMsg(GetLocalString("msg", "pill.nausea"))

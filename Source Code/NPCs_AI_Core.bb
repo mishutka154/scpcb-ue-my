@@ -3347,7 +3347,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Visible = (Dist < 36.0 And EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn)))
 		EndIf
 		
-		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * 2.0)
+		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * 1.5)
 		Select n\State
 			Case 0.0 ; ~ Idle
 				;[Block]
@@ -3395,7 +3395,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				Local FoundItem.Items = Null
 				
 				For it.Items = Each Items
-					If it\ItemTemplate\ID = it_pizza And (Not it\Picked)
+					If (it\ItemTemplate\ID = it_pizza Lor it\ItemTemplate\ID = it_scp2022pill Lor it\ItemTemplate\ID = it_scp500pill Lor it\ItemTemplate\ID = it_pill) And (Not it\Picked)
 						If EntityDistanceSquared(n\Collider, it\Collider) < 1.0
 							FoundItem = it
 							Exit
@@ -3417,7 +3417,13 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 					n\State3 = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
-						n\State2 = 2.0
+						If FoundItem\ItemTemplate\ID = it_scp2022pill
+							EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+							EntityFX(n\OBJ, 1)
+							n\State2 = 2.0
+						Else
+							n\State2 = 3.0
+						EndIf
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
@@ -3526,7 +3532,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
 				TurnEntity(Pvt, 90.0, 0.0, 0.0)
 				If EntityPick(Pvt, 0.6)
-					de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4)
+					de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4, (n\State2 = 2.0))
 					de\AlphaChange = -0.0003
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
 				EndIf
