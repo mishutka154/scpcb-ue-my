@@ -3428,7 +3428,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 								;[Block]
 								EntityColor(n\OBJ, 255.0, 255.0, 140.0)
 								EntityFX(n\OBJ, 1)
-								If n\State < 2.0 Then n\State = n\State + 2.0
+								If n\State3 < 2.0 Then n\State3 = n\State3 + 2.0
 								;[End Block]
 							Case it_scp500pill
 								;[Block]
