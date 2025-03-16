@@ -823,8 +823,8 @@ Function UpdateEvents%()
 												PositionEntity(n_I\Curr173\Collider, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 											Else
 												PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
-												PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
 												CreateHintMsg(Format(GetLocalString("msg", "run"), key\Name[key\SPRINT]), 6.0, True)
+												PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
 											EndIf
 											ResetEntity(n_I\Curr173\Collider)
 										EndIf
