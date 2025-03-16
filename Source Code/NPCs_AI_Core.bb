@@ -3335,6 +3335,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 	
 	; ~ n\State2: Boost factor
 	
+	; ~ n\State3: Pill types eaten
+	
+	; ~ 1.0 = Only SCP-500-01 eaten
+	; ~ 2.0 = Only SCP-2022-01 eaten
+	; ~ 3.0 = Both pills eaten
+	
 	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
 		
@@ -3420,9 +3426,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						If FoundItem\ItemTemplate\ID = it_scp2022pill
 							EntityColor(n\OBJ, 255.0, 255.0, 140.0)
 							EntityFX(n\OBJ, 1)
+							If n\State < 2.0 Then n\State = n\State + 2.0
 						EndIf
-						If FoundItem\ItemTemplate\ID = it_scp500pill Then n\State3 = 1
-						n\State2 = 2.0
+						If FoundItem\ItemTemplate\ID = it_scp500pill
+							If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
+						EndIf
+						If FoundItem\ItemTemplate\ID = it_pizza Then n\State2 = 2.0
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
@@ -3439,8 +3448,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 					Else
 						n\CurrSpeed = 0.0
 						; ~ TODO: Check if this works well
-						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
-						If n\State3 = 1
+						If n\State > 1
+							me\Injuries = Max(me\Injuries - (fps\Factor[0] / 700.0), 0.0)
+						Else
+							If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
+						EndIf
+						If n\State3 = 1 Lor n\State = 3
 							If I_008\Timer > 0.0 Then I_008\Revert = True
 							If I_409\Timer > 0.0 Then I_409\Revert = True
 							For i = 0 To 6
