@@ -3423,15 +3423,22 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 					n\LastSeen = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
-						If FoundItem\ItemTemplate\ID = it_scp2022pill
-							EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-							EntityFX(n\OBJ, 1)
-							If n\State < 2.0 Then n\State = n\State + 2.0
-						EndIf
-						If FoundItem\ItemTemplate\ID = it_scp500pill
-							If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
-						EndIf
-						If FoundItem\ItemTemplate\ID = it_pizza Then n\State2 = 2.0
+						Select FoundItem\ItemTemplate\ID
+							Case it_scp2022pill
+								;[Block]
+								EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+								EntityFX(n\OBJ, 1)
+								If n\State < 2.0 Then n\State = n\State + 2.0
+								;[End Block]
+							Case it_scp500pill
+								;[Block]
+								If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
+								;[End Block]
+							Case it_pizza
+								;[Block]
+								n\State2 = 2.0
+								;[End Block]
+						End Select
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
