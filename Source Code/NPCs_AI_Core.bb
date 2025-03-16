@@ -3353,7 +3353,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Visible = (Dist < 36.0 And EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn)))
 		EndIf
 		
-		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * 1.5)
+		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * n\State2)
 		Select n\State
 			Case 0.0 ; ~ Idle
 				;[Block]
