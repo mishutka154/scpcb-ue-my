@@ -3408,29 +3408,28 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						GiveAchievement("999")
 						PointEntity(n\Collider, me\Collider)
 						RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-						n\State3 = 70.0 * 1.5
+						n\LastSeen = 70.0 * 1.5
 						n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					EndIf
 				Else
 					PointEntity(n\Collider, FoundItem\Collider)
 					RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-					n\State3 = 70.0 * 1.5
+					n\LastSeen = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
 						If FoundItem\ItemTemplate\ID = it_scp2022pill
 							EntityColor(n\OBJ, 255.0, 255.0, 140.0)
 							EntityFX(n\OBJ, 1)
-							n\State2 = 2.0
-						Else
-							n\State2 = 3.0
 						EndIf
+						If FoundItem\ItemTemplate\ID = it_scp500pill Then n\State3 = 1
+						n\State2 = 2.0
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
 				EndIf
 				
-				n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
-				If n\State3 > 0.0
+				n\LastSeen = Max(n\LastSeen - fps\Factor[0], 0.0)
+				If n\LastSeen > 0.0
 					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
 					If Dist < 0.64
 						MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
@@ -3439,7 +3438,26 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
 						n\CurrSpeed = 0.0
-						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5) ; ~ TODO: Check if this works well
+						; ~ TODO: Check if this works well
+						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
+						If n\State3 = 1
+							If I_008\Timer > 0.0 Then I_008\Revert = True
+							If I_409\Timer > 0.0 Then I_409\Revert = True
+							For i = 0 To 6
+								I_1025\State[i] = 0.0
+							Next
+							If I_1025\FineState[0] > 0.0
+								; ~ Drop two latest items
+								For i = MaxItemAmount - 2 To MaxItemAmount - 1
+									If Inventory(i) <> Null Then DropItem(Inventory(i))
+								Next
+								MaxItemAmount = MaxItemAmount - 2
+								I_1025\FineState[0] = 0.0
+							EndIf
+							For i = 1 To 4
+								I_1025\FineState[i] = 0.0
+							Next
+						EndIf
 					EndIf
 					If n\CurrSpeed =< 0.001
 						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 36.0, 0.3, False)
