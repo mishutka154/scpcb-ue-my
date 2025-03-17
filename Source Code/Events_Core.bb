@@ -7078,7 +7078,7 @@ Function UpdateEvents%()
 				;[Block]
 				If e\room\Dist < 6.0
 					TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
-					CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
+					n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
 					RemoveEvent(e)
 				EndIf
 				;[End Block]
