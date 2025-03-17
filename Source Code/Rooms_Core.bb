@@ -17,8 +17,13 @@ Function FillRoom%(r.Rooms)
 			; ~ Storage Room 6H door
 			CreateDoor(r, r\x, r\y, r\z - 512.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_1)
 			
-			sc.SecurityCams = CreateSecurityCam(r, r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, 20.0)
-			sc\Angle = 180.0 : sc\Turn = 45.0
+			; ~ Observarion room door
+			CreateDoor(r, r\x - 224.0 * RoomScale, r\y, r\z - 768.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_1)
+			
+			sc.SecurityCams = CreateSecurityCam(r, r\x - 256.0 * RoomScale, r\y + 384.0 * RoomScale, r\z + 640.0 * RoomScale, 20.0, True, r\x - 427.0 * RoomScale, r\y + 236.0 * RoomScale, r\z - 574.4 * RoomScale, 0.0, 0.0, 0.0)
+			ShowEntity(sc\BaseOBJ)
+			ShowEntity(sc\CameraOBJ)
+			sc\Angle = 180.0 : sc\Turn = 45.0 : If Rand(3) = 1 Then sc\PlayerState = Rand(700.0)
 			
 			; ~ Clock
 			r\Objects[0] = LoadMesh_Strict("GFX\Map\Props\watches.b3d")
@@ -43,11 +48,6 @@ Function FillRoom%(r.Rooms)
 			EntityRadius(r\Objects[2], 0.2)
 			EntityPickMode(r\Objects[2], 1)
 			EntityParent(r\Objects[2], r\OBJ)
-			
-			If KEY2_SPAWNRATE = 6
-				it.Items = CreateItem("White Key", it_key_white, r\x - 529.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 585.0 * RoomScale)
-				EntityParent(it\Collider, r\OBJ)
-			EndIf
 			
 			it.Items = CreateItem("Log of Anomalous Items", it_paper, r\x + 192.0 * RoomScale, r\y + 96.0 * RoomScale, r\z + 461.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
@@ -1598,6 +1598,11 @@ Function FillRoom%(r.Rooms)
 			
 			it.Items = CreateItem("Gas Mask", it_gasmask, r\x + 609.0 * RoomScale, r\y + 150.0 * RoomScale, r\z + 961.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
+			
+			;If KEY2_SPAWNRATE = 6
+				it.Items = CreateItem("White Key", it_key_white, r\x + 1061.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 160.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			;EndIf
 			
 			it.Items = CreateItem("SCP-1123", it_scp1123, r\x + 912.0 * RoomScale, r\y + 170.0 * RoomScale, r\z + 857.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)

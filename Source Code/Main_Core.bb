@@ -3100,7 +3100,7 @@ Function UpdateMoving%()
 	
 	me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
 	If me\Pill2022HealTimer > 0.0
-		If me\Pill2022Used < 2.0 Then me\Injuries = Max(me\Injuries - FPSFactorEx / 10.0, 0.0)
+		me\Injuries = Max(me\Injuries - FPSFactorEx / 10.0, 0.0)
 		me\Pill2022HealTimer = Max(me\Pill2022HealTimer - FPSFactorEx, 0.0)
 	EndIf
 	
@@ -6305,6 +6305,7 @@ Function UpdateGUI%()
 								me\Bloodloss = 0.0
 								CreateMsg(GetLocalString("msg", "pill.2022"))
 							Else
+								me\Pill2022HealTimer = 0.0
 								me\Injuries = me\Injuries + 1.2
 								me\Bloodloss = me\Bloodloss + 30.0
 								CreateMsg(GetLocalString("msg", "pill.2022.burn"))

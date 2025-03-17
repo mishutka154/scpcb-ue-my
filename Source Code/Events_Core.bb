@@ -757,8 +757,13 @@ Function UpdateEvents%()
 						If e\EventState2 = 0.0
 							If e\EventState > 900.0 And e\room\RoomDoors[3]\Open
 								If e\EventState - fps\Factor[0] <= 900.0 
-									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3120.0 * RoomScale, True)
+									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3152.0 * RoomScale, True)
 									ResetEntity(n_I\Curr173\Collider)
+									
+									PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
+									me\LightBlink = 3.0
+									me\BlinkTimer = -10.0
+									PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
 									
 									e\room\NPC[1]\SoundCHN = PlaySoundEx(e\room\NPC[1]\Sound, Camera, e\room\NPC[1]\Collider, 10.0, 1.0, True)
 									e\room\NPC[1]\State = 1.0 : e\room\NPC[1]\Speed = -0.008
@@ -784,7 +789,7 @@ Function UpdateEvents%()
 								EndIf
 								
 								If e\EventState < 900.0 + (70.0 * 4.0)
-									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3120.0 * RoomScale, True)
+									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3152.0 * RoomScale, True)
 									ResetEntity(n_I\Curr173\Collider)
 									RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
 									
@@ -807,29 +812,21 @@ Function UpdateEvents%()
 									
 									n_I\Curr173\Idle = (1 - (me\LightBlink >= 0.25))
 									
-									If (Not me\Terminated) And (Not chs\NoTarget) And (Not chs\GodMode)
-										If EntityDistanceSquared(n_I\Curr173\Collider, me\Collider) < 6.25 And IsEqual(EntityY(me\Collider), EntityY(n_I\Curr173\Collider), 1.0)
-											me\LightBlink = 3.0
-											me\BlinkTimer = -10.0
-											PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
-											PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
-											PositionEntity(n_I\Curr173\Collider, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
-											ResetEntity(n_I\Curr173\Collider)
-											n_I\Curr173\Idle = 0
-										EndIf
-									EndIf
-									
 									If e\room\NPC[2]\State <> 1.0 And (Not me\Terminated)
 										If EntityZ(e\room\NPC[2]\Collider) < e\room\z + 898.0 * RoomScale
 											e\room\RoomDoors[3]\Open = False
 											me\LightBlink = 3.0
 											me\BlinkTimer = -10.0
 											PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
-											PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
-											PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
-											ResetEntity(n_I\Curr173\Collider)
 											n_I\Curr173\Idle = 0
-											CreateHintMsg(Format(GetLocalString("msg", "run"), key\Name[key\SPRINT]), 6.0, True)
+											If EntityDistanceSquared(n_I\Curr173\Collider, me\Collider) < 6.25 And IsEqual(EntityY(me\Collider), EntityY(n_I\Curr173\Collider), 1.0)
+												PositionEntity(n_I\Curr173\Collider, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
+											Else
+												PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
+												CreateHintMsg(Format(GetLocalString("msg", "run"), key\Name[key\SPRINT]), 6.0, True)
+												PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
+											EndIf
+											ResetEntity(n_I\Curr173\Collider)
 										EndIf
 									EndIf
 								EndIf
@@ -7081,7 +7078,7 @@ Function UpdateEvents%()
 				;[Block]
 				If e\room\Dist < 6.0
 					TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
-					CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
+					n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
 					RemoveEvent(e)
 				EndIf
 				;[End Block]
@@ -8437,13 +8434,14 @@ Function UpdateIntro%()
 					DeleteSingleTextureEntryFromCache(Tex)
 					HideEntity(e\room\NPC[13]\OBJ)
 					
-					TFormPoint(-897.0, 500.0, 362.0, e\room\OBJ, 0)
+					TFormPoint(-3180.0, -315.0, -687.0, e\room\OBJ, 0)
 					e\room\NPC[14] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 					RotateEntity(e\room\NPC[14]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
+					e\room\NPC[14]\State = -1.0
+					SetNPCFrame(e\room\NPC[14], 182.0)
 					Tex = LoadTexture_Strict("GFX\NPCs\scientist(2).png")
 					EntityTexture(e\room\NPC[14]\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex)
-					HideEntity(e\room\NPC[14]\OBJ)
 					
 					HideEntity(e\room\RoomDoors[6]\OBJ)
 					HideEntity(e\room\RoomDoors[6]\OBJ2)
@@ -8615,6 +8613,7 @@ Function UpdateIntro%()
 									For i = 6 To 12
 										ShowEntity(e\room\NPC[i]\OBJ)
 									Next
+									ShowEntity(e\room\NPC[14]\OBJ)
 									ShowEntity(e\room\NPC[11]\OBJ2)
 									ShowEntity(e\room\Objects[4])
 									
@@ -8890,7 +8889,6 @@ Function UpdateIntro%()
 									ShowEntity(n_I\Curr173\OBJ2)
 									ShowEntity(e\room\NPC[6]\OBJ)
 									ShowEntity(e\room\NPC[13]\OBJ)
-									ShowEntity(e\room\NPC[14]\OBJ)
 									ShowEntity(e\room\RoomDoors[6]\OBJ)
 									ShowEntity(e\room\RoomDoors[6]\OBJ2)
 									ShowEntity(e\room\RoomDoors[6]\FrameOBJ)
@@ -8953,6 +8951,7 @@ Function UpdateIntro%()
 										Next
 										
 										RemoveNPC(e\room\NPC[4])
+										RemoveNPC(e\room\NPC[14])
 										RemoveNPC(e\room\NPC[3])
 									EndIf
 								EndIf
@@ -9131,8 +9130,6 @@ Function UpdateIntro%()
 									If e\EventState3 < 14130.0
 										SetNPCFrame(e\room\NPC[2], 50.0)
 										me\BlinkTimer = -10.0 : me\LightBlink = 1.0
-										
-										RemoveNPC(e\room\NPC[14])
 									Else
 										n_I\Curr173\Idle = 0
 									EndIf

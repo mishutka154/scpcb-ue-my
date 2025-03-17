@@ -3335,6 +3335,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 	
 	; ~ n\State2: Boost factor
 	
+	; ~ n\State3: Pill types eaten
+	
+	; ~ 1.0 = Only SCP-500-01 eaten
+	; ~ 2.0 = Only SCP-2022-01 eaten
+	; ~ 3.0 = Both pills eaten
+	
 	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
 		
@@ -3347,7 +3353,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 			Visible = (Dist < 36.0 And EntityVisible(me\Collider, n\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn)))
 		EndIf
 		
-		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * 1.5)
+		n\CurrSpeed = Min(n\CurrSpeed * n\State2, n\Speed * n\State2)
 		Select n\State
 			Case 0.0 ; ~ Idle
 				;[Block]
@@ -3408,38 +3414,72 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 						GiveAchievement("999")
 						PointEntity(n\Collider, me\Collider)
 						RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-						n\State3 = 70.0 * 1.5
+						n\LastSeen = 70.0 * 1.5
 						n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					EndIf
 				Else
 					PointEntity(n\Collider, FoundItem\Collider)
 					RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
-					n\State3 = 70.0 * 1.5
+					n\LastSeen = 70.0 * 1.5
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 25.0)
 					If EntityDistanceSquared(n\Collider, FoundItem\Collider) < 0.09
-						If FoundItem\ItemTemplate\ID = it_scp2022pill
-							EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-							EntityFX(n\OBJ, 1)
-							n\State2 = 2.0
-						Else
-							n\State2 = 3.0
-						EndIf
+						Select FoundItem\ItemTemplate\ID
+							Case it_scp2022pill
+								;[Block]
+								EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+								EntityFX(n\OBJ, 1)
+								If n\State3 < 2.0 Then n\State3 = n\State3 + 2.0
+								;[End Block]
+							Case it_scp500pill
+								;[Block]
+								If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
+								;[End Block]
+							Case it_pizza
+								;[Block]
+								n\State2 = 2.0
+								;[End Block]
+						End Select
 						PlaySoundEx(LoadTempSound("SFX\SCP\458\Eating.ogg"), Camera, n\Collider, 3.0, 0.5)
 						RemoveItem(FoundItem)
 					EndIf
 				EndIf
 				
-				n\State3 = Max(n\State3 - fps\Factor[0], 0.0)
-				If n\State3 > 0.0
+				n\LastSeen = Max(n\LastSeen - fps\Factor[0], 0.0)
+				If n\LastSeen > 0.0
 					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
-					If Dist < 0.64
-						MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
-					ElseIf Dist > 1.0
+					If Dist > 1.0
 						If n\Frame < 11.0 Then AnimateNPC(n, 1.0, 11.0, 0.3, False)
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
-						n\CurrSpeed = 0.0
-						If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5) ; ~ TODO: Check if this works well
+						If Dist < 0.64
+							MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
+						Else
+							n\CurrSpeed = 0.0
+						EndIf
+						; ~ TODO: Check if this works well
+						If n\State3 > 1
+							me\Injuries = Max(me\Injuries - (fps\Factor[0] / 700.0), 0.0)
+						Else
+							If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
+						EndIf
+						If n\State3 = 1 Lor n\State = 3
+							If I_008\Timer > 0.0 Then I_008\Revert = True
+							If I_409\Timer > 0.0 Then I_409\Revert = True
+							For i = 0 To 6
+								I_1025\State[i] = 0.0
+							Next
+							If I_1025\FineState[0] > 0.0
+								; ~ Drop two latest items
+								For i = MaxItemAmount - 2 To MaxItemAmount - 1
+									If Inventory(i) <> Null Then DropItem(Inventory(i))
+								Next
+								MaxItemAmount = MaxItemAmount - 2
+								I_1025\FineState[0] = 0.0
+							EndIf
+							For i = 1 To 4
+								I_1025\FineState[i] = 0.0
+							Next
+						EndIf
 					EndIf
 					If n\CurrSpeed =< 0.001
 						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 1.0, 11.0), 36.0, 0.3, False)
