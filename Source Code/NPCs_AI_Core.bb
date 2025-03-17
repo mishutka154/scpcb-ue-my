@@ -3447,15 +3447,17 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				n\LastSeen = Max(n\LastSeen - fps\Factor[0], 0.0)
 				If n\LastSeen > 0.0
 					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 40.0)
-					If Dist < 0.64
-						MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
-					ElseIf Dist > 1.0
+					If Dist > 1.0
 						If n\Frame < 11.0 Then AnimateNPC(n, 1.0, 11.0, 0.3, False)
 						MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					Else
-						n\CurrSpeed = 0.0
+						If Dist < 0.64
+							MoveEntity(n\Collider, 0.0, 0.0, (-n\CurrSpeed) * fps\Factor[0])
+						Else
+							n\CurrSpeed = 0.0
+						EndIf
 						; ~ TODO: Check if this works well
-						If n\State > 1
+						If n\State3 > 1
 							me\Injuries = Max(me\Injuries - (fps\Factor[0] / 700.0), 0.0)
 						Else
 							If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
