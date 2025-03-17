@@ -1599,10 +1599,10 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Gas Mask", it_gasmask, r\x + 609.0 * RoomScale, r\y + 150.0 * RoomScale, r\z + 961.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			;If KEY2_SPAWNRATE = 6
+			If KEY2_SPAWNRATE = 6
 				it.Items = CreateItem("White Key", it_key_white, r\x + 1061.0 * RoomScale, r\y + 200.0 * RoomScale, r\z - 160.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
-			;EndIf
+			EndIf
 			
 			it.Items = CreateItem("SCP-1123", it_scp1123, r\x + 912.0 * RoomScale, r\y + 170.0 * RoomScale, r\z + 857.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)
