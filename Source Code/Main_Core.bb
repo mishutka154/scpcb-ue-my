@@ -4394,7 +4394,7 @@ Function UpdateGUI%()
 												If Inventory(MouseSlot)\SecondInv[c] = Null
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\State = 1.0
+														Inventory(MouseSlot)\State = Inventory(MouseSlot)\State + 1.0
 														
 														For ri = 0 To MaxItemAmount - 1
 															If Inventory(ri) = SelectedItem

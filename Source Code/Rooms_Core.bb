@@ -1485,6 +1485,7 @@ Function FillRoom%(r.Rooms)
 				it2.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
 				it2\Picked = True : it2\Dropped = -1 : it\SecondInv[i] = it2
 				HideEntity(it2\Collider)
+				it2\State = it2\State + 1.0
 				If i = k Then Exit
 			Next
 			SetAnimTime(it\OBJ, Max(0.0, 11.0 - k))
