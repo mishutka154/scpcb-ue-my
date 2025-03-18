@@ -2807,7 +2807,7 @@ Function UpdateMoving%()
 	EndIf
 	
 	If I_966\InsomniaEffectTimer > 0.0
-		I_966\InsomniaEffectTimer = I_966\InsomniaEffectTimer - fps\Factor[0] * (1.0 + (I_427\Using * (I_427\Timer < 70 * 360)))
+		I_966\InsomniaEffectTimer = I_966\InsomniaEffectTimer - fps\Factor[0] * (1.0 + (I_427\Using * (I_427\Timer < 70.0 * 360.0)))
 	Else
 		I_966\HasInsomnia = 0.0
 	EndIf
