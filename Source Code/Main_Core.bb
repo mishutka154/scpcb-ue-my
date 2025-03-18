@@ -1118,10 +1118,12 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					CreateConsoleMsg("- enable106")
 					CreateConsoleMsg("- disable049")
 					CreateConsoleMsg("- enable049")
-					CreateConsoleMsg("- disable096")
-					CreateConsoleMsg("- enable096")
 					CreateConsoleMsg("- disable066")
 					CreateConsoleMsg("- enable066")
+					CreateConsoleMsg("- disable096")
+					CreateConsoleMsg("- enable096")
+					CreateConsoleMsg("- disable513-1")
+					CreateConsoleMsg("- enable513-1")
 					CreateConsoleMsg("- disable966")
 					CreateConsoleMsg("- enable966")
 					CreateConsoleMsg("- doorcontrol")
@@ -1139,6 +1141,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					CreateConsoleMsg(GetLocalString("console", "help_3.1"))
 					CreateConsoleMsg("******************************")
 					CreateConsoleMsg("- camerafog [x]")
+					CreateConsoleMsg("- npclist")
 					CreateConsoleMsg("- spawn [npc type] [state]")
 					CreateConsoleMsg("- injure [value]")
 					CreateConsoleMsg("- infect [value]")
@@ -1335,6 +1338,20 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-049"))
 					CreateConsoleMsg("******************************")
 					;[End Block]
+				Case "disable513-1"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable513-1"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.dis"), "SCP-513-1"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "enable513-1"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "enable513-1"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(Format(GetLocalString("console", "help.SCP.en"), "SCP-513-1"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
 				Case "disable966"
 					;[Block]
 					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "disable966"))
@@ -1504,9 +1521,11 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[End Block]
 		Case "roomlist", "roomslist", "rooms", "room list"
 			;[Block]
+			CreateConsoleMsg("--------------------------------")
 			For rt.RoomTemplates = Each RoomTemplates
 				CreateConsoleMsg("ID: " + rt\RoomID + "; Name: " + rt\Name)
 			Next
+			CreateConsoleMsg("--------------------------------")
 			;[End Block]
 		Case "spawnitem", "si", "giveitem", "gi"
 			;[Block]
@@ -1561,9 +1580,11 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[End Block]
 		Case "itemlist", "itemslist", "items", "item list"
 			;[Block]
+			CreateConsoleMsg("--------------------------------")
 			For itt.ItemTemplates = Each ItemTemplates
 				CreateConsoleMsg(Format(Format(Format(GetLocalString("console", "itemlist"), itt\ID, "{0}"), itt\Name, "{1}"), itt\DisplayName, "{2}"), 255, 150, 0)
 			Next
+			CreateConsoleMsg("--------------------------------")
 			;[End Block]
 		Case "wireframe", "wf"
 			;[Block]
@@ -1646,6 +1667,16 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			ShowEntity(n_I\Curr106\Collider)
 			ShowEntity(n_I\Curr106\OBJ)
 			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-106"))
+			;[End Block]
+		Case "disable513-1", "dis513-1"
+			;[Block]
+			RemoveNPC(n_I\Curr513_1)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.dis"), "SCP-513"))
+			;[End Block]
+		Case "enable513-1", "en513-1"
+			;[Block]
+			If n_I\Curr513_1 = Null Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
+			CreateConsoleMsg(Format(GetLocalString("console", "SCP.en"), "SCP-13"))
 			;[End Block]
 		Case "disable966", "dis966"
 			;[Block]
@@ -1966,13 +1997,39 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			EndIf
 			CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
 			;[End Block]
+		Case "npclist", "npcslist"
+			;[Block]
+			CreateConsoleMsg("--------------------------------")
+			CreateConsoleMsg("008-1", 255, 150, 0)
+			CreateConsoleMsg("049", 255, 150, 0)
+			CreateConsoleMsg("049-2", 255, 150, 0)
+			CreateConsoleMsg("066", 255, 150, 0)
+			CreateConsoleMsg("096", 255, 150, 0)
+			CreateConsoleMsg("106", 255, 150, 0)
+			CreateConsoleMsg("173", 255, 150, 0)
+			CreateConsoleMsg("860-2", 255, 150, 0)
+			CreateConsoleMsg("372", 255, 150, 0)
+			CreateConsoleMsg("513-1", 255, 150, 0)
+			CreateConsoleMsg("939", 255, 150, 0)
+			CreateConsoleMsg("966", 255, 150, 0)
+			CreateConsoleMsg("999", 255, 150, 0)
+			CreateConsoleMsg("1048", 255, 150, 0)
+			CreateConsoleMsg("1048-a", 255, 150, 0)
+			CreateConsoleMsg("1499-1", 255, 150, 0)
+			CreateConsoleMsg("apache", 255, 150, 0)
+			CreateConsoleMsg("class-d", 255, 150, 0)
+			CreateConsoleMsg("guard", 255, 150, 0)
+			CreateConsoleMsg("mtf", 255, 150, 0)
+			CreateConsoleMsg("tentacle", 255, 150, 0)
+			CreateConsoleMsg("--------------------------------")
+			;[End Block]
 		Case "spawn", "s"
 			;[Block]
 			Args = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 			StrTemp = Piece(Args, 1)
 			StrTemp2 = Piece(Args, 2)
 			
-					; ~ Hacky fix for when the user doesn't input a second parameter.
+			; ~ Hacky fix for when the user doesn't input a second parameter.
 			If StrTemp <> StrTemp2
 				ConsoleSpawnNPC(StrTemp, StrTemp2)
 			Else
@@ -2430,8 +2487,8 @@ Function ClearConsole%()
 	CreateConsoleMsg("")
 	CreateConsoleMsg("Console commands: ")
 	CreateConsoleMsg(" - help [page]")
-	CreateConsoleMsg(" - teleport [room name]")
 	CreateConsoleMsg(" - roomlist")
+	CreateConsoleMsg(" - teleport [room name]")
 	CreateConsoleMsg(" - godmode [on / off]")
 	CreateConsoleMsg(" - noclip [on / off]")
 	CreateConsoleMsg(" - infinitestamina [on / off]")
@@ -2444,11 +2501,17 @@ Function ClearConsole%()
 	CreateConsoleMsg(" - heal")
 	CreateConsoleMsg(" - revive")
 	CreateConsoleMsg(" - asd")
-	CreateConsoleMsg(" - spawnitem [item name / ID]")
+	CreateConsoleMsg(" - npclist")
 	CreateConsoleMsg(" - itemlist")
+	CreateConsoleMsg(" - spawnitem [item name / ID]")
 	CreateConsoleMsg(" - 106retreat")
-	CreateConsoleMsg(" - disable173 / enable173")
+	CreateConsoleMsg(" - disable049 / enable049")
+	CreateConsoleMsg(" - disable066 / enable066")
+	CreateConsoleMsg(" - disable096 / enable096")
 	CreateConsoleMsg(" - disable106 / enable106")
+	CreateConsoleMsg(" - disable173 / enable173")
+	CreateConsoleMsg(" - disable513-1 / enable513-1")
+	CreateConsoleMsg(" - disable966 / enable966")
 	CreateConsoleMsg(" - spawn [NPC type]")
 End Function
 
@@ -3716,15 +3779,15 @@ Function NullSecondINV%(SecondINV.Items)
 End Function
 
 Function SwapInventoryItem%(FromItem.Items, ToItem.Items)
-    Local FromIndex%, ToIndex%
-    Local i%
+	Local FromIndex%, ToIndex%
+	Local i%
 	
-    For i = 0 To MaxItemAmount - 1
-        If Inventory(i) = FromItem Then FromIndex = i
-        If Inventory(i) = ToItem Then ToIndex = i
-    Next
+	For i = 0 To MaxItemAmount - 1
+		If Inventory(i) = FromItem Then FromIndex = i
+		If Inventory(i) = ToItem Then ToIndex = i
+	Next
 	Inventory(ToIndex) = FromItem
-    Inventory(FromIndex) = ToItem
+	Inventory(FromIndex) = ToItem
 End Function
 
 Function SwapOtherOpenItem%(FromItem.Items, ToItem.Items)

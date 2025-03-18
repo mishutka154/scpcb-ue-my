@@ -6,6 +6,7 @@
 - Added a tiny camera zoom which creates the effect of moving leaves.
 - Added player body.
 - Added lighting quality option.
+- Added «npclist» and «enable\disable513-1» console commands.
 
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
 - Removed leaning.
@@ -25,6 +26,8 @@
 - Player can move the items from clipboard\wallet directly to the inventory.
 - Images now have better quality.
 - The vignette is now hidden in certain rooms.
+
+- Optimized the game...
 
 [Launcher]
 - Added wiki button.
