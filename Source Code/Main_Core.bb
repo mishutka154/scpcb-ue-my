@@ -3715,6 +3715,30 @@ Function NullSecondINV%(SecondINV.Items)
 	If IsEmpty And SecondINV\ItemTemplate\InvImg2 <> 0 Then SecondINV\InvImg = SecondINV\ItemTemplate\InvImg2
 End Function
 
+Function SwapInventoryItem%(FromItem.Items, ToItem.Items)
+    Local FromIndex%, ToIndex%
+    Local i%
+	
+    For i = 0 To MaxItemAmount - 1
+        If Inventory(i) = FromItem Then FromIndex = i
+        If Inventory(i) = ToItem Then ToIndex = i
+    Next
+	Inventory(ToIndex) = FromItem
+    Inventory(FromIndex) = ToItem
+End Function
+
+Function SwapOtherOpenItem%(FromItem.Items, ToItem.Items)
+    Local FromIndex%, ToIndex%
+    Local i%
+	
+    For i = 0 To OtherOpen\InvSlots - 1
+        If OtherOpen\SecondInv[i] = FromItem Then FromIndex = i
+        If OtherOpen\SecondInv[i] = ToItem Then ToIndex = i
+    Next
+	OtherOpen\SecondInv[ToIndex] = FromItem
+	OtherOpen\SecondInv[FromIndex] = ToItem
+End Function
+
 Function RejectItemSwap%()
 	CreateMsg(GetLocalString("msg", "it.cannot.swap"))
 	OtherOpen = PrevOtherOpen
@@ -3941,7 +3965,6 @@ Function UpdateGUI%()
 	
 	UpdateBatteryTimer()
 	
-	Local PrevItem.Items
 	Local IsMouseOn%
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
@@ -4042,15 +4065,7 @@ Function UpdateGUI%()
 						OtherOpen\SecondInv[MouseSlot] = SelectedItem
 						SelectedItem = Null
 					ElseIf OtherOpen\SecondInv[MouseSlot] <> SelectedItem
-						PrevItem = OtherOpen\SecondInv[MouseSlot]
-						
-						For z = 0 To OtherOpen\InvSlots - 1
-							If OtherOpen\SecondInv[z] = SelectedItem
-								OtherOpen\SecondInv[z] = PrevItem
-								Exit
-							EndIf
-						Next
-						OtherOpen\SecondInv[MouseSlot] = SelectedItem
+						SwapOtherOpenItem(SelectedItem, OtherOpen\SecondInv[MouseSlot])
 						SelectedItem = Null
 					EndIf
 				EndIf
@@ -4228,8 +4243,6 @@ Function UpdateGUI%()
 						EndIf
 						SelectedItem = Null
 					ElseIf Inventory(MouseSlot) <> SelectedItem
-						PrevItem = Inventory(MouseSlot)
-						
 						Local c%, ri%
 						Local added.Items = Null
 						
@@ -4267,13 +4280,7 @@ Function UpdateGUI%()
 											If PrevOtherOpen <> Null
 												RejectItemSwap()
 											Else
-												For z = 0 To MaxItemAmount - 1
-													If Inventory(z) = SelectedItem
-														Inventory(z) = PrevItem
-														Exit
-													EndIf
-												Next
-												Inventory(MouseSlot) = SelectedItem
+												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 											EndIf
 											;[End Block]
 									End Select
@@ -4286,7 +4293,6 @@ Function UpdateGUI%()
 												If Inventory(MouseSlot)\SecondInv[c] = Null
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\State = 1.0
 														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 														
 														For ri = 0 To MaxItemAmount - 1
@@ -4320,13 +4326,7 @@ Function UpdateGUI%()
 											If PrevOtherOpen <> Null
 												RejectItemSwap()
 											Else
-												For z = 0 To MaxItemAmount - 1
-													If Inventory(z) = SelectedItem
-														Inventory(z) = PrevItem
-														Exit
-													EndIf
-												Next
-												Inventory(MouseSlot) = SelectedItem
+												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 											EndIf
 											;[End Block]
 									End Select
@@ -4338,13 +4338,7 @@ Function UpdateGUI%()
 											If PrevOtherOpen <> Null
 												RejectItemSwap()
 											Else
-												For z = 0 To MaxItemAmount - 1
-													If Inventory(z) = SelectedItem
-														Inventory(z) = PrevItem
-														Exit
-													EndIf
-												Next
-												Inventory(MouseSlot) = SelectedItem
+												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 											EndIf
 											;[End Block]
 										Default
@@ -4359,7 +4353,6 @@ Function UpdateGUI%()
 												If Inventory(MouseSlot)\SecondInv[c] = Null
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\State = 1.0
 														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
 														
 														For ri = 0 To MaxItemAmount - 1
@@ -4394,7 +4387,6 @@ Function UpdateGUI%()
 												If Inventory(MouseSlot)\SecondInv[c] = Null
 													If SelectedItem <> Null
 														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\State = Inventory(MouseSlot)\State + 1.0
 														
 														For ri = 0 To MaxItemAmount - 1
 															If Inventory(ri) = SelectedItem
@@ -4421,13 +4413,7 @@ Function UpdateGUI%()
 											If PrevOtherOpen <> Null
 												RejectItemSwap()
 											Else
-												For z = 0 To MaxItemAmount - 1
-													If Inventory(z) = SelectedItem
-														Inventory(z) = PrevItem
-														Exit
-													EndIf
-												Next
-												Inventory(MouseSlot) = SelectedItem
+												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 											EndIf
 											;[End Block]
 									End Select
@@ -4435,13 +4421,7 @@ Function UpdateGUI%()
 									If PrevOtherOpen <> Null
 										RejectItemSwap()
 									Else
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
+										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 									EndIf
 								EndIf
 								SelectedItem = Null
@@ -4522,13 +4502,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Default
 										;[Block]
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
+										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 										SelectedItem = Null
 										;[End Block]
 								End Select
@@ -4609,13 +4583,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Default
 										;[Block]
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
+										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 										SelectedItem = Null
 										;[End Block]
 								End Select
@@ -4696,13 +4664,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Default
 										;[Block]
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
+										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 										SelectedItem = Null
 										;[End Block]
 								End Select
@@ -4783,26 +4745,14 @@ Function UpdateGUI%()
 										;[End Block]
 									Default
 										;[Block]
-										For z = 0 To MaxItemAmount - 1
-											If Inventory(z) = SelectedItem
-												Inventory(z) = PrevItem
-												Exit
-											EndIf
-										Next
-										Inventory(MouseSlot) = SelectedItem
+										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 										SelectedItem = Null
 										;[End Block]
 								End Select
 								;[End Block]
 							Default
 								;[Block]
-								For z = 0 To MaxItemAmount - 1
-									If Inventory(z) = SelectedItem
-										Inventory(z) = PrevItem
-										Exit
-									EndIf
-								Next
-								Inventory(MouseSlot) = SelectedItem
+								SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
 								SelectedItem = Null
 								;[End Block]
 						End Select
