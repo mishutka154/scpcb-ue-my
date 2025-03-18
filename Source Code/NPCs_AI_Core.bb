@@ -3401,7 +3401,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				Local FoundItem.Items = Null
 				
 				For it.Items = Each Items
-					If (it\ItemTemplate\ID = it_pizza Lor it\ItemTemplate\ID = it_scp2022pill Lor it\ItemTemplate\ID = it_scp500pill Lor it\ItemTemplate\ID = it_pill) And (Not it\Picked)
+					If (it\ItemTemplate\ID = it_pizza Lor it\ItemTemplate\ID = it_scp2022pill Lor it\ItemTemplate\ID = it_scp500pill Lor it\ItemTemplate\ID = it_pill Lor it\ItemTemplate\ID = it_scp420j) And (Not it\Picked)
 						If EntityDistanceSquared(n\Collider, it\Collider) < 1.0
 							FoundItem = it
 							Exit
@@ -3433,6 +3433,10 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 							Case it_scp500pill
 								;[Block]
 								If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
+								;[End Block]
+							Case it_scp420j
+								;[Block]
+								PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
 								;[End Block]
 							Case it_pizza
 								;[Block]
