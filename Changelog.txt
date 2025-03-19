@@ -83,6 +83,7 @@
 - SCP-500 has an inventory.
 - Player can't use strange bottle to escape SCP-049's chamber which would cause issues with that room later.
 - Reworked E-Reader.
+- Updated SCP-005 model.
 
 [NPCs]
 - Added SCP-999.
