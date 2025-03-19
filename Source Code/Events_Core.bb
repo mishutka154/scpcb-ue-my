@@ -8057,7 +8057,8 @@ Function UpdateDimension1499%()
 						; ~ King
 						e\room\NPC.NPCs[0] = CreateNPC(NPCType1499_1, e\room\x - 1917.0 * RoomScale, e\room\y + 1904.0 * RoomScale, e\room\z + 2308.0 * RoomScale)
 						e\room\NPC[0]\PrevState = 2 : e\room\NPC[0]\Angle = 270.0
-						ChangeNPCTextureID(e\room\NPC[0], NPC_1499_1_KING_TEXTURE)
+						e\room\NPC[0]\LastSeen = 1
+						EntityColor(e\room\NPC[0]\OBJ, 255.0, 204.0, 140.0)
 						RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\NPC[0]\Angle, 0.0)
 						; ~ Guard next to king
 						e\room\NPC.NPCs[1] = CreateNPC(NPCType1499_1, e\room\x - 1917.0 * RoomScale, e\room\y + 1904.0 * RoomScale, e\room\z + 2052.0 * RoomScale)
