@@ -8088,7 +8088,7 @@ Function UpdateDimension1499%()
 						RotateEntity(n\Collider, 0.0, n\Angle, 0.0)
 						; ~ SCP-1499-1 instances praying in church
 						; ~ Zone 1
-						For x = 0 To 7
+						For x = 0 To 4
 							For y = 0 To 2
 								du.Dummy1499_1 = New Dummy1499_1
 								For n.NPCs = Each NPCs
@@ -8107,7 +8107,7 @@ Function UpdateDimension1499%()
 							Next
 						Next
 						; ~ Zone 2
-						For x = 0 To 6
+						For x = 0 To 3
 							For y = 0 To 2
 								du.Dummy1499_1 = New Dummy1499_1
 								For n.NPCs = Each NPCs
