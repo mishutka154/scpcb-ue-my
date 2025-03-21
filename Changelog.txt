@@ -26,6 +26,7 @@
 - Player can move the items from clipboard\wallet directly to the inventory.
 - Images now have better quality.
 - The vignette is now hidden in certain rooms.
+- Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
 
 - Optimized the game...
 
@@ -43,11 +44,13 @@
 - Added Revision Eyedrops in «room2_closets».
 - Added a truck in the Gate B area.
 - Added hazmat suit in SCP-035's containment chamber.
+- Added monitor to «room1_storage»
 
 - Changed SCP-005 in «cont2_409» to a crystallized variant.
 
 - Lowered clearance access of «room1_storage» to level 1.
 - Slowed down the speed of SCP-106's spawn timer in «room1_storage».
+- Decreased the additional speed of SCP-106's spawn timer when using SCP-914.
 - New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Updated SCP-008's label.
 - Improved «Keyboard.b3d» prop.
@@ -68,6 +71,7 @@
 - Added SCP-2022.
 - Added open SCP-427 icon.
 - Added new variations of SCP-005.
+- Added Jim Gonzales' badge.
 
 - Changed Bloody Key Card textures.
 - Speed up equipping SCP-268 and ballistic helmet.
@@ -83,7 +87,8 @@
 - SCP-500 has an inventory.
 - Player can't use strange bottle to escape SCP-049's chamber which would cause issues with that room later.
 - Reworked E-Reader.
-- Updated SCP-005 model.
+- Decreased chance for Level 4 Key Card from SCP-914.
+- Updated SCP-005, SCP-500, NVG, and SCRAMBLE models.
 
 [NPCs]
 - Added SCP-999.
