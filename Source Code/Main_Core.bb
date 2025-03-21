@@ -5309,7 +5309,7 @@ Function UpdateGUI%()
 								;[Block]
 								me\BlinkTimer = -10.0
 								
-								If PlayerRoom\RoomTemplate\RoomID = r_dimension_1499 Lor IsPlayerOutsideFacility() Lor (PlayerRoom\RoomTemplate\RoomID = r_cont2_049 And InFacility = LowerFloor) Lor (forest_event <> Null And forest_event\room = PlayerRoom)
+								If (Not PlayerInReachableRoom(True))
 									me\Injuries = 2.5
 									CreateMsg(GetLocalString("msg", "bleed"))
 								Else
