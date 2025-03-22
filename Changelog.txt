@@ -104,6 +104,9 @@
 - SCP-966's height is now randomized.
 - Player cannot spawn Apache anymore.
 
+[Menu]
+- Added a confirmation of quit from the main menu.
+
 [Bug Fixes]
 - Fixed SCP-789-J trigger distance.
 - Fixed mask of the Old Badge and the Ticket.

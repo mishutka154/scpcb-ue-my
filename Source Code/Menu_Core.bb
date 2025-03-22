@@ -6,6 +6,7 @@ Type MainMenu
 	Field MainMenuStr$, MainMenuStrX%, MainMenuStrY%
 	Field MainMenuTab%, PrevMainMenuTab%
 	Field CurrMenuPage%
+	Field QuitMenu%
 End Type
 
 Global mm.MainMenu
@@ -139,100 +140,118 @@ Function UpdateMainMenu%()
 			Width = 400 * MenuScale
 			Height = 70 * MenuScale
 			
-			RandomSeed = ""
-			If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "new"), Font_Default_Big)
-				If opt\DebugMode
-					RandomSeed = "666"
-				Else
-					If Rand(15) = 1
-						Select Rand(13)
-							Case 1
-								;[Block]
-								RandomSeed = "NIL"
-								;[End Block]
-							Case 2
-								;[Block]
-								RandomSeed = "NO"
-								;[End Block]
-							Case 3
-								;[Block]
-								RandomSeed = "d9341"
-								;[End Block]
-							Case 4
-								;[Block]
-								RandomSeed = "5CP_I73"
-								;[End Block]
-							Case 5
-								;[Block]
-								RandomSeed = "DONTBLINK"
-								;[End Block]
-							Case 6
-								;[Block]
-								RandomSeed = "CRUNCH"
-								;[End Block]
-							Case 7
-								;[Block]
-								RandomSeed = "die"
-								;[End Block]
-							Case 8
-								;[Block]
-								RandomSeed = "HTAED"
-								;[End Block]
-							Case 9
-								;[Block]
-								RandomSeed = "rustledjim"
-								;[End Block]
-							Case 10
-								;[Block]
-								RandomSeed = "larry"
-								;[End Block]
-							Case 11
-								;[Block]
-								RandomSeed = "JORGE"
-								;[End Block]
-							Case 12
-								;[Block]
-								RandomSeed = "dirtymetal"
-								;[End Block]
-							Case 13
-								;[Block]
-								RandomSeed = "whatpumpkin"
-								;[End Block]
-						End Select
+			If mm\QuitMenu = 0
+				RandomSeed = ""
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "new"), Font_Default_Big)
+					If opt\DebugMode
+						RandomSeed = "666"
 					Else
-						i = Rand(4, 8)
-						For j = 1 To i
-							If Rand(3) = 1
-								RandomSeed = RandomSeed + Rand(0, 9)
-							Else
-								RandomSeed = RandomSeed + Chr(Rand(97, 122))
-							EndIf
-						Next
+						If Rand(15) = 1
+							Select Rand(13)
+								Case 1
+									;[Block]
+									RandomSeed = "NIL"
+									;[End Block]
+								Case 2
+									;[Block]
+									RandomSeed = "NO"
+									;[End Block]
+								Case 3
+									;[Block]
+									RandomSeed = "d9341"
+									;[End Block]
+								Case 4
+									;[Block]
+									RandomSeed = "5CP_I73"
+									;[End Block]
+								Case 5
+									;[Block]
+									RandomSeed = "DONTBLINK"
+									;[End Block]
+								Case 6
+									;[Block]
+									RandomSeed = "CRUNCH"
+									;[End Block]
+								Case 7
+									;[Block]
+									RandomSeed = "die"
+									;[End Block]
+								Case 8
+									;[Block]
+									RandomSeed = "HTAED"
+									;[End Block]
+								Case 9
+									;[Block]
+									RandomSeed = "rustledjim"
+									;[End Block]
+								Case 10
+									;[Block]
+									RandomSeed = "larry"
+									;[End Block]
+								Case 11
+									;[Block]
+									RandomSeed = "JORGE"
+									;[End Block]
+								Case 12
+									;[Block]
+									RandomSeed = "dirtymetal"
+									;[End Block]
+								Case 13
+									;[Block]
+									RandomSeed = "whatpumpkin"
+									;[End Block]
+							End Select
+						Else
+							i = Rand(4, 8)
+							For j = 1 To i
+								If Rand(3) = 1
+									RandomSeed = RandomSeed + Rand(0, 9)
+								Else
+									RandomSeed = RandomSeed + Chr(Rand(97, 122))
+								EndIf
+							Next
+						EndIf
 					EndIf
+					LoadSavedGames()
+					CurrSave = New Save
+					LoadCustomMaps()
+					CurrCustomMap = New CustomMaps
+					mm\MainMenuTab = MainMenuTab_New_Game
 				EndIf
-				LoadSavedGames()
-				CurrSave = New Save
-				LoadCustomMaps()
-				CurrCustomMap = New CustomMaps
-				mm\MainMenuTab = MainMenuTab_New_Game
-			EndIf
-			
-			y = y + (100 * MenuScale)
-			
-			If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "load"), Font_Default_Big)
-				LoadSavedGames()
-				mm\MainMenuTab = MainMenuTab_Load_Game
-			EndIf
-			
-			y = y + (100 * MenuScale)
-			
-			If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "options"), Font_Default_Big) Then mm\MainMenuTab = MainMenuTab_Options
-			
-			y = y + (100 * MenuScale)
-			
-			If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "quit"), Font_Default_Big)
-				StopStream_Strict(MusicCHN) : MusicCHN = 0
-				End()
+				
+				y = y + (100 * MenuScale)
+				
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "load"), Font_Default_Big)
+					LoadSavedGames()
+					mm\MainMenuTab = MainMenuTab_Load_Game
+				EndIf
+				
+				y = y + (100 * MenuScale)
+				
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "options"), Font_Default_Big) Then mm\MainMenuTab = MainMenuTab_Options
+				
+				y = y + (100 * MenuScale)
+				
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "quit"), Font_Default_Big)
+					ShouldDeleteGadgets = True
+					mm\QuitMenu = 1
+					Return
+				EndIf
+			Else
+				y = y + (100 * MenuScale)
+				
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "back"), Font_Default_Big)
+					ShouldDeleteGadgets = True
+					mm\QuitMenu = 0
+					Return
+				EndIf
+				
+				y = y + (100 * MenuScale)
+				
+				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "quit"), Font_Default_Big)
+					StopStream_Strict(MusicCHN) : MusicCHN = 0
+					End()
+				EndIf
 			EndIf
 		Else
 			y = 376 * MenuScale
@@ -1749,6 +1768,18 @@ Function RenderMainMenu%()
 					;[End Block]
 			End Select
 		EndIf
+	Else
+		x = 159 * MenuScale
+		y = 286 * MenuScale
+		
+		Width = 400 * MenuScale
+		Height = 70 * MenuScale
+		
+		RenderFrame(x, y, Width, Height)
+		
+		Color(255, 255, 255)
+		SetFontEx(fo\FontID[Font_Default_Big])
+		TextEx(x + (Width / 2), y + (Height / 2), GetLocalString("menu", "quit?"), True, True)
 	EndIf
 	
 	RenderMenuButtons()
