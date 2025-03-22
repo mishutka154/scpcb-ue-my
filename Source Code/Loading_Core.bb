@@ -1215,7 +1215,7 @@ Function LoadItems%()
 	
 	; ~ [SCPs AND VARIATIONS]
 	;[Block]
-	CreateItemTemplate("SCP-005", "SCP-005", it_scp005, "scp_005.b3d", "INV_scp_005.png", "", 0.005, 1)
+	CreateItemTemplate("SCP-005", "SCP-005", it_scp005, "scp_005.b3d", "INV_scp_005.png", "", 0.005, 3)
 	CreateItemTemplate("SCP-005", "Coarse SCP-005", it_coarse005, "scp_005.b3d", "INV_scp_005.png", "", 0.005, 1)
 	CreateItemTemplate("SCP-005", "Crystallized SCP-005", it_crystal005, "scp_005.b3d", "INV_scp_005_crystal.png", "", 0.005, 1, "scp_005_crystal.png")
 	
