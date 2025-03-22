@@ -2408,6 +2408,7 @@ Type PlayerModel
 	Field Pivot%, OBJ%
 	Field AnimationSpeed#[13]
 	Field AnimID%
+	Field Texture%[2]
 End Type
 
 Global pm.PlayerModel

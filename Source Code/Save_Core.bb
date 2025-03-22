@@ -2417,6 +2417,10 @@ Function LoadGameQuick%(File$)
 	; ~ Resetting some stuff (those get changed when going to some areas)
 	HideDistance = 17.0
 	
+	Tex = LoadTexture_Strict("GFX\NPCs\D_9341.png")
+	EntityTexture(pm\OBJ, Tex)
+	DeleteSingleTextureEntryFromCache(Tex)
+	
 	CatchErrors("Uncaught: LoadGameQuick(" + File + ")")
 End Function
 
