@@ -505,7 +505,8 @@ Const DOOR_BIG_MODEL_1% = 4
 Const DOOR_BIG_MODEL_2% = 5
 Const DOOR_OFFICE_MODEL% = 6
 Const DOOR_WOODEN_MODEL% = 7
-Const DOOR_ONE_SIDED_MODEL% = 8
+Const DOOR_FENCE_MODEL% = 8
+Const DOOR_ONE_SIDED_MODEL% = 9
 ;[End Block]
 
 ; ~ Door Frame Model ID Constants
@@ -558,6 +559,8 @@ Function LoadDoors%()
 	d_I\DoorModelID[DOOR_OFFICE_MODEL] = LoadAnimMesh_Strict("GFX\Map\Props\officedoor.b3d")
 	
 	d_I\DoorModelID[DOOR_WOODEN_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorWooden.b3d")
+	
+	d_I\DoorModelID[DOOR_FENCE_MODEL] = LoadAnimMesh_Strict("GFX\Map\Props\FenceDoor.b3d")
 	
 	d_I\DoorModelID[DOOR_ONE_SIDED_MODEL] = LoadMesh_Strict("GFX\Map\Props\Door02.b3d")
 	
@@ -1445,7 +1448,7 @@ MusicCHN = StreamSound_Strict("SFX\Music\" + Music[2] + ".ogg", opt\MusicVolume,
 Global NowPlaying% = 2, ShouldPlay% = 11
 Global CurrMusic% = True
 
-Dim OpenDoorSFX%(6, 3), CloseDoorSFX%(6, 3)
+Dim OpenDoorSFX%(7, 3), CloseDoorSFX%(7, 3)
 
 Type SoundInstance
 	Field CloseDecayDoorSFX%[3], OpenDecayDoorSFX%[3]
@@ -1604,6 +1607,7 @@ Function LoadSounds%()
 			CloseDoorSFX(BIG_DOOR, i) = LoadSound_Strict("SFX\Door\BigDoorClose" + i + ".ogg")
 			OpenDoorSFX(OFFICE_DOOR, i) = LoadSound_Strict("SFX\Door\OfficeDoorOpen" + i + ".ogg")
 			OpenDoorSFX(WOODEN_DOOR, i) = LoadSound_Strict("SFX\Door\WoodenDoorOpen" + i + ".ogg")
+			OpenDoorSFX(FENCE_DOOR, i) = LoadSound_Strict("SFX\Door\WoodenDoorOpen" + i + ".ogg") ; ~ TODO: NEED A SOUND
 			snd_I\BigDoorErrorSFX[i] = LoadSound_Strict("SFX\Door\BigDoorError" + i + ".ogg")
 			
 			snd_I\NeckSnapSFX[i] = LoadSound_Strict("SFX\SCP\173\NeckSnap" + i + ".ogg")
@@ -1773,6 +1777,7 @@ Function RemoveSoundInstances%()
 			CloseDoorSFX(BIG_DOOR, i) = 0
 			OpenDoorSFX(OFFICE_DOOR, i) = 0
 			OpenDoorSFX(WOODEN_DOOR, i) = 0
+			OpenDoorSFX(FENCE_DOOR, i) = 0
 			snd_I\BigDoorErrorSFX[i] = 0
 			snd_I\SCP173SFX[i] = 0
 			snd_I\NeckSnapSFX[i] = 0
@@ -2920,6 +2925,10 @@ Function InitNewGame%()
 			Case WOODEN_DOOR
 				;[Block]
 				MoveEntity(d\OBJ, 68.0 * RoomScale, 0.0, 0.0)
+				;[End Block]
+			Case FENCE_DOOR
+				;[Block]
+				MoveEntity(d\OBJ, 114.0 * RoomScale, 0.0, 0.0)
 				;[End Block]
 		End Select
 		If d\FrameOBJ <> 0 Then EntityParent(d\FrameOBJ, 0)

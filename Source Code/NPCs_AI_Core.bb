@@ -1135,7 +1135,7 @@ Function UpdateNPCType066%(n.NPCs)
 									
 									For d.Doors = Each Doors
 										If EntityDistanceSquared(d\FrameOBJ, n\Collider) < 256.0
-											If d\Locked = 0 And d\KeyCard = 0 And d\Code = 0 And d\DoorType <> WOODEN_DOOR And d\DoorType <> OFFICE_DOOR Then OpenCloseDoor(d)
+											If d\Locked = 0 And d\KeyCard = 0 And d\Code = 0 And (Not d\HasOneSide) Then OpenCloseDoor(d)
 										EndIf
 									Next
 									;[End Block]
@@ -1767,7 +1767,7 @@ Function UpdateNPCType106%(n.NPCs)
 					For d.Doors = Each Doors
 						If (Not d\IsAffected) And (Not d\Open)
 							If EntityDistanceSquared(n\Collider, d\FrameOBJ) < 0.25 And (d\room <> Null And d\room\RoomTemplate\RoomID <> r_dimension_106)
-								If d\DoorType <> OFFICE_DOOR And d\DoorType <> WOODEN_DOOR And d\DoorType <> BIG_DOOR And d\DoorType <> SCP_914_DOOR
+								If (Not d\HasOneSide) And d\DoorType <> BIG_DOOR And d\DoorType <> SCP_914_DOOR
 									Local Tex%
 									
 									Select d\DoorType
@@ -2117,7 +2117,7 @@ Function UpdateNPCType173%(n.NPCs)
 							Local Pvt%, i%
 							
 							For d.Doors = Each Doors
-								If d\Locked = 0 And (Not d\Open) And d\Code = 0 And d\KeyCard = 0 And d\DoorType <> WOODEN_DOOR And d\DoorType <> OFFICE_DOOR
+								If d\Locked = 0 And (Not d\Open) And d\Code = 0 And d\KeyCard = 0 And (Not d\HasOneSide)
 									For i = 0 To 1
 										If d\Buttons[i] <> 0
 											If IsEqual(EntityX(n\Collider), EntityX(d\Buttons[i]), 0.5) And IsEqual(EntityZ(n\Collider), EntityZ(d\Buttons[i]), 0.5)

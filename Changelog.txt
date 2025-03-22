@@ -62,6 +62,7 @@
 - Player no longer infected by SCP-008 by entering chamber without gas mask.
 - «cont1_173» event has Ulgrin and Franklin react to SCP-173 sooner.
 - Level 1 Key Card in «room2_js» has been moved from the table to another place.
+- Fence doors are now operable.
 
 - Design improvements for some rooms...
 

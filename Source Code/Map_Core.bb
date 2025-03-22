@@ -2579,6 +2579,7 @@ Type Doors
 	Field ButtonsUpdateTimer#
 	Field IsAffected% = False
 	Field DoorColl%
+	Field HasOneSide% = False
 End Type
 
 ; ~ Door ID Constants
@@ -2589,8 +2590,9 @@ Const HEAVY_DOOR% = 2
 Const BIG_DOOR% = 3
 Const OFFICE_DOOR% = 4
 Const WOODEN_DOOR% = 5
-Const ONE_SIDED_DOOR% = 6
-Const SCP_914_DOOR% = 7
+Const FENCE_DOOR% = 6
+Const ONE_SIDED_DOOR% = 7
+Const SCP_914_DOOR% = 8
 ;[End Block]
 
 Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorType% = DEFAULT_DOOR, Keycard% = KEY_MISC, Code% = 0, CustomParent% = 0)
@@ -2692,15 +2694,24 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 			FrameModelID = DOOR_WOODEN_FRAME_MODEL
 			FrameScaleX = 45.0 * RoomScale : FrameScaleY = 44.0 * RoomScale : FrameScaleZ = 80.0 * RoomScale
 			;[End Block]
+		Case FENCE_DOOR
+			;[Block]
+			DoorModelID_1 = DOOR_FENCE_MODEL
+			DoorScaleX = 100.0 * RoomScale : DoorScaleY = 100.0 * RoomScale : DoorScaleZ = 100.0 * RoomScale
+			;[End Block]
 	End Select
 	
 	Local Temp% = (DoorType = BIG_DOOR)
 	
-	d\FrameOBJ = CopyEntity(d_I\DoorFrameModelID[FrameModelID])
-	ScaleEntity(d\FrameOBJ, FrameScaleX, FrameScaleY, FrameScaleZ)
+	If DoorType <> FENCE_DOOR
+		d\FrameOBJ = CopyEntity(d_I\DoorFrameModelID[FrameModelID])
+		ScaleEntity(d\FrameOBJ, FrameScaleX, FrameScaleY, FrameScaleZ)
+		If Temp Then EntityType(d\FrameOBJ, HIT_MAP)
+		EntityPickMode(d\FrameOBJ, 2)
+	Else
+		d\FrameOBJ = CreatePivot()
+	EndIf
 	PositionEntity(d\FrameOBJ, x, y, z)
-	If Temp Then EntityType(d\FrameOBJ, HIT_MAP)
-	EntityPickMode(d\FrameOBJ, 2)
 	
 	d\OBJ = CopyEntity(d_I\DoorModelID[DoorModelID_1])
 	ScaleEntity(d\OBJ, DoorScaleX, DoorScaleY, DoorScaleZ)
@@ -2710,9 +2721,9 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 	EntityPickMode(d\OBJ, 2)
 	EntityParent(d\OBJ, Parent)
 	
-	Local OfficeWooden% = ((DoorType = OFFICE_DOOR) Lor (DoorType = WOODEN_DOOR))
+	d\HasOneSide = (DoorType = OFFICE_DOOR Lor DoorType = WOODEN_DOOR Lor DoorType = FENCE_DOOR)
 	
-	If (Not OfficeWooden)
+	If (Not d\HasOneSide)
 		d\OBJ2 = CopyEntity(d_I\DoorModelID[DoorModelID_2])
 		ScaleEntity(d\OBJ2, DoorScaleX, DoorScaleY, DoorScaleZ)
 		PositionEntity(d\OBJ2, x, y, z)
@@ -2723,9 +2734,9 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 	EndIf
 	
 	For i = 0 To 1
-		If OfficeWooden
+		If d\HasOneSide
 			d\Buttons[i] = CreatePivot()
-			PositionEntity(d\Buttons[i], x - 0.22, y + 0.6, z + 0.1 + (i * (-0.2)))
+			PositionEntity(d\Buttons[i], x - (0.22 + 0.12 * (DoorType = FENCE_DOOR)), y + (0.6 + 0.1 * (DoorType = FENCE_DOOR)), z + 0.1 + (i * (-0.2)))
 			EntityRadius(d\Buttons[i], 0.1)
 			EntityPickMode(d\Buttons[i], 1)
 			EntityParent(d\Buttons[i], d\FrameOBJ)
@@ -2778,8 +2789,7 @@ Function UpdateDoors%()
 	
 	For d.Doors = Each Doors
 		If d\Nearby Lor (d\IsElevatorDoor > 0) ; ~ Make elevator doors update everytime because if not, this can cause a bug where the elevators suddenly won't work, most noticeable in room2_mt -- ENDSHN
-			Local OfficeWooden% = ((d\DoorType = OFFICE_DOOR) Lor (d\DoorType = WOODEN_DOOR))
-			Local FindButton% = (1 - (d\Open And OfficeWooden))
+			Local FindButton% = (1 - (d\Open And d\HasOneSide))
 			
 			If ((d\OpenState >= 180.0 Lor d\OpenState <= 0.0) And FindButton) And GrabbedEntity = 0
 				For i = 0 To 1
@@ -2787,8 +2797,8 @@ Function UpdateDoors%()
 						If IsEqual(EntityX(me\Collider), EntityX(d\Buttons[i], True), 1.0) And IsEqual(EntityZ(me\Collider, True), EntityZ(d\Buttons[i], True), 1.0) And UpdateButton(d\Buttons[i])
 							d_I\ClosestDoor = d
 							; ~ Determine and save animate door and button
-							If d\DoorType = OFFICE_DOOR Then d_I\AnimDoor = d
-							If d\KeyCard = KEY_MISC And d\Code = 0 And (Not OfficeWooden) Then d_I\AnimButton = d_I\ClosestButton
+							If d\DoorType = OFFICE_DOOR Lor d\DoorType = FENCE_DOOR Then d_I\AnimDoor = d
+							If d\KeyCard = KEY_MISC And d\Code = 0 And (Not d\HasOneSide) Then d_I\AnimButton = d_I\ClosestButton
 							Exit
 						EndIf
 					EndIf
@@ -2830,7 +2840,7 @@ Function UpdateDoors%()
 							MoveEntity(d\OBJ, SinValue * FPSFactorEx, 0.0, 0.0)
 							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, (-SinValue) * FPSFactorEx, 0.0, 0.0)
 							;[End Block]
-						Case OFFICE_DOOR, WOODEN_DOOR
+						Case OFFICE_DOOR, WOODEN_DOOR, FENCE_DOOR
 							;[Block]
 							If d\room <> Null
 								d\OpenState = CurveValue(180.0, d\OpenState, 40.0) + (fps\Factor[0] * 0.01)
@@ -2901,7 +2911,7 @@ Function UpdateDoors%()
 							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, SinValue * FPSFactorEx, 0.0, 0.0)
 							If d\OpenState < 15.0 And d\OpenState + fps\Factor[0] >= 15.0 Then SetEmitter(Null, FrameX, FrameY, FrameZ, 11)
 							;[End Block]
-						Case OFFICE_DOOR, WOODEN_DOOR
+						Case OFFICE_DOOR, WOODEN_DOOR, FENCE_DOOR
 							;[Block]
 							d\OpenState = 0.0
 							RotateEntity(d\OBJ, 0.0, EntityYaw(d\FrameOBJ), 0.0)
@@ -2941,6 +2951,10 @@ Function UpdateDoors%()
 							;[Block]
 							MoveEntity(d\OBJ, 68.0 * RoomScale, 0.0, 0.0)
 							;[End Block]
+						Case FENCE_DOOR
+							;[Block]
+							MoveEntity(d\OBJ, 114.0 * RoomScale, 0.0, 0.0)
+							;[End Block]
 					End Select
 				EndIf
 			EndIf
@@ -2960,7 +2974,7 @@ Function UpdateDoors%()
 				EndIf
 			EndIf
 			
-			If (Not OfficeWooden)
+			If (Not d\HasOneSide)
 				If d\ButtonsUpdateTimer =< 0.0
 					; ~ Automatically disable d\AutoClose parameter in order to prevent player get stuck
 					If d\AutoClose And d\Locked > 0 Then d\AutoClose = False
@@ -2995,7 +3009,7 @@ Function UpdateDoors%()
 		EndIf
 	EndIf
 	If d_I\AnimDoor <> Null
-		If AnimTime(d_I\AnimDoor\OBJ) > 0.99 Then AnimateEx(d_I\AnimDoor\OBJ, AnimTime(d_I\AnimDoor\OBJ), 1.0, 41.0, 1.2, False)
+		If AnimTime(d_I\AnimDoor\OBJ) > 0.99 Then AnimateEx(d_I\AnimDoor\OBJ, AnimTime(d_I\AnimDoor\OBJ), 1.0 + 22.0 * (d_I\AnimDoor\Locked > 0), 22.0 + 22.0 * (d_I\AnimDoor\Locked > 0), 0.6, False)
 	EndIf
 	If d_I\AnimButton <> 0
 		If ButtonDirection
@@ -3448,7 +3462,7 @@ Function UseDoor%(PlaySFX% = True)
 	
 	If SelectedItem <> Null Then Temp = GetUsingItem(SelectedItem)
 	
-	Local CurrCase% = (d_I\ClosestDoor\KeyCard > KEY_MISC) + (2 * (d_I\ClosestDoor\KeyCard > KEY_860 And d_I\ClosestDoor\KeyCard < KEY_MISC)) + (3 * (d_I\ClosestDoor\Code <> 0)) + (4 * (d_I\ClosestDoor\DoorType = WOODEN_DOOR Lor d_I\ClosestDoor\DoorType = OFFICE_DOOR)) + (5 * (d_I\ClosestDoor\DoorType = ELEVATOR_DOOR))
+	Local CurrCase% = (d_I\ClosestDoor\KeyCard > KEY_MISC) + (2 * (d_I\ClosestDoor\KeyCard > KEY_860 And d_I\ClosestDoor\KeyCard < KEY_MISC)) + (3 * (d_I\ClosestDoor\Code <> 0)) + (4 * (d_I\ClosestDoor\DoorType = WOODEN_DOOR Lor d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR)) + (5 * (d_I\ClosestDoor\DoorType = ELEVATOR_DOOR))
 	Local BreakTheDoor% = False
 	
 	Select CurrCase
@@ -3587,12 +3601,12 @@ Function UseDoor%(PlaySFX% = True)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case 4 ; ~ Office/Wooden Door
+		Case 4 ; ~ Office/Wooden/Fence Door
 			;[Block]
 			If d_I\ClosestDoor\Locked > 0
 				If SelectedItem = Null
 					If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "wood.wontbudge"))
-					If d_I\ClosestDoor\DoorType = OFFICE_DOOR
+					If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
 						PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
 						SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 					Else
@@ -3626,7 +3640,7 @@ Function UseDoor%(PlaySFX% = True)
 						SelectedItem = Null
 					EndIf
 					If (Temp > KEY_860) And (Temp <> KEY_005)
-						If d_I\ClosestDoor\DoorType = OFFICE_DOOR
+						If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
 							PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
 							SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 						Else
@@ -3638,7 +3652,7 @@ Function UseDoor%(PlaySFX% = True)
 				EndIf
 				Return
 			Else
-				If d_I\ClosestDoor\DoorType = OFFICE_DOOR
+				If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
 					PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
 					SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 				EndIf
@@ -4817,7 +4831,7 @@ Function HideRoomsColl%(room.Rooms)
 					EntityAlpha(d\OBJ, 0.0)
 					If d\OBJ2 <> 0 Then EntityAlpha(d\OBJ2, 0.0)
 					For i = 0 To 1
-						If d\Buttons[i] <> 0 And d\DoorType <> WOODEN_DOOR And d\DoorType <> OFFICE_DOOR Then EntityAlpha(d\Buttons[i], 0.0)
+						If d\Buttons[i] <> 0 And (Not d\HasOneSide) Then EntityAlpha(d\Buttons[i], 0.0)
 						; ~ Hide it anyway because player's collider cannot interact with it
 						If d\ElevatorPanel[i] <> 0 Then HideEntity(d\ElevatorPanel[i])
 					Next
@@ -4875,7 +4889,7 @@ Function ShowRoomsColl%(room.Rooms)
 				EntityAlpha(d\OBJ, 1.0)
 				If d\OBJ2 <> 0 Then EntityAlpha(d\OBJ2, 1.0)
 				For i = 0 To 1
-					If d\Buttons[i] <> 0 And d\DoorType <> WOODEN_DOOR And d\DoorType <> OFFICE_DOOR Then EntityAlpha(d\Buttons[i], 1.0)
+					If d\Buttons[i] <> 0 And (Not d\HasOneSide) Then EntityAlpha(d\Buttons[i], 1.0)
 					If d\ElevatorPanel[i] <> 0 Then ShowEntity(d\ElevatorPanel[i])
 				Next
 				EntityAlpha(d\FrameOBJ, 1.0)
