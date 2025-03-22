@@ -27,6 +27,7 @@
 - Images now have better quality.
 - The vignette is now hidden in certain rooms.
 - Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
+- Changed logo of the game.
 
 - Optimized the game...
 
