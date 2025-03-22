@@ -248,7 +248,11 @@ Function UpdateMainMenu%()
 				
 				y = y + (100 * MenuScale)
 				
-				If UpdateMenuButton(x, y, Width, Height, GetLocalString("menu", "quit"), Font_Default_Big)
+				Local TempStr$ = GetLocalString("menu", "quit")
+				
+				If mm\MainMenuBlinkTimer[1] < mm\MainMenuBlinkDuration[1] Then TempStr = GetLocalString("menu", "escape")
+				
+				If UpdateMenuButton(x, y, Width, Height, TempStr, Font_Default_Big)
 					StopStream_Strict(MusicCHN) : MusicCHN = 0
 					End()
 				EndIf
