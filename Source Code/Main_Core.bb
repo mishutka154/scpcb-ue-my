@@ -4396,7 +4396,7 @@ Function UpdateGUI%()
 								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_wallet
 									; ~ Add an item to wallet
 									Select SelectedItem\ItemTemplate\ID
-										Case it_paper, it_oldpaper, it_origami
+										Case it_paper, it_oldpaper, it_origami, it_scp500pill, it_scp500pilldeath, it_scp2022pill
 											;[Block]
 											If PrevOtherOpen <> Null
 												RejectItemSwap()
