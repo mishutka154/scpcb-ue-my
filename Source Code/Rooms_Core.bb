@@ -3153,7 +3153,7 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(d\Buttons[1], 0.0, 0.0, 0.0, True)
 			d\DisableWaypoint = True : d\MTFClose = False : d\Locked = 1
 			
-			d.Doors = CreateDoor(r, r\x + 1132.5 * RoomScale, r\y, r\z + 1100.5 * RoomScale, -90.0, False, BIG_DOOR, KEY_CARD_5)
+			d.Doors = CreateDoor(r, r\x + 1132.5 * RoomScale, r\y, r\z, -90.0, False, BIG_DOOR, KEY_CARD_5)
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			PositionEntity(d\Buttons[1], r\x + 945.0 * RoomScale, EntityY(d\Buttons[1], True), r\z - 422.0 * RoomScale, True)
 			RotateEntity(d\Buttons[1], 0.0, 180.0, 0.0, True)
