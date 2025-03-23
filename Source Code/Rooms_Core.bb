@@ -1429,7 +1429,7 @@ Function FillRoom%(r.Rooms)
 			; ~ Fence door
 			CreateDoor(r, r\x - 246.0 * RoomScale, r\y, r\z + 208.0 * RoomScale, 90.0, True, FENCE_DOOR)
 			
-			; ~ Misc. door
+			; ~ Misc door
 			d.Doors = CreateDoor(r, r\x - 1024.0 * RoomScale, r\y, r\z - 400.0 * RoomScale, 270.0, False, DEFAULT_DOOR, KEY_CARD_2)
 			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
@@ -1483,12 +1483,11 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-500", it_scp500, r\x + 1147.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 345.0 * RoomScale)
-			k = Rand(10)
+			k = Rand(9)
 			For i = 0 To it\InvSlots - 1
 				it2.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
 				it2\Picked = True : it2\Dropped = -1 : it\SecondInv[i] = it2
 				HideEntity(it2\Collider)
-				it2\State = it2\State + 1.0
 				If i = k Then Exit
 			Next
 			SetAnimTime(it\OBJ, Max(0.0, 11.0 - k))
