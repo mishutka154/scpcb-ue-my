@@ -72,7 +72,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 				If n\PathTimer <= 0.0 ; ~ Update path
 					n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 					
-					; ~ Attempt to find a room (the PlayerRoom or one of it's adjacent rooms) for SCP-049 to go to but select the one closest to him
+					; ~ Attempt to find a room (the PlayerRoom or one of it's adjacent rooms) for SCP-008-1 to go to but select the one closest to them
 					If n\PathStatus <> PATH_STATUS_FOUND
 						Local ClosestDist# = EntityDistanceSquared(PlayerRoom\OBJ, n\Collider)
 						Local ClosestRoom.Rooms = PlayerRoom
