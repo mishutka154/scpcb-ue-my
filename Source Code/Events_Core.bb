@@ -6875,16 +6875,17 @@ Function UpdateEvents%()
 									If (Not IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(e\room\NPC[0]\Collider), 1.0))
 										If IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(me\Collider, True), 1.0)
 											If e\room\RoomDoors[0]\Open
+												PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
+												e\room\NPC[0]\State3 = 4.0
 												e\room\RoomDoors[0]\FastOpen = True
 												OpenCloseDoor(e\room\RoomDoors[0])
-												PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 											EndIf
 										EndIf
 									Else
 										If (Not e\room\RoomDoors[0]\Open)
+											PlaySoundEx(snd_I\DoorOpen079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 											e\room\RoomDoors[0]\FastOpen = False
 											OpenCloseDoor(e\room\RoomDoors[0])
-											PlaySoundEx(snd_I\DoorOpen079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 										EndIf
 									EndIf
 								EndIf
