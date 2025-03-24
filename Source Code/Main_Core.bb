@@ -3160,8 +3160,9 @@ Function UpdateMoving%()
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 40.0, 0.0)
 		me\HealTimer = Max(me\HealTimer - FPSFactorEx, 0.0)
 	EndIf
-	
+	Local PrevPill2022Used# = me\Pill2022Used
 	me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
+	If me\Pill2022Used < 1.0 And PrevPill2022Used >= 1.0 Then EntityFX(pm\OBJ, 0)
 	If me\Pill2022HealTimer > 0.0
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 10.0, 0.0)
 		me\Pill2022HealTimer = Max(me\Pill2022HealTimer - FPSFactorEx, 0.0)
