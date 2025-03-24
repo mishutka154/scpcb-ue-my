@@ -1113,7 +1113,7 @@ Function NPCSeesNPC%(n.NPCs, n2.NPCs, Dist# = 36.0)
 	Return(0)
 End Function
 
-Function NPCSeesPlayer%(n.NPCs, Dist#, Angle# = 60.0, DisableSoundOnCrouch% = False)
+Function NPCSeesPlayer%(n.NPCs, Dist#, Angle# = 60.0)
 	; ~ Return values:
 	; ~ 0: Player is not detected anyhow
 	; ~ 1: Player is detected by vision
@@ -1135,26 +1135,17 @@ Function NPCSeesPlayer%(n.NPCs, Dist#, Angle# = 60.0, DisableSoundOnCrouch% = Fa
 			Local DeltaYawVal# = Abs(DeltaYaw(n\Collider, me\Collider))
 			
 			; ~ Spots the player if he's either in view or making a loud sound
-			If me\SndVolume > 1.0
-				If (DeltaYawVal > Angle) And Visible
-					Return(1)
-				ElseIf (Not Visible)
-					If DisableSoundOnCrouch And me\Crouch
-						Return(0)
-					Else
-						Return(2)
-					EndIf
-				EndIf
-			ElseIf DeltaYawVal > 60.0 
+			If (PowTwo(me\SndVolume) > Dist2 Lor (DeltaYawVal < Angle)) And Visible
+				Return(1)
+			Else
 				Return(0)
 			EndIf
-			Return(Visible)
 		EndIf
 	Else
 		Local ReturnState% = 0 + (3 * me\Detected)
 		
 		If Dist2 < PowTwo(Dist + ((PlayerRoom\RoomTemplate\RoomID = r_gate_a) * 4.0))
-			If me\SndVolume > Rnd(1.0, 1.5) Then ReturnState = 2
+			If PowTwo(me\SndVolume) > Dist2 Then ReturnState = 2
 			If EntityVisible(n\Collider, me\Collider) And Abs(DeltaYaw(n\Collider, me\Collider)) < Angle Then ReturnState = 1
 		EndIf
 		Return(ReturnState)

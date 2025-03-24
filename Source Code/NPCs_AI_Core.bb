@@ -695,7 +695,7 @@ Function UpdateNPCType049%(n.NPCs)
 				;[End Block]
 			Case 4.0 ; ~ Going to surveillance room
 				;[Block]
-				PlayerSeeable = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume, 60.0, True)
+				PlayerSeeable = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume)
 				If PlayerSeeable = 1
 					PlaySound_Strict(LoadTempSound("SFX\SCP\049\Room2SLSpawn.ogg"))
 					n\PathStatus = PATH_STATUS_NO_SEARCH
@@ -705,8 +705,6 @@ Function UpdateNPCType049%(n.NPCs)
 					n\State3 = 0.0
 					n\State2 = 70.0 * 2.0
 					n\State = 2.0
-				ElseIf PlayerSeeable = 2 And n\State3 > 0.0
-					n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 				Else
 					If n\State3 = 6.0
 						If EntityDistanceSquared(n\Collider, me\Collider) > PowTwo(HideDistance)
