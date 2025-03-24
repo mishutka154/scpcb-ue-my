@@ -382,8 +382,8 @@ Function UpdateNPCType049%(n.NPCs)
 			Remove714Timer = Min(Remove714Timer + fps\Factor[0], 500.0)
 			RemoveHazmatTimer = Min(RemoveHazmatTimer + fps\Factor[0], 500.0)
 		ElseIf (Not chs\NoTarget)
-			If EntityVisible(me\Collider, n\Collider)
-				If n\State > 1 And n\State <> 3
+			If n\State > 1 And n\State <> 3
+				If EntityVisible(me\Collider, n\Collider)
 					If wi\HazmatSuit > 0
 						RemoveHazmatTimer = RemoveHazmatTimer - (fps\Factor[0] * 1.5)
 						If RemoveHazmatTimer < 350.0 And RemoveHazmatTimer + fps\Factor[0] * 1.5 >= 350.0 And (Not ChannelPlaying(n\SoundCHN2))
