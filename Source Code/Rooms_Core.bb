@@ -3450,6 +3450,9 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[2], r\x + 1780.0 * RoomScale, r\y - 248.0 * RoomScale, r\z - 276.0 * RoomScale)
 			EntityParent(r\Objects[2], r\OBJ)
 			
+			it.Items = CreateItem("Document SCP-294", it_paper, r\x + 1477.0 * RoomScale, r\y - 240.0 * RoomScale, r\z - 623.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			it.Items = CreateItem("Cup", it_cup, r\x - 508.0 * RoomScale, r\y - 187.0 * RoomScale, r\z + 284.0 * RoomScale, 240, 175, 70)
 			it\Name = "ORANGE JUICE"
 			it\DisplayName = Format(GetLocalString("items", "cupof"), GetLocalString("misc", "orange"))
