@@ -4835,7 +4835,7 @@ Function HideRoomsColl%(room.Rooms)
 						; ~ Hide it anyway because player's collider cannot interact with it
 						If d\ElevatorPanel[i] <> 0 Then HideEntity(d\ElevatorPanel[i])
 					Next
-					EntityAlpha(d\FrameOBJ, 0.0)
+					If d\DoorType <> FENCE_DOOR Then EntityAlpha(d\FrameOBJ, 0.0)
 				EndIf
 			EndIf
 		Next
@@ -4892,7 +4892,7 @@ Function ShowRoomsColl%(room.Rooms)
 					If d\Buttons[i] <> 0 And (Not d\HasOneSide) Then EntityAlpha(d\Buttons[i], 1.0)
 					If d\ElevatorPanel[i] <> 0 Then ShowEntity(d\ElevatorPanel[i])
 				Next
-				EntityAlpha(d\FrameOBJ, 1.0)
+				If d\DoorType <> FENCE_DOOR Then EntityAlpha(d\FrameOBJ, 1.0)
 			EndIf
 		Next
 		
