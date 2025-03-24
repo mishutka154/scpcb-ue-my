@@ -1772,18 +1772,6 @@ Function RenderMainMenu%()
 					;[End Block]
 			End Select
 		EndIf
-	Else
-		x = 159 * MenuScale
-		y = 286 * MenuScale
-		
-		Width = 400 * MenuScale
-		Height = 70 * MenuScale
-		
-		RenderFrame(x, y, Width, Height)
-		
-		Color(255, 255, 255)
-		SetFontEx(fo\FontID[Font_Default_Big])
-		TextEx(x + (Width / 2), y + (Height / 2), GetLocalString("menu", "quit?"), True, True)
 	EndIf
 	
 	RenderMenuButtons()
