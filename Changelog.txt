@@ -24,6 +24,7 @@
 - Now the anomalous clock smoothly changes alpha.
 - Changed auto save timer from 2 mins to 1 min.
 - Player can move the items from clipboard\wallet directly to the inventory.
+- Cannot insert pills inside wallet anymore.
 - Images now have better quality.
 - The vignette is now hidden in certain rooms.
 - Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
@@ -74,6 +75,7 @@
 - Added open SCP-427 icon.
 - Added new variations of SCP-005.
 - Added Jim Gonzales' badge.
+- Added Note from Gears.
 
 - Changed Bloody Key Card textures.
 - Speed up equipping SCP-268 and ballistic helmet.
