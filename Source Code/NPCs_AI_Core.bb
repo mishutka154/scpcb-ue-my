@@ -47,7 +47,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 					MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 					
-					n\PathTimer = 0.0
+					n\PathTimer = 70.0 * 2.0
 					n\PathStatus = PATH_STATUS_NO_SEARCH
 					n\PathLocation = 0
 					
