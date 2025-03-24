@@ -195,7 +195,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 				If n\Frame >= 146.0 And PrevFrame < 146.0
 					If n\Target = Null
-						If EntityDistanceSquared(n\Collider, me\Collider) < 0.5625
+						If EntityDistanceSquared(n\Collider, me\Collider) < 0.64
 							PlaySound_Strict(snd_I\DamageSFX[Rand(5, 8)])
 							InjurePlayer(Rnd(0.4, 0.7) * DifficultyDMGMult, 1.0, 0.0, 0.225 * DifficultyDMGMult, 0.0875 * DifficultyDMGMult)
 							me\CameraShake = 2.5 * (I_1025\FineState[3] = 0.0)
@@ -208,7 +208,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 							PlaySoundEx(snd_I\MissSFX, Camera, n\Collider, 2.5)
 						EndIf
 					Else
-						If EntityDistanceSquared(n\Collider, n\Target\Collider) < 0.5625
+						If EntityDistanceSquared(n\Collider, n\Target\Collider) < 0.64
 							PlaySoundEx(snd_I\DamageSFX[Rand(5, 8)], Camera, n\Target\OBJ)
 							If n\Target\HP > 0
 								n\Target\HP = Max(n\Target\HP - Rnd(10.0, 20.0), 0.0)
@@ -990,7 +990,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 					EndIf
 					If Attack
 						If n\Target = Null
-							If EntityDistanceSquared(n\Collider, me\Collider) < 0.5625
+							If EntityDistanceSquared(n\Collider, me\Collider) < 0.64
 								PlaySound_Strict(snd_I\DamageSFX[Rand(5, 8)])
 								InjurePlayer(Rnd(0.55, 0.85) * DifficultyDMGMult, 0.0, 0.0, 0.3 * DifficultyDMGMult, 0.125 * DifficultyDMGMult)
 								me\CameraShake = 2.5 * (I_1025\FineState[3] = 0.0)
@@ -1003,7 +1003,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 								PlaySoundEx(snd_I\MissSFX, Camera, n\Collider, 2.5)
 							EndIf
 						Else
-							If EntityDistanceSquared(n\Collider, n\Target\Collider) < 0.5625
+							If EntityDistanceSquared(n\Collider, n\Target\Collider) < 0.64
 								PlaySoundEx(snd_I\DamageSFX[Rand(5, 8)], Camera, n\Target\OBJ)
 								If n\Target\HP > 0
 									n\Target\HP = Max(n\Target\HP - Rnd(30.0, 50.0), 0.0)
@@ -3186,7 +3186,7 @@ Function UpdateNPCType966%(n.NPCs)
 							n\PathTimer = 70.0 * 10.0 ; ~ Search again after 10 seconds
 						Else
 							; ~ Still attack if the player is too close
-							If Dist < 0.81 And (Not chs\NoTarget)
+							If Dist < 0.7225 And (Not chs\NoTarget)
 								If EntityVisible(n\Collider, me\Collider) Then n\State = 9.0
 							EndIf
 							
