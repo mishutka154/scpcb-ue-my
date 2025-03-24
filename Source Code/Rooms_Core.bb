@@ -3583,6 +3583,9 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateRandomBattery(r\x + 574.0 * RoomScale, r\y + 230.0 * RoomScale, r\z + 960.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
+			it.Items = CreateItem("Document SCP-2022", it_paper, r\x + 523.0 * RoomScale, r\y + 100.0 * RoomScale, r\z - 961.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			If Rand(2) = 1
 				it.Items = CreateRandomBattery(r\x + 424.0 * RoomScale, r\y + 230.0 * RoomScale, r\z + 960.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
