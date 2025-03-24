@@ -5147,7 +5147,7 @@ Function UpdateGUI%()
 					;[Block]
 					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 					
-					SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / (2.0 + (0.5 * (SelectedItem\ItemTemplate\ID = it_finevest)))), 100)
+					SelectedItem\State = Min(SelectedItem\State + (fps\Factor[0] / (2.0 + (0.5 * (SelectedItem\ItemTemplate\ID = it_finevest)))), 100.0)
 					
 					If SelectedItem\State = 100.0
 						If wi\BallisticVest > 0
