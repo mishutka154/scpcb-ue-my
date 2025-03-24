@@ -1153,6 +1153,7 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "doc1123"), "Document SCP-1123", it_paper, "paper.b3d", "INV_paper.png", "doc_1123.png", 0.003, 0, "doc_1123.png")
 	CreateItemTemplate(GetLocalString("items", "doc1162"), "Document SCP-1162-ARC", it_paper, "paper.b3d", "INV_paper.png", "doc_1162_ARC.png", 0.003, 0, "doc_1162_ARC.png")
 	CreateItemTemplate(GetLocalString("items", "doc1499"), "Document SCP-1499", it_paper, "paper.b3d", "INV_paper.png", "doc_1499.png", 0.003, 0, "doc_1499.png")
+	CreateItemTemplate(GetLocalString("items", "doc2022"), "Document SCP-2022", it_paper, "paper.b3d", "INV_paper.png", "doc_2022.png", 0.003, 0, "doc_2022.png")
 	
 	CreateItemTemplate(GetLocalString("items", "doc1048a"), "Incident Report SCP-1048-A", it_paper, "paper.b3d", "INV_paper.png", "doc_IR_1048_a.png", 0.003, 0, "doc_IR_1048_a.png")
 	CreateItemTemplate(GetLocalString("items", "doc035a"), "SCP-035 Addendum", it_paper, "paper.b3d", "INV_paper.png", "doc_035_ad.png", 0.003, 0, "doc_035_ad.png")
