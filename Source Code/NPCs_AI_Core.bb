@@ -27,12 +27,16 @@ Function UpdateNPCType008_1%(n.NPCs)
 				n\State2 = Max(n\State2 - fps\Factor[0], 0.0)
 				If n\State2 > 0.0
 					If n\Target = Null
-						If NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume) = 1 Then n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
-						If EntityVisible(n\Collider, me\Collider) Then PointEntity(n\Collider, me\Collider)
+						If NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume) = 1
+							n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
+							PointEntity(n\Collider, me\Collider)
+						EndIf
 						Dist = EntityDistanceSquared(n\Collider, me\Collider)
 					Else
-						If NPCSeesNPC(n\Target, n) = 1 Then n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
-						If EntityVisible(n\Collider, n\Target\Collider) Then PointEntity(n\Collider, n\Target\Collider)
+						If NPCSeesNPC(n\Target, n) = 1
+							n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
+							PointEntity(n\Collider, n\Target\Collider)
+						EndIf
 						Dist = EntityDistanceSquared(n\Collider, n\Target\Collider)
 					EndIf
 					
@@ -66,24 +70,25 @@ Function UpdateNPCType008_1%(n.NPCs)
 				;[Block]
 				Dist = EntityDistanceSquared(n\Collider, me\Collider)
 				If n\PathTimer <= 0.0 ; ~ Update path
-					Local r.Rooms
-					Local x# = 0.0
-					Local y# = 0.0
-					Local z# = 0.0
+					n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 					
-					; ~ Tries to find a room that is close
-					For r.Rooms = Each Rooms
-						If EntityDistanceSquared(r\OBJ, n\Collider) < 196.0 And EntityDistanceSquared(r\OBJ, n\Collider) > 36.0
-							x = EntityX(r\OBJ)
-							y = 0.1
-							z = EntityZ(r\OBJ)
-							Exit
-						EndIf
-					Next
-					
-					If x <> 0.0 And y <> 0.0 And z <> 0.0 Then n\PathStatus = FindPath(n, x, y, z)
-					
-					If n\PathStatus = PATH_STATUS_FOUND
+					; ~ Attempt to find a room (the PlayerRoom or one of it's adjacent rooms) for SCP-049 to go to but select the one closest to him
+					If n\PathStatus <> PATH_STATUS_FOUND
+						Local ClosestDist# = EntityDistanceSquared(PlayerRoom\OBJ, n\Collider)
+						Local ClosestRoom.Rooms = PlayerRoom
+						Local CurrDist# = 0.0
+						
+						For i = 0 To MaxRoomAdjacents - 1
+							If PlayerRoom\Adjacent[i] <> Null
+								CurrDist = EntityDistanceSquared(PlayerRoom\Adjacent[i]\OBJ, n\Collider)
+								If CurrDist < ClosestDist
+									ClosestDist = CurrDist
+									ClosestRoom = PlayerRoom\Adjacent[i]
+								EndIf
+							EndIf
+						Next
+						n\PathStatus = FindPath(n, EntityX(ClosestRoom\OBJ), 0.5, EntityZ(ClosestRoom\OBJ))
+					ElseIf n\PathStatus = PATH_STATUS_FOUND
 						While n\Path[n\PathLocation] = Null
 							If n\PathLocation > MaxPathLocations - 1
 								n\PathLocation = 0 : n\PathStatus = PATH_STATUS_NO_SEARCH
@@ -501,7 +506,10 @@ Function UpdateNPCType049%(n.NPCs)
 					n\State2 = Max(n\State2 - fps\Factor[0], 0.0)
 					PlayerSeeable = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume)
 					If n\State2 > 0.0
-						If PlayerSeeable = 1 Then n\State2 = 70.0 * 2.0
+						If PlayerSeeable = 1
+							n\State2 = 70.0 * 2.0
+							PointEntity(n\Collider, me\Collider)
+						EndIf
 						; ~ Playing a sound after detecting the player
 						If n\PrevState <= 1 And (Not ChannelPlaying(n\SoundCHN2))
 							LoadNPCSound(n, "SFX\SCP\049\Spotted" + Rand(0, 6) + ".ogg", 1)
@@ -512,7 +520,6 @@ Function UpdateNPCType049%(n.NPCs)
 						n\PathTimer = 0.0
 						n\PathLocation = 0
 						
-						If EntityVisible(n\Collider, me\Collider) Then PointEntity(n\Collider, me\Collider)
 						RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider, True), 0.0, True)
 						
 						If Dist > 0.2375
@@ -812,12 +819,16 @@ Function UpdateNPCType049_2%(n.NPCs)
 				n\State2 = Max(n\State2 - fps\Factor[0], 0.0)
 				If n\State2 > 0.0
 					If n\Target = Null
-						If NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume) = 1 Then n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
-						If EntityVisible(n\Collider, me\Collider) Then PointEntity(n\Collider, me\Collider)
+						If NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume) = 1
+							n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
+							PointEntity(n\Collider, me\Collider)
+						EndIf
 						Dist = EntityDistanceSquared(n\Collider, me\Collider)
 					Else
-						If NPCSeesNPC(n\Target, n) Then n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
-						If EntityVisible(n\Collider, n\Target\Collider) Then PointEntity(n\Collider, n\Target\Collider)
+						If NPCSeesNPC(n\Target, n)
+							n\State2 = 70.0 * 2.0 ; ~ Give up after 2 seconds
+							PointEntity(n\Collider, n\Target\Collider)
+						EndIf
 						Dist = EntityDistanceSquared(n\Collider, n\Target\Collider)
 					EndIf
 					

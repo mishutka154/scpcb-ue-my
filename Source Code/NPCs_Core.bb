@@ -1113,7 +1113,7 @@ Function NPCSeesNPC%(n.NPCs, n2.NPCs, Dist# = 36.0)
 	Return(0)
 End Function
 
-Function NPCSeesPlayer%(n.NPCs, Dist#, Angle# = 60.0)
+Function NPCSeesPlayer%(n.NPCs, Dist#, Angle# = 80.0)
 	; ~ Return values:
 	; ~ 0: Player is not detected anyhow
 	; ~ 1: Player is detected by vision
