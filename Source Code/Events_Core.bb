@@ -682,6 +682,17 @@ Function UpdateEvents%()
 							e\room\NPC[1] = CreateNPC(NPCTypeD, e\room\x, e\room\y + 0.5, e\room\z - 1.0 + 2048.0 * RoomScale)
 							ChangeNPCTextureID(e\room\NPC[1], NPC_CLASS_D_FRANKLIN_TEXTURE)
 						EndIf
+						
+						If e\room\NPC[7] <> Null
+							PositionEntity(e\room\NPC[7]\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.3, e\room\z + 3116.0 * RoomScale)
+							ResetEntity(e\room\NPC[7]\Collider)
+						Else
+							e\room\NPC[7] = CreateNPC(NPCTypeD, e\room\x + 32.0 * RoomScale, e\room\y + 0.3, e\room\z + 3116.0 * RoomScale)
+							ChangeNPCTextureID(e\room\NPC[7], NPC_CLASS_D_SCIENTIST_TEXTURE)
+						EndIf
+							RotateEntity(e\room\NPC[7]\Collider, 0.0, e\room\Angle, 0.0)
+						
+
 						SetNPCFrame(e\room\NPC[1], 210.0)
 						; ~ Preload this sound cause of huge file size
 						e\room\NPC[1]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0a.ogg")
@@ -757,8 +768,12 @@ Function UpdateEvents%()
 						If e\EventState2 = 0.0
 							If e\EventState > 900.0 And e\room\RoomDoors[3]\Open
 								If e\EventState - fps\Factor[0] <= 900.0 
-									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3152.0 * RoomScale, True)
+									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3184.0 * RoomScale, True)
 									ResetEntity(n_I\Curr173\Collider)
+									RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
+									e\room\NPC[7]\State3 = 4.0
+									e\room\NPC[7]\IsDead = True
+									PlaySoundEx(snd_I\NeckSnapSFX[0], Camera, e\room\NPC[7]\Collider, 8.0)
 									
 									PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
 									me\LightBlink = 3.0
@@ -789,10 +804,6 @@ Function UpdateEvents%()
 								EndIf
 								
 								If e\EventState < 900.0 + (70.0 * 4.0)
-									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3152.0 * RoomScale, True)
-									ResetEntity(n_I\Curr173\Collider)
-									RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
-									
 									If e\EventState > 900.0 + 70.0 And e\EventState < 900.0 + (70.0 * 2.5)
 										AnimateNPC(e\room\NPC[2], 1539.0, 1553.0, 0.2, False)
 										PointEntity(e\room\NPC[2]\OBJ, n_I\Curr173\Collider)
@@ -8461,11 +8472,7 @@ Function UpdateIntro%()
 					TFormPoint(-894.0, 500.0, 130.0, e\room\OBJ, 0)
 					e\room\NPC[13] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 					RotateEntity(e\room\NPC[13]\Collider, 0.0, e\room\Angle + 290.0, 0.0)
-					
-					Local Tex% = LoadTexture_Strict("GFX\NPCs\scientist.png")
-					
-					EntityTexture(e\room\NPC[13]\OBJ, Tex)
-					DeleteSingleTextureEntryFromCache(Tex)
+					ChangeNPCTextureID(e\room\NPC[13], NPC_CLASS_D_SCIENTIST_TEXTURE)
 					HideEntity(e\room\NPC[13]\OBJ)
 					
 					TFormPoint(-3180.0, -315.0, -687.0, e\room\OBJ, 0)
@@ -9120,7 +9127,6 @@ Function UpdateIntro%()
 									ElseIf e\EventState3 < 14065.0
 										me\BlinkTimer = -10.0
 										
-										RemoveNPC(e\room\NPC[13])
 										OpenCloseDoor(e\room\RoomDoors[6])
 										
 										PlaySoundEx(snd_I\NeckSnapSFX[Rand(0, 2)], Camera, n_I\Curr173\Collider)
@@ -9249,6 +9255,8 @@ Function UpdateIntro%()
 														ResetEntity(e\room\NPC[i]\Collider)
 													Next
 													
+													
+													
 													FreeSound_Strict(snd_I\IntroSFX[2]) : snd_I\IntroSFX[2] = 0
 													For i = 4 To 6
 														FreeSound_Strict(snd_I\IntroSFX[i]) : snd_I\IntroSFX[i] = 0
@@ -9259,6 +9267,8 @@ Function UpdateIntro%()
 													
 													e\room\NPC[6]\GravityMult = 1.0
 													r\NPC[1] = e\room\NPC[6]
+													
+													r\NPC[7] = e\room\NPC[13]
 													
 													For d.Doors = Each Doors
 														If d\room = e\room Then RemoveDoor(d)
