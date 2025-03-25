@@ -2635,7 +2635,7 @@ Function DelSaveOnKeter%()
 	EndIf
 End Function
 
-Function Kill%(IsBloody% = False)
+Function Kill%(IsBloody% = False, Animated% = True)
 	If chs\GodMode Then Return
 	
 	StopBreathSound()
@@ -2668,13 +2668,15 @@ Function Kill%(IsBloody% = False)
 			FreeEntity(Pvt) : Pvt = 0
 		EndIf
 		
-		me\KillAnim = Rand(0, 1) : me\ForceMove = 0.0
-		PlaySound_Strict(snd_I\DamageSFX[0])
-		
-		ShowEntity(me\Head)
-		PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
-		ResetEntity(me\Head)
-		RotateEntity(me\Head, 0.0, EntityYaw(Camera), 0.0)
+		If Animated
+			me\KillAnim = Rand(0, 1) : me\ForceMove = 0.0
+			PlaySound_Strict(snd_I\DamageSFX[0])
+			
+			ShowEntity(me\Head)
+			PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
+			ResetEntity(me\Head)
+			RotateEntity(me\Head, 0.0, EntityYaw(Camera), 0.0)
+		EndIf
 		
 		me\Terminated = True
 	EndIf

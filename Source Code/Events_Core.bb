@@ -751,8 +751,7 @@ Function UpdateEvents%()
 								If (Not chs\GodMode) And (Not me\Terminated)
 									PlaySound_Strict(LoadTempSound("SFX\Character\BodyFall.ogg"))
 									msg\DeathMsg = Format(GetLocalString("death", "vent"), SubjectName)
-									me\Terminated = True
-									DelSaveOnKeter()
+									Kill(True, False)
 								EndIf
 							EndIf
 						EndIf
@@ -1858,7 +1857,7 @@ Function UpdateEvents%()
 								Select Setting
 									Case ROUGH
 										;[Block]
-										me\Terminated = True
+										Kill(False, False)
 										If ChannelPlaying(e\SoundCHN) Then StopChannel(e\SoundCHN) : e\SoundCHN = 0
 										msg\DeathMsg = Format(GetLocalString("death", "914"), SubjectName)
 										;[End Block]
@@ -5879,8 +5878,7 @@ Function UpdateEvents%()
 									msg\DeathMsg = Format(GetLocalString("death", "939.shaft"), SubjectName)
 									PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
 									me\BlurTimer = 3000.0
-									me\Terminated = True
-									DelSaveOnKeter()
+									Kill(False, False)
 								EndIf
 							EndIf
 						EndIf
@@ -7390,8 +7388,7 @@ Function UpdateDimension106%()
 											msg\DeathMsg = GetLocalString("death", "106_1")
 											PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
 											me\BlurTimer = 3000.0
-											me\Terminated = True
-											DelSaveOnKeter()
+											Kill(True, False)
 										EndIf
 									EndIf
 									e\SoundCHN = LoopSoundEx(e\Sound, e\SoundCHN, Camera, e\room\Objects[i], 6.0)
@@ -7413,8 +7410,7 @@ Function UpdateDimension106%()
 									PlaySound_Strict(snd_I\HorrorSFX[8])
 									msg\DeathMsg = GetLocalString("death", "106_2")
 									me\BlurTimer = 3000.0
-									me\Terminated = True
-									DelSaveOnKeter()
+									Kill(False, False)
 								EndIf
 							EndIf
 						EndIf
@@ -7745,8 +7741,7 @@ Function UpdateDimension106%()
 									PlaySound_Strict(snd_I\HorrorSFX[8])
 									msg\DeathMsg = GetLocalString("death", "106_2")
 									me\BlurTimer = 3000.0
-									me\Terminated = True
-									DelSaveOnKeter()
+									Kill(False, False)
 								EndIf
 							EndIf
 						EndIf
