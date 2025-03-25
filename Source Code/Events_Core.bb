@@ -690,7 +690,7 @@ Function UpdateEvents%()
 							e\room\NPC[7] = CreateNPC(NPCTypeD, e\room\x + 32.0 * RoomScale, e\room\y + 0.3, e\room\z + 3116.0 * RoomScale)
 							ChangeNPCTextureID(e\room\NPC[7], NPC_CLASS_D_SCIENTIST_TEXTURE)
 						EndIf
-							RotateEntity(e\room\NPC[7]\Collider, 0.0, e\room\Angle, 0.0)
+						RotateEntity(e\room\NPC[7]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 						
 
 						SetNPCFrame(e\room\NPC[1], 210.0)
@@ -772,7 +772,7 @@ Function UpdateEvents%()
 									PositionEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3184.0 * RoomScale, True)
 									ResetEntity(n_I\Curr173\Collider)
 									RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
-									e\room\NPC[7]\State3 = 4.0
+									e\room\NPC[7]\State3 = 2.0
 									e\room\NPC[7]\IsDead = True
 									PlaySoundEx(snd_I\NeckSnapSFX[0], Camera, e\room\NPC[7]\Collider, 8.0)
 									
