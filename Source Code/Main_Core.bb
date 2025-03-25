@@ -2628,11 +2628,11 @@ Function RenderHintMessages%()
 End Function
 
 Function DelSaveOnKeter%()
-If SelectedDifficulty\SaveType => SAVE_ON_QUIT
-	DeleteGame(CurrSave)
-	GameSaved = False
-	LoadSavedGames()
-EndIf
+	If SelectedDifficulty\SaveType => SAVE_ON_QUIT
+		DeleteGame(CurrSave)
+		GameSaved = False
+		LoadSavedGames()
+	EndIf
 End Function
 
 Function Kill%(IsBloody% = False)
