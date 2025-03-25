@@ -692,7 +692,6 @@ Function UpdateEvents%()
 						EndIf
 						RotateEntity(e\room\NPC[7]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 						
-
 						SetNPCFrame(e\room\NPC[1], 210.0)
 						; ~ Preload this sound cause of huge file size
 						e\room\NPC[1]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0a.ogg")
@@ -8333,7 +8332,7 @@ Const INTRO_IN_CHAMBER% = 6
 
 Function UpdateIntro%()
 	Local e.Events, r.Rooms, d.Doors, p.Props, sc.SecurityCams, l.Lights, se.SoundEmitters, w.WayPoints
-	Local i%, Temp%, FPSFactorEx#
+	Local i%, Temp%, FPSFactorEx#, Tex%
 	Local x#, y#, z#
 	Local Dist#, Dist2#, Pvt%
 	Local StrTemp$ = ""
@@ -8420,7 +8419,7 @@ Function UpdateIntro%()
 					e\room\NPC[7]\State = -1.0
 					; ~ Preload this sound cause of huge file size
 					e\room\NPC[7]\Sound = LoadSound_Strict("SFX\Room\Intro\Scientist\Conversation.ogg")
-					SetNPCFrame(e\room\NPC[7], 182.0)
+					SetNPCFrame(e\room\NPC[7], 161.0)
 					ChangeNPCTextureID(e\room\NPC[7], NPC_CLASS_D_SECURITY_TEXTURE)
 					HideEntity(e\room\NPC[7]\OBJ)
 					
@@ -8474,7 +8473,7 @@ Function UpdateIntro%()
 					e\room\NPC[14] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 					RotateEntity(e\room\NPC[14]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
 					e\room\NPC[14]\State = -1.0
-					SetNPCFrame(e\room\NPC[14], 182.0)
+					SetNPCFrame(e\room\NPC[14], 161.0)
 					Tex = LoadTexture_Strict("GFX\NPCs\scientist(2).png")
 					EntityTexture(e\room\NPC[14]\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex)
@@ -8735,6 +8734,11 @@ Function UpdateIntro%()
 								EndIf
 							EndIf
 							
+							If e\room\NPC[7] <> Null
+								For i = 1 To 2
+									AnimateEx(e\room\NPC[7 * i]\OBJ, AnimTime(e\room\NPC[7 * i]\OBJ), 161.0, 190.0, 0.1)
+								Next
+							EndIf
 							e\room\NPC[5]\SoundCHN2 = LoopSoundEx(e\room\NPC[5]\Sound2, e\room\NPC[5]\SoundCHN2, Camera, e\room\NPC[5]\OBJ, 2.0, 0.5)
 							
 							If EntityX(me\Collider) < e\room\x - 5376.0 * RoomScale And e\EventStr = ""
