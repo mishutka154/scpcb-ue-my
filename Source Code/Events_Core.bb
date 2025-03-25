@@ -751,7 +751,8 @@ Function UpdateEvents%()
 								If (Not chs\GodMode) And (Not me\Terminated)
 									PlaySound_Strict(LoadTempSound("SFX\Character\BodyFall.ogg"))
 									msg\DeathMsg = Format(GetLocalString("death", "vent"), SubjectName)
-									Kill(True)
+									me\Terminated = True
+									DelSaveOnKeter()
 								EndIf
 							EndIf
 						EndIf
@@ -2390,12 +2391,6 @@ Function UpdateEvents%()
 										If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 : wi\SCRAMBLE = 0
 										
 										me\Zombie = True
-										
-										If SelectedDifficulty\SaveType => SAVE_ON_QUIT
-											DeleteGame(CurrSave)
-											GameSaved = False
-											LoadSavedGames()
-										EndIf
 										
 										msg\DeathMsg = GetLocalString("death", "0492")
 										
@@ -5885,6 +5880,7 @@ Function UpdateEvents%()
 									PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
 									me\BlurTimer = 3000.0
 									me\Terminated = True
+									DelSaveOnKeter()
 								EndIf
 							EndIf
 						EndIf
@@ -7394,7 +7390,8 @@ Function UpdateDimension106%()
 											msg\DeathMsg = GetLocalString("death", "106_1")
 											PlaySound_Strict(LoadTempSound("SFX\Room\PocketDimension\Impact.ogg"))
 											me\BlurTimer = 3000.0
-											Kill(True)
+											me\Terminated = True
+											DelSaveOnKeter()
 										EndIf
 									EndIf
 									e\SoundCHN = LoopSoundEx(e\Sound, e\SoundCHN, Camera, e\room\Objects[i], 6.0)
@@ -7416,7 +7413,8 @@ Function UpdateDimension106%()
 									PlaySound_Strict(snd_I\HorrorSFX[8])
 									msg\DeathMsg = GetLocalString("death", "106_2")
 									me\BlurTimer = 3000.0
-									Kill()
+									me\Terminated = True
+									DelSaveOnKeter()
 								EndIf
 							EndIf
 						EndIf
@@ -7748,6 +7746,7 @@ Function UpdateDimension106%()
 									msg\DeathMsg = GetLocalString("death", "106_2")
 									me\BlurTimer = 3000.0
 									me\Terminated = True
+									DelSaveOnKeter()
 								EndIf
 							EndIf
 						EndIf

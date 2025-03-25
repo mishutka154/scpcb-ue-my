@@ -2180,7 +2180,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[End Block]
 		Case "kill", "suicide"
 			;[Block]
-			me\Terminated = True
+			Kill()
 			Select Rand(4)
 				Case 1
 					;[Block]
@@ -2627,6 +2627,14 @@ Function RenderHintMessages%()
 	EndIf
 End Function
 
+Function DelSaveOnKeter%()
+If SelectedDifficulty\SaveType => SAVE_ON_QUIT
+	DeleteGame(CurrSave)
+	GameSaved = False
+	LoadSavedGames()
+EndIf
+End Function
+
 Function Kill%(IsBloody% = False)
 	If chs\GodMode Then Return
 	
@@ -2662,11 +2670,6 @@ Function Kill%(IsBloody% = False)
 		
 		me\KillAnim = Rand(0, 1) : me\ForceMove = 0.0
 		PlaySound_Strict(snd_I\DamageSFX[0])
-		If SelectedDifficulty\SaveType => SAVE_ON_QUIT
-			DeleteGame(CurrSave)
-			GameSaved = False
-			LoadSavedGames()
-		EndIf
 		
 		ShowEntity(me\Head)
 		PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)

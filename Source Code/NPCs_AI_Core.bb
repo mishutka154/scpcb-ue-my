@@ -446,6 +446,7 @@ Function UpdateNPCType049%(n.NPCs)
 									PositionEntity(me\Head, EntityX(Camera, True), EntityY(Camera, True), EntityZ(Camera, True), True)
 									ResetEntity(me\Head)
 									RotateEntity(me\Head, 0.0, EntityYaw(Camera) + Rnd(-45.0, 45.0), 0.0)
+									DelSaveOnKeter()
 									me\FallTimer = Min(-1.0, me\FallTimer)
 								EndIf
 							Else
