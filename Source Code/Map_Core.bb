@@ -1515,6 +1515,7 @@ Const r_room3_ez% = 102, r_room3_2_ez% = 103, r_room3_3_ez% = 104, r_room3_4_ez%
 Const r_room4_ez% = 106, r_room4_2_ez% = 107
 ; ~ OTHERS
 Const r_dimension_106% = 108, r_dimension_1499% = 109
+Const r_room2_closets_2% = 110
 ;[End Block]
 
 Function FindRoomID%(RoomName$)
@@ -1574,6 +1575,10 @@ Function FindRoomID%(RoomName$)
 		Case "room2_closets"
 			;[Block]
 			Return(r_room2_closets)
+			;[End Block]
+		Case "room2_closets_2"
+			;[Block]
+			Return(r_room2_closets_2)
 			;[End Block]
 		Case "room2_elevator"
 			;[Block]
@@ -5587,6 +5592,7 @@ Function CreateMap%()
 	SetRoom(0, ROOM2, "cont2_427_714_860_1025", 0.2)
 	SetRoom(0, ROOM2, "room2_storage", 0.3)
 	SetRoom(0, ROOM2, "room2_gw_2", 0.4)
+	SetRoom(0, ROOM2, "room2_closets_2", 0.45)
 	SetRoom(0, ROOM2, "cont2_012", 0.5)
 	SetRoom(0, ROOM2, "room2_sl", 0.55)
 	SetRoom(0, ROOM2, "cont2_500_1499", 0.6)
