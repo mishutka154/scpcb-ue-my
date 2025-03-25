@@ -776,6 +776,12 @@ Function FillRoom%(r.Rooms)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			;[End Block]
+		Case r_room2_closets_2
+			;[Block]
+			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, False, OFFICE_DOOR)
+			
+			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z - 576.0 * RoomScale, 90.0, True, OFFICE_DOOR)
+			;[End Block]
 		Case r_room2_elevator
 			;[Block]
 			d.Doors = CreateDoor(r, r\x + 448.0 * RoomScale, r\y, r\z, -90.0, True, ELEVATOR_DOOR)
