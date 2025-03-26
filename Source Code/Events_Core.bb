@@ -8617,6 +8617,7 @@ Function UpdateIntro%()
 							;[End Block]
 						Case INTRO_CELL_REQUESTING
 							;[Block]
+							LightRenderDistance = 16.0
 							If (Not ChannelPlaying(e\room\NPC[3]\SoundCHN))
 								LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\ExitCell.ogg")
 								e\room\NPC[3]\SoundCHN = PlaySoundEx(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider, 10.0, 1.0, True)
@@ -10390,4 +10391,4 @@ Function UpdateForest%()
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS

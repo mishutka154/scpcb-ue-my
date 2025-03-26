@@ -3339,6 +3339,7 @@ End Function
 
 Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the line
 	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
+	Local i%
 	Local de.Decals
 	
 	; ~ n\State: Main state
@@ -3442,7 +3443,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 								;[End Block]
 							Case it_scp500pill
 								;[Block]
-								If n\State3 < 3 Then n\State3 = ((n\State3 = 2) * 2) + 1
+								If n\State3 < 3.0 Then n\State3 = ((n\State3 = 2.0) * 2.0) + 1.0
 								;[End Block]
 							Case it_scp420j
 								;[Block]
@@ -3471,12 +3472,12 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 							n\CurrSpeed = 0.0
 						EndIf
 						; ~ TODO: Check if this works well
-						If n\State3 > 1
+						If n\State3 > 1.0
 							me\Injuries = Max(me\Injuries - (fps\Factor[0] / 700.0), 0.0)
 						Else
 							If me\Injuries > 0.5 Then me\Injuries = Max(me\Injuries - (fps\Factor[0] / 2800.0), 0.5)
 						EndIf
-						If n\State3 = 1 Lor n\State = 3
+						If n\State3 = 1.0 Lor n\State3 = 3.0
 							If I_008\Timer > 0.0 Then I_008\Revert = True
 							If I_409\Timer > 0.0 Then I_409\Revert = True
 							For i = 0 To 6
@@ -3586,7 +3587,7 @@ Function UpdateNPCType999%(n.NPCs) ; ~ Will need a lot more stuff later down the
 				PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.3, EntityZ(n\Collider))
 				TurnEntity(Pvt, 90.0, 0.0, 0.0)
 				If EntityPick(Pvt, 0.6)
-					de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4, (n\State2 = 2.0))
+					de.Decals = CreateDecal(DECAL_999, PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.3, 0.36), 0.4, (n\State3 > 1.0))
 					de\AlphaChange = -0.0003
 					EntityParent(de\OBJ, PlayerRoom\OBJ)
 				EndIf
