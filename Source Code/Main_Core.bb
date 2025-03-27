@@ -5223,7 +5223,6 @@ Function UpdateGUI%()
 							wi\GasMask = 0 : wi\BallisticHelmet = False
 							I_427\Using = False : I_1499\Using = 0
 							I_268\Using = 0
-							ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX + (wi\HazmatSuit = it_hazmatsuit148)) ; ~ NOTICE: Const PLAYER_BODY_HAZMAT_TEX% = 1, Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
 							Select SelectedItem\ItemTemplate\ID
 								Case it_hazmatsuit
 									;[Block]
@@ -5246,6 +5245,7 @@ Function UpdateGUI%()
 									wi\HazmatSuit = 4
 									;[End Block]
 							End Select
+							ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX + (wi\HazmatSuit = 4)) ; ~ NOTICE: Const PLAYER_BODY_HAZMAT_TEX% = 1, Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
 						EndIf
 						SelectedItem\State = 0.0
 						SelectedItem = Null
