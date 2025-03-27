@@ -603,13 +603,6 @@ Function UpdateGame%()
 						SelectedItem = Null
 					ElseIf SelectedItem <> Null
 						PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-						For i = 0 To OtherOpen\InvSlots - 1
-							If OtherOpen\SecondInv[i] = SelectedItem
-								PrevOtherOpen = OtherOpen
-								SelectedItem = PrevOtherOpen\SecondInv[i]
-								Exit
-							EndIf
-						Next
 					EndIf
 					OtherOpen = Null
 				EndIf
@@ -3553,7 +3546,6 @@ Function ResetSelectedStuff%()
 	sc_I\SelectedMonitor = Null
 	SelectedItem = Null
 	OtherOpen = Null
-	PrevOtherOpen = Null
 	d_I\ClosestButton = 0
 	GrabbedEntity = 0
 End Function
@@ -3808,12 +3800,6 @@ Function SwapOtherOpenItem%(FromItem.Items, ToItem.Items)
     Next
 	OtherOpen\SecondInv[ToIndex] = FromItem
 	OtherOpen\SecondInv[FromIndex] = ToItem
-End Function
-
-Function RejectItemSwap%()
-	CreateMsg(GetLocalString("msg", "it.cannot.swap"))
-	OtherOpen = PrevOtherOpen
-	PrevOtherOpen = Null
 End Function
 
 Function UpdateGUI%()
@@ -4202,6 +4188,27 @@ Function UpdateGUI%()
 		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null
+			Local PrevOtherOpen.Items = Null
+			Local SecondInvItem.Items = Null
+			
+			For z = 0 To MaxItemAmount - 1
+				If Inventory(z) <> Null
+					If Inventory(z)\InvSlots > 0
+						Local FoundSecondInv% = False
+						Local sz%
+						
+						For sz = 0 To Inventory(z)\InvSlots - 1
+							If Inventory(z)\SecondInv[sz] = SelectedItem
+								SecondInvItem = Inventory(z)
+								FoundSecondInv = True
+								Exit
+							EndIf
+						Next
+						If FoundSecondInv Then Exit
+					EndIf
+				EndIf
+			Next
+			
 			If (Not mo\MouseDown1) Lor mo\MouseHit2
 				If MouseSlot = 66
 					Local ShouldPreventDropping%
@@ -4291,6 +4298,7 @@ Function UpdateGUI%()
 					If ShouldPreventDropping
 						CreateHintMsg(GetLocalString("msg", "takeoff"))
 					Else
+						If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
 						DropItem(SelectedItem)
 						InvOpen = mo\MouseHit2
 					EndIf
@@ -4308,10 +4316,7 @@ Function UpdateGUI%()
 							EndIf
 						Next
 						Inventory(MouseSlot) = SelectedItem
-						If PrevOtherOpen <> Null
-							NullSecondINV(PrevOtherOpen)
-							PrevOtherOpen = Null
-						EndIf
+						If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
 						SelectedItem = Null
 					ElseIf Inventory(MouseSlot) <> SelectedItem
 						Local c%, ri%
@@ -4348,10 +4353,11 @@ Function UpdateGUI%()
 											;[End Block]
 										Default
 											;[Block]
-											If PrevOtherOpen <> Null
-												RejectItemSwap()
-											Else
+											If SecondInvItem = Null
 												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
+											Else
+												CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+												OtherOpen = SecondInvItem
 											EndIf
 											;[End Block]
 									End Select
@@ -4360,90 +4366,98 @@ Function UpdateGUI%()
 									Select SelectedItem\ItemTemplate\ID
 										Case it_paper, it_oldpaper, it_origami, it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_playcard, it_mastercard, it_mastercard_golden, it_badge, it_oldbadge, it_ticket
 											;[Block]
-											For c = 0 To Inventory(MouseSlot)\InvSlots - 1
-												If Inventory(MouseSlot)\SecondInv[c] = Null
-													If SelectedItem <> Null
-														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
-														
-														For ri = 0 To MaxItemAmount - 1
-															If Inventory(ri) = SelectedItem
-																Inventory(ri) = Null
-																ItemAmount = ItemAmount - 1
-																PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-																Exit
-															EndIf
-														Next
-														added = SelectedItem
-														SelectedItem = Null
-														Exit
+											If SecondInvItem <> Inventory(MouseSlot)
+												If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
+												For c = 0 To Inventory(MouseSlot)\InvSlots - 1
+													If Inventory(MouseSlot)\SecondInv[c] = Null
+														If SelectedItem <> Null
+															Inventory(MouseSlot)\SecondInv[c] = SelectedItem
+															Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
+															
+															For ri = 0 To MaxItemAmount - 1
+																If Inventory(ri) = SelectedItem
+																	Inventory(ri) = Null
+																	ItemAmount = ItemAmount - 1
+																	PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+																	Exit
+																EndIf
+															Next
+															added = SelectedItem
+															SelectedItem = Null
+															Exit
+														EndIf
 													EndIf
-												EndIf
-											Next
-											If SelectedItem <> Null
-												CreateMsg(GetLocalString("msg", "clipboard.full"))
-											Else
-												If added\ItemTemplate\ID = it_paper Lor added\ItemTemplate\ID = it_oldpaper
-													CreateMsg(GetLocalString("msg", "clipboard.paper"))
-												ElseIf added\ItemTemplate\ID = it_badge Lor added\ItemTemplate\ID = it_oldbadge Lor added\ItemTemplate\ID = it_oldbadge
-													CreateMsg(Format(GetLocalString("msg", "clipboard.badge"), added\ItemTemplate\DisplayName))
+												Next
+												If SelectedItem <> Null
+													CreateMsg(GetLocalString("msg", "clipboard.full"))
 												Else
-													CreateMsg(Format(GetLocalString("msg", "clipboard.add"), added\ItemTemplate\DisplayName))
+													If added\ItemTemplate\ID = it_paper Lor added\ItemTemplate\ID = it_oldpaper
+														CreateMsg(GetLocalString("msg", "clipboard.paper"))
+													ElseIf added\ItemTemplate\ID = it_badge Lor added\ItemTemplate\ID = it_oldbadge Lor added\ItemTemplate\ID = it_oldbadge
+														CreateMsg(Format(GetLocalString("msg", "clipboard.badge"), added\ItemTemplate\DisplayName))
+													Else
+														CreateMsg(Format(GetLocalString("msg", "clipboard.add"), added\ItemTemplate\DisplayName))
+													EndIf
 												EndIf
 											EndIf
 											;[End Block]
 										Default
 											;[Block]
-											If PrevOtherOpen <> Null
-												RejectItemSwap()
-											Else
+											If SecondInvItem = Null
 												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
+											Else
+												CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+												OtherOpen = SecondInvItem
 											EndIf
 											;[End Block]
 									End Select
 								ElseIf Inventory(MouseSlot)\ItemTemplate\ID = it_wallet
 									; ~ Add an item to wallet
 									Select SelectedItem\ItemTemplate\ID
-										Case it_paper, it_oldpaper, it_origami, it_scp500pill, it_scp500pilldeath, it_scp2022pill
+										Case it_paper, it_oldpaper, it_origami
 											;[Block]
-											If PrevOtherOpen <> Null
-												RejectItemSwap()
-											Else
+											If SecondInvItem = Null
 												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
+											Else
+												CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+												OtherOpen = SecondInvItem
 											EndIf
 											;[End Block]
 										Default
 											;[Block]
-											If (SelectedItem\ItemTemplate\ID = it_scp714 And I_714\Using = 2) Lor (SelectedItem\ItemTemplate\ID = it_coarse714 And I_714\Using = 1)
-												CreateMsg(GetLocalString("msg", "takeoff"))
-												SelectedItem = Null
-												Return
-											EndIf
-											
-											For c = 0 To Inventory(MouseSlot)\InvSlots - 1
-												If Inventory(MouseSlot)\SecondInv[c] = Null
-													If SelectedItem <> Null
-														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
-														
-														For ri = 0 To MaxItemAmount - 1
-															If Inventory(ri) = SelectedItem
-																Inventory(ri) = Null
-																ItemAmount = ItemAmount - 1
-																PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-																Exit
-															EndIf
-														Next
-														added = SelectedItem
-														SelectedItem = Null
-														Exit
-													EndIf
+											If SecondInvItem <> Inventory(MouseSlot)
+												If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
+												If (SelectedItem\ItemTemplate\ID = it_scp714 And I_714\Using = 2) Lor (SelectedItem\ItemTemplate\ID = it_coarse714 And I_714\Using = 1)
+													CreateMsg(GetLocalString("msg", "takeoff"))
+													SelectedItem = Null
+													Return
 												EndIf
-											Next
-											If SelectedItem <> Null
-												CreateMsg(GetLocalString("msg", "wallet.full"))
-											Else
-												CreateMsg(Format(GetLocalString("msg", "wallet.add"), added\ItemTemplate\DisplayName))
+												
+												For c = 0 To Inventory(MouseSlot)\InvSlots - 1
+													If Inventory(MouseSlot)\SecondInv[c] = Null
+														If SelectedItem <> Null
+															Inventory(MouseSlot)\SecondInv[c] = SelectedItem
+															Inventory(MouseSlot)\InvImg = Inventory(MouseSlot)\ItemTemplate\InvImg
+															
+															For ri = 0 To MaxItemAmount - 1
+																If Inventory(ri) = SelectedItem
+																	Inventory(ri) = Null
+																	ItemAmount = ItemAmount - 1
+																	PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+																	Exit
+																EndIf
+															Next
+															added = SelectedItem
+															SelectedItem = Null
+															Exit
+														EndIf
+													EndIf
+												Next
+												If SelectedItem <> Null
+													CreateMsg(GetLocalString("msg", "wallet.full"))
+												Else
+													CreateMsg(Format(GetLocalString("msg", "wallet.add"), added\ItemTemplate\DisplayName))
+												EndIf
 											EndIf
 											;[End Block]
 									End Select
@@ -4454,45 +4468,50 @@ Function UpdateGUI%()
 									Select SelectedItem\ItemTemplate\ID
 										Case it_scp500pill, it_scp500pilldeath, it_pill, it_scp2022pill
 											;[Block]
-											For c = 0 To Inventory(MouseSlot)\InvSlots - 1
-												If Inventory(MouseSlot)\SecondInv[c] = Null
-													If SelectedItem <> Null
-														Inventory(MouseSlot)\SecondInv[c] = SelectedItem
-														
-														For ri = 0 To MaxItemAmount - 1
-															If Inventory(ri) = SelectedItem
-																Inventory(ri) = Null
-																ItemAmount = ItemAmount - 1
-																PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-																Exit
-															EndIf
-														Next
-														added = SelectedItem
-														SelectedItem = Null
-														Exit
+											If SecondInvItem <> Inventory(MouseSlot)
+												If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
+												For c = 0 To Inventory(MouseSlot)\InvSlots - 1
+													If Inventory(MouseSlot)\SecondInv[c] = Null
+														If SelectedItem <> Null
+															Inventory(MouseSlot)\SecondInv[c] = SelectedItem
+															
+															For ri = 0 To MaxItemAmount - 1
+																If Inventory(ri) = SelectedItem
+																	Inventory(ri) = Null
+																	ItemAmount = ItemAmount - 1
+																	PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+																	Exit
+																EndIf
+															Next
+															added = SelectedItem
+															SelectedItem = Null
+															Exit
+														EndIf
 													EndIf
+												Next
+												If SelectedItem <> Null
+													CreateMsg(GetLocalString("msg", "500.full"))
+												Else
+													CreateMsg(Format(GetLocalString("msg", "500.add"), added\ItemTemplate\DisplayName))
 												EndIf
-											Next
-											If SelectedItem <> Null
-												CreateMsg(GetLocalString("msg", "500.full"))
-											Else
-												CreateMsg(Format(GetLocalString("msg", "500.add"), added\ItemTemplate\DisplayName))
 											EndIf
 											;[End Block]
 										Default
 											;[Block]
-											If PrevOtherOpen <> Null
-												RejectItemSwap()
-											Else
+											If SecondInvItem = Null
 												SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
+											Else
+												CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+												OtherOpen = SecondInvItem
 											EndIf
 											;[End Block]
 									End Select
 								Else
-									If PrevOtherOpen <> Null
-										RejectItemSwap()
-									Else
+									If SecondInvItem = Null
 										SwapInventoryItem(SelectedItem, Inventory(MouseSlot))
+									Else
+										CreateMsg(GetLocalString("msg", "it.cannot.swap"))
+										OtherOpen = SecondInvItem
 									EndIf
 								EndIf
 								SelectedItem = Null
@@ -10427,4 +10446,4 @@ Function TeleportEntity%(Entity%, x#, y#, z#, CustomRadius# = 0.3, IsGlobal% = F
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS
