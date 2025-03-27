@@ -8416,10 +8416,9 @@ Function UpdateIntro%()
 					
 					TFormPoint(-3073.0, -315.0, -2165.0, e\room\OBJ, 0)
 					e\room\NPC[7] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
-					e\room\NPC[7]\State = -1.0
+					e\room\NPC[7]\State = 3.0
 					; ~ Preload this sound cause of huge file size
 					e\room\NPC[7]\Sound = LoadSound_Strict("SFX\Room\Intro\Scientist\Conversation.ogg")
-					SetNPCFrame(e\room\NPC[7], 161.0)
 					ChangeNPCTextureID(e\room\NPC[7], NPC_CLASS_D_SECURITY_TEXTURE)
 					HideEntity(e\room\NPC[7]\OBJ)
 					
@@ -8735,11 +8734,6 @@ Function UpdateIntro%()
 								EndIf
 							EndIf
 							
-							If e\room\NPC[7] <> Null
-								For i = 1 To 2
-									AnimateEx(e\room\NPC[7 * i]\OBJ, AnimTime(e\room\NPC[7 * i]\OBJ), 161.0, 190.0, 0.1)
-								Next
-							EndIf
 							e\room\NPC[5]\SoundCHN2 = LoopSoundEx(e\room\NPC[5]\Sound2, e\room\NPC[5]\SoundCHN2, Camera, e\room\NPC[5]\OBJ, 2.0, 0.5)
 							
 							If EntityX(me\Collider) < e\room\x - 5376.0 * RoomScale And e\EventStr = ""
