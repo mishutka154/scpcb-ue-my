@@ -35,6 +35,16 @@ Function LoopSoundEx%(SoundHandle%, SoundCHN%, Cam%, Entity%, Range# = 10.0, Vol
 	Return(SoundCHN)
 End Function
 
+Function LoopSoundLocal%(SoundHandle%, SoundCHN%, Volume# = 1.0, IsVoice% = False)
+	If Volume > 0.0
+		If (Not ChannelPlaying(SoundCHN)) Then SoundCHN = PlaySound_Strict(SoundHandle, IsVoice)
+		ChannelVolume(SoundCHN, Volume * ((opt\VoiceVolume * IsVoice) + (opt\SFXVolume * (Not (IsVoice)))) * opt\MasterVolume)
+	Else
+		ChannelVolume(SoundCHN, 0.0)
+	EndIf
+	Return(SoundCHN)
+End Function
+
 Function UpdateSoundOrigin%(SoundCHN%, Cam%, Entity%, Range# = 10.0, Volume# = 1.0, IsVoice% = False, SFXVolume% = True)
 	If (Not ChannelPlaying(SoundCHN)) Lor Entity = 0 Then Return
 	

@@ -1494,7 +1494,7 @@ Type SoundInstance
 	Field HorrorSFX%[14]
 	Field MissSFX%
 	Field IntroSFX%[7]
-	Field AlarmSFX%[4]
+	Field AlarmSFX%[3]
 	Field DamageSFX%[14]
 	Field HeartBeatSFX%
 	Field NeckSnapSFX%[3]
@@ -1628,6 +1628,8 @@ Function LoadSounds%()
 			StepSFX(2, 0, i) = LoadSound_Strict("SFX\Step\StepPD" + i + ".ogg")
 			StepSFX(3, 0, i) = LoadSound_Strict("SFX\Step\StepCloth" + i + ".ogg")
 			StepSFX(4, 0, i) = LoadSound_Strict("SFX\Step\StepForest" + i + ".ogg")
+			
+			snd_I\AlarmSFX[i] = LoadSound_Strict("SFX\Alarm\Alarm" + (i + 1) + ".ogg")
 		EndIf
 		If i < 4
 			snd_I\DecaySFX[i] = LoadSound_Strict("SFX\SCP\106\Decay" + i + ".ogg")
@@ -1635,8 +1637,6 @@ Function LoadSounds%()
 			snd_I\DripSFX[i] = LoadSound_Strict("SFX\Character\D9341\BloodDrip" + i + ".ogg")
 			
 			snd_I\PickSFX[i] = LoadSound_Strict("SFX\Interact\PickItem" + i + ".ogg")
-			
-			snd_I\AlarmSFX[i] = LoadSound_Strict("SFX\Alarm\Alarm" + i + ".ogg")
 			
 			snd_I\Step2SFX[i + 3] = LoadSound_Strict("SFX\Step\NPCs\939_966\StepMetal" + i + ".ogg")
 			If i < 3
@@ -1784,11 +1784,11 @@ Function RemoveSoundInstances%()
 			CoughSFX(0, i) = 0
 			CoughSFX(1, i) = 0
 			snd_I\LightSFX[i] = 0
+			snd_I\AlarmSFX[i] = 0
 		EndIf
 		If i < 4
 			snd_I\DecaySFX[i] = 0
 			snd_I\PickSFX[i] = 0
-			snd_I\AlarmSFX[i] = 0
 			snd_I\DripSFX[i] = 0
 			snd_I\OpenDecayDoorSFX[i] = 0
 			snd_I\CloseDecayDoorSFX[i] = 0

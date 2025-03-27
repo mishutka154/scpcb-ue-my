@@ -713,7 +713,7 @@ Function UpdateItems%()
 					If I_714\Using <> 2 And wi\HazmatSuit <> 4 And wi\GasMask <> 4
 						me\BlurTimer = 1000.0 - (200.0 * (I_714\Using = 1))
 						me\CameraShake = 1.0 - (0.5 * (I_714\Using = 1))
-						If (Not ChannelPlaying(I_1123\SoundCHN)) Then I_1123\SoundCHN = PlaySound_Strict(I_1123\Sound)
+						I_1123\SoundCHN = LoopSoundLocal(I_1123\Sound, I_1123\SoundCHN)
 					EndIf
 					;[End Block]
 			End Select

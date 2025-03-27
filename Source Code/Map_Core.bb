@@ -4281,7 +4281,7 @@ Function UpdateSecurityCams%()
 										EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_895_OVERLAY_1, MONITOR_895_OVERLAY_5)])
 										If sc\PlayerState = 1 Then PlaySound_Strict(snd_I\HorrorSFX[1])
 										sc\PlayerState = 2
-										If (Not ChannelPlaying(sc\SoundCHN)) Then sc\SoundCHN = PlaySound_Strict(snd_I\HorrorSFX[4])
+										sc\SoundCHN = LoopSoundLocal(snd_I\HorrorSFX[4], sc\SoundCHN)
 									EndIf
 									me\BlurTimer = 1000.0
 									If me\VomitTimer = 0.0 Then me\VomitTimer = 1.0

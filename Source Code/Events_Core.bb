@@ -881,10 +881,7 @@ Function UpdateEvents%()
 						EndIf
 					EndIf
 					
-					If e\EventState < 2000.0
-						If (Not ChannelPlaying(e\SoundCHN)) Then e\SoundCHN = PlaySound_Strict(snd_I\AlarmSFX[0])
-					EndIf
-					
+					If e\EventState < 2000.0 Then e\SoundCHN = LoopSoundEx(RoomAmbience[5], e\SoundCHN, Camera, e\room\OBJ, 100.0)
 					If e\EventState3 < 11.0
 						If (Not ChannelPlaying(e\SoundCHN2))
 							e\EventState3 = e\EventState3 + 1.0
@@ -1110,10 +1107,7 @@ Function UpdateEvents%()
 				;[Block]
 				; ~ EventState2: Are the magnets on
 				
-				If SoundTransmission
-					If (Not ChannelPlaying(e\SoundCHN2)) Then e\SoundCHN2 = PlaySound_Strict(snd_I\RadioStatic)
-				EndIf
-				
+				If SoundTransmission Then e\SoundCHN2 = LoopSoundLocal(snd_I\RadioStatic, e\SoundCHN2)
 				If (SoundTransmission Lor (e\EventState3 + fps\Factor[0] >= 2500.0)) And e\EventState = 1.0 Then e\EventState3 = Min(e\EventState3 + fps\Factor[0], 4000.0)
 				
 				If PlayerRoom = e\room
@@ -1930,7 +1924,7 @@ Function UpdateEvents%()
 						e\EventState3 = Max(e\EventState3 - fps\Factor[0], 0.0)
 					EndIf
 					If e\EventState3 > 0.0 And e\EventState3 < 212.0
-						If (Not ChannelPlaying(e\BlindsCHN)) Then e\BlindsCHN = LoopSoundEx(snd_I\BlindsSFX, e\BlindsCHN, Camera, e\room\Objects[6])
+						e\BlindsCHN = LoopSoundEx(snd_I\BlindsSFX, e\BlindsCHN, Camera, e\room\Objects[6], 2.0)
 					Else
 						StopChannel(e\BlindsCHN) : e\BlindsCHN = 0
 					EndIf
@@ -1967,7 +1961,7 @@ Function UpdateEvents%()
 									If EntityHidden(e\room\Objects[i]) Then ShowEntity(e\room\Objects[i])
 								Next
 							EndIf
-							e\SoundCHN = LoopSoundEx(snd_I\AlarmSFX[0], e\SoundCHN, Camera, e\room\Objects[0], 5.0)
+							e\SoundCHN = LoopSoundEx(RoomAmbience[5], e\SoundCHN, Camera, e\room\Objects[0], 5.0)
 							
 							UpdateRedLight(e\room\Objects[5], 1500, 800)
 							
@@ -2606,7 +2600,7 @@ Function UpdateEvents%()
 						If I_714\Using <> 2 And wi\HazmatSuit <> 4 And wi\GasMask <> 4
 							me\BlurTimer = 1000.0 - (200.0 * (I_714\Using = 1))
 							me\CameraShake = 1.0 - (0.5 * (I_714\Using = 1))
-							If (Not ChannelPlaying(I_1123\SoundCHN)) Then I_1123\SoundCHN = PlaySound_Strict(I_1123\Sound)
+							I_1123\SoundCHN = LoopSoundLocal(I_1123\Sound, I_1123\SoundCHN)
 						EndIf
 					EndIf
 					Select e\EventState
@@ -4186,7 +4180,7 @@ Function UpdateEvents%()
 						e\EventState4 = Max(e\EventState4 - fps\Factor[0], -196.0)
 					EndIf
 					If e\EventState4 < 0.0 And e\EventState4 > -196.0
-						If (Not ChannelPlaying(e\BlindsCHN)) Then e\BlindsCHN = LoopSoundEx(snd_I\BlindsSFX, e\BlindsCHN, Camera, e\room\Objects[3])
+						e\BlindsCHN = LoopSoundEx(snd_I\BlindsSFX, e\BlindsCHN, Camera, e\room\Objects[3], 2.0)
 					Else
 						StopChannel(e\BlindsCHN) : e\BlindsCHN = 0
 					EndIf
@@ -6626,7 +6620,7 @@ Function UpdateEvents%()
 				EndIf
 				
 				If PlayerRoom = e\room
-					e\SoundCHN = LoopSoundEx(snd_I\AlarmSFX[2], e\SoundCHN, Camera, e\room\OBJ, 5.0)
+					e\SoundCHN = LoopSoundEx(snd_I\AlarmSFX[1], e\SoundCHN, Camera, e\room\OBJ, 5.0)
 					
 					If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 9.0
 						If Rand(50) = 1
@@ -6665,7 +6659,7 @@ Function UpdateEvents%()
 								e\room\RoomDoors[i]\FastOpen = True
 								OpenCloseDoor(e\room\RoomDoors[i])
 							Next
-							PlaySound_Strict(snd_I\AlarmSFX[3])
+							PlaySound_Strict(snd_I\AlarmSFX[2])
 							e\EventState = 0.01
 						ElseIf EntityDistanceSquared(e\room\Objects[0], me\Collider) > 5.29
 							e\EventState2 = 0.0

@@ -1210,7 +1210,7 @@ Function UpdateNPCType066%(n.NPCs)
 	
 	If n\State > 1.0
 		If n\Sound = 0 Then n\Sound = LoadSound_Strict("SFX\SCP\066\Rolling.ogg")
-		If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(n\Sound, Camera, n\Collider, 20.0)
+		n\SoundCHN = LoopSoundEx(n\Sound, n\SoundCHN, Camera, n\Collider, 20.0)
 	EndIf
 	
 	If n\State3 > 0.0
@@ -1254,7 +1254,7 @@ Function UpdateNPCType096%(n.NPCs)
 			EndIf
 		Next
 		If HasBatteryForScramble
-			If (Not ChannelPlaying(SCRAMBLECHN)) Then SCRAMBLECHN = PlaySound_Strict(snd_I\SCRAMBLESFX)
+			SCRAMBLECHN = LoopSoundLocal(snd_I\SCRAMBLESFX, SCRAMBLECHN)
 			If EntityHidden(n\OBJ2) Then ShowEntity(n\OBJ2)
 			ScaleSprite(n\OBJ2, Rnd(0.06, 0.08), Rnd(0.07, 0.09))
 			PositionEntity(n\OBJ2, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05)
@@ -4141,7 +4141,7 @@ Function UpdateNPCTypeApache%(n.NPCs)
 					If DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider)) < 900.0
 						If IsEqual(EntityY(me\Collider), EntityY(n\Collider), 20.0)
 							If EntityVisible(me\Collider, n\Collider)
-								PlaySoundEx(snd_I\AlarmSFX[1], Camera, n\Collider, 50.0, 1.0)
+								PlaySoundEx(snd_I\AlarmSFX[0], Camera, n\Collider, 50.0, 1.0)
 								n\State = 2.0
 							EndIf
 						EndIf

@@ -3303,7 +3303,7 @@ Function UpdateMouseLook%()
 			If ChannelPlaying(BreathCHN)
 				If ChannelPlaying(BreathGasRelaxedCHN) Then StopChannel(BreathGasRelaxedCHN) : BreathGasRelaxedCHN = 0
 			Else
-				If (Not ChannelPlaying(BreathGasRelaxedCHN)) Then BreathGasRelaxedCHN = PlaySound_Strict(snd_I\BreathGasRelaxedSFX, True)
+				BreathGasRelaxedCHN = LoopSoundLocal(snd_I\BreathGasRelaxedSFX, BreathGasRelaxedCHN, 1.0, True)
 			EndIf
 		EndIf
 		
@@ -3628,10 +3628,8 @@ Function UpdateNVG%()
 		
 		If wi\NVGPower < 160
 			If BatMsgTimer >= 70.0
-				If (Not ChannelPlaying(LowBatteryCHN[1]))
-					me\SndVolume = Max(3.0, me\SndVolume)
-					LowBatteryCHN[1] = PlaySound_Strict(snd_I\LowBatterySFX[1])
-				EndIf
+				me\SndVolume = Max(3.0, me\SndVolume)
+				LowBatteryCHN[1] = LoopSoundLocal(snd_I\LowBatterySFX[1], LowBatteryCHN[1])
 			EndIf
 		EndIf
 	EndIf
@@ -3854,7 +3852,7 @@ Function UpdateGUI%()
 			EndIf
 		Else
 			If PD_event\Img <> 0
-				StopChannel(PD_event\SoundCHN)
+				StopChannel(PD_event\SoundCHN) : PD_event\SoundCHN = 0
 				FreeImage(PD_event\Img) : PD_event\Img = 0
 			EndIf
 			
@@ -3865,7 +3863,7 @@ Function UpdateGUI%()
 						PlaySound_Strict(PD_event\Sound2, True)
 						PD_event\Img2 = ResizeImageEx(LoadImage_Strict("GFX\Overlays\kneel_mortal_overlay.png"), MenuScale, MenuScale)
 					Else
-						If (Not ChannelPlaying(PD_event\SoundCHN)) Then PD_event\SoundCHN = PlaySound_Strict(PD_event\Sound, True)
+						PD_event\SoundCHN = LoopSoundLocal(PD_event\Sound, PD_event\SoundCHN)
 					EndIf
 				Else
 					If ChannelPlaying(PD_event\SoundCHN) Then StopChannel(PD_event\SoundCHN) : PD_event\SoundCHN = 0
@@ -5787,18 +5785,16 @@ Function UpdateGUI%()
 							For i = 0 To 5
 								If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
 							Next
-							
-							If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+							RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
 						ElseIf CoffinDistance < 8.0
 							For i = 0 To 5
 								If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
 							Next
-							
-							If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic895)
+							RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic895, RadioCHN[6])
 						Else
 							If SelectedItem\ItemTemplate\ID = it_veryfineradio
 								SelectedItem\State2 = -1.0
-								If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+								RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
 								RadioState[6] = RadioState[6] + fps\Factor[0]
 								x = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
 								If RadioState[6] - fps\Factor[0] <= RadioState[7] * 50.0 And RadioState[6] > RadioState[7] * 50.0
@@ -5818,10 +5814,8 @@ Function UpdateGUI%()
 								Select Int(SelectedItem\State2)
 									Case 0
 										;[Block]
-										If opt\UserTrackMode = 0
-											If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-										ElseIf UserTrackMusicAmount < 1
-											If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+										If opt\UserTrackMode = 0 Lor UserTrackMusicAmount < 1
+											RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
 										Else
 											If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
 											
@@ -5961,8 +5955,7 @@ Function UpdateGUI%()
 										;[End Block]
 									Case 4
 										;[Block]
-										If (Not ChannelPlaying(RadioCHN[6])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-										
+										RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
 										If (Not ChannelPlaying(RadioCHN[4]))
 											If (Not RemoteDoorOn) And RadioState[8] = 0
 												RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
@@ -6060,7 +6053,7 @@ Function UpdateGUI%()
 									Case 5
 										;[Block]
 										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-										If (Not ChannelPlaying(RadioCHN[5])) Then RadioCHN[5] = PlaySound_Strict(snd_I\RadioStatic)
+										RadioCHN[5] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[5])
 										;[End Block]
 								End Select
 								
@@ -6083,10 +6076,8 @@ Function UpdateGUI%()
 						If (Not Temp)
 							If SelectedItem\State < 40.0
 								If BatMsgTimer >= 70.0
-									If (Not ChannelPlaying(LowBatteryCHN[0]))
-										me\SndVolume = Max(3.0, me\SndVolume)
-										LowBatteryCHN[0] = PlaySound_Strict(snd_I\LowBatterySFX[0])
-									EndIf
+									me\SndVolume = Max(3.0, me\SndVolume)
+									LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
 								EndIf
 							EndIf
 						EndIf
@@ -6124,10 +6115,8 @@ Function UpdateGUI%()
 							SelectedItem\State3 = 0.0
 							If SelectedItem\State < 20.0
 								If BatMsgTimer >= 70.0
-									If (Not ChannelPlaying(LowBatteryCHN[0]))
-										me\SndVolume = Max(3.0, me\SndVolume)
-										LowBatteryCHN[0] = PlaySound_Strict(snd_I\LowBatterySFX[0])
-									EndIf
+									me\SndVolume = Max(3.0, me\SndVolume)
+									LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
 								EndIf
 							EndIf
 						Else
@@ -6514,10 +6503,8 @@ Function UpdateGUI%()
 						
 						If SelectedItem\State < 20.0 And SelectedItem\ItemTemplate\ID <> it_e_readerulti
 							If BatMsgTimer >= 70.0
-								If (Not ChannelPlaying(LowBatteryCHN[0]))
-									me\SndVolume = Max(3.0, me\SndVolume)
-									LowBatteryCHN[0] = PlaySound_Strict(snd_I\LowBatterySFX[0])
-								EndIf
+								me\SndVolume = Max(3.0, me\SndVolume)
+								LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
 							EndIf
 						EndIf
 					Else
@@ -9905,10 +9892,10 @@ Function Update427%()
 				If I_1025\FineState[i] > 0.0 Then I_1025\FineState[i] = Max(I_1025\FineState[i] - (0.0006 * fps\Factor[0]), 0.0)
 			Next
 			If I_427\Sound[0] = 0 Then I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
-			If (Not ChannelPlaying(I_427\SoundCHN[0])) Then I_427\SoundCHN[0] = PlaySound_Strict(I_427\Sound[0])
+			I_427\SoundCHN[0] = LoopSoundLocal(I_427\Sound[0], I_427\SoundCHN[0])
 			If I_427\Timer >= 70.0 * 180.0
 				If I_427\Sound[1] = 0 Then I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
-				If (Not ChannelPlaying(I_427\SoundCHN[1])) Then I_427\SoundCHN[1] = PlaySound_Strict(I_427\Sound[1])
+				I_427\SoundCHN[1] = LoopSoundLocal(I_427\Sound[1], I_427\SoundCHN[1])
 			EndIf
 			If PrevI427Timer < 70.0 * 60.0 And I_427\Timer >= 70.0 * 60.0
 				CreateMsg(GetLocalString("msg", "freshener"))
@@ -9931,7 +9918,7 @@ Function Update427%()
 		If I_427\Sound[0] = 0 Then I_427\Sound[0] = LoadSound_Strict("SFX\SCP\427\Effect.ogg")
 		If I_427\Sound[1] = 0 Then I_427\Sound[1] = LoadSound_Strict("SFX\SCP\427\Transform.ogg")
 		For i = 0 To 1
-			If (Not ChannelPlaying(I_427\SoundCHN[i])) Then I_427\SoundCHN[i] = PlaySound_Strict(I_427\Sound[i])
+			I_427\SoundCHN[i] = LoopSoundLocal(I_427\Sound[i], I_427\SoundCHN[i])
 		Next
 		If Rnd(200) < 2.0
 			Pvt = CreatePivot()
