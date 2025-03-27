@@ -8,6 +8,7 @@
 - Added lighting quality option.
 - Added «npclist» and «enable\disable513-1» console commands.
 - Added decay sounds for elevator doors and big doors.
+- Added one more Class D loading screen description.
 
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
 - Removed leaning.

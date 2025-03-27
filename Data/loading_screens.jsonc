@@ -27,9 +27,10 @@
 		"align_y": "bottom",
 		"background": true,
 		"descriptions": [
-			"Class D personnel are designated staff used to handle the Keter-level objects.",
+			"Class D personnel are designated staff used for testing on SCP objects. Class D personnel are also used for manual labor (i.e. food service, logistics, and hazardous janitorial/maintenance work).",
 			"Class D personnel are recruited from prison inmates. Condemned persons are preferred; in times of duress, Protocol 12 can be authorized, allowing recruitment of innocents or persons incarcerated for lesser crimes.",
-			"All Class D personnel are to be terminated at the [DATA REDACTED], and a new staff must be ready to replace them."
+			"All Class D personnel are to be terminated at the [DATA REDACTED], and a new staff must be ready to replace them.",
+			"On rarer occasions, inmates convicted of worse crimes will be designated \"high risk\" and as such be separated from normal Class D personnel, given new uniforms, and reserved for Keter-level objects."
 		]
 	},
 	{
