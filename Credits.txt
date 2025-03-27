@@ -295,9 +295,10 @@
 			mishutka154
 			https://github.com/mishutka154
 							
-			Vladster_flomaster
 			Ivan Mikhailov ("Redbull.Ivan")
 			
+			Vladster_flomaster
+
 			TrillTeam:
 			https://www.youtube.com/c/TrillTeam
 
@@ -373,7 +374,7 @@
 			
 		Ukrainian translation:
 			
-			Author unknown
+			xstallm
 			
 *Blitz3D Engine Creators
 
