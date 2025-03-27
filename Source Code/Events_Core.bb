@@ -2300,8 +2300,7 @@ Function UpdateEvents%()
 								If x2
 									ShouldPlay = 8
 									IsBlackOut = False
-									If e\Sound2 = 0 Then LoadEventSound(e, "SFX\Ambient\Room Ambience\FuelPump.ogg", 1)
-									e\SoundCHN2 = LoopSoundEx(e\Sound2, e\SoundCHN2, Camera, e\room\Objects[4], 6.0)
+									e\SoundCHN2 = LoopSoundEx(RoomAmbience[7], e\SoundCHN2, Camera, e\room\Objects[4], 6.0)
 									For i = 4 To 7
 										e\room\RoomDoors[i]\Locked = 0
 									Next
