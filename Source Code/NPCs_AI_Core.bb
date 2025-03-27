@@ -4307,7 +4307,7 @@ Function UpdateNPCTypeD_Clerk%(n.NPCs)
 				;[End Block]
 			Case 3.0 ; ~ Typing
 				;[Block]
-				AnimateNPC(n, 161.0, 190.0, 0.4)
+				AnimateNPC(n, 161.0, 190.0, 0.1)
 				;[End Block]
 		End Select
 		If n\HP =< 0 And n\NPCType = NPCTypeClerk
