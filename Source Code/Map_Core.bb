@@ -2793,6 +2793,22 @@ Function AffectDecayDoor%(d.Doors)
 	d\IsAffected = True
 End Function
 
+; ~ This function is written for SCP-1123's event
+Function ChangeDoorYPositon%(d.Doors, y#)
+	Local i%
+	
+	PositionEntity(d\FrameOBJ, EntityX(d\FrameOBJ, True), y, EntityZ(d\FrameOBJ, True), True)
+	PositionEntity(d\OBJ, EntityX(d\OBJ, True), y, EntityZ(d\OBJ, True), True)
+	ResetEntity(d\OBJ)
+	If d\OBJ2 <> 0
+		PositionEntity(d\OBJ2, EntityX(d\OBJ2, True), y, EntityZ(d\OBJ2, True), True)
+		ResetEntity(d\OBJ2)
+	EndIf
+	For i = 0 To 1
+		If d\Buttons[i] <> 0 Then PositionEntity(d\Buttons[i], EntityX(d\Buttons[i], True), y + 0.7, EntityZ(d\Buttons[i], True), True)
+	Next
+End Function
+
 Function UpdateDoors%()
 	Local d.Doors
 	Local x#, z#, Dist#, i%

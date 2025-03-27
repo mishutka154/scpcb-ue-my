@@ -1738,5 +1738,34 @@ Function ChangeNPCTextureID%(n.NPCs, TextureID%)
 	If n\NPCType = NPCType173 Then EntityTexture(n\OBJ2, n_I\NPCTextureID[TextureID])
 End Function
 
+Const PLAYER_BODY_NORMAL_TEX% = 0
+Const PLAYER_BODY_HAZMAT_TEX% = 1
+Const PLAYER_BODY_VEST_TEX% = 2
+Const PLAYER_BODY_PRISONER_TEX% = 3
+
+Function ChangePlayerBodyTexture%(ID%)
+	Local TexName$ = ""
+	
+	Select ID
+		Case PLAYER_BODY_HAZMAT_TEX
+			;[Block]
+			TexName = "_hazmat"
+			;[End Block]
+		Case PLAYER_BODY_VEST_TEX
+			;[Block]
+			TexName = "_vest"
+			;[End Block]
+		Case PLAYER_BODY_PRISONER_TEX
+			;[Block]
+			TexName = "_flashback"
+			;[End Block]
+	End Select
+	
+	Local Tex% = LoadTexture_Strict("GFX\NPCs\D_9341" + TexName + ".png")
+	
+	EntityTexture(pm\OBJ, Tex)
+	DeleteSingleTextureEntryFromCache(Tex)
+End Function
+
 ;~IDEal Editor Parameters:
 ;~C#Blitz3D TSS

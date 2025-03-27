@@ -5179,10 +5179,12 @@ Function UpdateGUI%()
 					If SelectedItem\State = 100.0
 						If wi\BallisticVest > 0
 							CreateMsg(GetLocalString("msg", "vest.off"))
+							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
 							wi\BallisticVest = 0
 							DropItem(SelectedItem)
 						Else
 							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
+							ChangePlayerBodyTexture(PLAYER_BODY_VEST_TEX)
 							Select SelectedItem\ItemTemplate\ID
 								Case it_vest
 									;[Block]
@@ -5209,6 +5211,7 @@ Function UpdateGUI%()
 					If SelectedItem\State = 100.0
 						If wi\HazmatSuit > 0
 							CreateMsg(GetLocalString("msg", "suit.off"))
+							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
 							wi\HazmatSuit = 0
 							DropItem(SelectedItem)
 						Else
@@ -5218,6 +5221,7 @@ Function UpdateGUI%()
 							wi\GasMask = 0 : wi\BallisticHelmet = False
 							I_427\Using = False : I_1499\Using = 0
 							I_268\Using = 0
+							ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX)
 							Select SelectedItem\ItemTemplate\ID
 								Case it_hazmatsuit
 									;[Block]
@@ -9848,6 +9852,13 @@ Function Update1048AEars()
 		I_1048A\Revert = False
 	EndIf
 End Function
+
+Type SCP1123
+	Field Sound%
+	Field SoundCHN%
+End Type
+
+Global I_1123.SCP1123
 
 Type SCP427
 	Field Using%

@@ -1495,100 +1495,51 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_cont2_1123
 			;[Block]
-			; ~ Fake observation room door
-			d.Doors = CreateDoor(r, r\x + 352.0 * RoomScale, r\y + 769.0 * RoomScale, r\z - 640.0 * RoomScale, 90.0)
-			d\AutoClose = False : d\DisableWaypoint = True
-			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+			; ~ Observation room door
+			d.Doors = CreateDoor(r, r\x + 352.0 * RoomScale, r\y, r\z - 640.0 * RoomScale, 90.0)
 			r\RoomDoors.Doors[0] = d
-			
-			; ~ A door inside the cell 
-			d.Doors = CreateDoor(r, r\x - 336.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 712.0 * RoomScale, 90.0, False, WOODEN_DOOR)
-			d\Locked = 2 : d\MTFClose = False
-			r\RoomDoors.Doors[1] = d
-			
-			; ~ An intermediate door
-			d.Doors = CreateDoor(r, r\x - 336.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 168.0 * RoomScale, 270.0, False, WOODEN_DOOR)
-			r\RoomDoors.Doors[2] = d
-			
-			; ~ A door leading to the nazi before shot
-			d.Doors = CreateDoor(r, r\x - 668.0 * RoomScale, r\y + 769.0 * RoomScale, r\z - 704.0 * RoomScale, 0.0, False, WOODEN_DOOR)
-			r\RoomDoors.Doors[3] = d
 			
 			; ~ SCP-1123 chamber doors
 			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 544.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
 			RotateEntity(d\Buttons[0], 0.0, 270.0, 0.0, True)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.015, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.4, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
+			r\RoomDoors.Doors[1] = d
 			
 			d2.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 288.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
 			PositionEntity(d2\Buttons[0], EntityX(d2\Buttons[0], True) - 0.06, EntityY(d2\Buttons[0], True), EntityZ(d2\Buttons[0], True) + 0.031, True)
 			FreeEntity(d2\Buttons[1]) : d2\Buttons[1] = 0
+			r\RoomDoors.Doors[2] = d2
 			
 			d\LinkedDoor = d2
 			d2\LinkedDoor = d
 			
-			; ~ Observation room door
-			CreateDoor(r, r\x + 352.0 * RoomScale, r\y, r\z - 640.0 * RoomScale, 90.0)
-			
-			; ~ Fake SCP-1123 Chamber door
-			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 544.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
-			RotateEntity(d\Buttons[0], 0.0, 270.0, 0.0, True)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.015, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.4, True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
-			
-			d2.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y + 769.0 * RoomScale, r\z + 288.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
-			PositionEntity(d2\Buttons[0], EntityX(d2\Buttons[0], True) - 0.06, EntityY(d2\Buttons[0], True), EntityZ(d2\Buttons[0], True) + 0.031, True)
-			FreeEntity(d2\Buttons[1]) : d2\Buttons[1] = 0
-			
-			d\LinkedDoor = d2
-			d2\LinkedDoor = d
-			
-			d.Doors = CreateDoor(r, r\x, r\y + 769.0 * RoomScale, r\z + 416.0 * RoomScale, 0.0, False, WOODEN_DOOR)
+			; ~ A door inside the cell 
+			d.Doors = CreateDoor(r, r\x - 336.0 * RoomScale, r\y - 999999.0 * RoomScale, r\z + 712.0 * RoomScale, 90.0, False, WOODEN_DOOR)
 			d\Locked = 2 : d\MTFClose = False
+			r\RoomDoors.Doors[3] = d
 			
-			d.Doors = CreateDoor(r, r\x, r\y + 769.0 * RoomScale, r\z - 945.0 * RoomScale, 0.0, False, WOODEN_DOOR)
+			; ~ An intermediate door
+			d.Doors = CreateDoor(r, r\x - 336.0 * RoomScale, r\y - 999999.0 * RoomScale, r\z + 168.0 * RoomScale, 270.0, False, WOODEN_DOOR)
+			r\RoomDoors.Doors[4] = d
+			
+			; ~ A door leading to the nazi before shot
+			d.Doors = CreateDoor(r, r\x - 668.0 * RoomScale, r\y - 999999.0 * RoomScale, r\z - 704.0 * RoomScale, 0.0, False, WOODEN_DOOR)
+			r\RoomDoors.Doors[5] = d
+			
+			; Misc. doors
+			d.Doors = CreateDoor(r, r\x, r\y - 999999.0 * RoomScale, r\z + 416.0 * RoomScale, 0.0, False, WOODEN_DOOR)
 			d\Locked = 2 : d\MTFClose = False
+			r\RoomDoors.Doors[6] = d
 			
-			; ~ SCP-1123 sound position
-			r\Objects[0] = CreatePivot()
-			PositionEntity(r\Objects[0], r\x + 912.0 * RoomScale, r\y + 170.0 * RoomScale, r\z + 857.0 * RoomScale)
-			EntityParent(r\Objects[0], r\OBJ)
-			
-			; ~ Nazi position near the player's cell
-			r\Objects[1] = CreatePivot()
-			PositionEntity(r\Objects[1], r\x - 139.0 * RoomScale, r\y + 910.0 * RoomScale, r\z + 655.0 * RoomScale)
-			EntityParent(r\Objects[1], r\OBJ)
+			d.Doors = CreateDoor(r, r\x, r\y - 999999.0 * RoomScale, r\z - 945.0 * RoomScale, 0.0, False, WOODEN_DOOR)
+			d\Locked = 2 : d\MTFClose = False
+			r\RoomDoors.Doors[7] = d
 			
 			; ~ Player's position inside the cell
-			r\Objects[2] = CreatePivot()
-			PositionEntity(r\Objects[2], r\x - 818.0 * RoomScale, r\y + 850.0 * RoomScale, r\z + 736.0 * RoomScale)
-			EntityParent(r\Objects[2], r\OBJ)
-			
-			; ~ Player's position after leaving the cell
-			r\Objects[3] = CreatePivot()
-			PositionEntity(r\Objects[3], r\x + 828.0 * RoomScale, r\y + 850.0 * RoomScale, r\z + 592.0 * RoomScale)
-			EntityParent(r\Objects[3], r\OBJ)
-			
-			; ~ Nazi position before the shooting
-			r\Objects[4] = CreatePivot()
-			PositionEntity(r\Objects[4], r\x - 706.0 * RoomScale, r\y + 910.0 * RoomScale, r\z - 845.0 * RoomScale)
-			EntityParent(r\Objects[4], r\OBJ)
-			
-			; ~ Nazi position while start shooting
-			r\Objects[5] = CreatePivot()
-			PositionEntity(r\Objects[5], r\x - 575.0 * RoomScale, r\y + 910.0 * RoomScale, r\z - 402.0 * RoomScale)
-			EntityParent(r\Objects[5], r\OBJ)
-			
-			; ~ Player's position befor the shooting
-			r\Objects[6] = CreatePivot()
-			PositionEntity(r\Objects[6], r\x - 468.0 * RoomScale, r\y + 850.0 * RoomScale, r\z - 273.0 * RoomScale)
-			EntityParent(r\Objects[6], r\OBJ)
-			
-			r\Objects[7] = LoadRMesh("GFX\Map\cont2_1123_cell.rmesh", Null)
-			ScaleEntity(r\Objects[7], RoomScale, RoomScale, RoomScale)
-			PositionEntity(r\Objects[7], r\x, r\y, r\z)
-			EntityParent(r\Objects[7], r\OBJ)
-			HideEntity(r\Objects[7])
+			r\Objects[0] = CreatePivot()
+			PositionEntity(r\Objects[0], r\x - 818.0 * RoomScale, r\y + 850.0 * RoomScale, r\z + 736.0 * RoomScale)
+			EntityParent(r\Objects[0], r\OBJ)
 			
 			de.Decals = CreateDecal(DECAL_BLOOD_5, r\x - 550.0 * RoomScale, r\y + 769.0 * RoomScale + 0.005, r\z + 568.0 * RoomScale, 90.0, Rnd(360.0), 0.0, Rnd(0.4, 0.5), Rnd(0.8, 1.0))
 			EntityParent(de\OBJ, r\OBJ)

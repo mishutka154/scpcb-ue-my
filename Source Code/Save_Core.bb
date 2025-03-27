@@ -2191,14 +2191,10 @@ Function LoadGameQuick%(File$)
 				;[End Block]
 			Case e_cont2_1123
 				;[Block]
-				If e\room\Objects[7] = 0
-					e\room\Objects[7] = LoadRMesh("GFX\Map\cont2_1123_cell.rmesh", Null)
-					ScaleEntity(e\room\Objects[7], RoomScale, RoomScale, RoomScale)
-					PositionEntity(e\room\Objects[7], e\room\x, e\room\y, e\room\z)
-					RotateEntity(e\room\Objects[7], 0.0, e\room\Angle, 0.0)
-					EntityParent(e\room\Objects[7], e\room\OBJ)
-					HideEntity(e\room\Objects[7])
-				EndIf
+				For i = 7 To 8
+					If e\room\Objects[i] <> 0 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
+				Next
+				If e\room\RoomDoors[8] <> Null Then RemoveDoor(e\room\RoomDoors[8])
 				;[End Block]
 			Case e_cont2_012
 				;[Block]
@@ -2415,9 +2411,13 @@ Function LoadGameQuick%(File$)
 	; ~ Resetting some stuff (those get changed when going to some areas)
 	HideDistance = 17.0
 	
-	Tex = LoadTexture_Strict("GFX\NPCs\D_9341.png")
-	EntityTexture(pm\OBJ, Tex)
-	DeleteSingleTextureEntryFromCache(Tex)
+	If wi\HazmatSuit > 0
+		ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX)
+	ElseIf wi\BallisticVest > 0
+		ChangePlayerBodyTexture(PLAYER_BODY_VEST_TEX)
+	Else
+		ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
+	EndIf
 	
 	CatchErrors("Uncaught: LoadGameQuick(" + File + ")")
 End Function

@@ -818,7 +818,7 @@ Function RemoveMonitorInstances%()
 	Delete(mon_I) : mon_I = Null
 End Function
 
-Const MaxNPCModelIDAmount% = 33
+Const MaxNPCModelIDAmount% = 32
 Const MaxNPCTextureID% = 23
 
 Type NPCInstance
@@ -869,8 +869,7 @@ Const NPC_CLASS_D_MODEL% = 27
 Const NPC_DUCK_MODEL% = 28
 Const NPC_GUARD_MODEL% = 29
 Const NPC_MTF_MODEL% = 30
-Const NPC_NAZI_MODEL% = 31
-Const NPC_VEHICLE_MODEL% = 32
+Const NPC_VEHICLE_MODEL% = 31
 ;[End Block]
 
 ; ~ NPC Texture ID Constants
@@ -991,8 +990,6 @@ Function LoadNPCs%()
 	n_I\NPCModelID[NPC_GUARD_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\guard.b3d")
 	
 	n_I\NPCModelID[NPC_MTF_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\MTF.b3d")
-	
-	n_I\NPCModelID[NPC_NAZI_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\nazi_officer.b3d")
 	
 	n_I\NPCModelID[NPC_VEHICLE_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\vehicle.b3d")
 	
@@ -1749,6 +1746,8 @@ Function LoadSounds%()
 	snd_I\BlindsSFX = LoadSound_Strict("SFX\Room\Blinds.ogg")
 	
 	snd_I\SparkShortSFX = LoadSound_Strict("SFX\Room\SparkShort.ogg")
+	
+	I_1123\Sound = LoadSound_Strict("SFX\SCP\1123\Ambient.ogg")
 End Function
 
 Function RemoveSoundInstances%()
@@ -2376,6 +2375,7 @@ Function LoadData%()
 	I_1499.SCP1499 = New SCP1499
 	I_966.SCP966 = New SCP966
 	I_1048A.SCP1048A = New SCP1048A
+	I_1123.SCP1123 = New SCP1123
 	
 	as.AutoSave = New AutoSave
 	
@@ -2411,7 +2411,6 @@ Type PlayerModel
 	Field Pivot%, OBJ%
 	Field AnimationSpeed#[13]
 	Field AnimID%
-	Field Texture%[2]
 End Type
 
 Global pm.PlayerModel
@@ -3333,6 +3332,8 @@ Function NullGame%(PlayButtonSFX% = True)
 	Delete(I_1499) : I_1499 = Null
 	SCP1499Chunks = 0
 	Delete(I_1048A) : I_1048A = Null
+	FreeSound_Strict(I_1123\Sound) : I_1123\Sound = 0
+	Delete(I_1123) : I_1123 = Null
 	Delete(I_966) : I_966 = Null
 	
 	QuickLoadPercent = 0

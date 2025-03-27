@@ -627,10 +627,6 @@ Function UpdateItems%()
 					If ClosestItem = Null Lor i\Dist < EntityDistanceSquared(Camera, ClosestItem\Collider)
 						If EntityInView(i\OBJ, Camera) And EntityVisible(i\Collider, Camera) Then ClosestItem = i
 					EndIf
-					If i\ItemTemplate\ID = it_scp2022pill
-						ed = Rnd(0.038, 0.042)
-						ScaleSprite(i\OBJ2, ed, ed)
-					EndIf
 				EndIf
 				
 				If EntityCollided(i\Collider, HIT_MAP)
@@ -706,6 +702,21 @@ Function UpdateItems%()
 	
 	If (Not InvOpen) And OtherOpen = Null
 		If ClosestItem <> Null
+			Select ClosestItem\ItemTemplate\ID
+				Case it_scp2022pill
+					;[Block]
+					ed = Rnd(0.038, 0.042)
+					ScaleSprite(ClosestItem\OBJ2, ed, ed)
+					;[End Block]
+				Case it_scp1123
+					;[Block]
+					If I_714\Using <> 2 And wi\HazmatSuit <> 4 And wi\GasMask <> 4
+						me\BlurTimer = 1000.0 - (200.0 * (I_714\Using = 1))
+						me\CameraShake = 1.0 - (0.5 * (I_714\Using = 1))
+						If (Not ChannelPlaying(I_1123\SoundCHN)) Then I_1123\SoundCHN = PlaySound_Strict(I_1123\Sound)
+					EndIf
+					;[End Block]
+			End Select
 			If mo\MouseHit1 Then PickItem(ClosestItem)
 		EndIf
 	EndIf

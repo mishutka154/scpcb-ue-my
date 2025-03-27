@@ -636,7 +636,7 @@ Function UpdateEvents%()
 	CatchErrors("UpdateEvents()")
 	
 	Local p.Particles, n.NPCs, r.Rooms, e.Events, e2.Events, de.Decals, du.Dummy1499_1, w.WayPoints, pr.Props, l.Lights, se.SoundEmitters
-	Local it.Items, it2.Items, sc.SecurityCams, sc2.SecurityCams, wayp.WayPoints, d.Doors, s.Screens, emit.Emitter, itt.ItemTemplates
+	Local it.Items, it2.Items, sc.SecurityCams, sc2.SecurityCams, wayp.WayPoints, d.Doors, d2.Doors, s.Screens, emit.Emitter, itt.ItemTemplates
 	Local i%, j%, k%
 	Local Temp%, StrTemp$, Pvt%
 	Local fDir#, Scale#, Tex%, t1%, Name$ ;CurrTrigger$ = "",
@@ -2600,20 +2600,14 @@ Function UpdateEvents%()
 			Case e_cont2_1123
 				;[Block]
 				If PlayerRoom = e\room
-					If I_714\Using <> 2 And wi\HazmatSuit <> 4 And wi\GasMask <> 4
-						If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 0.81 Lor e\EventState > 0.0
-							If e\EventState = 0.0 Then me\BlurTimer = 1000.0 - (200.0 * (I_714\Using = 1))
-							me\CameraShake = 1.0 - (0.5 * (I_714\Using = 1))
-							If e\Sound2 = 0 Then e\Sound2 = LoadSound_Strict("SFX\SCP\1123\Ambient.ogg")
-							e\SoundCHN2 = LoopSoundEx(e\Sound2, e\SoundCHN2, Camera, me\Collider, 4.0, 4.0)
-						EndIf
-					EndIf
 					; ~ The event is started when the player picks up SCP-1123 (in Items.bb/UpdateItems())
 					If e\EventState > 0.0
 						CanSave = 0
-						If EntityHidden(e\room\Objects[7]) Then ShowEntity(e\room\Objects[7])
-					Else
-						If (Not EntityHidden(e\room\Objects[7])) Then HideEntity(e\room\Objects[7])
+						If I_714\Using <> 2 And wi\HazmatSuit <> 4 And wi\GasMask <> 4
+							me\BlurTimer = 1000.0 - (200.0 * (I_714\Using = 1))
+							me\CameraShake = 1.0 - (0.5 * (I_714\Using = 1))
+							If (Not ChannelPlaying(I_1123\SoundCHN)) Then I_1123\SoundCHN = PlaySound_Strict(I_1123\Sound)
+						EndIf
 					EndIf
 					Select e\EventState
 						Case 1.0
@@ -2623,18 +2617,37 @@ Function UpdateEvents%()
 							me\PrevBloodloss = me\Bloodloss
 							PrevIsBlackOut = IsBlackOut : IsBlackOut = False
 							
-							e\room\NPC[0] = CreateNPC(NPCTypeD, EntityX(e\room\Objects[1], True), EntityY(e\room\Objects[1], True), EntityZ(e\room\Objects[1], True))
+							y1 = e\room\y + 769.0 * RoomScale
+							e\room\RoomDoors[0]\Open = False
+							For i = 0 To 7
+								ChangeDoorYPositon(e\room\RoomDoors[i], y1)
+								If i > 2 Then e\room\RoomDoors[i]\Open = False
+							Next
+							For i = 4 To 5
+								e\room\RoomDoors[i]\Locked = 0
+							Next
+							
+							e\room\Objects[7] = LoadRMesh("GFX\Map\cont2_1123_cell.rmesh", Null)
+							ScaleEntity(e\room\Objects[7], RoomScale, RoomScale, RoomScale)
+							PositionEntity(e\room\Objects[7], e\room\x, e\room\y, e\room\z)
+							RotateEntity(e\room\Objects[7], 0.0, e\room\Angle, 0.0)
+							EntityParent(e\room\Objects[7], e\room\OBJ)
+							
+							TFormPoint(-139.0, 910.0, 655.0, e\room\OBJ, 0)
+							e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
+							e\room\NPC[0]\State = -1.0
 							FreeEntity(e\room\NPC[0]\OBJ) : e\room\NPC[0]\OBJ = 0
-							e\room\NPC[0]\OBJ = CopyEntity(n_I\NPCModelID[NPC_NAZI_MODEL])
+							e\room\NPC[0]\OBJ = LoadAnimMesh_Strict("GFX\NPCs\nazi_officer.b3d")
 							Scale = IniGetFloat(NPCsFile, "Class D", "Scale") / MeshWidth(e\room\NPC[0]\OBJ)
 							ScaleEntity(e\room\NPC[0]\OBJ, Scale, Scale, Scale)
 							
-							PositionEntity(me\Collider, EntityX(e\room\Objects[2], True), EntityY(e\room\Objects[2], True), EntityZ(e\room\Objects[2], True), True)
+							PositionEntity(me\Collider, EntityX(e\room\Objects[0], True), EntityY(e\room\Objects[0], True), EntityZ(e\room\Objects[0], True), True)
 							ResetEntity(me\Collider)
 							
-							pm\Texture[0] = LoadTexture_Strict("GFX\NPCs\flashback.png")
-							pm\Texture[1] = LoadTexture_Strict("GFX\NPCs\D_9341.png")
-							EntityTexture(pm\OBJ, pm\Texture[0])
+							For i = 0 To MaxItemAmount - 1
+								If Inventory(i) <> Null Then RemoveWearableItems(Inventory(i))
+							Next
+							ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
 							
 							me\CameraShake = 1.0
 							me\BlurTimer = 1200.0
@@ -2652,23 +2665,24 @@ Function UpdateEvents%()
 							ShouldPlay = 29
 							
 							If e\EventState2 > 1000.0
-								If (Not e\room\RoomDoors[1]\Open) Then OpenCloseDoor(e\room\RoomDoors[1])
+								If (Not e\room\RoomDoors[3]\Open) Then OpenCloseDoor(e\room\RoomDoors[3])
 								
 								If e\EventState2 >= 1040.0 And e\EventState2 - fps\Factor[0] < 1040.0 
 									e\room\NPC[0]\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\1123\Officer0.ogg"), Camera, e\room\NPC[0]\OBJ, 10.0, 1.0, True)
 								ElseIf e\EventState2 >= 1400.0 And e\EventState2 - fps\Factor[0] < 1400.0
 									e\room\NPC[0]\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\1123\Officer1.ogg"), Camera, e\room\NPC[0]\OBJ, 10.0, 1.0, True)
 								EndIf
-								e\room\NPC[0]\State = 3.0
 								AnimateNPC(e\room\NPC[0], 3.0, 26.0, 0.2)
-								If EntityDistanceSquared(me\Collider, e\room\Objects[2]) > PowTwo(392.0 * RoomScale)
+								If EntityDistanceSquared(me\Collider, e\room\Objects[0]) > PowTwo(392.0 * RoomScale)
 									me\BlinkTimer = -10.0
+									me\LightBlink = 2.0
 									me\BlurTimer = 500.0
-									PositionEntity(me\Collider, EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True), True)
+									TFormPoint(828.0, 850.0, 592.0, e\room\OBJ, 0)
+									PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
 									RotateEntity(me\Collider, 0.0, EntityYaw(e\room\OBJ, True), 0.0)
 									ResetEntity(me\Collider)
 									
-									EntityTexture(pm\OBJ, pm\Texture[1])
+									ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
 									
 									e\EventState = 3.0
 								EndIf
@@ -2676,34 +2690,50 @@ Function UpdateEvents%()
 							;[End Block]
 						Case 3.0
 							;[Block]
-							If e\room\RoomDoors[0]\OpenState > 160.0
-								PositionEntity(e\room\NPC[0]\Collider, EntityX(e\room\Objects[4], True), EntityY(e\room\Objects[4], True), EntityZ(e\room\Objects[4], True))
+							If e\room\RoomDoors[0]\Open
+								TFormPoint(-706.0, 910.0, -845.0, e\room\OBJ, 0)
+								PositionEntity(e\room\NPC[0]\Collider, TFormedX(), TFormedY(), TFormedZ())
 								ResetEntity(e\room\NPC[0]\Collider)
 								
-								EntityTexture(pm\OBJ, pm\Texture[0])
+								me\BlinkTimer = -10.0
+								me\LightBlink = 2.0
+								PlaySound_Strict(snd_I\HorrorSFX[11])
+								ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
+								TFormPoint(268.0, 0.0, -640.0, e\room\OBJ, 0)
+								PositionEntity(me\Collider, TFormedX(), EntityY(me\Collider) + 0.1, TFormedZ(), True)
+								ResetEntity(me\Collider)
+								ResetInput()
 								
+								For i = 0 To 2
+									ChangeDoorYPositon(e\room\RoomDoors[i], e\room\y)
+								Next
+								TFormPoint(337.0, 0.0, -640.0, e\room\OBJ, 0)
+								d.Doors = CreateDoor(Null, TFormedX(), e\room\y + 769.0 * RoomScale, TFormedZ(), e\room\Angle + 90.0, False, WOODEN_DOOR)
+								d\Locked = 2 : d\MTFClose = False
+								e\room\RoomDoors.Doors[8] = d
+								
+								e\room\Objects[8] = LoadRMesh("GFX\Map\cont2_1123_door_frame.rmesh", Null)
+								PositionEntity(e\room\Objects[8], e\room\x, e\room\y, e\room\z)
+								RotateEntity(e\room\Objects[8], 0.0, e\room\Angle, 0.0)
+								ScaleEntity(e\room\Objects[8], RoomScale, RoomScale, RoomScale)
 								e\EventState = 4.0
 							EndIf
 							;[End Block]
 						Case 4.0
 							;[Block]
-							TFormPoint(EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 0.0, e\room\OBJ)
-							
-							If TFormedX() < 256.0 And TFormedZ() > -480.0 Then e\room\RoomDoors[0]\Open = False
-							
-							If e\room\RoomDoors[3]\Open
-								e\room\NPC[0]\State = 3.0
+							If e\room\RoomDoors[5]\Open
 								PointEntity(e\room\NPC[0]\Collider, me\Collider)
 								AnimateNPC(e\room\NPC[0], 27.0, 54.0, 0.5, False)
-								If e\room\NPC[0]\Frame >= 54.0
+								If e\room\NPC[0]\Frame >= 53.9
 									e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Horror.ogg"))
 									
-									me\BlinkTimer = -10.0
 									me\BlurTimer = 500.0
 									me\Injuries = 1.5
 									me\Bloodloss = 70.0
+									me\BlinkTimer = -10.0
+									me\LightBlink = 2.0
 									
-									EntityTexture(pm\OBJ, pm\Texture[1])
+									ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
 									
 									PositionEntity(me\Collider, EntityX(e\room\OBJ, True), 0.3, EntityZ(e\room\OBJ, True), True)
 									ResetEntity(me\Collider)
@@ -2717,20 +2747,24 @@ Function UpdateEvents%()
 							;[Block]
 							e\EventState2 = e\EventState2 + fps\Factor[0]
 							If e\EventState2 > 500.0
-								For i = 2 To 3
+								For i = 4 To 5
 									e\room\RoomDoors[i]\Open = False
 									e\room\RoomDoors[i]\Locked = 2
 								Next
 								
-								PositionEntity(e\room\NPC[0]\Collider, EntityX(e\room\Objects[5], True), EntityY(e\room\Objects[5], True), EntityZ(e\room\Objects[5], True))
+								TFormPoint(-575.0, 910.0, -402.0, e\room\OBJ, 0)
+								PositionEntity(e\room\NPC[0]\Collider, TFormedX(), TFormedY(), TFormedZ())
 								ResetEntity(e\room\NPC[0]\Collider)
 								
 								me\Injuries = 1.5
 								me\Bloodloss = 70.0
 								me\BlinkTimer = -10.0
 								me\BlurTimer = 500.0
+								me\BlinkTimer = -10.0
+								me\LightBlink = 2.0
 								
-								PositionEntity(me\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
+								TFormPoint(-468.0, 850.0, -273.0, e\room\OBJ, 0)
+								PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
 								ResetEntity(me\Collider)
 								
 								de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(me\Collider, True), e\room\y + 769.0 * RoomScale + 0.005, EntityZ(me\Collider, True), 90.0, Rnd(360.0), 0.0, 0.5)
@@ -2738,7 +2772,7 @@ Function UpdateEvents%()
 								
 								e\room\NPC[0]\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\1123\Officer2.ogg"), Camera, e\room\NPC[0]\Collider, 7.0, 1.0, True)
 								
-								EntityTexture(pm\OBJ, pm\Texture[0])
+								ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
 								
 								e\EventState = 6.0
 							EndIf
@@ -2784,18 +2818,18 @@ Function UpdateEvents%()
 							Next
 							
 							GiveAchievement("1123")
-							EntityTexture(pm\OBJ, pm\Texture[1])
-							
-							RemoveNPC(e\room\NPC[0])
-							For i = 0 To 1
-								DeleteSingleTextureEntryFromCache(pm\Texture[i])
+							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
+							For i = 3 To 7
+								ChangeDoorYPositon(e\room\RoomDoors[i], -999999.0)
 							Next
-							FreeEntity(e\room\Objects[7]) : e\room\Objects[7] = 0
+							RemoveDoor(e\room\RoomDoors[8])
+							RemoveNPC(e\room\NPC[0])
+							For i = 7 To 8
+								FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
+							Next
 							RemoveEvent(e)
 							;[End Block]
 					End Select
-				Else
-					If (Not EntityHidden(e\room\Objects[7])) Then HideEntity(e\room\Objects[7])
 				EndIf
 				;[End Block]
 			Case e_cont2c_066_1162_arc
