@@ -8472,11 +8472,11 @@ Function UpdateIntro%()
 					TFormPoint(-3180.0, -315.0, -687.0, e\room\OBJ, 0)
 					e\room\NPC[14] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 					RotateEntity(e\room\NPC[14]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
-					e\room\NPC[14]\State = -1.0
-					SetNPCFrame(e\room\NPC[14], 161.0)
+					e\room\NPC[14]\State = 3.0
 					Tex = LoadTexture_Strict("GFX\NPCs\scientist(2).png")
 					EntityTexture(e\room\NPC[14]\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex)
+					HideEntity(e\room\NPC[14]\OBJ)
 					
 					HideEntity(e\room\RoomDoors[6]\OBJ)
 					HideEntity(e\room\RoomDoors[6]\OBJ2)

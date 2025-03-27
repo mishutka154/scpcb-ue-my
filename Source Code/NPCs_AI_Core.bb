@@ -4305,6 +4305,10 @@ Function UpdateNPCTypeD_Clerk%(n.NPCs)
 					If (PrevFrame < 309.0 And n\Frame >= 309.0) Lor (PrevFrame <= 319.0 And n\Frame <= 301.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 1, Rand(0, 2)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
 				EndIf
 				;[End Block]
+			Case 3.0 ; ~ Typing
+				;[Block]
+				AnimateNPC(n, 161.0, 190.0, 0.4)
+				;[End Block]
 		End Select
 		If n\HP =< 0 And n\NPCType = NPCTypeClerk
 			SetNPCFrame(n, 41.0)
