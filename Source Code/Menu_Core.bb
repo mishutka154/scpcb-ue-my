@@ -1949,7 +1949,7 @@ Function RenderLoading%(Percent%, Assets$ = "")
 							;[End Block]
 					End Select
 				Else
-					Select Rand(13)
+					Select Rand(16)
 						Case 1
 							;[Block]
 							CWMText = GetLocalString("menu", "990_1")
@@ -1997,6 +1997,18 @@ Function RenderLoading%(Percent%, Assets$ = "")
 						Case 13
 							;[Block]
 							CWMText = GetLocalString("menu", "990_9")
+							;[End Block]
+						Case 14
+							;[Block]
+							CWMText = GetLocalString("menu", "990_10")
+							;[End Block]
+						Case 15
+							;[Block]
+							CWMText = GetLocalString("menu", "990_11")
+							;[End Block]
+						Case 16
+							;[Block]
+							CWMText = GetLocalString("menu", "990_12")
 							;[End Block]
 					End Select
 				EndIf
