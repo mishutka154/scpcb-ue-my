@@ -823,7 +823,6 @@ Const MaxNPCTextureID% = 23
 
 Type NPCInstance
 	Field NPCModelID%[MaxNPCModelIDAmount]
-	Field NPCTextureID%[MaxNPCTextureID]
 	Field Curr173.NPCs
 	Field Curr106.NPCs
 	Field Curr096.NPCs
@@ -909,34 +908,6 @@ Function LoadNPCs%()
 	
 	n_I.NPCInstance = New NPCInstance
 	
-	n_I\NPCTextureID[NPC_CLASS_D_GONZALES_TEXTURE] = LoadTexture_Strict("GFX\NPCs\Gonzales.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_BENJAMIN_TEXTURE] = LoadTexture_Strict("GFX\NPCs\D_9341(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_SECURITY_TEXTURE] = LoadTexture_Strict("GFX\NPCs\security.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_SCIENTIST_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scientist.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_FRANKLIN_TEXTURE] = LoadTexture_Strict("GFX\NPCs\Franklin.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_MAYNARD_TEXTURE] = LoadTexture_Strict("GFX\NPCs\Maynard.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_CLASS_D_TEXTURE] = LoadTexture_Strict("GFX\NPCs\class_d(2).png", 1, DeleteAllTextures)
-	If opt\IntroEnabled Then n_I\NPCTextureID[NPC_CLASS_D_D9341_TEXTURE] = LoadTexture_Strict("GFX\NPCs\D_9341.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_JANITOR_TEXTURE] = LoadTexture_Strict("GFX\NPCs\janitor.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_MAINTENANCE_TEXTURE] = LoadTexture_Strict("GFX\NPCs\maintenance.png", 1, DeleteAllTextures)
-	
-	n_I\NPCTextureID[NPC_MTF_LEADER_TEXTURE] = LoadTexture_Strict("GFX\NPCs\MTF(2).png", 1, DeleteAllTextures)
-	
-	n_I\NPCTextureID[NPC_096_BLOODY_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_096_bloody.png", 1, DeleteAllTextures)
-	
-	n_I\NPCTextureID[NPC_CLASS_D_BODY_1_TEXTURE] = LoadTexture_Strict("GFX\NPCs\body.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_BODY_2_TEXTURE] = LoadTexture_Strict("GFX\NPCs\body(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_035_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_035_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_409_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_409_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_939_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_939_2_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_939_victim(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE] = LoadTexture_Strict("GFX\NPCs\femur_breaker_victim.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLERK_VICTIM_205_TEXTURE] = LoadTexture_Strict("GFX\NPCs\clerk(2).png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_CLERK_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\clerk_tesla.png", 1, DeleteAllTextures)
-	
-	n_I\NPCTextureID[NPC_173_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_173_tesla.png", 1, DeleteAllTextures)
-	n_I\NPCTextureID[NPC_999_TESLA_TEXTURE] = LoadTexture_Strict("GFX\NPCs\scp_999_tesla.png", 1, DeleteAllTextures)
-	
 	n_I\NPCModelID[NPC_008_1_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_008_1.b3d")
 	
 	n_I\NPCModelID[NPC_035_TENTACLE_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_035_tentacle.b3d")
@@ -1003,9 +974,6 @@ Function RemoveNPCInstances%()
 	
 	For i = 0 To MaxNPCModelIDAmount - 1
 		FreeEntity(n_I\NPCModelID[i]) : n_I\NPCModelID[i] = 0
-	Next
-	For i = NPC_CLASS_D_GONZALES_TEXTURE To NPC_096_BLOODY_TEXTURE
-		n_I\NPCTextureID[i] = 0
 	Next
 	Delete(n_I) : n_I = Null
 End Function
