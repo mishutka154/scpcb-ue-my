@@ -2509,13 +2509,7 @@ Function UpdateEvents%()
 								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(e\room\Objects[0], True), e\room\y + 0.005, EntityZ(e\room\Objects[0], True), 90.0, Rnd(360.0), 0.0, 0.8, 0.8)
 								EntityParent(de\OBJ, e\room\OBJ)
 								
-								Tex = LoadTexture_Strict("GFX\Map\Textures\Door01_Corrosive.png")
-								EntityTexture(e\room\RoomDoors[0]\OBJ, Tex)
-								EntityTexture(e\room\RoomDoors[0]\OBJ2, Tex)
-								EntityTexture(e\room\RoomDoors[0]\FrameOBJ, Tex)
-								DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-								
-								e\room\RoomDoors[0]\IsAffected = True
+								AffectDecayDoor(e\room\RoomDoors[0])
 								
 								e\EventState = 1.0
 							EndIf
@@ -10385,4 +10379,4 @@ Function UpdateForest%()
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

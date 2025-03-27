@@ -1774,29 +1774,13 @@ Function UpdateNPCType106%(n.NPCs)
 				
 				If Dist < 144.0
 					Local d.Doors
+					
 					For d.Doors = Each Doors
-						If (Not d\IsAffected) And (Not d\Open)
+						If (Not d\IsAffected) And d\DoorType <> SCP_914_DOOR And (Not d\HasOneSide) And (Not d\Open)
 							If EntityDistanceSquared(n\Collider, d\FrameOBJ) < 0.25 And (d\room <> Null And d\room\RoomTemplate\RoomID <> r_dimension_106)
-								If (Not d\HasOneSide) And d\DoorType <> BIG_DOOR And d\DoorType <> SCP_914_DOOR
-									Local Tex%
-									
-									Select d\DoorType
-										Case DEFAULT_DOOR, ONE_SIDED_DOOR, ELEVATOR_DOOR
-											;[Block]
-											Tex = LoadTexture_Strict("GFX\Map\Textures\Door01_Corrosive.png")
-											;[End Block]
-										Case HEAVY_DOOR
-											;[Block]
-											Tex = LoadTexture_Strict("GFX\Map\Textures\containment_doors_Corrosive.png")
-											;[End Block]
-									End Select
-									EntityTexture(d\OBJ, Tex)
-									If d\OBJ2 <> 0 Then EntityTexture(d\OBJ2, Tex)
-									EntityTexture(d\FrameOBJ, Tex)
-									DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-									d\IsAffected = True
-									Exit
-								EndIf
+								n\SoundCHN2 = PlaySoundEx(snd_I\SCP106SFX[Rand(6, 8)], Camera, n\Collider)
+								AffectDecayDoor(d)
+								Exit
 							EndIf
 						EndIf
 					Next

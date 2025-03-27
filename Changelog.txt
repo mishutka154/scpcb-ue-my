@@ -7,6 +7,7 @@
 - Added player body.
 - Added lighting quality option.
 - Added «npclist» and «enable\disable513-1» console commands.
+- Added decay sounds for elevator doors and big doors.
 
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
 - Removed leaning.
@@ -29,6 +30,7 @@
 - The vignette is now hidden in certain rooms.
 - Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
 - Changed logo of the game.
+- Heavy doors now stick out a little from the frame.
 
 - Optimized the game...
 

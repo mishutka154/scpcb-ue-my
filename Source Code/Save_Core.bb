@@ -2025,13 +2025,13 @@ Function LoadGameQuick%(File$)
 				
 				PositionEntity(d\OBJ, OBJX, y, OBJZ, True)
 				If IsAffected
-						Select d\DoorType
+					Select d\DoorType
 						Case DEFAULT_DOOR, ONE_SIDED_DOOR, ELEVATOR_DOOR
 							;[Block]
 							EntityTexture(d\OBJ, TexCorrDefault)
 							EntityTexture(d\FrameOBJ, TexCorrDefault)
 							;[End Block]
-						Case HEAVY_DOOR
+						Case BIG_DOOR, HEAVY_DOOR
 							;[Block]
 							EntityTexture(d\OBJ, TexCorrHeavy)
 							EntityTexture(d\FrameOBJ, TexCorrHeavy)
@@ -2048,7 +2048,7 @@ Function LoadGameQuick%(File$)
 								;[Block]
 								EntityTexture(d\OBJ2, TexCorrDefault)
 								;[End Block]
-							Case HEAVY_DOOR
+							Case BIG_DOOR, HEAVY_DOOR
 								;[Block]
 								EntityTexture(d\OBJ2, TexCorrHeavy)
 								;[End Block]

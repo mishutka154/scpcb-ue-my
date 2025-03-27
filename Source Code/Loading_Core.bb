@@ -1456,7 +1456,7 @@ Global CurrMusic% = True
 Dim OpenDoorSFX%(7, 3), CloseDoorSFX%(7, 3)
 
 Type SoundInstance
-	Field CloseDecayDoorSFX%[3], OpenDecayDoorSFX%[3]
+	Field CloseDecayDoorSFX%[4], OpenDecayDoorSFX%[4]
 	Field BigDoorErrorSFX%[3]
 	Field DoorClose079%, DoorOpen079%
 	Field KeyCardSFX%[2]
@@ -1578,10 +1578,12 @@ Function LoadSounds%()
 	
 	snd_I\OpenDecayDoorSFX[DEFAULT_DOOR] = LoadSound_Strict("SFX\Door\DoorDecayOpen.ogg") ; ~ Also one-sided door
 	snd_I\CloseDecayDoorSFX[DEFAULT_DOOR] = LoadSound_Strict("SFX\Door\DoorDecayClose.ogg") ; ~ Also one-sided door
-	snd_I\OpenDecayDoorSFX[ELEVATOR_DOOR] = LoadSound_Strict("SFX\Door\DoorDecayOpen.ogg") ; ~ TODO: Currently a placeholder
-	snd_I\CloseDecayDoorSFX[ELEVATOR_DOOR] = LoadSound_Strict("SFX\Door\DoorDecayClose.ogg") ; ~ TODO: Currently a placeholder
+	snd_I\OpenDecayDoorSFX[ELEVATOR_DOOR] = LoadSound_Strict("SFX\Door\ElevatorDecayOpen.ogg")
+	snd_I\CloseDecayDoorSFX[ELEVATOR_DOOR] = LoadSound_Strict("SFX\Door\ElevatorDecayClose.ogg")
 	snd_I\OpenDecayDoorSFX[HEAVY_DOOR] = LoadSound_Strict("SFX\Door\Door2DecayOpen.ogg")
 	snd_I\CloseDecayDoorSFX[HEAVY_DOOR] = LoadSound_Strict("SFX\Door\Door2DecayClose.ogg")
+	snd_I\OpenDecayDoorSFX[BIG_DOOR] = LoadSound_Strict("SFX\Door\BigDoorDecayOpen.ogg")
+	snd_I\CloseDecayDoorSFX[BIG_DOOR] = LoadSound_Strict("SFX\Door\BigDoorDecayClose.ogg")
 	
 	For i = 0 To 13
 		If i < 2
@@ -1752,12 +1754,6 @@ End Function
 Function RemoveSoundInstances%()
 	Local i%
 	
-	snd_I\OpenDecayDoorSFX[DEFAULT_DOOR] = 0
-	snd_I\CloseDecayDoorSFX[DEFAULT_DOOR] = 0
-	snd_I\OpenDecayDoorSFX[ELEVATOR_DOOR] = 0
-	snd_I\CloseDecayDoorSFX[ELEVATOR_DOOR] = 0
-	snd_I\OpenDecayDoorSFX[HEAVY_DOOR] = 0
-	snd_I\CloseDecayDoorSFX[HEAVY_DOOR] = 0
 	For i = 0 To 13
 		If i < 2
 			RadioSFX(0, i) = 0
@@ -1795,6 +1791,8 @@ Function RemoveSoundInstances%()
 			snd_I\PickSFX[i] = 0
 			snd_I\AlarmSFX[i] = 0
 			snd_I\DripSFX[i] = 0
+			snd_I\OpenDecayDoorSFX[i] = 0
+			snd_I\CloseDecayDoorSFX[i] = 0
 		EndIf
 		If i < 5
 			BreathSFX(0, i) = 0

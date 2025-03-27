@@ -120,13 +120,7 @@ Function FillRoom%(r.Rooms)
 				it.Items = CreateItem("SCP-005", it_scp005, r\x, r\y + 255.0 * RoomScale, r\z + 238.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 				
-				Tex = LoadTexture_Strict("GFX\Map\Textures\Door01_Corrosive.png")
-				EntityTexture(r\RoomDoors[0]\OBJ, Tex)
-				EntityTexture(r\RoomDoors[0]\OBJ2, Tex)
-				EntityTexture(r\RoomDoors[0]\FrameOBJ, Tex)
-				DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
-				
-				r\RoomDoors[0]\IsAffected = True
+				AffectDecayDoor(r\RoomDoors[0])
 				
 				de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x - 362.0 * RoomScale, r\y + 0.005, r\z - 420.0 * RoomScale, 90.0, Rnd(360.0), 0.0)
 				EntityParent(de\OBJ, r\OBJ)
@@ -1994,16 +1988,12 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[1], r\x - 164.0 * RoomScale, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 			r\RoomDoors.Doors[0] = d
 			
-			Tex = LoadTexture_Strict("GFX\Map\Textures\Door01_Corrosive.png")
 			d.Doors = CreateDoor(r, r\x - 296.0 * RoomScale, r\y, r\z - 144.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_5)
-			d\AutoClose = False : d\Locked = 1 : d\IsAffected = True
+			d\AutoClose = False : d\Locked = 1
 			PositionEntity(d\Buttons[0], r\x - 438.0 * RoomScale, EntityY(d\Buttons[0], True), r\z - 480.0 * RoomScale, True)
 			RotateEntity(d\Buttons[0], 0.0, 90.0, 0.0, True)
 			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
-			EntityTexture(d\OBJ, Tex)
-			EntityTexture(d\OBJ2, Tex)
-			EntityTexture(d\FrameOBJ, Tex)
-			DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+			AffectDecayDoor(d)
 			r\RoomDoors.Doors[1] = d
 			
 			r\RoomDoors[0]\LinkedDoor = r\RoomDoors[1]
@@ -3694,15 +3684,11 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room2_scientists_2
 			;[Block]
-			Tex = LoadTexture_Strict("GFX\Map\Textures\Door01_Corrosive.png")
 			; ~ Dr. L's office door
 			d.Doors = CreateDoor(r, r\x - 352.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_MISC, CODE_DR_L)
-			d\MTFClose = False : d\DisableWaypoint = True : d\IsAffected = True
+			d\MTFClose = False : d\DisableWaypoint = True
 			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
-			EntityTexture(d\OBJ, Tex)
-			EntityTexture(d\OBJ2, Tex)
-			EntityTexture(d\FrameOBJ, Tex)
-			DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
+			AffectDecayDoor(d)
 			r\RoomDoors.Doors[0] = d
 			
 			; ~ Conference Room 9B door
