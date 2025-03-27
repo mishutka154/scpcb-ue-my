@@ -1579,9 +1579,11 @@ Function UpdateNPCType096%(n.NPCs)
 											n\Path[n\PathLocation]\door\Locked = 1
 											If Dist < 36.0 Then me\BigCameraShake = 3.0
 											
-											Local emit.Emitter = SetEmitter(Null, EntityX(n\Path[n\PathLocation]\door\OBJ, True), EntityY(n\Path[n\PathLocation]\door\OBJ, True), EntityZ(n\Path[n\PathLocation]\door\OBJ, True), 16)
-											
-											EntityParent(emit\Owner, n\Path[n\PathLocation]\door\OBJ)
+											If (Not n\Path[n\PathLocation]\door\HasOneSide)
+												Local emit.Emitter = SetEmitter(Null, EntityX(n\Path[n\PathLocation]\door\OBJ, True), EntityY(n\Path[n\PathLocation]\door\OBJ, True), EntityZ(n\Path[n\PathLocation]\door\OBJ, True), 16)
+												
+												EntityParent(emit\Owner, n\Path[n\PathLocation]\door\OBJ)
+											EndIf
 											PlaySoundEx(snd_I\OpenDoorFastSFX, Camera, n\Path[n\PathLocation]\door\FrameOBJ)
 										EndIf
 									EndIf
