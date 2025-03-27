@@ -1740,8 +1740,9 @@ End Function
 
 Const PLAYER_BODY_NORMAL_TEX% = 0
 Const PLAYER_BODY_HAZMAT_TEX% = 1
-Const PLAYER_BODY_VEST_TEX% = 2
-Const PLAYER_BODY_PRISONER_TEX% = 3
+Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
+Const PLAYER_BODY_VEST_TEX% = 3
+Const PLAYER_BODY_PRISONER_TEX% = 4
 
 Function ChangePlayerBodyTexture%(ID%)
 	Local TexName$ = ""
@@ -1750,6 +1751,10 @@ Function ChangePlayerBodyTexture%(ID%)
 		Case PLAYER_BODY_HAZMAT_TEX
 			;[Block]
 			TexName = "_hazmat"
+			;[End Block]
+		Case PLAYER_BODY_HAZMAT_HEAVY_TEX
+			;[Block]
+			TexName = "_hazmat_heavy"
 			;[End Block]
 		Case PLAYER_BODY_VEST_TEX
 			;[Block]
