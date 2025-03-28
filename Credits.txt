@@ -179,7 +179,8 @@
 		https://github.com/itzslain
 
 		Andre Pari ("ADMClef")
-		
+		racer_216
+
 *EX-developers
 		
 		Stefan Koch ("Salvage")
@@ -259,7 +260,6 @@
 		aciu
 		SPOOKYfellow
 		Morgan Dusty
-		racer_216
 		SynthMaster
 		MetridSiardily
 		neptuneprogamertv
