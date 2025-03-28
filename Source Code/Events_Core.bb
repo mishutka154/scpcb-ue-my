@@ -2610,15 +2610,18 @@ Function UpdateEvents%()
 							me\PrevBloodloss = me\Bloodloss
 							PrevIsBlackOut = IsBlackOut : IsBlackOut = False
 							
-							y1 = e\room\y + 769.0 * RoomScale
+							y1 = e\room\y + 4865.0 * RoomScale
 							e\room\RoomDoors[0]\Open = False
-							For i = 0 To 7
-								ChangeDoorYPositon(e\room\RoomDoors[i], y1)
-								If i > 2 Then e\room\RoomDoors[i]\Open = False
-							Next
-							For i = 4 To 5
-								e\room\RoomDoors[i]\Locked = 0
-							Next
+							ChangeDoorYPositon(e\room\RoomDoors[0], y1)
+							ChangeDoorYPositon(e\room\RoomDoors[1], y1)
+							ChangeDoorYPositon(e\room\RoomDoors[2], y1)
+							e\room\RoomDoors[3]\Open = False
+							e\room\RoomDoors[4]\Open = False
+							e\room\RoomDoors[4]\Locked = 0
+							e\room\RoomDoors[5]\Open = False
+							e\room\RoomDoors[5]\Locked = 0
+							e\room\RoomDoors[6]\Open = False
+							e\room\RoomDoors[7]\Open = False
 							
 							e\room\Objects[7] = LoadRMesh("GFX\Map\cont2_1123_cell.rmesh", Null)
 							ScaleEntity(e\room\Objects[7], RoomScale, RoomScale, RoomScale)
@@ -2626,7 +2629,7 @@ Function UpdateEvents%()
 							RotateEntity(e\room\Objects[7], 0.0, e\room\Angle, 0.0)
 							EntityParent(e\room\Objects[7], e\room\OBJ)
 							
-							TFormPoint(-139.0, 910.0, 655.0, e\room\OBJ, 0)
+							TFormPoint(-139.0, 5006.0, 655.0, e\room\OBJ, 0)
 							e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 							e\room\NPC[0]\State = -1.0
 							FreeEntity(e\room\NPC[0]\OBJ) : e\room\NPC[0]\OBJ = 0
@@ -2670,7 +2673,7 @@ Function UpdateEvents%()
 									me\BlinkTimer = -10.0
 									me\LightBlink = 2.0
 									me\BlurTimer = 500.0
-									TFormPoint(828.0, 850.0, 592.0, e\room\OBJ, 0)
+									TFormPoint(828.0, 4946.0, 592.0, e\room\OBJ, 0)
 									PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
 									RotateEntity(me\Collider, 0.0, EntityYaw(e\room\OBJ, True), 0.0)
 									ResetEntity(me\Collider)
@@ -2684,13 +2687,16 @@ Function UpdateEvents%()
 						Case 3.0
 							;[Block]
 							If e\room\RoomDoors[0]\Open
-								TFormPoint(-706.0, 910.0, -845.0, e\room\OBJ, 0)
+								TFormPoint(-706.0, 5006.0, -845.0, e\room\OBJ, 0)
 								PositionEntity(e\room\NPC[0]\Collider, TFormedX(), TFormedY(), TFormedZ())
 								ResetEntity(e\room\NPC[0]\Collider)
 								
 								me\BlinkTimer = -10.0
 								me\LightBlink = 2.0
 								PlaySound_Strict(snd_I\HorrorSFX[11])
+								For i = 0 To MaxItemAmount - 1
+									If Inventory(i) <> Null Then RemoveWearableItems(Inventory(i))
+								Next
 								ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
 								TFormPoint(268.0, 0.0, -640.0, e\room\OBJ, 0)
 								PositionEntity(me\Collider, TFormedX(), EntityY(me\Collider) + 0.1, TFormedZ(), True)
@@ -2701,7 +2707,7 @@ Function UpdateEvents%()
 									ChangeDoorYPositon(e\room\RoomDoors[i], e\room\y)
 								Next
 								TFormPoint(337.0, 0.0, -640.0, e\room\OBJ, 0)
-								d.Doors = CreateDoor(Null, TFormedX(), e\room\y + 769.0 * RoomScale, TFormedZ(), e\room\Angle + 90.0, False, WOODEN_DOOR)
+								d.Doors = CreateDoor(Null, TFormedX(), e\room\y + 4865.0 * RoomScale, TFormedZ(), e\room\Angle + 90.0, False, WOODEN_DOOR)
 								d\Locked = 2 : d\MTFClose = False
 								e\room\RoomDoors.Doors[8] = d
 								
@@ -2745,7 +2751,7 @@ Function UpdateEvents%()
 									e\room\RoomDoors[i]\Locked = 2
 								Next
 								
-								TFormPoint(-575.0, 910.0, -402.0, e\room\OBJ, 0)
+								TFormPoint(-575.0, 5006.0, -402.0, e\room\OBJ, 0)
 								PositionEntity(e\room\NPC[0]\Collider, TFormedX(), TFormedY(), TFormedZ())
 								ResetEntity(e\room\NPC[0]\Collider)
 								
@@ -2756,16 +2762,18 @@ Function UpdateEvents%()
 								me\BlinkTimer = -10.0
 								me\LightBlink = 2.0
 								
-								TFormPoint(-468.0, 850.0, -273.0, e\room\OBJ, 0)
-								PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
+								TFormPoint(-468.0, 4946.0, -273.0, e\room\OBJ, 0)
+								PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ())
 								ResetEntity(me\Collider)
+								For i = 0 To MaxItemAmount - 1
+									If Inventory(i) <> Null Then RemoveWearableItems(Inventory(i))
+								Next
+								ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
 								
-								de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(me\Collider, True), e\room\y + 769.0 * RoomScale + 0.005, EntityZ(me\Collider, True), 90.0, Rnd(360.0), 0.0, 0.5)
+								de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(me\Collider, True), e\room\y + 4865.0 * RoomScale + 0.005, EntityZ(me\Collider, True), 90.0, Rnd(360.0), 0.0, 0.5)
 								EntityParent(de\OBJ, e\room\OBJ)
 								
-								e\room\NPC[0]\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\1123\Officer2.ogg"), Camera, e\room\NPC[0]\Collider, 7.0, 1.0, True)
-								
-								ChangePlayerBodyTexture(PLAYER_BODY_PRISONER_TEX)
+								PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Officer2.ogg"), True)
 								
 								e\EventState = 6.0
 							EndIf
@@ -2774,7 +2782,7 @@ Function UpdateEvents%()
 							;[Block]
 							PointEntity(e\room\NPC[0]\Collider, me\Collider)
 							AnimateNPC(e\room\NPC[0], 75.0, 128.0, 0.04)
-							If (Not ChannelPlaying(e\room\NPC[0]\SoundCHN))
+							If e\room\NPC[0]\Frame >= 127.9
 								PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Gunshot.ogg"))
 								e\EventState = 7.0
 							EndIf
@@ -2812,9 +2820,6 @@ Function UpdateEvents%()
 							
 							GiveAchievement("1123")
 							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
-							For i = 3 To 7
-								ChangeDoorYPositon(e\room\RoomDoors[i], -999999.0)
-							Next
 							RemoveDoor(e\room\RoomDoors[8])
 							RemoveNPC(e\room\NPC[0])
 							For i = 7 To 8

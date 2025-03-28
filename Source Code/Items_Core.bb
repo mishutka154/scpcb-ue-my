@@ -2792,17 +2792,14 @@ Function Use1123%()
 		PlaySound_Strict(LoadTempSound("SFX\SCP\1123\Touch.ogg"))
 		
 		Temp = True
-		For e.Events = Each Events
-			If e\EventID = e_cont2_1123
-				If PlayerRoom = e\room
-					If e\EventState < 1.0 ; ~ Start the event
-						e\EventState = 1.0
-						Temp = False
-						Exit
-					EndIf
+		If skull_event <> Null
+			If PlayerRoom = skull_event\room
+				If skull_event\EventState < 1.
+					skull_event\EventState = 1.0
+					Temp = False
 				EndIf
 			EndIf
-		Next
+		EndIf
 	Else
 		CreateMsg(GetLocalString("msg", "skull.nothappend"))
 	EndIf
