@@ -8543,7 +8543,7 @@ Function UpdateIntro%()
 					Select e\EventState
 						Case INTRO_IN_CELL
 							;[Block]
-							LightRenderDistance = 16.0
+							LightRenderDistance = 25.0
 							
 							FPSFactorEx = fps\Factor[0] / 30.0
 							
@@ -8642,7 +8642,7 @@ Function UpdateIntro%()
 							;[End Block]
 						Case INTRO_CELL_REQUESTING
 							;[Block]
-							LightRenderDistance = 16.0
+							LightRenderDistance = 25.0
 							If (Not ChannelPlaying(e\room\NPC[3]\SoundCHN))
 								LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\ExitCell.ogg")
 								e\room\NPC[3]\SoundCHN = PlaySoundEx(e\room\NPC[3]\Sound, Camera, e\room\NPC[3]\Collider, 10.0, 1.0, True)
@@ -8681,7 +8681,7 @@ Function UpdateIntro%()
 									e\EventState = INTRO_MOVING_TO_CHAMBER
 								EndIf
 							Else ; ~ Inside the cell
-								LightRenderDistance = 16.0
+								LightRenderDistance = 25.0
 								
 								FPSFactorEx = fps\Factor[0] / 4.0
 								e\EventState2 = Min(e\EventState2 + FPSFactorEx, 630.0)
