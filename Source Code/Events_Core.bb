@@ -76,17 +76,17 @@ Const e_room2c_ec% = 58
 Const e_room3_2_ez_duck% = 59
 ; ~ OTHERS
 Const e_096_spawn% = 60
-Const e_106_victim% = 61
-Const e_106_sinkhole% = 62
-Const e_173_appearing% = 63
-Const e_682_roar% = 64
-Const e_1048_a% = 65
-Const e_checkpoint% = 66
-Const e_door_closing% = 67
-Const e_gateway% = 68
-Const e_tesla% = 69
-Const e_trick% = 70, e_trick_item% = 71
-Const e_dimension_106% = 72, e_dimension_1499% = 73
+Const e_106_victim% = 61, e_106_victim_wall% = 62
+Const e_106_sinkhole% = 63
+Const e_173_appearing% = 64
+Const e_682_roar% = 65
+Const e_1048_a% = 66
+Const e_checkpoint% = 67
+Const e_door_closing% = 68
+Const e_gateway% = 69
+Const e_tesla% = 70
+Const e_trick% = 71, e_trick_item% = 72
+Const e_dimension_106% = 73, e_dimension_1499% = 74
 ;[End Block]
 
 ; ~ For Map Creator
@@ -339,6 +339,10 @@ Function FindEventID%(EventName$)
 		Case "106_victim"
 			;[Block]
 			Return(e_106_victim)
+			;[End Block]
+		Case "106_victim_wall"
+			;[Block]
+			Return(e_106_victim_wall)
 			;[End Block]
 		Case "106_sinkhole"
 			;[Block]
@@ -930,7 +934,7 @@ Function UpdateEvents%()
 											PlaySound_Strict(snd_I\HorrorSFX[10])
 											
 											TFormPoint(0.0, 188.0, 459.0, e\room\OBJ, 0)
-											de.Decals = CreateDecal(DECAL_CORROSIVE_1, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 360.0, Rnd(360.0), 0.1, 0.01)
+											de.Decals = CreateDecal(DECAL_CORROSIVE_1, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle, Rnd(360.0), 0.1, 0.01)
 											de\SizeChange = 0.003 : de\AlphaChange = 0.005 : de\Timer = 90000.0
 											EntityParent(de\OBJ, e\room\OBJ)
 											
@@ -6533,6 +6537,55 @@ Function UpdateEvents%()
 					EndIf
 				Else
 					RemoveEvent(e)
+				EndIf
+				;[End Block]
+			Case e_106_victim_wall
+				;[Block]
+				If PlayerRoom = e\room
+					If e\EventState = 0.0
+						If Rand(200) = 1 Then e\EventState = 1.0
+					EndIf
+				EndIf
+				If e\EventState > 0.0
+					While e\EventState < 5.0
+						If Rand(100) = 1
+							de.Decals = CreateDecal(DECAL_CORROSIVE_1, e\room\x + Rnd(-2.0, 2.0), e\room\y + 0.005, e\room\z + Rnd(-2.0, 2.0), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
+							de\SizeChange = 0.0015
+							EntityParent(de\OBJ, e\room\OBJ)
+							
+							PlaySoundEx(snd_I\DecaySFX[0], Camera, de\OBJ, 2.0, 0.5)
+							
+							e\EventState = e\EventState + 1.0
+						EndIf
+					Wend
+				EndIf
+				If e\EventState = 5.0
+					If e\room\NPC[0] = Null
+						If Rand(200) = 1
+							TFormPoint(-245.0, 56.0, 0.0, e\room\OBJ, 0)
+							e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
+							e\room\NPC[0]\State = -1.0 : e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
+							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
+							SetNPCFrame(e\room\NPC[0], 41.0)
+							If n_I\Curr106\Contained
+								ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_106_FEMUR_BREAKER_TEXTURE)
+							Else
+								ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_106_TEXTURE)
+							EndIf
+							
+							TFormPoint(-223.95, 135.0, 0.0, e\room\OBJ, 0)
+							de.Decals = CreateDecal(DECAL_CORROSIVE_1, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 90.0, 0.0, 0.5, 0.0)
+							de\SizeChange = 0.003 : de\AlphaChange = 0.002 : de\Timer = 90000.0
+							
+							PlaySound_Strict(snd_I\HorrorSFX[13])
+						EndIf
+					EndIf
+				EndIf
+				If e\room\NPC[0] <> Null
+					LightVolume = CurveValue(0.4, LightVolume, 10.0)
+					me\CurrSpeed = Min(me\CurrSpeed - (me\CurrSpeed * (0.15 / EntityDistance(e\room\NPC[0]\Collider, me\Collider)) * fps\Factor[0]), me\CurrSpeed)
+					AnimateNPC(e\room\NPC[0], 41.0, 60.0, 0.02 + (0.25 * (AnimTime(e\room\NPC[0]\OBJ) > 48.0)), False)
+					If e\room\NPC[0]\Frame > 59.9 Then RemoveEvent(e)
 				EndIf
 				;[End Block]
 			Case e_106_sinkhole

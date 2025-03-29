@@ -819,7 +819,7 @@ Function RemoveMonitorInstances%()
 End Function
 
 Const MaxNPCModelIDAmount% = 32
-Const MaxNPCTextureID% = 23
+Const MaxNPCTextureID% = 25
 
 Type NPCInstance
 	Field NPCModelID%[MaxNPCModelIDAmount]
@@ -892,16 +892,18 @@ Const NPC_096_BLOODY_TEXTURE% = 11
 Const NPC_CLASS_D_BODY_1_TEXTURE% = 12
 Const NPC_CLASS_D_BODY_2_TEXTURE% = 13
 Const NPC_CLASS_D_VICTIM_035_TEXTURE% = 14
-Const NPC_CLASS_D_VICTIM_409_TEXTURE% = 15
-Const NPC_CLASS_D_VICTIM_939_1_TEXTURE% = 16
-Const NPC_CLASS_D_VICTIM_939_2_TEXTURE% = 17
-Const NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE% = 18
+Const NPC_CLASS_D_VICTIM_106_TEXTURE% = 15
+Const NPC_CLASS_D_VICTIM_106_FEMUR_BREAKER_TEXTURE% = 16
+Const NPC_CLASS_D_VICTIM_409_TEXTURE% = 17
+Const NPC_CLASS_D_VICTIM_939_1_TEXTURE% = 18
+Const NPC_CLASS_D_VICTIM_939_2_TEXTURE% = 19
+Const NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE% = 20
 
-Const NPC_CLERK_VICTIM_205_TEXTURE% = 19
-Const NPC_CLERK_TESLA_TEXTURE% = 20
+Const NPC_CLERK_VICTIM_205_TEXTURE% = 21
+Const NPC_CLERK_TESLA_TEXTURE% = 22
 
-Const NPC_173_TESLA_TEXTURE% = 21
-Const NPC_999_TESLA_TEXTURE% = 22
+Const NPC_173_TESLA_TEXTURE% = 23
+Const NPC_999_TESLA_TEXTURE% = 24
 ;[End Block]
 
 Function LoadNPCs%()
@@ -927,6 +929,8 @@ Function LoadNPCs%()
 	n_I\NPCTextureName[NPC_CLASS_D_BODY_1_TEXTURE] = "body"
 	n_I\NPCTextureName[NPC_CLASS_D_BODY_2_TEXTURE] = "body(2)"
 	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_035_TEXTURE] = "scp_035_victim"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_106_TEXTURE] = "scp_106_victim"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_106_FEMUR_BREAKER_TEXTURE] = "scp_106_victim_femur_breaker"
 	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_409_TEXTURE] = "scp_409_victim"
 	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = "scp_939_victim"
 	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_939_2_TEXTURE] ="scp_939_victim(2)"
@@ -1920,7 +1924,8 @@ Function LoadEvents%()
 	CreateEvent(e_trick_item, r_room2c_2_lcz, 0, 0.15)
 	CreateEvent(e_trick_item, r_room2c_2_ez, 0, 0.15)
 	CreateEvent(e_trick_item, r_room4_2_ez, 1, 0.15)
-	CreateEvent(e_trick_item, r_room2_4_ez, 1, 0.2)
+	CreateEvent(e_trick_item, r_room2_4_ez, 0, 0.2)
+	CreateEvent(e_106_victim_wall, r_room2_4_ez, 1, 0.5)
 	
 	CreateEvent(e_1048_a, r_room2_lcz, 1, 0.7)
 	CreateEvent(e_1048_a, r_room2_3_lcz, 1, 0.3 + (0.3 * SelectedDifficulty\AggressiveNPCs))
