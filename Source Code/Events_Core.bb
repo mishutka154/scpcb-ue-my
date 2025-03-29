@@ -6548,7 +6548,7 @@ Function UpdateEvents%()
 				EndIf
 				If e\EventState > 0.0
 					While e\EventState < 5.0
-						If Rand(100) = 1
+						If Rand(120) = 1
 							de.Decals = CreateDecal(DECAL_CORROSIVE_1, e\room\x + Rnd(-2.0, 2.0), e\room\y + 0.005, e\room\z + Rnd(-2.0, 2.0), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
 							de\SizeChange = 0.0015
 							EntityParent(de\OBJ, e\room\OBJ)
