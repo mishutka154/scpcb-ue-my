@@ -1735,138 +1735,14 @@ Function ChangeNPCTextureID%(n.NPCs, TextureID%)
 	
 	n\TextureID = TextureID + 1
 	
-	Local TexName$
-	
-	Select TextureID
-		Case NPC_CLASS_D_GONZALES_TEXTURE
-			;[Block]
-			TexName = "Gonzales"
-			;[End Block]
-		Case NPC_CLASS_D_BENJAMIN_TEXTURE
-			;[Block]
-			TexName = "D_9341(2)"
-			;[End Block]
-		Case NPC_CLASS_D_SECURITY_TEXTURE
-			;[Block]
-			TexName = "security"
-			;[End Block]
-		Case NPC_CLASS_D_SCIENTIST_TEXTURE
-			;[Block]
-			TexName = "scientist"
-			;[End Block]
-		Case NPC_CLASS_D_FRANKLIN_TEXTURE
-			;[Block]
-			TexName = "Franklin"
-			;[End Block]
-		Case NPC_CLASS_D_MAYNARD_TEXTURE
-			;[Block]
-			TexName = "Maynard"
-			;[End Block]
-		Case NPC_CLASS_D_CLASS_D_TEXTURE
-			;[Block]
-			TexName = "class_d(2)"
-			;[End Block]
-		Case NPC_CLASS_D_D9341_TEXTURE
-			;[Block]
-			TexName = "D_9341"
-			;[End Block]
-		Case NPC_CLASS_D_JANITOR_TEXTURE
-			;[Block]
-			TexName = "janitor"
-			;[End Block]
-		Case NPC_CLASS_D_MAINTENANCE_TEXTURE
-			;[Block]
-			TexName = "maintenance"
-			;[End Block]
-		Case NPC_MTF_LEADER_TEXTURE
-			;[Block]
-			TexName = "MTF(2)"
-			;[End Block]
-		Case NPC_096_BLOODY_TEXTURE
-			;[Block]
-			TexName = "scp_096_bloody"
-			;[End Block]
-		Case NPC_CLASS_D_BODY_1_TEXTURE
-			;[Block]
-			TexName = "body"
-			;[End Block]
-		Case NPC_CLASS_D_BODY_2_TEXTURE
-			;[Block]
-			TexName = "body(2)"
-			;[End Block]
-		Case NPC_CLASS_D_VICTIM_035_TEXTURE
-			;[Block]
-			TexName = "scp_035_victim"
-			;[End Block]
-		Case NPC_CLASS_D_VICTIM_409_TEXTURE
-			;[Block]
-			TexName = "scp_409_victim"
-			;[End Block]
-		Case NPC_CLASS_D_VICTIM_939_1_TEXTURE
-			;[Block]
-			TexName = "scp_939_victim"
-			;[End Block]
-		Case NPC_CLASS_D_VICTIM_939_2_TEXTURE
-			;[Block]
-			TexName = "scp_939_victim(2)"
-			;[End Block]
-		Case NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE
-			;[Block]
-			TexName = "femur_breaker_victim"
-			;[End Block]
-		Case NPC_CLERK_VICTIM_205_TEXTURE
-			;[Block]
-			TexName = "clerk(2)"
-			;[End Block]
-		Case NPC_CLERK_TESLA_TEXTURE
-			;[Block]
-			TexName = "clerk_tesla"
-			;[End Block]
-		Case NPC_173_TESLA_TEXTURE
-			;[Block]
-			TexName = "scp_173_tesla"
-			;[End Block]
-		Case NPC_999_TESLA_TEXTURE
-			;[Block]
-			TexName = "scp_999_tesla"
-			;[End Block]
-	End Select
-	
-	Local Tex% = LoadTexture_Strict("GFX\NPCs\" + TexName + ".png")
+	Local Tex% = LoadTexture_Strict("GFX\NPCs\" + n_I\NPCTextureName[TextureID] + ".png")
 	
 	EntityTexture(n\OBJ, Tex)
 	If n\NPCType = NPCType173 Then EntityTexture(n\OBJ2, Tex)
 End Function
 
-Const PLAYER_BODY_NORMAL_TEX% = 0
-Const PLAYER_BODY_HAZMAT_TEX% = 1
-Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
-Const PLAYER_BODY_VEST_TEX% = 3
-Const PLAYER_BODY_PRISONER_TEX% = 4
-
 Function ChangePlayerBodyTexture%(ID%)
-	Local TexName$ = ""
-	
-	Select ID
-		Case PLAYER_BODY_HAZMAT_TEX
-			;[Block]
-			TexName = "_hazmat"
-			;[End Block]
-		Case PLAYER_BODY_HAZMAT_HEAVY_TEX
-			;[Block]
-			TexName = "_hazmat_heavy"
-			;[End Block]
-		Case PLAYER_BODY_VEST_TEX
-			;[Block]
-			TexName = "_vest"
-			;[End Block]
-		Case PLAYER_BODY_PRISONER_TEX
-			;[Block]
-			TexName = "_flashback"
-			;[End Block]
-	End Select
-	
-	Local Tex% = LoadTexture_Strict("GFX\NPCs\D_9341" + TexName + ".png")
+	Local Tex% = LoadTexture_Strict("GFX\NPCs\D_9341" + pm\BodyTextureName[ID] + ".png")
 	
 	EntityTexture(pm\OBJ, Tex)
 	DeleteSingleTextureEntryFromCache(Tex)

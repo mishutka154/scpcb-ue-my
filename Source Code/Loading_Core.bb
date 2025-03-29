@@ -823,6 +823,7 @@ Const MaxNPCTextureID% = 23
 
 Type NPCInstance
 	Field NPCModelID%[MaxNPCModelIDAmount]
+	Field NPCTextureName$[MaxNPCTextureID]
 	Field Curr173.NPCs
 	Field Curr106.NPCs
 	Field Curr096.NPCs
@@ -907,6 +908,34 @@ Function LoadNPCs%()
 	Local i%
 	
 	n_I.NPCInstance = New NPCInstance
+	
+	n_I\NPCTextureName[NPC_CLASS_D_GONZALES_TEXTURE] = "Gonzales"
+	n_I\NPCTextureName[NPC_CLASS_D_BENJAMIN_TEXTURE] = "D_9341(2)"
+	n_I\NPCTextureName[NPC_CLASS_D_SECURITY_TEXTURE] = "security"
+	n_I\NPCTextureName[NPC_CLASS_D_SCIENTIST_TEXTURE] = "scientist"
+	n_I\NPCTextureName[NPC_CLASS_D_FRANKLIN_TEXTURE] = "Franklin"
+	n_I\NPCTextureName[NPC_CLASS_D_MAYNARD_TEXTURE] = "Maynard"
+	n_I\NPCTextureName[NPC_CLASS_D_CLASS_D_TEXTURE] = "class_d(2)"
+	n_I\NPCTextureName[NPC_CLASS_D_D9341_TEXTURE] = "NPCs\D_9341"
+	n_I\NPCTextureName[NPC_CLASS_D_JANITOR_TEXTURE] = "janitor"
+	n_I\NPCTextureName[NPC_CLASS_D_MAINTENANCE_TEXTURE] = "maintenance"
+	
+	n_I\NPCTextureName[NPC_MTF_LEADER_TEXTURE] = "MTF(2)"
+	
+	n_I\NPCTextureName[NPC_096_BLOODY_TEXTURE] = "scp_096_bloody"
+	
+	n_I\NPCTextureName[NPC_CLASS_D_BODY_1_TEXTURE] = "body"
+	n_I\NPCTextureName[NPC_CLASS_D_BODY_2_TEXTURE] = "body(2)"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_035_TEXTURE] = "scp_035_victim"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_409_TEXTURE] = "scp_409_victim"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_939_1_TEXTURE] = "scp_939_victim"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_939_2_TEXTURE] ="scp_939_victim(2)"
+	n_I\NPCTextureName[NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE] = "femur_breaker_victim"
+	n_I\NPCTextureName[NPC_CLERK_VICTIM_205_TEXTURE] = "clerk(2)"
+	n_I\NPCTextureName[NPC_CLERK_TESLA_TEXTURE] = "clerk_tesla"
+	
+	n_I\NPCTextureName[NPC_173_TESLA_TEXTURE] = "scp_173_tesla"
+	n_I\NPCTextureName[NPC_999_TESLA_TEXTURE] = "scp_999_tesla"
 	
 	n_I\NPCModelID[NPC_008_1_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\scp_008_1.b3d")
 	
@@ -2375,10 +2404,21 @@ End Function
 
 Global Camera%
 
+Const MaxBodyTextures% = 5
+; ~ Player's body texture constants
+;[Block]
+Const PLAYER_BODY_NORMAL_TEX% = 0
+Const PLAYER_BODY_HAZMAT_TEX% = 1
+Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
+Const PLAYER_BODY_VEST_TEX% = 3
+Const PLAYER_BODY_PRISONER_TEX% = 4
+;[End Block]
+
 Type PlayerModel
 	Field Pivot%, OBJ%
 	Field AnimationSpeed#[13]
 	Field AnimID%
+	Field BodyTextureName$[MaxBodyTextures]
 End Type
 
 Global pm.PlayerModel
@@ -2506,6 +2546,11 @@ Function LoadEntities%()
 		End Select
 		ExtractAnimSeq(pm\OBJ, StartFrame, EndFrame)
 	Next
+	pm\BodyTextureName[PLAYER_BODY_NORMAL_TEX] = ""
+	pm\BodyTextureName[PLAYER_BODY_HAZMAT_TEX] = "_hazmat"
+	pm\BodyTextureName[PLAYER_BODY_HAZMAT_HEAVY_TEX] = "_hazmat_heavy"
+	pm\BodyTextureName[PLAYER_BODY_VEST_TEX] = "_vest"
+	pm\BodyTextureName[PLAYER_BODY_PRISONER_TEX] = "_flashback"
 	
 	ParticleCam = Camera
 	ParticlePiv = CreatePivot()
