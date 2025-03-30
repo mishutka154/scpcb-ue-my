@@ -3192,11 +3192,7 @@ Function UpdateEvents%()
 					; ~ Play a sound clip when the player passes through the gate
 					If e\EventState2 = 0.0
 						If EntityZ(me\Collider) < e\room\z
-							If me\Zone = 1
-								PlaySound_Strict(LoadTempSound("SFX\Ambient\ToZone2.ogg"))
-							Else
-								PlaySound_Strict(LoadTempSound("SFX\Ambient\ToZone3.ogg"))
-							EndIf
+							PlaySound_Strict(LoadTempSound("SFX\Ambient\ToZone" + (3 - (me\Zone = 1)) + ".ogg"))
 							e\EventState2 = 1.0
 						EndIf
 					EndIf
