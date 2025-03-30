@@ -314,7 +314,7 @@
 				Alexander Orlov
 				Vladislav Semetsky 
 				Voice Synth 
-				Ivan Mikhailov  ("Redbull.Ivan")
+				Ivan Mikhailov ("Redbull.Ivan")
 				MIkhail Natarius ("FilinMinv")
 				Oleg Siryak 
 				Nikolai Markozov 
