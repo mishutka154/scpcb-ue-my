@@ -9664,17 +9664,12 @@ Global I_268.SCP268
 
 Function Update268%()
     If I_268\Using > 1
-		I_268\InvisibilityOn = (I_268\Timer > 0.0)
+		Local FPSFactorEX# = fps\Factor[0] / (1.0 + (I_268\Using = 3))
+		Local Factor268# = FPSFactorEX * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
 		
-		Local Factor268#
-		I_268\PauseCharge = 140.0
-		
-		If I_268\Using = 3 
-			Factor268 = (fps\Factor[0] / 2.0) * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
-		Else
-			Factor268 = fps\Factor[0] * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
-		EndIf
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
+		I_268\InvisibilityOn = (I_268\Timer > 0.0)
+		I_268\PauseCharge = 140.0
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
     Else
 		If I_268\PauseCharge =< 0.0
