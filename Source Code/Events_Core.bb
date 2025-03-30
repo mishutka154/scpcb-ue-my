@@ -2329,7 +2329,7 @@ Function UpdateEvents%()
 								e\EventState2 = UpdateElevators(e\EventState2, e\room\RoomDoors[0], e\room\RoomDoors[1], e\room\Objects[0], e\room\Objects[1], e)
 								e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[2], e\room\RoomDoors[3], e\room\Objects[2], e\room\Objects[3], e)
 								
-								If e\room\NPC[0]\Idle > 0
+								If e\room\NPC[0]\HideFromNVG
 									i = 0
 									If EntityDistanceSquared(me\Collider, e\room\RoomDoors[1]\FrameOBJ) < 9.0
 										i = 1
