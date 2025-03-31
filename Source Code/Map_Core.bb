@@ -2910,7 +2910,7 @@ Function UpdateDoors%()
 						Case OFFICE_DOOR, WOODEN_DOOR, FENCE_DOOR
 							;[Block]
 							If d\room <> Null
-								d\OpenState = CurveValue(180.0, d\OpenState, 40.0) + (fps\Factor[0] * 0.01)
+								d\OpenState = CurveAngle(180.0, d\OpenState, 40.0) + (fps\Factor[0] * 0.01)
 								RotateEntity(d\OBJ, 0.0, d\room\Angle + d\Angle + (d\OpenState / 2.5), 0.0)
 							EndIf
 							;[End Block]
