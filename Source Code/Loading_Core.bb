@@ -482,8 +482,8 @@ Const MaxButtonTextureIDAmount% = 4
 Const MaxElevatorPanelTextureIDAmount% = 3
 
 Type DoorInstance
-	Field DoorModelName$[MaxDoorModelIDAmount]
-	Field DoorFrameModelName$[MaxDoorFrameModelIDAmount]
+	Field DoorModelID%[MaxDoorModelIDAmount]
+	Field DoorFrameModelID%[MaxDoorFrameModelIDAmount]
 	Field ButtonModelID%[MaxButtonModelIDAmount]
 	Field ButtonTextureID%[MaxButtonTextureIDAmount]
 	Field ElevatorPanelModel%
@@ -546,37 +546,45 @@ Function LoadDoors%()
 	
 	d_I.DoorInstance = New DoorInstance
 	
-	d_I\DoorModelName[DOOR_DEFAULT_MODEL] = "Door01"
+	d_I\DoorModelID[DOOR_DEFAULT_MODEL] = LoadMesh_Strict("GFX\Map\Props\Door01.b3d")
 	
-	d_I\DoorModelName[DOOR_ELEVATOR_MODEL] = "ElevatorDoor"
+	d_I\DoorModelID[DOOR_ELEVATOR_MODEL] = LoadMesh_Strict("GFX\Map\Props\ElevatorDoor.b3d")
 	
-	d_I\DoorModelName[DOOR_HEAVY_MODEL_1] = "HeavyDoor1"
-	d_I\DoorModelName[DOOR_HEAVY_MODEL_2] = "HeavyDoor2"
+	d_I\DoorModelID[DOOR_HEAVY_MODEL_1] = LoadMesh_Strict("GFX\Map\Props\HeavyDoor1.b3d")
+	d_I\DoorModelID[DOOR_HEAVY_MODEL_2] = LoadMesh_Strict("GFX\Map\Props\HeavyDoor2.b3d")
 	
-	d_I\DoorModelName[DOOR_BIG_MODEL_1] = "contdoorleft"
-	d_I\DoorModelName[DOOR_BIG_MODEL_2] = "contdoorright"
+	d_I\DoorModelID[DOOR_BIG_MODEL_1] = LoadMesh_Strict("GFX\Map\Props\contdoorleft.b3d")
+	d_I\DoorModelID[DOOR_BIG_MODEL_2] = LoadMesh_Strict("GFX\Map\Props\contdoorright.b3d")
 	
-	d_I\DoorModelName[DOOR_OFFICE_MODEL] = "officedoor"
+	d_I\DoorModelID[DOOR_OFFICE_MODEL] = LoadAnimMesh_Strict("GFX\Map\Props\officedoor.b3d")
 	
-	d_I\DoorModelName[DOOR_WOODEN_MODEL] = "DoorWooden"
+	d_I\DoorModelID[DOOR_WOODEN_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorWooden.b3d")
 	
-	d_I\DoorModelName[DOOR_FENCE_MODEL] = "FenceDoor"
+	d_I\DoorModelID[DOOR_FENCE_MODEL] = LoadAnimMesh_Strict("GFX\Map\Props\FenceDoor.b3d")
 	
-	d_I\DoorModelName[DOOR_ONE_SIDED_MODEL] = "Door02"
+	d_I\DoorModelID[DOOR_ONE_SIDED_MODEL] = LoadMesh_Strict("GFX\Map\Props\Door02.b3d")
 	
-	d_I\DoorFrameModelName[DOOR_DEFAULT_FRAME_MODEL] = "DoorFrame"
+	For i = 0 To MaxDoorModelIDAmount - 1
+		HideEntity(d_I\DoorModelID[i])
+	Next
 	
-	d_I\DoorFrameModelName[DOOR_BIG_FRAME_MODEL] = "ContDoorFrame"
+	d_I\DoorFrameModelID[DOOR_DEFAULT_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorFrame.b3d")
 	
-	d_I\DoorFrameModelName[DOOR_OFFICE_FRAME_MODEL] = "officedoorframe"
+	d_I\DoorFrameModelID[DOOR_BIG_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\ContDoorFrame.b3d")
 	
-	d_I\DoorFrameModelName[DOOR_WOODEN_FRAME_MODEL] = "DoorWoodenFrame"
+	d_I\DoorFrameModelID[DOOR_OFFICE_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\officedoorframe.b3d")
+	
+	d_I\DoorFrameModelID[DOOR_WOODEN_FRAME_MODEL] = LoadMesh_Strict("GFX\Map\Props\DoorWoodenFrame.b3d")
 	
 	d_I\DoorColl = LoadMesh_Strict("GFX\Map\Props\DoorColl.b3d")
 	HideEntity(d_I\DoorColl)
 	
 	d_I\BigDoorColl = LoadMesh_Strict("GFX\Map\Props\BigDoorColl.b3d")
 	HideEntity(d_I\BigDoorColl)
+	
+	For i = 0 To MaxDoorFrameModelIDAmount - 1
+		HideEntity(d_I\DoorFrameModelID[i])
+	Next
 	
 	d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_DOWN] = LoadTexture_Strict("GFX\Map\Textures\elevator_panel_down.png", 1, DeleteAllTextures)
 	d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_UP] = LoadTexture_Strict("GFX\Map\Textures\elevator_panel_up.png", 1, DeleteAllTextures)
@@ -608,6 +616,12 @@ End Function
 Function RemoveDoorInstances%()
 	Local i%
 	
+	For i = 0 To MaxDoorModelIDAmount - 1
+		FreeEntity(d_I\DoorModelID[i]) : d_I\DoorModelID[i] = 0
+	Next
+	For i = 0 To MaxDoorFrameModelIDAmount - 1
+		FreeEntity(d_I\DoorFrameModelID[i]) : d_I\DoorFrameModelID[i] = 0
+	Next
 	FreeEntity(d_I\ElevatorPanelModel) : d_I\ElevatorPanelModel = 0
 	For i = 0 To MaxButtonModelIDAmount - 1
 		FreeEntity(d_I\ButtonModelID[i]) : d_I\ButtonModelID[i] = 0
