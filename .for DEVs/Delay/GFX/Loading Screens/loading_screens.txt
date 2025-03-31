@@ -1,0 +1,12 @@
+	{
+		"title": "SCP-939",
+		"image": "939.png",
+		"align_x": "left",
+		"align_y": "top",
+		"background": false,
+		"descriptions": [
+			"SCP-939 are endothermic, pack-based predators which display atrophy of various systems similar to troglobitic organisms. SCP-939 average 2.2 meters tall standing upright and weigh an average of 250kg, though weight is highly variable.",
+			"SCP-939's primary method of luring prey is the imitation of human speech in the voices of prior victims, though imitation of other species and active nocturnal hunts have been documented.",
+			"Prey is usually killed with a single bite to the cranium or neck; bite forces have been measured in excess of 35 MPa."
+		]
+	},
