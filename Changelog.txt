@@ -7,20 +7,24 @@
 - Added player body.
 - Added lighting quality option.
 - Added «npclist» and «enable\disable513-1» console commands.
-- Added decay sounds for elevator doors and big doors.
 - Added one more description for Class D loading screen.
+- Added blob shadows for NPCs and items.
+- Added a body model for player.
+- Added new event for «room2_4_ez» room.
+- Added new hints during the CWM loading screen.
 
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
-- Removed leaning.
-- Removed buttons glowing.
+- Removed leaning and buttons' glowing.
 - Removed Dr. Maynard and Franklin's loading screens.
 
-- SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
-- Partially reverted SCP-079 increased chances to hack monitors with SCP-895.
+- Changes for SCP-895:
+	- SCP-895 can effect monitors once player leaves SCP-173's room instead of requiring entering heavy containment zone.
+	- Partially reverted SCP-079 increased chances to hack monitors with SCP-895.
 - Increased range to interact with ducks.
 - Increased map size from 18 to 21.
+- Heavy doors now stick out a little from the frame.
 - Updated SCP-895's overlay textures.
-- Better subtitles.
+- Better subtitles visual.
 - Player now regenerates blood when no longer bleeding, recovery rate depends on injury and caps at 60% bloodloss before stopping.
 - Slightly increase stamina regeneration when standing still.
 - Now the anomalous clock smoothly changes alpha.
@@ -28,11 +32,11 @@
 - Player can move the items from clipboard\wallet directly to the inventory.
 - Images now have better quality.
 - The vignette is now hidden in certain rooms.
-- Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
-- Changed logo of the game.
-- Heavy doors now stick out a little from the frame.
 
+- Changed logo of the game.
 - Optimized the game...
+- Freed up some RAM.
+- Updated credits.
 
 [Launcher]
 - Added wiki button.
@@ -40,24 +44,28 @@
 [Rooms]
 - Gate A is now accessible by disabling remote door controls without talking with SCP-079.
 
-- Added new rooms.
+- Added new rooms:
+	- «room2_closets_2»
+	- «room2c_2_hcz»
+	- «room2c_3_hcz»
+	- «room4_3_hcz»
 - Added leaf particles in the forest.
 - Added penny in «room1_storage».
-- Added «pencil.b3d», «chessboard.b3d», «printer.b3d», «Plant.b3d», and «Plant2.b3d» props.
+- Added new props.
 - Added picture frame of Mark Sibly in «room2_scientists_2».
 - Added Revision Eyedrops in «room2_closets».
 - Added a truck in the Gate B area.
 - Added hazmat suit in SCP-035's containment chamber.
-- Added monitor to «room1_storage»
 
-- Changed SCP-005 in «cont2_409» to a crystallized variant.
-
-- Lowered clearance access of «room1_storage» to level 1.
-- Slowed down the speed of SCP-106's spawn timer in «room1_storage».
+- Changes for «room1_storage»:
+	- Added monitor to «room1_storage».
+	- Lowered clearance access of «room1_storage» to level 1.
+	- Slowed down the speed of SCP-106's spawn timer in «room1_storage».
+	- New interactions with the duck in «room1_storage» when wearing SCP-714.
 - Decreased the additional speed of SCP-106's spawn timer when using SCP-914.
-- New interactions with the duck in «room1_storage» when wearing SCP-714.
+
 - Updated SCP-008's label.
-- Improved «Keyboard.b3d» prop.
+- Improved «Keyboard.b3d» and «system_unit.b3d» props.
 - The decontamination rooms trap the player for longer.
 - Reduced spawn chance of «room2_tesla_lcz».
 - Moved Gas Mask to the lower floor of «room2_closets».
@@ -67,10 +75,10 @@
 - «cont1_173» event has Ulgrin and Franklin react to SCP-173 sooner.
 - Level 1 Key Card in «room2_js» has been moved from the table to another place.
 - Fence doors are now operable.
+- Tiny improvement for «room2_test_hcz» event.
+- Some improvements for intro room.
 
 - Design improvements for some rooms...
-
-- Tiny improvement for «room2_test_hcz» event.
 
 [Items]
 - Added SCP-2022.
@@ -80,33 +88,38 @@
 - Added Note from Gears.
 
 - Changed Bloody Key Card textures.
-- Speed up equipping SCP-268 and ballistic helmet.
-- Speed up using cups slightly.
-- Syringes will restore some of the player's stamina.
-- Syringes increases the player's stamina regeneration.
+- Equip changes:
+	- Speed up equipping SCP-268 and ballistic helmet.
+	- Speed up using cups slightly.
+- Changes for syringes:
+	- Syringes will restore some of the player's stamina.
+	- Syringes increases the player's stamina regeneration.
 - Very Fine Eyedrops blur and blindness effects take longer before affecting the player and are shorter in duration.
-- Fine SCRAMBLE GEAR gives some useful information about NPCs.
-- SCRAMBLE GEAR allows players to see in the dark.
+- Changes for SCRAMBLE GEAR:
+	- SCRAMBLE GEAR allows players to see in the dark.
+	- Fine SCRAMBLE GEAR gives some useful information about NPCs.
 - Green Night Vision Goggles and Blue Night Vision Goggles have swapped battery drain.
 - S-NAV Navigator Ultimate tells the player how many rooms they've visited.
-- SCP-500 always spawns now.
-- SCP-500 has an inventory.
+- SCP-500 always spawns now and has an inventory.
 - Player can't use strange bottle to escape SCP-049's chamber which would cause issues with that room later.
 - Reworked E-Reader.
 - Decreased chance for Level 4 Key Card from SCP-914.
-- Updated SCP-005, SCP-500, NVG, and SCRAMBLE models.
+- Updated SCP-005, SCP-500, NVG, SCRAMBLE GEAR and wallet's models.
 
 [NPCs]
-- Added SCP-999.
+- Added SCP-999 and SCP-2022.
 - Added tesla stun animation for SCP-049.
 - Added special texture for MTF leader.
+- Added more human textures.
 
 - Better texture for guards, CI, Class-D and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.
-- SCP-966 now reduces the player's stamina regeneration.
-- SCP-966's height is now randomized.
+- Changes for SCP-966:
+	- SCP-966 now reduces the player's stamina regeneration.
+	- SCP-966's height is now randomized.
 - Player cannot spawn Apache anymore.
+- Reduced SCP-106's «AggressiveNPCs» spawntimer multiplier from 2.0x to 1.5x.
 
 [Menu]
 - Added a confirmation of quit from the main menu.
