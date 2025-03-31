@@ -1503,7 +1503,6 @@ Type SoundInstance
 	Field BreathGasRelaxedSFX%
 	Field Step2SFX%[13]
 	Field VehicleSFX%[2]
-	Field ExplosionSFX%
 	Field MachineSFX%
 	Field ApacheSFX%
 	Field BlindsSFX%
@@ -1885,8 +1884,6 @@ Function RemoveSoundInstances%()
 	snd_I\SCRAMBLESFX = 0
 	
 	snd_I\FemurBreakerSFX = 0
-	
-	snd_I\ExplosionSFX = 0
 	
 	snd_I\VomitSFX = 0
 	

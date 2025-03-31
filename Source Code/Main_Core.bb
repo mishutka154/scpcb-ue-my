@@ -9329,8 +9329,7 @@ Function UpdateExplosion%()
 		me\ExplosionTimer = me\ExplosionTimer + fps\Factor[0]
 		If me\ExplosionTimer < 140.0
 			If me\ExplosionTimer - fps\Factor[0] < 5.0
-				snd_I\ExplosionSFX = LoadSound_Strict("SFX\Ending\GateB\Nuke0.ogg")
-				PlaySound_Strict(snd_I\ExplosionSFX)
+				PlaySound_Strict(LoadTempSound("SFX\Ending\GateB\Nuke0.ogg"))
 				me\BigCameraShake = 10.0
 				me\ExplosionTimer = 5.0
 			EndIf
@@ -9339,8 +9338,7 @@ Function UpdateExplosion%()
 			me\BigCameraShake = Min((me\ExplosionTimer / 20.0), 20.0)
 			If me\ExplosionTimer - fps\Factor[0] < 140.0
 				me\BlinkTimer = 1.0
-				snd_I\ExplosionSFX = LoadSound_Strict("SFX\Ending\GateB\Nuke1.ogg")
-				PlaySound_Strict(snd_I\ExplosionSFX)
+				PlaySound_Strict(LoadTempSound("SFX\Ending\GateB\Nuke1.ogg"))
 			EndIf
 			me\LightFlash = Min((me\ExplosionTimer - 140.0) / 10.0, 5.0)
 			
