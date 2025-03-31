@@ -4144,14 +4144,14 @@ Function UpdateEvents%()
 												;[Block]
 												ShowEntity(n\OBJ)
 												;[End Block]
-											Case NPCType999
-												;[Block]
-												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
-												n\EnemyX = 0.0
-												n\EnemyY = 0.0
-												n\EnemyZ = 0.0
-												n\State = 4.0
-												;[End Block]
+;											Case NPCType999
+;												;[Block]
+;												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
+;												n\EnemyX = 0.0
+;												n\EnemyY = 0.0
+;												n\EnemyZ = 0.0
+;												n\State = 4.0
+;												;[End Block]
 											Case NPCTypeClerk
 												;[Block]
 												ChangeNPCTextureID(n, NPC_CLERK_TESLA_TEXTURE)
@@ -7211,14 +7211,14 @@ Function UpdateEvents%()
 					EndIf
 				EndIf
 				;[End Block]
-			Case e_room2_office
-				;[Block]
-				If e\room\Dist < 6.0
-					TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
-					n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
-					RemoveEvent(e)
-				EndIf
-				;[End Block]
+;			Case e_room2_office
+;				;[Block]
+;				If e\room\Dist < 6.0
+;					TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
+;					n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
+;					RemoveEvent(e)
+;				EndIf
+;				;[End Block]
 			Case e_dimension_1499
 				;[Block]
 				If PlayerRoom <> e\room

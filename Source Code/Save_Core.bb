@@ -789,10 +789,10 @@ Function LoadGame%(File$)
 				;[Block]
 				n_I\Curr066 = n
 				;[End Block]
-			Case NPCType999
-				;[Block]
-				n_I\Curr999 = n
-				;[End Block]
+;			Case NPCType999
+;				;[Block]
+;				n_I\Curr999 = n
+;				;[End Block]
 		End Select
 		
 		x = ReadFloat(f)
@@ -1773,10 +1773,10 @@ Function LoadGameQuick%(File$)
 				;[Block]
 				n_I\Curr066 = n
 				;[End Block]
-			Case NPCType999
-				;[Block]
-				n_I\Curr999 = n
-				;[End Block]
+;			Case NPCType999
+;				;[Block]
+;				n_I\Curr999 = n
+;				;[End Block]
 		End Select
 		
 		x = ReadFloat(f)

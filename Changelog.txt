@@ -110,7 +110,6 @@
 - Updated SCP-005, SCP-500, NVG, SCRAMBLE GEAR and wallet's models.
 
 [NPCs]
-- Added SCP-999 and SCP-2022.
 - Added tesla stun animation for SCP-049.
 - Added special texture for MTF leader.
 - Added more human textures.
