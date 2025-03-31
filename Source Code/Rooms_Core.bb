@@ -704,15 +704,19 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room2_7_lcz
 			;[Block]
-			d.Doors = CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, -90.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
+			CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, -90.0, False, FENCE_DOOR)
+			
+			d.Doors = CreateDoor(r, r\x + 720.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.15, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			
+			r\RoomLevers[0] = CreateLever(r, r\x + 657.0 * RoomScale, r\y + 152.0 * RoomScale, r\z + 883.0 * RoomScale, 0.0)
+			r\RoomLevers[1] = CreateLever(r, r\x + 576.0 * RoomScale, r\y + 164.0 * RoomScale, r\z + 896.0 * RoomScale, 0.0)
 			;[End Block]
 		Case r_room2_closets
 			;[Block]
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, False, OFFICE_DOOR)
 			
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z - 576.0 * RoomScale, 90.0, True, OFFICE_DOOR)
-			
 			
 			d.Doors = CreateDoor(r, r\x - 244.0 * RoomScale, r\y, r\z, 90.0)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.048, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)

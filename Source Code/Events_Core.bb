@@ -6655,20 +6655,47 @@ Function UpdateEvents%()
 				;[End Block]
 			Case e_blackout
 				;[Block]
+				If e\room\Dist < 16.0
+					Temp = False
+					If Rand(70) = 1
+						If e\EventState2 < 0.5 Then me\LightBlink = 1.0
+						Temp = True
+					EndIf
+				EndIf
 				If PlayerRoom = e\room
 					If e\room\Objects[0] = 0
 						TFormPoint(864.0, 162.0, -68.0, e\room\OBJ, 0)
 						e\room\Objects[0] = CreatePivot()
 						PositionEntity(e\room\Objects[0], TFormedX(), TFormedY(), TFormedZ(), True)
 					Else
-						If Rand(50) = 1
+						If Temp
 							SetTemplateVelocity(ParticleEffect[19], -0.007, -0.008, -0.001, 0.0012, -0.007, 0.008)
 							For i = 0 To 1
 								SetEmitter(e\room, EntityX(e\room\Objects[0], True), EntityY(e\room\Objects[0], True), EntityZ(e\room\Objects[0], True), 19)
 							Next
 							PlaySoundEx(snd_I\SparkShortSFX, Camera, e\room\Objects[0], 8.0, 0.6)
-							me\LightBlink = 1.0
 						EndIf
+						x1 = UpdateLever(e\room\RoomLevers[1]\OBJ) ; ~ Fuel pump
+						z1 = UpdateLever(e\room\RoomLevers[0]\OBJ) ; ~ Generator
+						
+						; ~ Fuel pump on
+						If x1
+							e\EventState2 = Min(1.0, e\EventState2 + fps\Factor[0] / 350.0)
+							
+							; ~ Generator on
+							If z1
+								If e\Sound = 0 Then LoadEventSound(e, "SFX\Room\GeneratorOn.ogg", 1)
+								e\EventState = Min(1.0, e\EventState + fps\Factor[0] / 450.0)
+							Else
+								e\EventState = Min(0.0, e\EventState - fps\Factor[0] / 450.0)
+							EndIf
+						Else
+							e\EventState2 = Max(0.0, e\EventState2 - fps\Factor[0] / 350.0)
+							e\EventState = Max(0.0, e\EventState - fps\Factor[0] / 450.0)
+						EndIf
+						
+						If e\EventState > 0.0 Then e\SoundCHN = LoopSoundEx(e\Sound, e\SoundCHN, Camera, e\room\RoomLevers[0]\BaseOBJ, 3.0, e\EventState)
+						If e\EventState2 > 0.0 Then e\SoundCHN2 = LoopSoundEx(RoomAmbience[7], e\SoundCHN2, Camera, e\room\RoomLevers[1]\BaseOBJ, 2.0, e\EventState2 * 0.8)
 					EndIf
 				EndIf
 				;[End Block]
