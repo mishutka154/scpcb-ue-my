@@ -341,6 +341,18 @@
 		]
 	},
 	{
+		"title": "SCP-939",
+		"image": "939.png",
+		"align_x": "left",
+		"align_y": "top",
+		"background": false,
+		"descriptions": [
+			"SCP-939 are endothermic, pack-based predators which display atrophy of various systems similar to troglobitic organisms. SCP-939 average 2.2 meters tall standing upright and weigh an average of 250kg, though weight is highly variable.",
+			"SCP-939's primary method of luring prey is the imitation of human speech in the voices of prior victims, though imitation of other species and active nocturnal hunts have been documented.",
+			"Prey is usually killed with a single bite to the cranium or neck; bite forces have been measured in excess of 35 MPa."
+		]
+	},
+	{
 		"title": "SCP-966",
 		"image": "966.png",
 		"align_x": "left",
@@ -362,18 +374,6 @@
 			"SCP-970 is a spatial phenomenon wherein a collection of rooms are looped on themselves. In all cases found, this is by means of a series of doors appearing in the walls, all in a straight line, such that it is possible to walk forwards and end up at the starting position.",
 			"The alteration to the rooms does not affect neighbouring rooms and floors. There is as of yet no known explanation for the appearance of this phenomenon.",
 			"Since the first discovery of the SCP-970 phenomenon, [DATA REDACTED] further such examples of the phenomenon have been discovered, with [DATA REDACTED] % of these in a 800-kilometer radius of Sector 19."
-		]
-	},
-	{
-		"title": "SCP-999",
-		"image": "999.png",
-		"align_x": "right",
-		"align_y": "bottom",
-		"background": false,
-		"descriptions": [
-			"SCP-999 appears to be a large, amorphous, gelatinous mass of translucent orange slime, weighing about 54 kg (120 lbs) with a consistency similar to that of peanut butter.",
-			"Subject’s temperament is best described as playful and dog-like.",
-			"Simply touching SCP-999’s surface causes an immediate mild euphoria, which intensifies the longer one is exposed to SCP-999, and lasts long after separation from the creature."
 		]
 	},
 	{
