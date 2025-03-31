@@ -828,8 +828,7 @@ Function FillRoom%(r.Rooms)
 				If bk\IsBroken Then BD_Temp = (bk\x = r\x And bk\z = r\z)
 				
 				If ((Not bk\IsBroken) And Rand(2) = 1) Lor BD_Temp
-					r\Objects[1] = CopyEntity(d_I\DoorModelID[DOOR_DEFAULT_MODEL])
-					ScaleEntity(r\Objects[1], (204.0 * RoomScale) / MeshWidth(r\Objects[1]), 313.0 * RoomScale / MeshHeight(r\Objects[1]), 16.0 * RoomScale / MeshDepth(r\Objects[1]))
+					r\Objects[1] = CopyEntity(d\OBJ)
 					EntityType(r\Objects[1], HIT_MAP)
 					PositionEntity(r\Objects[1], r\x + 339.0 * RoomScale, r\y, r\z + 461.0 * RoomScale)
 					RotateEntity(r\Objects[1], 0.0, 0.0, 0.0)
