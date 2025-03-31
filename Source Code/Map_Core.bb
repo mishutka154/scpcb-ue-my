@@ -4715,7 +4715,7 @@ Function CreateCustomCenter%(room.Rooms, x#, z#)
 	EntityParent(room\RoomCenter, room\OBJ)
 End Function
 
-Include "Source Code\Rooms_Core.bb"
+Include "Source Code\Map_Rooms_Core.bb"
 
 Function ResetRender%()
 	Local it.Items, n.NPCs
