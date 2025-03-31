@@ -113,6 +113,7 @@
 - Added tesla stun animation for SCP-049.
 - Added special texture for MTF leader.
 - Added more human textures.
+- Added new texture for SCP-035's victim (in the office event).
 
 - Better texture for guards, CI, Class-D and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
