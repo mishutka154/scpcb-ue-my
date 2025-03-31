@@ -3959,7 +3959,7 @@ Function UpdateEvents%()
 							SetNPCFrame(e\room\NPC[0], 19.0)
 							RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
 							MoveEntity(e\room\NPC[0]\Collider, 0.0, 0.0, -0.5)
-							ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_035_TEXTURE)
+							ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_035_CORPSE_TEXTURE)
 						EndIf
 						If EntityDistanceSquared(e\room\NPC[0]\Collider, me\Collider) < 6.25
 							me\Injuries = me\Injuries + (fps\Factor[0] / (5000.0 * (1.0 + (wi\HazmatSuit > 0))))
