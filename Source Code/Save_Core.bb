@@ -859,10 +859,10 @@ Function LoadGame%(File$)
 				;[End Block]
 		End Select
 	Next
-	If n_I\Curr999\State3 > 1
-		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-		EntityFX(n\OBJ, 1)
-	EndIf
+;	If n_I\Curr999\State3 > 1
+;		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+;		EntityFX(n\OBJ, 1)
+;	EndIf
 	
 	For n.NPCs = Each NPCs
 		If n\TargetID <> 0
@@ -1843,10 +1843,10 @@ Function LoadGameQuick%(File$)
 				;[End Block]
 		End Select
 	Next
-	If n_I\Curr999\State3 > 1
-		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-		EntityFX(n\OBJ, 1)
-	EndIf
+;	If n_I\Curr999\State3 > 1
+;		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+;		EntityFX(n\OBJ, 1)
+;	EndIf
 	
 	For n.NPCs = Each NPCs
 		If n\TargetID <> 0
