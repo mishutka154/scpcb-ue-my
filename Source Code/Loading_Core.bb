@@ -1928,6 +1928,8 @@ Function LoadEvents%()
 	CreateEvent(e_1048_a, r_room2_3_lcz, 1, 0.3 + (0.3 * SelectedDifficulty\AggressiveNPCs))
 	CreateEvent(e_1048_a, r_room2_5_lcz, 0, 0.2 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
+	CreateEvent(e_blackout, r_room2_7_lcz, 0, 0.3)
+	
 	CreateEvent(e_room2_storage, r_room2_storage, 0)
 	
 	CreateEvent(e_room1_dead_end_106, r_room1_dead_end_lcz, Rand(0, 1))

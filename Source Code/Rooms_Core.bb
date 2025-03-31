@@ -702,6 +702,11 @@ Function FillRoom%(r.Rooms)
 			d\LinkedDoor = d2
 			d2\LinkedDoor = d
 			;[End Block]
+		Case r_room2_7_lcz
+			;[Block]
+			d.Doors = CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, -90.0, False, FENCE_DOOR)
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
+			;[End Block]
 		Case r_room2_closets
 			;[Block]
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, False, OFFICE_DOOR)

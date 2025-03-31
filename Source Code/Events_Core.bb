@@ -81,12 +81,13 @@ Const e_106_sinkhole% = 63
 Const e_173_appearing% = 64
 Const e_682_roar% = 65
 Const e_1048_a% = 66
-Const e_checkpoint% = 67
-Const e_door_closing% = 68
-Const e_gateway% = 69
-Const e_tesla% = 70
-Const e_trick% = 71, e_trick_item% = 72
-Const e_dimension_106% = 73, e_dimension_1499% = 74
+Const e_blackout% = 67
+Const e_checkpoint% = 68
+Const e_door_closing% = 69
+Const e_gateway% = 70
+Const e_tesla% = 71
+Const e_trick% = 72, e_trick_item% = 73
+Const e_dimension_106% = 74, e_dimension_1499% = 75
 ;[End Block]
 
 ; ~ For Map Creator
@@ -359,6 +360,10 @@ Function FindEventID%(EventName$)
 		Case "1048_a"
 			;[Block]
 			Return(e_1048_a)
+			;[End Block]
+		Case "blackout"
+			;[Block]
+			Return(e_blackout)
 			;[End Block]
 		Case "checkpoint"
 			;[Block]
@@ -6646,6 +6651,25 @@ Function UpdateEvents%()
 				If e\room\Dist < 8.0
 					CreateNPC(NPCType1048_A, e\room\x, e\room\y + 0.3, e\room\z)
 					RemoveEvent(e)
+				EndIf
+				;[End Block]
+			Case e_blackout
+				;[Block]
+				If PlayerRoom = e\room
+					If e\room\Objects[0] = 0
+						TFormPoint(864.0, 162.0, -68.0, e\room\OBJ, 0)
+						e\room\Objects[0] = CreatePivot()
+						PositionEntity(e\room\Objects[0], TFormedX(), TFormedY(), TFormedZ(), True)
+					Else
+						If Rand(50) = 1
+							SetTemplateVelocity(ParticleEffect[19], -0.007, -0.008, -0.001, 0.0012, -0.007, 0.008)
+							For i = 0 To 1
+								SetEmitter(e\room, EntityX(e\room\Objects[0], True), EntityY(e\room\Objects[0], True), EntityZ(e\room\Objects[0], True), 19)
+							Next
+							PlaySoundEx(snd_I\SparkShortSFX, Camera, e\room\Objects[0], 8.0, 0.6)
+							me\LightBlink = 1.0
+						EndIf
+					EndIf
 				EndIf
 				;[End Block]
 			Case e_room4_2_hcz_d
