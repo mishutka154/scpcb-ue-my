@@ -1585,7 +1585,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room2c_gw_lcz
 			;[Block]
@@ -1709,7 +1709,7 @@ Function FillRoom%(r.Rooms)
 		Case r_room3_lcz
 			;[Block]
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room3_storage
 			;[Block]
@@ -2037,7 +2037,7 @@ Function FillRoom%(r.Rooms)
 			
 			; ~ Fence door
 			d.Doors = CreateDoor(r, r\x - 260.0 * RoomScale, r\y - 10944.0 * RoomScale, r\z + 1660.0 * RoomScale, 90.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			; ~ Misc Doors
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 64.0 * RoomScale, 0.0, False, HEAVY_DOOR, KEY_CARD_4)
@@ -2100,7 +2100,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			
 			d.Doors = CreateDoor(r, r\x + 692.0 * RoomScale, r\y - 8600.0 * RoomScale, r\z + 399.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			; ~ Levers
 			r\RoomLevers.Levers[0] = CreateLever(r, r\x - 744.0 * RoomScale, r\y - 7908.0 * RoomScale, r\z + 3123.0 * RoomScale, 0.0, True)
@@ -3038,10 +3038,10 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			d.Doors = CreateDoor(r, r\x + 1250.0 * RoomScale, r\y - 1244.0 * RoomScale, r\z + 5144.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			d.Doors = CreateDoor(r, r\x - 4590.0 * RoomScale, r\y - 1244.0 * RoomScale, r\z + 5144.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			; ~ The door leading to ending tunnel
 			d.Doors = CreateDoor(r, r\x - 4064.0 * RoomScale, r\y - 1248.0 * RoomScale, r\z + 3952.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_2)
@@ -3149,10 +3149,10 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[4] = d
 			
 			d.Doors = CreateDoor(r, r\x + 2744.0 * RoomScale, r\y - 928.0 * RoomScale, r\z + 6137.0 * RoomScale, 0.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			d.Doors = CreateDoor(r, r\x + 4769.0 * RoomScale, r\y + 16.0 * RoomScale, r\z - 2100.0 * RoomScale, 180.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			CreateDoor(r, r\x + 3072.0 * RoomScale, r\y - 928.0 * RoomScale, r\z + 5800.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_3)
 			
