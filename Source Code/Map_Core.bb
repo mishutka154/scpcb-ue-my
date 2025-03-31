@@ -2600,6 +2600,17 @@ Const ONE_SIDED_DOOR% = 7
 Const SCP_914_DOOR% = 8
 ;[End Block]
 
+; ~ Doors Dimensions Constants
+;[Block]
+Const DEFAULT_DOOR_WIDTH# = 203.0 * RoomScale / 11.0814 ; ~ MeshWidth(d_I\DoorModelID[DEFAULT_DOOR])
+Const DEFAULT_DOOR_HEIGHT# = 313.0 * RoomScale / 24.2875 ; ~ MeshHeight(d_I\DoorModelID[DEFAULT_DOOR])
+Const DEFAULT_DOOR_DEPTH# = 15.0 * RoomScale / 1.05759 ; ~ MeshDepth(d_I\DoorModelID[DEFAULT_DOOR])
+
+Const ONE_SIDED_DOOR_WIDTH# = 203.0 * RoomScale / 12.8785 ; ~ MeshWidth(d_I\DoorModelID[ONE_SIDED_DOOR])
+Const ONE_SIDED_DOOR_HEIGHT# = 313.0 * RoomScale / 24.3672 ; ~ MeshHeight(d_I\DoorModelID[ONE_SIDED_DOOR])
+Const ONE_SIDED_DOOR_DEPTH# = 15.0 * RoomScale / 1.05749 ; ~ MeshDepth(d_I\DoorModelID[ONE_SIDED_DOOR])
+;[End Block]
+
 Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorType% = DEFAULT_DOOR, Keycard% = KEY_MISC, Code% = 0, CustomParent% = 0)
 	Local d.Doors
 	Local Parent%, i%
@@ -2635,12 +2646,14 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 	
 	d\room = room
 	
+	Local Scale#
+	
 	Select DoorType
 		Case DEFAULT_DOOR
 			;[Block]
 			DoorModelID_1 = DOOR_DEFAULT_MODEL
 			DoorModelID_2 = DoorModelID_1
-			DoorScaleX = 203.0 * RoomScale / MeshWidth(d_I\DoorModelID[DoorModelID_1]) : DoorScaleY = 313.0 * RoomScale / MeshHeight(d_I\DoorModelID[DoorModelID_1]) : DoorScaleZ = 15.0 * RoomScale / MeshDepth(d_I\DoorModelID[DoorModelID_1])
+			DoorScaleX = DEFAULT_DOOR_WIDTH : DoorScaleY = DEFAULT_DOOR_HEIGHT : DoorScaleZ = DEFAULT_DOOR_DEPTH
 			
 			FrameModelID = DOOR_DEFAULT_FRAME_MODEL
 			FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
@@ -2649,7 +2662,7 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 			;[Block]
 			DoorModelID_1 = DOOR_ONE_SIDED_MODEL
 			DoorModelID_2 = DoorModelID_1
-			DoorScaleX = 203.0 * RoomScale / MeshWidth(d_I\DoorModelID[DoorModelID_1]) : DoorScaleY = 313.0 * RoomScale / MeshHeight(d_I\DoorModelID[DoorModelID_1]) : DoorScaleZ = 15.0 * RoomScale / MeshDepth(d_I\DoorModelID[DoorModelID_1])
+			DoorScaleX = ONE_SIDED_DOOR_WIDTH : DoorScaleY = ONE_SIDED_DOOR_HEIGHT : DoorScaleZ = ONE_SIDED_DOOR_DEPTH
 			
 			FrameModelID = DOOR_DEFAULT_FRAME_MODEL
 			FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
@@ -2678,10 +2691,11 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 			;[Block]
 			DoorModelID_1 = DOOR_BIG_MODEL_1
 			DoorModelID_2 = DOOR_BIG_MODEL_2
-			DoorScaleX = 55.0 * RoomScale : DoorScaleY = 55.0 * RoomScale : DoorScaleZ = 55.0 * RoomScale
+			Scale = 55.0 * RoomScale
+			DoorScaleX = Scale : DoorScaleY = Scale : DoorScaleZ = Scale
 			
 			FrameModelID = DOOR_BIG_FRAME_MODEL
-			FrameScaleX = 55.0 * RoomScale : FrameScaleY = 55.0 * RoomScale : FrameScaleZ = 55.0 * RoomScale
+			FrameScaleX = Scale : FrameScaleY = Scale : FrameScaleZ = Scale
 			;[End Block]
 		Case OFFICE_DOOR
 			;[Block]
@@ -2702,7 +2716,8 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 		Case FENCE_DOOR
 			;[Block]
 			DoorModelID_1 = DOOR_FENCE_MODEL
-			DoorScaleX = 100.0 * RoomScale : DoorScaleY = 100.0 * RoomScale : DoorScaleZ = 100.0 * RoomScale
+			Scale = 100.0 * RoomScale
+			DoorScaleX = Scale : DoorScaleY = Scale : DoorScaleZ = Scale
 			;[End Block]
 	End Select
 	
