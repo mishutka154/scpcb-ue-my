@@ -49,6 +49,9 @@
 	- «room2c_2_hcz»
 	- «room2c_3_hcz»
 	- «room4_3_hcz»
+	- «room2_7_lcz»
+	- «room2_7_hcz»
+	- «room2_7_ez»
 - Added leaf particles in the forest.
 - Added penny in «room1_storage».
 - Added new props.
