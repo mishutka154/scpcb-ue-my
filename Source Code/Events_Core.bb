@@ -5399,7 +5399,7 @@ Function UpdateEvents%()
 						e\EventState3 = Max(0.0, e\EventState3 - fps\Factor[0] / 450.0)
 					EndIf
 					
-					If e\EventState2 > 0.0 Then e\SoundCHN = LoopSoundEx(RoomAmbience[7], e\SoundCHN, Camera, e\room\RoomLevers[1]\BaseOBJ, 5.0, e\EventState2 * 0.8)
+					If e\EventState2 > 0.0 Then e\SoundCHN = LoopSoundEx(RoomAmbience[7], e\SoundCHN, Camera, e\room\RoomLevers[2]\BaseOBJ, 5.0, e\EventState2 * 0.8)
 					If e\EventState3 > 0.0 Then e\SoundCHN2 = LoopSoundEx(e\Sound2, e\SoundCHN2, Camera, e\room\RoomLevers[1]\BaseOBJ, 6.0, e\EventState3)
 					
 					If Temp And x1 And z1
