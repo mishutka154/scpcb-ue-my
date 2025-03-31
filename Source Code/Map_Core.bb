@@ -4139,7 +4139,7 @@ Function CreateSecurityCam.SecurityCams(room.Rooms, x1#, y1#, z1#, Pitch1#, Scre
 		
 		sc\ScrOverlay = CreateSprite(sc\ScrOBJ)
 		ScaleSprite(sc\ScrOverlay, MonWidth, MonHeight)
-		MoveEntity(sc\ScrOverlay, 0.0, 0.0, -0.005)
+		MoveEntity(sc\ScrOverlay, 0.0, 0.0, -0.0045)
 		EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 		SpriteViewMode(sc\ScrOverlay, 2)
 		EntityFX(sc\ScrOverlay, 1)
