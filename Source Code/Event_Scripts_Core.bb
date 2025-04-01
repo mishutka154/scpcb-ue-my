@@ -6296,7 +6296,7 @@ End Function
 Function UpdateEvent_Room3_HCZ_1048%(e.Events)
 	If e\room\Dist < 5.0
 		If e\EventState = 0.0
-			TFormPoint(704.0, 132.0, -416.0, e\room\OBJ, 0)
+			TFormPoint(704.0, 166.0, -416.0, e\room\OBJ, 0)
 			e\room\NPC[0] = CreateNPC(NPCType1048, TFormedX(), TFormedY(), TFormedZ())
 			e\room\NPC[0]\State = 3.0
 			PointEntity(e\room\NPC[0]\Collider, e\room\OBJ)
