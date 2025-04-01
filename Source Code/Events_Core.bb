@@ -293,10 +293,10 @@ Function FindEventID%(EventName$)
 			;[Block]
 			Return(e_room2_6_ez_guard)
 			;[End Block]
-		Case "room2_office"
-			;[Block]
-			Return(e_room2_office)
-			;[End Block]
+;		Case "room2_office"
+;			;[Block]
+;			Return(e_room2_office)
+;			;[End Block]
 		Case "room2_cafeteria"
 			;[Block]
 			Return(e_room2_cafeteria)
