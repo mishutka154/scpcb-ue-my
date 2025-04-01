@@ -14,7 +14,7 @@
  AbsPath="\Source Code\Devil_Particles_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Difficulty_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Events_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
- AbsPath="\Source Code\Events_AI_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
+ AbsPath="\Source Code\Event_Scripts_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Game.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\Graphics_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"
  AbsPath="\Source Code\INI_Core.bb" PrjFolder="" Line="0" Column="0" Tip="0" Visible="False"

@@ -516,7 +516,7 @@ Function RenderQuickLoading%()
 	EndIf
 End Function
 
-Include "Source Code\Events_AI_Core.bb"
+Include "Source Code\Event_Scripts_Core.bb"
 
 Function QuickLoadEvents%() ; ~ Get rid of this shit - Jabka
 	If QuickLoad_CurrEvent = Null
