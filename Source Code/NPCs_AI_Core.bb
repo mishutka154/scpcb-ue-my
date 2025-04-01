@@ -1683,6 +1683,7 @@ Function UpdateNPCType106%(n.NPCs)
 			Case 0.0 ; ~ Reset the timer
 				;[Block]
 				PositionEntity(n\Collider, 0.0, -500.0, 0.0)
+				PositionEntity(n\Shadow\OBJ, 0.0, -500.0, 0.0)
 				ResetEntity(n\Collider)
 				HideEntity(n\OBJ2)
 				n\State = 1.0
@@ -1752,7 +1753,7 @@ Function UpdateNPCType106%(n.NPCs)
 				;[Block]
 				Local Visible% = False
 				
-				If Dist < 64.0
+				If Dist < 100.0
 					If (Not (chs\NoTarget Lor I_268\InvisibilityOn)) Then Visible = EntityVisible(n\Collider, me\Collider)
 				EndIf
 				If Visible
@@ -1793,7 +1794,7 @@ Function UpdateNPCType106%(n.NPCs)
 					Local PrevFrame# = n\Frame
 					
 					If (Dist > 625.0 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Lor Visible Lor n\PathStatus <> PATH_STATUS_FOUND) And PlayerRoom\RoomTemplate\RoomID <> r_gate_a And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
-						If (Dist > 4.0 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106) Then TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.3) - EntityY(n\Collider)) / 50.0, 0.0)
+						If (Dist > 9.0 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106) Then TranslateEntity(n\Collider, 0.0, ((EntityY(me\Collider) - 0.295) - EntityY(n\Collider)) / 50.0, 0.0)
 						
 						n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
 						
@@ -1826,7 +1827,7 @@ Function UpdateNPCType106%(n.NPCs)
 								Wend
 								
 								If n\Path[n\PathLocation] <> Null
-									TranslateEntity(n\Collider, 0.0, ((EntityY(n\Path[n\PathLocation]\OBJ, True) - 0.17) - EntityY(n\Collider)) / 50.0, 0.0)
+									TranslateEntity(n\Collider, 0.0, ((EntityY(n\Path[n\PathLocation]\OBJ, True) - 0.165) - EntityY(n\Collider)) / 50.0, 0.0)
 									
 									PointEntity(n\OBJ, n\Path[n\PathLocation]\OBJ)
 									
@@ -1850,38 +1851,28 @@ Function UpdateNPCType106%(n.NPCs)
 							n\CurrSpeed = 0.0
 						EndIf
 					EndIf
-					If Dist < 100.0
+					If Dist < 100.0 Lor PlayerRoom\RoomTemplate\RoomID = r_gate_a
 						If (PrevFrame <= 286.0 And n\Frame > 286.0)
 							PlaySoundEx(StepSFX(2, 0, Rand(0, 2)), Camera, n\Collider, 6.0, Rnd(0.8, 1.0))
 							
-							If PlayerRoom\RoomTemplate\RoomID = r_gate_a
-								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) + Cos(EntityYaw(n\Collider)) * 0.1, PlayerRoom\y + 0.005, EntityZ(n\Collider, True) - Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
+							Pvt = CreatePivot()
+							PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.1, EntityZ(n\Collider))
+							TurnEntity(Pvt, 90.0, 0.0, 0.0)
+							If EntityPick(Pvt, 0.2)
+								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) + Cos(EntityYaw(n\Collider)) * 0.1, PickedY() + 0.005, EntityZ(n\Collider, True) - Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
 								de\SizeChange = -0.00002 : de\Timer = 90000.0
-							Else
-								Pvt = CreatePivot()
-								PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.1, EntityZ(n\Collider))
-								TurnEntity(Pvt, 90.0, 0.0, 0.0)
-								If EntityPick(Pvt, 0.2)
-									de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) + Cos(EntityYaw(n\Collider)) * 0.1, PickedY() + 0.005, EntityZ(n\Collider, True) - Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
-									de\SizeChange = -0.00002 : de\Timer = 90000.0
-								EndIf
-								FreeEntity(Pvt) : Pvt = 0
 							EndIf
+							FreeEntity(Pvt) : Pvt = 0
 						ElseIf (PrevFrame <= 311.0 And n\Frame > 311.0)
 							PlaySoundEx(StepSFX(2, 0, Rand(0, 2)), Camera, n\Collider, 6.0, Rnd(0.8, 1.0))
-							If PlayerRoom\RoomTemplate\RoomID = r_gate_a
-								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) - Cos(EntityYaw(n\Collider)) * 0.1, PlayerRoom\y + 0.005, EntityZ(n\Collider, True) + Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
+							Pvt = CreatePivot()
+							PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.1, EntityZ(n\Collider))
+							TurnEntity(Pvt, 90.0, 0.0, 0.0)
+							If EntityPick(Pvt, 0.2) Then 
+								de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) - Cos(EntityYaw(n\Collider)) * 0.1, PickedY() + 0.005, EntityZ(n\Collider, True) + Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
 								de\SizeChange = -0.00002 : de\Timer = 90000.0
-							Else
-								Pvt = CreatePivot()
-								PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider) + 0.1, EntityZ(n\Collider))
-								TurnEntity(Pvt, 90.0, 0.0, 0.0)
-								If EntityPick(Pvt, 0.2) Then 
-									de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(n\Collider, True) - Cos(EntityYaw(n\Collider)) * 0.1, PickedY() + 0.005, EntityZ(n\Collider, True) + Sin(EntityYaw(n\Collider)) * 0.1, 90.0, Rnd(360.0), 0.0, 0.1, 0.8)
-									de\SizeChange = -0.00002 : de\Timer = 90000.0
-								EndIf
-								FreeEntity(Pvt) : Pvt = 0
 							EndIf
+							FreeEntity(Pvt) : Pvt = 0
 						EndIf
 					EndIf
 				ElseIf (Not chs\NoTarget)
