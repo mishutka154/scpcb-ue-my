@@ -77,6 +77,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 						Local ClosestDist# = EntityDistanceSquared(PlayerRoom\OBJ, n\Collider)
 						Local ClosestRoom.Rooms = PlayerRoom
 						Local CurrDist# = 0.0
+						Local i%
 						
 						For i = 0 To MaxRoomAdjacents - 1
 							If PlayerRoom\Adjacent[i] <> Null
