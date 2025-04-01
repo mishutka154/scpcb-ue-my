@@ -966,10 +966,10 @@ Function UpdateEndings%()
 	
 	For e.Events = Each Events
 		If e\EventID = e_gate_a
-			UpdateEvent_Gate_B(e)
+			UpdateEvent_Gate_A(e)
 			Exit
 		ElseIf e\EventID = e_gate_b
-			UpdateEvent_Gate_A(e)
+			UpdateEvent_Gate_B(e)
 			Exit
 		EndIf
 	Next
