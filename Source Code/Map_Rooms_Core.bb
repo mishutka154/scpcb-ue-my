@@ -704,7 +704,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room2_7_lcz
 			;[Block]
-			CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, -90.0, False, FENCE_DOOR)
+			CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, 90.0, False, FENCE_DOOR)
 			
 			d.Doors = CreateDoor(r, r\x + 720.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_1)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.15, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
@@ -1437,7 +1437,7 @@ Function FillRoom%(r.Rooms)
 			CreateDoor(r, r\x + 556.0 * RoomScale, r\y, r\z + 288.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_4)
 			
 			; ~ Fence door
-			CreateDoor(r, r\x - 246.0 * RoomScale, r\y, r\z + 208.0 * RoomScale, 90.0, True, FENCE_DOOR)
+			CreateDoor(r, r\x - 246.0 * RoomScale, r\y, r\z + 208.0 * RoomScale, 270.0, True, FENCE_DOOR)
 			
 			; ~ Misc door
 			d.Doors = CreateDoor(r, r\x - 1024.0 * RoomScale, r\y, r\z - 400.0 * RoomScale, 270.0, False, DEFAULT_DOOR, KEY_CARD_2)
@@ -1589,7 +1589,7 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.165, True)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
-			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 0.0, False, FENCE_DOOR)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
 			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room2c_gw_lcz
@@ -1713,7 +1713,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room3_lcz
 			;[Block]
-			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 0.0, False, FENCE_DOOR)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
 			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room3_storage
@@ -1759,7 +1759,7 @@ Function FillRoom%(r.Rooms)
 			CreateDoor(r, r\x + 256.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_HAND_WHITE)
 			
 			; ~ Fence door
-			CreateDoor(r, r\x - 245.0 * RoomScale, r\y, r\z - 527.0 * RoomScale, 90.0, False, FENCE_DOOR)
+			CreateDoor(r, r\x - 245.0 * RoomScale, r\y, r\z - 527.0 * RoomScale, 270.0, False, FENCE_DOOR)
 			
 			r\RoomLevers.Levers[0] = CreateLever(r, r\x + 3096.0 * RoomScale, r\y - 5464.0 * RoomScale, r\z + 6569.0 * RoomScale)
 			r\RoomLevers.Levers[1] = CreateLever(r, r\x + 1216.0 * RoomScale, r\y - 5464.0 * RoomScale, r\z + 3240.0 * RoomScale)
