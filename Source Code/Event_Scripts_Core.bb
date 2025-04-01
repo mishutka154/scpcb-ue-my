@@ -9244,12 +9244,12 @@ Function UpdateEvent_106_Victim_Wall%(e.Events)
 End Function
 
 Function UpdateEvent_173_Spawn%(e.Events)
-	If e\room\Dist < 6.0
+	If e\room\Dist < 6.0 And (PlayerRoom <> e\room)
 		If n_I\Curr173\Idle > 1
 			RemoveEvent(e)
 		Else
 			If n_I\Curr173\Idle = 0
-				If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 36.0 And (Not PlayerSees173(n_I\Curr173))
+				If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 16.0 And (Not PlayerSees173(n_I\Curr173))
 					Select e\room\RoomTemplate\RoomID
 						Case r_room2_4_lcz, r_room2_4_hcz
 							;[Block]
@@ -9277,6 +9277,23 @@ Function UpdateEvent_173_Spawn%(e.Events)
 								Case 3
 									;[Block]
 									TFormPoint(-920.0, -512.0, 480.0, e\room\OBJ, 0)
+									;[End Block]
+							End Select
+							;[End Block]
+						Case r_room2_7_ez
+							;[Block]
+							Select Rand(3)
+								Case 1
+									;[Block]
+									TFormPoint(905.0, -512.0, 507.0, e\room\OBJ, 0)
+									;[End Block]
+								Case 2
+									;[Block]
+									TFormPoint(-34.0, -512.0, 594.0, e\room\OBJ, 0)
+									;[End Block]
+								Case 3
+									;[Block]
+									TFormPoint(256.0, -512.0, -911.0, e\room\OBJ, 0)
 									;[End Block]
 							End Select
 							;[End Block]

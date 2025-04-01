@@ -3374,6 +3374,29 @@ Function FillRoom%(r.Rooms)
 				emit\State = 3
 			EndIf
 			;[End Block]
+		Case r_room2_7_ez
+			;[Block]
+			If Rand(2) = 1
+				it.Items = CreateRandomBattery(r\x - 655.0 * RoomScale, r\y - 488.0 * RoomScale, r\z + 158.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
+			
+			If Rand(2) = 1
+				it.Items = CreateItem("E-Reader", it_e_reader, r\x - 655.0 * RoomScale, r\y - 504.0 * RoomScale, r\z + 866.0 * RoomScale)
+				it\State = Rnd(100.0)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
+			
+			If Rand(2) = 1
+				it.Items = CreateItem("S-NAV Navigator", it_nav, r\x - 655.0 * RoomScale, r\y - 441.0 * RoomScale, r\z + 721.0 * RoomScale)
+				it\State = Rnd(100.0)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
+			
+			it.Items = CreateItem("Security Clearance Levels", it_paper, r\x - 655.0 * RoomScale, r\y - 510.0 * RoomScale, r\z + 108.0 * RoomScale)
+			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
+			;[End Block]
 		Case r_room2_cafeteria
 			;[Block]
 			; ~ Misc doors

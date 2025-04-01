@@ -1969,6 +1969,8 @@ Function LoadEvents%()
 	CreateEvent(e_room3_2_ez_duck, r_room3_2_ez, 1)
 	CreateEvent(e_173_spawn, r_room3_3_ez, 0)
 	
+	CreateEvent(e_173_spawn, r_room2_7_ez, 0, 0.6)
+	
 	; ~ The dead guard
 	CreateEvent(e_room3_2_hcz_guard, r_room3_2_hcz, 0, 0.1)
 	
