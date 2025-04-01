@@ -249,10 +249,10 @@ Function UpdateEvent_Cont1_173%(e.Events)
 			EndIf
 			
 			If e\room\NPC[7] <> Null
-				PositionEntity(e\room\NPC[7]\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.3, e\room\z + 3116.0 * RoomScale)
+				PositionEntity(e\room\NPC[7]\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.2, e\room\z + 3116.0 * RoomScale)
 				ResetEntity(e\room\NPC[7]\Collider)
 			Else
-				e\room\NPC[7] = CreateNPC(NPCTypeD, e\room\x + 32.0 * RoomScale, e\room\y + 0.3, e\room\z + 3116.0 * RoomScale)
+				e\room\NPC[7] = CreateNPC(NPCTypeD, e\room\x + 32.0 * RoomScale, e\room\y + 0.2, e\room\z + 3116.0 * RoomScale)
 				ChangeNPCTextureID(e\room\NPC[7], NPC_CLASS_D_SCIENTIST_TEXTURE)
 			EndIf
 			RotateEntity(e\room\NPC[7]\Collider, 0.0, e\room\Angle + 180.0, 0.0)
@@ -404,6 +404,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 									CreateHintMsg(Format(GetLocalString("msg", "run"), key\Name[key\SPRINT]), 6.0, True)
 									PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
 								EndIf
+								PositionEntity(n_I\Curr173\Shadow\OBJ, EntityX(n_I\Curr173\OBJ, True), EntityY(n_I\Curr173\OBJ, True), EntityZ(n_I\Curr173\OBJ, True), True)
 								ResetEntity(n_I\Curr173\Collider)
 							EndIf
 						EndIf
