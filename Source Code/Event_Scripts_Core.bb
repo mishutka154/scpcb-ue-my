@@ -9312,7 +9312,7 @@ Function UpdateEvent_Blackout%(e.Events)
 	
 	If e\room\Dist < 16.0
 		If Rand(70) = 1
-			If e\EventState2 < 0.5 Then me\LightBlink = 1.0
+			If e\EventState2 < 0.5 And InFacility = NullFloor Then me\LightBlink = 1.0
 			Temp = True
 		EndIf
 	EndIf
