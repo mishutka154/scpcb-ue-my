@@ -458,6 +458,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 				e\SoundCHN2 = PlaySound_Strict(e\Sound2, (e\EventState3 = 1.0))
 			Else
 				If Int(e\EventState3) = 8.0 Then me\BigCameraShake = 1.0
+				If Int(e\EventState3) > 7.0 Then UpdateLampShaking()
 			EndIf
 		EndIf
 		If (e\EventState Mod 600.0 > 300.0) And ((e\EventState + fps\Factor[0]) Mod 600.0 < 300.0)
@@ -2188,6 +2189,7 @@ Function UpdateEvent_Room2_Elevator%(e.Events)
 				EndIf
 			Else
 				e\EventState = e\EventState + fps\Factor[0]
+				If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 13.0 Then UpdateLampShaking()
 				If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 7.4
 					me\BigCameraShake = 7.4 - (e\EventState / 70.0)
 					TempLightVolume = 0.6
@@ -9314,6 +9316,7 @@ Function UpdateEvent_682_Roar%(e.Events)
 		e\EventState = e\EventState - fps\Factor[0]
 		
 		If e\EventState < 70.0 * 17.0
+			UpdateLampShaking()
 			If e\EventState + fps\Factor[0] >= 70.0 * 17.0 Then e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\682\Roar.ogg"))
 			If e\EventState > 70.0 * 14.0 Then me\BigCameraShake = 0.5
 			If e\EventState > 70.0 * 6.0 And e\EventState < 70.0 * 9.5 Then me\BigCameraShake = 2.0

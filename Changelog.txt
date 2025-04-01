@@ -12,6 +12,7 @@
 - Added a body model for player.
 - Added new event for «room2_4_ez» room.
 - Added new hints during the CWM loading screen.
+- Added lamp shake during some events.
 
 - Removed «Save texture to VRAM» option. Some textures have 256 flag by default.
 - Removed leaning and buttons' glowing.

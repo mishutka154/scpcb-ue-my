@@ -12,6 +12,7 @@ Type Props
 	Field room.Rooms
 	Field TexPath$
 	Field IsCooler%
+	Field IsLamp%
 End Type
 
 Type TempProps
@@ -40,6 +41,7 @@ Function CreateProp.Props(room.Rooms, Name$, x#, y#, z#, Pitch#, Yaw#, Roll#, Sc
 	p\room = room
 	p\TexPath = TexturePath
 	p\IsCooler = (Name = "GFX\Map\Props\water_cooler.b3d")
+	p\IsLamp = (Name = "GFX\Map\Props\lamp_c.b3d")
 	
 	If p\OBJ = 0 Then p\OBJ = LoadMesh_Strict(Name)
 	PositionEntity(p\OBJ, x, y, z)
@@ -51,6 +53,21 @@ Function CreateProp.Props(room.Rooms, Name$, x#, y#, z#, Pitch#, Yaw#, Roll#, Sc
 	EntityPickMode(p\OBJ, 2)
 	
 	Return(p)
+End Function
+
+Function UpdateLampShaking%()
+	Local p.Props
+	Local ShakeValue# = Sin(MilliSecs()) * Min(5.0 * me\BigCameraShake, 12.0)
+	
+	For p.Props = Each Props
+		If p\IsLamp
+			Local Shake% = False
+			
+			If p\room = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, p\room) Then Shake = True
+			
+			If Shake Then RotateEntity(p\OBJ, ShakeValue, 0.0, 0.0, True)
+		EndIf
+	Next
 End Function
 
 Function RemoveProp%(pr.Props)
