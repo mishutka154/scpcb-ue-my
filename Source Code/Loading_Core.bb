@@ -1911,8 +1911,8 @@ Function LoadEvents%()
 	
 	; ~ The chance for SCP-173 appearing in the first r_room2c_gw_lcz is about 66%
 	; ~ There's a 30% chance that it appears in the later r_room2c_gw_lcz
-	If Rand(3) < 3 Then CreateEvent(e_173_appearing, r_room2c_gw_lcz, 0)
-	CreateEvent(e_173_appearing, r_room2c_gw_lcz, 1, 0.3 + (0.5 * SelectedDifficulty\AggressiveNPCs))
+	If Rand(3) < 3 Then CreateEvent(e_173_spawn, r_room2c_gw_lcz, 0)
+	CreateEvent(e_173_spawn, r_room2c_gw_lcz, 1, 0.3 + (0.5 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent(e_trick, r_room2_lcz, 0, 0.15)
 	CreateEvent(e_trick, r_room2_3_lcz, 0, 0.15)
@@ -1934,8 +1934,8 @@ Function LoadEvents%()
 	
 	CreateEvent(e_room2_storage, r_room2_storage, 0)
 	
-	CreateEvent(e_room1_dead_end_106, r_room1_dead_end_lcz, Rand(0, 1))
-	CreateEvent(e_room1_dead_end_guard, r_room1_dead_end_ez, Rand(0, 1))
+	CreateEvent(e_room1_dead_end_lcz_106, r_room1_dead_end_lcz, Rand(0, 1))
+	CreateEvent(e_room1_dead_end_ez_guard, r_room1_dead_end_ez, Rand(0, 1))
 	
 	CreateEvent(e_room2_scientists_2, r_room2_scientists_2, 0)
 	
@@ -1949,7 +1949,7 @@ Function LoadEvents%()
 	CreateEvent(e_room2_6_hcz_173, r_room2_6_hcz, 0, 0.3 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
 	; ~ SCP-173 appears in half of the r_room2_6_lcz-rooms
-	CreateEvent(e_173_appearing, r_room2_6_lcz, 0, 0.5 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent(e_173_spawn, r_room2_6_lcz, 0, 0.5 + (0.4 * SelectedDifficulty\AggressiveNPCs))
 	
 	; ~ The anomalous duck in r_room2_2_ez-rooms
 	CreateEvent(e_room2_2_ez_duck, r_room2_2_ez, 0, 0.7)
@@ -1965,9 +1965,9 @@ Function LoadEvents%()
 	
 	CreateEvent(e_room2_servers_hcz, r_room2_servers_hcz, 0)
 	
-	CreateEvent(e_173_appearing, r_room3_2_ez, 0, 0.8)
+	CreateEvent(e_173_spawn, r_room3_2_ez, 0, 0.8)
 	CreateEvent(e_room3_2_ez_duck, r_room3_2_ez, 1)
-	CreateEvent(e_173_appearing, r_room3_3_ez, 0)
+	CreateEvent(e_173_spawn, r_room3_3_ez, 0)
 	
 	; ~ The dead guard
 	CreateEvent(e_room3_2_hcz_guard, r_room3_2_hcz, 0, 0.1)
@@ -2033,7 +2033,7 @@ Function LoadEvents%()
 	
 	CreateEvent(e_room2_2_hcz_106, r_room2_2_hcz, Rand(0, 3))
 	
-	CreateEvent(e_173_appearing, r_room2_4_hcz, 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent(e_173_spawn, r_room2_4_hcz, 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent(e_room2_test_hcz, r_room2_test_hcz, 0)
 	CreateEvent(e_room2_test_lcz_173, r_room2_test_lcz, 0)
@@ -2089,7 +2089,7 @@ Function LoadEvents%()
 	CreateEvent(e_096_spawn, r_room4_hcz, 0, 0.6 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	CreateEvent(e_096_spawn, r_room4_2_hcz, 0, 0.7 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
-	CreateEvent(e_173_appearing, r_room2_4_lcz, 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
+	CreateEvent(e_173_spawn, r_room2_4_lcz, 0, 0.4 + (0.4 * SelectedDifficulty\AggressiveNPCs))
 	
 	CreateEvent(e_room2_4_hcz_106, r_room2_4_hcz, 0, 0.07 + (0.1 * SelectedDifficulty\AggressiveNPCs))
 	
