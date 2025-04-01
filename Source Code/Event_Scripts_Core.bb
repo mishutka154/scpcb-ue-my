@@ -4052,8 +4052,8 @@ Function UpdateEvent_Cont1_035%(e.Events)
 							
 							Temp = True
 							
-							If e\Sound = 0 Then LoadEventSound(e, "SFX\Room\035Chamber\Whispers0.ogg")
-							If e\Sound2 = 0 Then LoadEventSound(e, "SFX\Room\035Chamber\Whispers1.ogg", 1)
+							If e\Sound = 0 Then e\Sound = LoadSound_Strict("SFX\Room\035Chamber\Whispers0.ogg")
+							If e\Sound2 = 0 Then e\Sound2 = LoadSound_Strict("SFX\Room\035Chamber\Whispers1.ogg")
 							
 							e\EventState2 = Min(e\EventState2 + (fps\Factor[0] / 6000.0), 1.0)
 							e\EventState3 = CurveValue(e\EventState2, e\EventState3, 50.0)
@@ -4498,7 +4498,7 @@ Function UpdateEvent_Cont1_895%(e.Events)
 					EndIf
 				EndIf
 			ElseIf e\room\NPC[0]\PrevState = 2
-				If e\room\NPC[0]\Sound = 0 Then LoadNPCSound(e\room\NPC[0], "SFX\Room\895Chamber\GuardRadio.ogg")
+				If e\room\NPC[0]\Sound = 0 Then e\room\NPC[0]\Sound = LoadSound_Strict("SFX\Room\895Chamber\GuardRadio.ogg")
 				e\room\NPC[0]\SoundCHN = LoopSoundEx(e\room\NPC[0]\Sound, e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 5.0)
 			EndIf
 		EndIf
@@ -5786,7 +5786,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 			
 			; ~ Generator on
 			If z
-				If e\Sound2 = 0 Then LoadEventSound(e, "SFX\Room\GeneratorOn.ogg", 1)
+				If e\Sound2 = 0 Then e\Sound2 = LoadSound_Strict("SFX\Room\GeneratorOn.ogg")
 				e\EventState3 = Min(1.0, e\EventState3 + fps\Factor[0] / 450.0)
 			Else
 				e\EventState3 = Min(0.0, e\EventState3 - fps\Factor[0] / 450.0)
@@ -9338,7 +9338,7 @@ Function UpdateEvent_Blackout%(e.Events)
 				
 				; ~ Generator on
 				If UpdateLever(e\room\RoomLevers[0]\OBJ) ; ~ Generator
-					If e\Sound = 0 Then LoadEventSound(e, "SFX\Room\GeneratorOn.ogg", 1)
+					If e\Sound = 0 Then e\Sound = LoadSound_Strict("SFX\Room\GeneratorOn.ogg")
 					e\EventState = Min(1.0, e\EventState + fps\Factor[0] / 450.0)
 				Else
 					e\EventState = Min(0.0, e\EventState - fps\Factor[0] / 450.0)
@@ -9418,7 +9418,7 @@ Function UpdateEvent_Checkpoint%(e.Events)
 	EndIf
 	
 	If e\room\RoomDoors[0]\Open <> e\EventState
-		If e\Sound = 0 Then LoadEventSound(e, "SFX\Door\DoorCheckpoint.ogg")
+		If e\Sound = 0 Then e\Sound = LoadSound_Strict("SFX\Door\DoorCheckpoint.ogg")
 		e\SoundCHN = PlaySoundEx(e\Sound, Camera, e\room\RoomDoors[0]\OBJ)
 		e\SoundCHN2 = PlaySoundEx(e\Sound, Camera, e\room\RoomDoors[1]\OBJ)
 	EndIf
