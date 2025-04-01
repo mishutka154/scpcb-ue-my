@@ -116,6 +116,7 @@
 - Added more human textures.
 - Added new texture for SCP-035's victim (in the office event).
 
+- Better SCP-1048-A's AI.
 - Better texture for guards, CI, Class-D and SCP-049-2.
 - SCP-1048-A now has better explosion effect.
 - SCP-513-1 reduces sanity and increases the heart rate.

@@ -3669,9 +3669,6 @@ Function UpdateNPCType1048_A%(n.NPCs)
 	If n\IsDead Then Return
 	
 	Local Dist# = EntityDistanceSquared(n\Collider, me\Collider)
-	Local Visible% = (Dist < 6.0 And EntityVisible(n\Collider, me\Collider))
-	
-	If Visible Then GiveAchievement("1048")
 	
 	n\Speed = 1.0
 	Select n\State
@@ -3681,21 +3678,43 @@ Function UpdateNPCType1048_A%(n.NPCs)
 			
 			AnimateNPC(n, 2.0, 399.0, n\Speed)
 			
-			If Rand(300) = 1
+			If Rand(350) = 1
 				If (Not ChannelPlaying(n\SoundCHN)) Then n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\1048A\Random" + Rand(0, 4) + ".ogg"), Camera, n\Collider, 8.0, 1.0, True)
 			EndIf
-			If Visible And (Not (chs\NoTarget Lor I_268\InvisibilityOn)) Then n\State = 2.0
+			If Dist < 9.0 And EntityVisible(n\Collider, me\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+				GiveAchievement("1048")
+				n\State2 = 70.0 * 2.0
+				n\State = 1.0
+			EndIf
 			;[End Block]
 		Case 1.0 ; ~ Walks
 			;[Block]
 			n\Speed = 0.008
 			
-			RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
-			n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
-			n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
-			MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+			UpdateNPCBlinking(n)
 			
-			AnimateNPC(n, 649.0, 677.0, n\CurrSpeed * 125.0)
+			Local PlayerSeeable# = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume, 360.0)
+			
+			n\State2 = Max(n\State2 - fps\Factor[0], 0.0)
+			If n\State2 > 0.0
+				If PlayerSeeable = 1
+					n\State2 = 70.0 * 2.0
+					PointEntity(n\Collider, me\Collider)
+				EndIf
+				RotateEntity(n\Collider, 0.0, EntityYaw(n\Collider), 0.0, True)
+				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
+				n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 10.0)
+				MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
+				
+				AnimateNPC(n, 649.0, 677.0, n\CurrSpeed * 37.5)
+			Else
+				n\State = 0.0
+			EndIf
+			If Dist < 3.0 And EntityVisible(n\Collider, me\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+				SetNPCFrame(n, 400.0)
+				n\State = 2.0
+				Return
+			EndIf
 			;[End Block]
 		Case 2.0 ; ~ Scream
 			;[Block]
