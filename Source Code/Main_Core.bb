@@ -2374,6 +2374,12 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			Next
 			CreateConsoleMsg(GetLocalString("console", "funds"))
 			;[End Block]
+		Case "rufino"
+			;[Block]
+			For n.NPCs = Each NPCs
+				If n\NPCType = NPCTypeD Then ChangeNPCTextureID(n, NPC_CLASS_D_RUFINO_TEXTURE)
+			Next
+			;[End Block]
 		Case "codes"
 			;[Block]
 			CreateConsoleMsg(GetLocalString("console", "codes_1"))
