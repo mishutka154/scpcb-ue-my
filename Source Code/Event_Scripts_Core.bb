@@ -4233,7 +4233,7 @@ Function UpdateEvent_Cont1_106%(e.Events)
 		Local de.Decals
 		
 		If e\room\NPC[0] <> Null
-			If EntityY(me\Collider) < (-6900.0) * RoomScale
+			If EntityY(me\Collider) < (-6400.0) * RoomScale
 				ShouldPlay = 25
 				me\Zone = 1
 				
