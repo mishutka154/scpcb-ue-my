@@ -1992,7 +1992,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			EndIf
 			CreateConsoleMsg(Format(GetLocalString("console", "fog"), fog\FarDist, "{0}"))
 			;[End Block]
-		Case "npclist", "npcslist"
+		Case "npclist", "npcslist", "npc list", "npcs list", "npcs"
 			;[Block]
 			CreateConsoleMsg("--------------------------------")
 			CreateConsoleMsg("008-1", 255, 150, 0)
