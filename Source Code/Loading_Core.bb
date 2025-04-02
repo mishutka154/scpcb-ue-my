@@ -414,6 +414,7 @@ Function LoadParticles%()
 	
 	; ~ Blood sprite
 	ParticleEffect[21] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[21], 1)
 	SetTemplateEmitterLifeTime(ParticleEffect[21], 1)
 	SetTemplateParticleLifeTime(ParticleEffect[21], 15, 20)
 	SetTemplateTexture(ParticleEffect[21], PARTICLE_BLOOD)
