@@ -61,6 +61,7 @@
 - Added Revision Eyedrops in «room2_closets».
 - Added a truck in the Gate B area.
 - Added hazmat suit in SCP-035's containment chamber.
+- Added Asav Harn's body in SCP-513's containment chamber.
 
 - Changes for «room1_storage»:
 	- Added monitor to «room1_storage».

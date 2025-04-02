@@ -6403,6 +6403,39 @@ Function UpdateEvent_Room3_2_HCZ_Guard%(e.Events)
 	EndIf
 End Function
 
+Function UpdateEvent_Cont3_513%(e.Events)
+	If e\room\Dist < 8.0
+		Local it.Items, de.Decals
+		Local i%
+		
+		TFormPoint(-201.0, 55.0, 0.0, e\room\OBJ, 0)
+		e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
+		e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
+		SetNPCFrame(e\room\NPC[0], 40.0)
+		ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_HARN_TEXTURE)
+		RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
+		
+		TFormPoint(-190.0, 20.0, -60.0, e\room\OBJ, 0)
+		it.Items = CreateItem("Asav Harn's Badge", it_badge, TFormedX(), TFormedY(), TFormedZ())
+		EntityType(it\Collider, HIT_ITEM)
+		
+		TFormPoint(-271.95, 73.0, 0.0, e\room\OBJ, 0)
+		de.Decals = CreateDecal(DECAL_BLOOD_2, TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 90.0, 0.0, 0.5, 1.0)
+		EntityParent(de\OBJ, e\room\OBJ)
+		
+		Local Angle# = e\room\Angle + 90.0
+		
+		TFormPoint(-256.0, 0.0, 0.0, e\room\OBJ, 0)
+		de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), TFormedX(), 0.005, TFormedZ(), 90.0, Angle, 0.0, 0.45)
+		For i = 0 To 5
+			TFormPoint(-271.95, Rnd(30.0, 170.0), Rnd(-100.0, 100.0), e\room\OBJ, 0)
+			de.Decals = CreateDecal(Rand(DECAL_BULLET_HOLE_1, DECAL_BULLET_HOLE_2), TFormedX(), TFormedY(), TFormedZ(), 0.0, Angle, Rnd(-4.0, 4.0), Rnd(0.028, 0.034), 1.0, 1, 2)
+			EntityParent(de\OBJ, e\room\OBJ)
+		Next
+		RemoveEvent(e)
+	EndIf
+End Function
+
 Function UpdateEvent_Cont3_966%(e.Events)
 	If PlayerRoom = e\room
 		Local i%

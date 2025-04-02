@@ -835,8 +835,8 @@ Function RemoveMonitorInstances%()
 	Delete(mon_I) : mon_I = Null
 End Function
 
-Const MaxNPCModelIDAmount% = 31
-Const MaxNPCTextureID% = 25
+Const MaxNPCModelIDAmount% = 31 ;32
+Const MaxNPCTextureID% = 26 ;27
 
 Type NPCInstance
 	Field NPCModelID%[MaxNPCModelIDAmount]
@@ -901,27 +901,28 @@ Const NPC_CLASS_D_CLASS_D_TEXTURE% = 6
 Const NPC_CLASS_D_D9341_TEXTURE% = 7
 Const NPC_CLASS_D_JANITOR_TEXTURE% = 8
 Const NPC_CLASS_D_MAINTENANCE_TEXTURE% = 9
+Const NPC_CLASS_D_HARN_TEXTURE% = 10
 
-Const NPC_MTF_LEADER_TEXTURE% = 10
+Const NPC_MTF_LEADER_TEXTURE% = 11
 
-Const NPC_096_BLOODY_TEXTURE% = 11
+Const NPC_096_BLOODY_TEXTURE% = 12
 
-Const NPC_CLASS_D_BODY_1_TEXTURE% = 12
-Const NPC_CLASS_D_BODY_2_TEXTURE% = 13
-Const NPC_CLASS_D_VICTIM_035_TEXTURE% = 14
-Const NPC_CLASS_D_VICTIM_035_CORPSE_TEXTURE% = 15
-Const NPC_CLASS_D_VICTIM_106_TEXTURE% = 16
-Const NPC_CLASS_D_VICTIM_106_FEMUR_BREAKER_TEXTURE% = 17
-Const NPC_CLASS_D_VICTIM_409_TEXTURE% = 18
-Const NPC_CLASS_D_VICTIM_939_1_TEXTURE% = 19
-Const NPC_CLASS_D_VICTIM_939_2_TEXTURE% = 20
-Const NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE% = 21
+Const NPC_CLASS_D_BODY_1_TEXTURE% = 13
+Const NPC_CLASS_D_BODY_2_TEXTURE% = 14
+Const NPC_CLASS_D_VICTIM_035_TEXTURE% = 15
+Const NPC_CLASS_D_VICTIM_035_CORPSE_TEXTURE% = 16
+Const NPC_CLASS_D_VICTIM_106_TEXTURE% = 17
+Const NPC_CLASS_D_VICTIM_106_FEMUR_BREAKER_TEXTURE% = 18
+Const NPC_CLASS_D_VICTIM_409_TEXTURE% = 19
+Const NPC_CLASS_D_VICTIM_939_1_TEXTURE% = 20
+Const NPC_CLASS_D_VICTIM_939_2_TEXTURE% = 21
+Const NPC_CLASS_D_VICTIM_FEMUR_BREAKER_TEXTURE% = 22
 
-Const NPC_CLERK_VICTIM_205_TEXTURE% = 22
-Const NPC_CLERK_TESLA_TEXTURE% = 23
+Const NPC_CLERK_VICTIM_205_TEXTURE% = 23
+Const NPC_CLERK_TESLA_TEXTURE% = 24
 
-Const NPC_173_TESLA_TEXTURE% = 24
-;Const NPC_999_TESLA_TEXTURE% = 25
+Const NPC_173_TESLA_TEXTURE% = 25
+;Const NPC_999_TESLA_TEXTURE% = 26
 ;[End Block]
 
 Function LoadNPCs%()
@@ -939,6 +940,7 @@ Function LoadNPCs%()
 	n_I\NPCTextureName[NPC_CLASS_D_D9341_TEXTURE] = "NPCs\D_9341"
 	n_I\NPCTextureName[NPC_CLASS_D_JANITOR_TEXTURE] = "janitor"
 	n_I\NPCTextureName[NPC_CLASS_D_MAINTENANCE_TEXTURE] = "maintenance"
+	n_I\NPCTextureName[NPC_CLASS_D_HARN_TEXTURE] = "Harn"
 	
 	n_I\NPCTextureName[NPC_MTF_LEADER_TEXTURE] = "MTF(2)"
 	
@@ -2071,6 +2073,8 @@ Function LoadEvents%()
 	
 	CreateEvent(e_cont2_860_1, r_cont2_860_1, 0)
 	
+	CreateEvent(e_cont3_513, r_cont3_513, 0)
+	
 	CreateEvent(e_cont3_966, r_cont3_966, 0)
 	
 	CreateEvent(e_cont2_1123, r_cont2_1123, 0)
@@ -2321,8 +2325,6 @@ Type Player
 	Field InsideElevator%
 	Field PickTimer#, LastPicked%
 	Field PickedCooler.Props
-	Field Pill2022Used#
-	Field Pill2022HealTimer#
 End Type
 
 Global me.Player
@@ -2399,6 +2401,7 @@ Function LoadData%()
 	I_966.SCP966 = New SCP966
 	I_1048A.SCP1048A = New SCP1048A
 	I_1123.SCP1123 = New SCP1123
+	I_2022.SCP2022 = New SCP2022
 	
 	as.AutoSave = New AutoSave
 	
@@ -3367,6 +3370,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	FreeSound_Strict(I_1123\Sound) : I_1123\Sound = 0
 	Delete(I_1123) : I_1123 = Null
 	Delete(I_966) : I_966 = Null
+	Delete(I_2022) : I_2022 = Null
 	
 	QuickLoadPercent = 0
 	QuickLoadPercent_DisplayTimer = 0.0

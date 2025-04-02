@@ -3160,17 +3160,20 @@ Function UpdateMoving%()
 	EndIf
 	
 	Local FPSFactorEx# = fps\Factor[0] / 70.0
+	
 	If me\HealTimer > 0.0
 		me\Bloodloss = Min(me\Bloodloss + FPSFactorEx / 4.0, 100.0)
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 40.0, 0.0)
 		me\HealTimer = Max(me\HealTimer - FPSFactorEx, 0.0)
 	EndIf
-	Local PrevPill2022Used# = me\Pill2022Used
-	me\Pill2022Used = Max(0.0, me\Pill2022Used - (fps\Factor[0] * 0.0001))
-	If me\Pill2022Used < 1.0 And PrevPill2022Used >= 1.0 Then EntityFX(pm\OBJ, 0)
-	If me\Pill2022HealTimer > 0.0
+	
+	Local Prev2022Used# = I_2022\Used
+	
+	I_2022\Used = Max(0.0, I_2022\Used - (fps\Factor[0] * 0.0001))
+	If I_2022\Used < 1.0 And Prev2022Used >= 1.0 Then EntityFX(pm\OBJ, 0)
+	If I_2022\HealTimer > 0.0
 		me\Injuries = Max(me\Injuries - FPSFactorEx / 10.0, 0.0)
-		me\Pill2022HealTimer = Max(me\Pill2022HealTimer - FPSFactorEx, 0.0)
+		I_2022\HealTimer = Max(I_2022\HealTimer - FPSFactorEx, 0.0)
 	EndIf
 	
 	If me\HeartBeatVolume > 0.0
@@ -6338,12 +6341,12 @@ Function UpdateGUI%()
 					;[Block]
 					If CanUseItem(True)
 						If SelectedItem\ItemTemplate\ID = it_scp2022pill
-							If me\Pill2022Used < 2.0
-								me\Pill2022HealTimer = me\Pill2022HealTimer + 20.0
+							If I_2022\Used < 2.0
+								I_2022\HealTimer = I_2022\HealTimer + 20.0
 								me\Bloodloss = 0.0
 								CreateMsg(GetLocalString("msg", "pill.2022"))
 							Else
-								me\Pill2022HealTimer = 0.0
+								I_2022\HealTimer = 0.0
 								me\Injuries = me\Injuries + 1.2
 								me\Bloodloss = me\Bloodloss + 30.0
 								CreateMsg(GetLocalString("msg", "pill.2022.burn"))
@@ -6352,7 +6355,7 @@ Function UpdateGUI%()
 								me\VomitTimer = 30.0
 								EntityFX(pm\OBJ, 1)
 							EndIf
-							me\Pill2022Used = me\Pill2022Used + 1.0
+							I_2022\Used = I_2022\Used + 1.0
 						Else
 							CreateMsg(GetLocalString("msg", "pill"))
 						EndIf
@@ -9787,6 +9790,13 @@ Type SCP1048A
 End Type
 
 Global I_1048A.SCP1048A
+
+Type SCP2022
+	Field Used#
+	Field HealTimer#
+End Type
+
+Global I_2022.SCP2022
 
 Function Update1048AEars()
 	If I_1048A\EarGrowTimer > 0.0

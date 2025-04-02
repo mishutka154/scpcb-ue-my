@@ -2894,11 +2894,6 @@ Function FillRoom%(r.Rooms)
 			it2\Picked = True : it2\Dropped = -1 : it2\State = Rand(0, 6)
 			it\SecondInv[0] = it2
 			HideEntity(it2\Collider)
-			
-			it2.Items = CreateItem("Asav Harn's Badge", it_badge, 0.0, 0.0, 0.0)
-			it2\Picked = True : it2\Dropped = -1
-			it\SecondInv[1] = it2
-			HideEntity(it2\Collider)
 			;[End Block]
 		Case r_cont3_966
 			;[Block]
