@@ -112,6 +112,7 @@
 - Decreased chance for Level 4 Key Card from SCP-914.
 - Updated SCP-005, SCP-500, NVG, SCRAMBLE GEAR and wallet's models.
 - New texture for Maynard's note in SCP-005's containment chamber.
+- New texture for Incident Report SCP-1048-A-0023.
 
 [NPCs]
 - Added tesla stun animation for SCP-049.
