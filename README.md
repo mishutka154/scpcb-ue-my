@@ -14,7 +14,7 @@ Requirements:
 
 -	[IDEal for Blitz3D](https://web.archive.org/web/20130827150202/http://fungamesfactory.com/download.php?get=IDEalSetup_0.8.94.exe) v0.8.94
 
--	[BlitzPlus](https://www.blitzcoder.org/forum/downloads.php) v1.47 for Map Creator
+-	[BlitzPlus](https://blitzplus.software.informer.com/download/) v1.47 for Map Creator
 
 -	[CBRE-EX](https://github.com/AnalogFeelings/cbre-ex/releases) v.2.1.0 for rooms
 

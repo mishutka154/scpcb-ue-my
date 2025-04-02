@@ -1161,6 +1161,7 @@ Function PlaceForest%(fr.Forest, x#, y#, z#, r.Rooms)
 									Case 7 ; ~ Add a rock
 										;[Block]
 										Detail_Entity = CopyEntity(fr\DetailMesh[1])
+										ScaleEntity(Detail_Entity, 0.1, 0.1, 0.1, True)
 										PositionEntity(Detail_Entity, DetailEntityPosX, ColorR * 0.03 - 1.5, DetailEntityPosZ, True)
 										RotateEntity(Detail_Entity, 0.0, Rnd(360.0), 0.0, True)
 										;[End Block]
@@ -1340,6 +1341,7 @@ Function PlaceMapCreatorForest%(fr.Forest, x#, y#, z#, r.Rooms)
 									Case 7 ; ~ Add a rock
 										;[Block]
 										Detail_Entity = CopyEntity(fr\DetailMesh[1])
+										ScaleEntity(Detail_Entity, 0.1, 0.1, 0.1, True)
 										PositionEntity(Detail_Entity, DetailEntityPosX, ColorR * 0.03 - 1.5, DetailEntityPosZ, True)
 										RotateEntity(Detail_Entity, 0.0, Rnd(360.0), 0.0, True)
 										;[End Block]
