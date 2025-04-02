@@ -936,13 +936,6 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 			;[Block]
 			Use1123()
 			;[End Block]
-		Case it_crystal005
-			;[Block]
-			If I_409\Timer = 0.0 And (Not I_427\Using)
-				me\BlurTimer = Max(1000.0, me\BlurTimer)
-				I_409\Timer = 0.001
-			EndIf
-			;[End Block]
 	End Select
 	
 	item\Picked = False

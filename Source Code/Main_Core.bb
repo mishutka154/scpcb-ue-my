@@ -4158,6 +4158,10 @@ Function UpdateGUI%()
 			If IsMouseOn = n Then MouseSlot = n
 			
 			If Inventory(n) <> Null And SelectedItem <> Inventory(n)
+				If I_409\Timer = 0.0 And (Not I_427\Using) And Inventory(n)\ItemTemplate\ID = it_crystal005
+					me\BlurTimer = Max(1000.0, me\BlurTimer)
+					I_409\Timer = 0.001
+				EndIf
 				If IsMouseOn = n
 					If SelectedItem = Null
 						If mo\MouseHit1
@@ -6433,16 +6437,9 @@ Function UpdateGUI%()
 						AdaptScreenGamma()
 					EndIf
 					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden
+				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden
 					;[Block]
 					; ~ Skip this line
-					;[End Block]
-				Case it_crystal005
-					;[Block]
-					If I_409\Timer = 0.0 And (Not I_427\Using)
-						me\BlurTimer = Max(1000.0, me\BlurTimer)
-						I_409\Timer = 0.001
-					EndIf
 					;[End Block]
 				Case it_e_reader, it_e_reader20, it_e_readerulti
 					;[Block]
