@@ -939,7 +939,7 @@ Function LoadNPCs%()
 	n_I\NPCTextureName[NPC_CLASS_D_FRANKLIN_TEXTURE] = "Franklin"
 	n_I\NPCTextureName[NPC_CLASS_D_MAYNARD_TEXTURE] = "Maynard"
 	n_I\NPCTextureName[NPC_CLASS_D_CLASS_D_TEXTURE] = "class_d(2)"
-	n_I\NPCTextureName[NPC_CLASS_D_D9341_TEXTURE] = "NPCs\D_9341"
+	n_I\NPCTextureName[NPC_CLASS_D_D9341_TEXTURE] = "D_9341"
 	n_I\NPCTextureName[NPC_CLASS_D_JANITOR_TEXTURE] = "janitor"
 	n_I\NPCTextureName[NPC_CLASS_D_MAINTENANCE_TEXTURE] = "maintenance"
 	n_I\NPCTextureName[NPC_CLASS_D_HARN_TEXTURE] = "Harn"
