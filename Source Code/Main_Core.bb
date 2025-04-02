@@ -6349,6 +6349,7 @@ Function UpdateGUI%()
 								CreateMsg(GetLocalString("msg", "pill.2022.burn"))
 								I_1025\State[2] = 1.0
 								PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+								me\VomitTimer = 30.0
 								EntityFX(pm\OBJ, 1)
 							EndIf
 							me\Pill2022Used = me\Pill2022Used + 1.0
@@ -6366,6 +6367,24 @@ Function UpdateGUI%()
 						
 						If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
 						
+						RemoveItem(SelectedItem)
+					EndIf
+					;[End Block]
+				Case it_scp2022
+					;[Block]
+					If SelectedItem\State > 0.0
+						If ItemAmount < MaxItemAmount
+							it.Items = CreateItem("SCP-2022-01", it_scp2022pill, 0.0, 0.0, 0.0)
+							EntityType(it\Collider, HIT_ITEM)
+							PickItem(it, False)
+							SelectedItem\State = SelectedItem\State - 1.0
+							CreateMsg(GetLocalString("msg", "2022.take"))
+						Else
+							CreateMsg(GetLocalString("msg", "cantcarry"))
+						EndIf
+						SelectedItem = Null
+					Else
+						CreateMsg(GetLocalString("msg", "2022.empty"))
 						RemoveItem(SelectedItem)
 					EndIf
 					;[End Block]

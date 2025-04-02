@@ -459,6 +459,18 @@
 		]
 	},
 	{
+		"title": "SCP-2022",
+		"image": "2022.png",
+		"align_x": "center",
+		"align_y": "center",
+		"background": false,
+		"descriptions": [
+			"SCP-2022 are [SR] gelatin capsules that compress and constantly emit electromagnetic energies similar to sunlight and contains other unknown active ingredients, two of which are labeled Lumen and Kelvin (K), based on the packaging.",
+			"Ingested orally, 1 dose of SCP-2022 steadily supplies the body with healthy, daily amounts of Vitamin D for up to an average of 16 months (487 days).",
+			"Overuse of the supplements increase this sensation, with the test group experiencing increased burning sensations in organs, development of photosensitivity, sunburn, inflammation, dim to intense bioluminescence, Hypervitaminosis D, vomiting, nausea, dehydration, decreased appetite, insomnia, constipation, fatigue, irritability, myasthenia, and metastatic calcification."
+		]
+	},
+	{
 		"title": "Keycard",
 		"image": "key_card.png",
 		"align_x": "right",

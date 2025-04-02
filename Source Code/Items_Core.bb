@@ -76,105 +76,106 @@ Const it_scp1123% = 33
 Const it_scp1499% = 34
 Const it_fine1499% = 35
 
-Const it_scp2022pill% = 36
+Const it_scp2022% = 36
+Const it_scp2022pill% = 37
 ;[End Block]
 
 ; ~ [MISC ITEMS]
 ;[Block]
-Const it_helmet% = 37
+Const it_helmet% = 38
 
-Const it_vest% = 38
-Const it_corrvest% = 39
-Const it_finevest% = 40
-Const it_veryfinevest% = 41
+Const it_vest% = 39
+Const it_corrvest% = 40
+Const it_finevest% = 41
+Const it_veryfinevest% = 42
 
-Const it_cup% = 42
-Const it_emptycup% = 43
+Const it_cup% = 43
+Const it_emptycup% = 44
 
-Const it_clipboard% = 44
-Const it_wallet% = 45
+Const it_clipboard% = 45
+Const it_wallet% = 46
 
-Const it_electronics% = 46
+Const it_electronics% = 47
 
-Const it_eyedrops% = 47
-Const it_eyedrops2% = 48
-Const it_fineeyedrops% = 49
-Const it_veryfineeyedrops% = 50
+Const it_eyedrops% = 48
+Const it_eyedrops2% = 49
+Const it_fineeyedrops% = 50
+Const it_veryfineeyedrops% = 51
 
-Const it_firstaid% = 51
-Const it_firstaid2% = 52
-Const it_finefirstaid% = 53
-Const it_veryfinefirstaid% = 54
+Const it_firstaid% = 52
+Const it_firstaid2% = 53
+Const it_finefirstaid% = 54
+Const it_veryfinefirstaid% = 55
 
-Const it_gasmask% = 55
-Const it_finegasmask% = 56
-Const it_veryfinegasmask% = 57
-Const it_gasmask148% = 58
+Const it_gasmask% = 56
+Const it_finegasmask% = 57
+Const it_veryfinegasmask% = 58
+Const it_gasmask148% = 59
 
-Const it_hazmatsuit% = 59
-Const it_finehazmatsuit% = 60
-Const it_veryfinehazmatsuit% = 61
-Const it_hazmatsuit148% = 62
+Const it_hazmatsuit% = 60
+Const it_finehazmatsuit% = 61
+Const it_veryfinehazmatsuit% = 62
+Const it_hazmatsuit148% = 63
 
-Const it_nvg% = 63
-Const it_finenvg% = 64
-Const it_veryfinenvg% = 65
-Const it_scramble% = 66
-Const it_finescramble% = 67
+Const it_nvg% = 64
+Const it_finenvg% = 65
+Const it_veryfinenvg% = 66
+Const it_scramble% = 67
+Const it_finescramble% = 68
 
-Const it_radio% = 68
-Const it_18vradio% = 69
-Const it_fineradio% = 70
-Const it_veryfineradio% = 71
+Const it_radio% = 69
+Const it_18vradio% = 70
+Const it_fineradio% = 71
+Const it_veryfineradio% = 72
 
-Const it_nav% = 72
-Const it_nav300% = 73
-Const it_nav310% = 74
-Const it_navulti% = 75
+Const it_nav% = 73
+Const it_nav300% = 74
+Const it_nav310% = 75
+Const it_navulti% = 76
 
-Const it_e_reader% = 76
-Const it_e_reader20% = 77
-Const it_e_readerulti% = 78
+Const it_e_reader% = 77
+Const it_e_reader20% = 78
+Const it_e_readerulti% = 79
 
-Const it_bat% = 79
-Const it_coarsebat% = 80
-Const it_finebat% = 81
-Const it_veryfinebat% = 82
-Const it_killbat% = 83
+Const it_bat% = 80
+Const it_coarsebat% = 81
+Const it_finebat% = 82
+Const it_veryfinebat% = 83
+Const it_killbat% = 84
 
-Const it_syringe% = 84
-Const it_finesyringe% = 85
-Const it_veryfinesyringe% = 86
-Const it_syringeinf% = 87
+Const it_syringe% = 85
+Const it_finesyringe% = 86
+Const it_veryfinesyringe% = 87
+Const it_syringeinf% = 88
 ;[End Block]
 
 ; ~ [KEYCARDS, HANDS, KEYS, CARDS, COINS]
 ;[Block]
-Const it_key0% = 88
-Const it_key1% = 89
-Const it_key2% = 90
-Const it_key3% = 91
-Const it_key4% = 92
-Const it_key5% = 93
-Const it_key6% = 94
-Const it_keyomni% = 95
+Const it_key0% = 89
+Const it_key1% = 90
+Const it_key2% = 91
+Const it_key3% = 92
+Const it_key4% = 93
+Const it_key5% = 94
+Const it_key6% = 95
+Const it_keyomni% = 96
 
-Const it_mastercard% = 96
-Const it_mastercard_golden% = 97
-Const it_playcard% = 98
+Const it_mastercard% = 97
+Const it_mastercard_golden% = 98
+Const it_playcard% = 99
 
-Const it_hand% = 99
-Const it_hand2% = 100
-Const it_hand3% = 101
+Const it_hand% = 100
+Const it_hand2% = 101
+Const it_hand3% = 102
 
-Const it_key_yellow% = 102
-Const it_key_white% = 103
-Const it_lostkey% = 104
+Const it_key_yellow% = 103
+Const it_key_white% = 104
+Const it_lostkey% = 105
 
-Const it_25ct% = 105
-Const it_coin% = 106
+Const it_25ct% = 106
+Const it_coin% = 107
 
-Const it_pizza% = 107
+Const it_pizza% = 108
 ;[End Block]
 ;[End Block]
 
@@ -854,6 +855,10 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 							EndIf
 						Next
 						;[End Block]
+					Case it_scp2022
+						;[Block]
+						If item\State = 0.0 Then item\State = Rand(2, 8)
+						;[End Block]
 				End Select
 				
 				If item\ItemTemplate\SoundID <> 66 And PlayPickUpSound Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
@@ -1089,7 +1094,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 	me\RefinedItems = me\RefinedItems + 1
 	
 	Local it.Items, it2.Items, it3.Items, de.Decals, n.NPCs, r.Rooms
-	Local Remove% = True, i%
+	Local Remove% = True, i%, j%
 	Local MakeDecal% = False
 	
 	Select item\ItemTemplate\ID
@@ -2452,6 +2457,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					If Rand(10) = 1
 						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
+						j = Rand(9)
+						For i = 0 To it2\InvSlots - 1
+							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
+							HideEntity(it3\Collider)
+							If i = j Then Exit
+						Next
+						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
 					Else
 						If Rand(3) = 1
 							it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
@@ -2499,6 +2512,86 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					If (Not NO427Spawn)
+						If Rand(2) = 1
+							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							
+							If Rand(2) = 1
+								it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+								EntityType(it3\Collider, HIT_ITEM)
+							EndIf
+							
+							If Rand(3) = 1
+								it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+								EntityType(it3\Collider, HIT_ITEM)
+							EndIf
+							
+							If Rand(4) = 1
+								it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+								EntityType(it3\Collider, HIT_ITEM)
+							EndIf
+						Else
+							it2.Items = CreateItem("SCP-2022", it_scp2022, x, y, z)
+							it2\State = Rand(6)
+						EndIf
+					Else
+						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
+					EndIf
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					If Rand(3) = 1
+						it2.Items = CreateItem("SCP-2022", it_scp2022, x, y, z)
+						it2\State = Rand(6)
+					Else
+						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						
+						If Rand(2) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
+						
+						If Rand(3) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
+						
+						If Rand(4) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
+					EndIf
+					;[End Block]
+			End Select
+			;[End Block]
+		Case it_scp2022
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					MakeDecal = True
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+					
+					If Rand(2) = 1
+						it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
+					EndIf
+					
+					If Rand(3) = 1
+						it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
+					EndIf
+					
+					If Rand(4) = 1
+						it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						EntityType(it3\Collider, HIT_ITEM)
+					EndIf
+					;[End Block]
+				Case FINE
+					;[Block]
+					If Rand(2) = 1
 						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
 						If Rand(2) = 1
@@ -2516,26 +2609,80 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							EntityType(it3\Collider, HIT_ITEM)
 						EndIf
 					Else
-						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
+						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
+						j = Rand(9)
+						For i = 0 To it2\InvSlots - 1
+							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
+							HideEntity(it3\Collider)
+							If i = j Then Exit
+						Next
+						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-					
-					If Rand(2) = 1
-						it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-						EntityType(it3\Collider, HIT_ITEM)
-					EndIf
-					
 					If Rand(3) = 1
-						it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-						EntityType(it3\Collider, HIT_ITEM)
+						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
+						j = Rand(9)
+						For i = 0 To it2\InvSlots - 1
+							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
+							HideEntity(it3\Collider)
+							If i = j Then Exit
+						Next
+						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
+					Else
+						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						
+						If Rand(2) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
+						
+						If Rand(3) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
+						
+						If Rand(4) = 1
+							it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							EntityType(it3\Collider, HIT_ITEM)
+						EndIf
 					EndIf
-					
-					If Rand(4) = 1
-						it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-						EntityType(it3\Collider, HIT_ITEM)
+					;[End Block]
+			End Select
+			;[End Block]
+		Case it_scp2022pill
+			;[Block]
+			Select Setting
+				Case ROUGH, COARSE
+					;[Block]
+					MakeDecal = True
+					;[End Block]
+				Case ONETOONE
+					;[Block]
+					it2.Items = CreateItem("Pill", it_pill, x, y, z)
+					;[End Block]
+				Case FINE
+					;[Block]
+					If Rand(3) = 1
+						it2.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+					Else
+						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+					EndIf
+					;[End Block]
+				Case VERYFINE
+					;[Block]
+					If Rand(10) = 1
+						it2.Items = CreateItem("SCP-2022", it_scp2022, x, y, z)
+						it2\State = Rand(6)
+					Else
+						If Rand(3) = 1
+							it2.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+						Else
+							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						EndIf
 					EndIf
 					;[End Block]
 			End Select
