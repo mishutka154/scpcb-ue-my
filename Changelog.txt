@@ -1,3 +1,14 @@
+{v1.5.1}
+
+[NPCs]
+- New texture for Rufino.
+
+[Bug Fixes]
+- Fixed wrong ID of SCP-939's victim texture.
+- Fixed wrong ID of Harn's texture.
+- Fixed blur in SCP-1123's chamber event.
+- Fixed SCP-1048's position at checkpoints.
+
 {v1.5}
 
 [Global]
