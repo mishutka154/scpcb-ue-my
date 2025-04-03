@@ -14,6 +14,7 @@
 - Fixed some MAVs.
 - Fixed SCP-1499 dimension's music still playing after leaving the dimension.
 - Fixed NPCs' teleportation.
+- Fixed SL_monitors that had images of the old rooms.
 
 {v1.5}
 
