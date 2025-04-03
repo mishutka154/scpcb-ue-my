@@ -2437,33 +2437,17 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					If NO427Spawn
-						If Rand(3) = 1
-							it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
-						Else
-							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-						EndIf
+						it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					Else
 						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					If Rand(10) = 1
-						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
-						j = Rand(9)
-						For i = 0 To it2\InvSlots - 1
-							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
-							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
-							HideEntity(it3\Collider)
-							If i = j Then Exit
-						Next
-						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
+					If Rand(3) = 1
+						it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					Else
-						If Rand(3) = 1
-							it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
-						Else
-							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
-						EndIf
+						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
