@@ -9,6 +9,7 @@
 - Fixed blur in SCP-1123's chamber event.
 - Fixed SCP-1048's position at checkpoints.
 - Fixed some MAVs.
+- Fix SCP-1499 dimension's music still playing after leaving the dimension.
 
 {v1.5}
 

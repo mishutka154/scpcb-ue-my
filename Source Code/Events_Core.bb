@@ -887,10 +887,10 @@ Function UpdateEvents%()
 				;[Block]
 				UpdateEvent_Room3_2_EZ_Duck(e)
 				;[End Block]
-;			Case e_dimension_1499
-;				;[Block]
-;				UpdateEvent_Dimension_1499(e)
-;				;[End Block]
+			Case e_dimension_1499
+				;[Block]
+				UpdateEvent2_Dimension_1499(e)
+				;[End Block]
 			Case e_096_spawn
 				;[Block]
 				UpdateEvent_096_Spawn(e)

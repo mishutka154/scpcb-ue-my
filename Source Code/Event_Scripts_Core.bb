@@ -8690,32 +8690,37 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		e\EventState2 = PD_StartRoom
 	EndIfEnd Function
 
-;Function UpdateEvent_Dimension_1499%(e.Events)
-;	If PlayerRoom <> e\room
-;		If e\room\Objects[0] <> 0
-;			For i = 1 To 15
-;				If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
-;			Next
-;		EndIf
-;		If EntityY(me\Collider) > EntityY(e\room\OBJ) - 0.5 Then PlayerRoom = e\room
-;	EndIf
-;	If e\EventState = 2.0
-;		If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-;		StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
-;		HideEntity(I_1499\Sky)
-;		HideChunks()
-;		HideRoomsNoColl(e\room)
-;		For n.NPCs = Each NPCs
-;			If n\NPCType = NPCType1499_1 Then RemoveNPC(n)
-;		Next
-;		For du.Dummy1499_1 = Each Dummy1499_1
-;			RemoveDummy1499_1(du)
-;		Next
-;		If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
-;		If e\EventState3 < 70.0 * 30.0 Then e\EventState3 = 0.0
-;		e\EventState = 1.0
-;	EndIf
-;End Function
+Function UpdateEvent2_Dimension_1499%(e.Events)
+	If PlayerRoom <> e\room
+		If e\room\Objects[0] <> 0
+			Local i%
+			
+			For i = 1 To 15
+				If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
+			Next
+		EndIf
+		If EntityY(me\Collider) > EntityY(e\room\OBJ) - 0.5 Then PlayerRoom = e\room
+	EndIf
+	If e\EventState = 2.0
+		If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+		StopChannel(e\SoundCHN2) : e\SoundCHN2 = 0
+		HideEntity(I_1499\Sky)
+		HideChunks()
+		HideRoomsNoColl(e\room)
+		
+		Local n.NPCs, du.Dummy1499_1
+		
+		For n.NPCs = Each NPCs
+			If n\NPCType = NPCType1499_1 Then RemoveNPC(n)
+		Next
+		For du.Dummy1499_1 = Each Dummy1499_1
+			RemoveDummy1499_1(du)
+		Next
+		If e\Sound2 <> 0 Then FreeSound_Strict(e\Sound2) : e\Sound2 = 0
+		If e\EventState3 < 70.0 * 30.0 Then e\EventState3 = 0.0
+		e\EventState = 1.0
+	EndIf
+End Function
 
 Type Dummy1499_1
 	Field Anim%
