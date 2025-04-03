@@ -1,5 +1,8 @@
 {v1.5.1}
 
+[Global]
+- Removed Level 6 Key Card achievement.
+
 [NPCs]
 - New texture for Rufino.
 

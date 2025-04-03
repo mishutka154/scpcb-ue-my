@@ -761,10 +761,6 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 						;[Block]
 						GiveAchievement("148")
 						;[End Block]
-					Case it_key6
-						;[Block]
-						GiveAchievement("keycard6")
-						;[End Block]
 					Case it_keyomni
 						;[Block]
 						GiveAchievement("omni")
