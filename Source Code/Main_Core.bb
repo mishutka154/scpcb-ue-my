@@ -3658,10 +3658,10 @@ Function RenderNVG%()
 			
 			SetFontEx(fo\FontID[Font_Digital])
 			If n_I\Curr106\Contained
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, "SCP-106 Contatined", True)
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, GetLocalString("msg", "scramble.106.cont"), True)
 			Else
 				; ~ Replace with a cool design later lol so don't actually translate anything
-				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Int(n_I\Curr106\State2 / 70.0) + " seconds left before SCP-106 arrives", True)
+				TextEx(mo\Viewport_Center_X, 60 * MenuScale, Format(GetLocalString("msg", "scramble.106.arr"), Int(n_I\Curr106\State2 / 70.0)), True)
 			EndIf
 			
 			; ~ NPCs box
