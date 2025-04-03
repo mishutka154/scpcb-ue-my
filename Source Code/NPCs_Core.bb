@@ -490,7 +490,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			Temp = IniGetFloat(NPCsFile, Name, "Scale") / MeshWidth(n\OBJ)
 			ScaleEntity(n\OBJ, Temp, Temp, Temp)
 			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
-			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
+			MeshCullBox(n\OBJ, -MeshW * 1.5, -MeshH * 1.5, -MeshD * 1.5, MeshW * 3.0, MeshH * 3.0, MeshD * 3.0)
 			;[End Block]
 		Case NPCTypeGuard
 			;[Block]

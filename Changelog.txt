@@ -9,6 +9,7 @@
 - Fixed doors position in SCP-1123's chamber after loading the game.
 - Fixed wrong name of the SCP-106's victim texture.
 - Fixed SCP-173 not appearing in the intro scene.
+- Fixed Class D mesh culling.
 
 {v1.5.1}
 
