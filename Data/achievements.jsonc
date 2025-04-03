@@ -194,11 +194,6 @@
 			"image": "AchvO5.png",
 			"scp": false
 		},
-  		{
-			"id": "keycard6",
-			"image": "AchvKeyCard6.png",
-			"scp": false
-        },
  		{
 			"id": "omni",
 			"image": "AchvOmni.png",
