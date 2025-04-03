@@ -9429,7 +9429,7 @@ Function UpdateEvent_Checkpoint%(e.Events)
 		
 		If e\EventState3 = 0.0
 			If Rand(2) = 1
-				TFormPoint(877.0, 121.0, 333.0, e\room\OBJ, 0)
+				TFormPoint(877.0, 146.6, 333.0, e\room\OBJ, 0)
 				e\room\NPC[0] = CreateNPC(NPCType1048, TFormedX(), TFormedY(), TFormedZ())
 				e\room\NPC[0]\State = 2.0
 			EndIf
