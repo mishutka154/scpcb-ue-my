@@ -348,9 +348,10 @@ Function UpdateEvent_Cont1_173%(e.Events)
 						PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
 						
 						e\room\NPC[1]\SoundCHN = PlaySoundEx(e\room\NPC[1]\Sound, Camera, e\room\NPC[1]\Collider, 10.0, 1.0, True)
-						e\room\NPC[1]\State = 1.0 : e\room\NPC[1]\Speed = -0.008
+						e\room\NPC[1]\State = 1.0
 						e\room\NPC[2]\SoundCHN = PlaySoundEx(e\room\NPC[2]\Sound, Camera, e\room\NPC[2]\Collider, 10.0, 1.0, True)
 					EndIf
+					e\room\NPC[1]\Speed = -0.008
 					e\room\NPC[1]\CurrSpeed = CurveValue(e\room\NPC[1]\Speed, e\room\NPC[1]\CurrSpeed, 5.0)
 					RotateEntity(e\room\NPC[1]\Collider, 0.0, 0.0, 0.0)
 					
