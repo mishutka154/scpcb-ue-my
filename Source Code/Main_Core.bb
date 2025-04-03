@@ -10413,7 +10413,7 @@ Function UpdateLeave1499%()
 				I_1499\x = EntityX(me\Collider)
 				I_1499\y = EntityY(me\Collider)
 				I_1499\z = EntityZ(me\Collider)
-				TeleportEntity(me\Collider, I_1499\PrevX, I_1499\PrevY + 0.05, I_1499\PrevZ)
+				TeleportEntity(me\Collider, I_1499\PrevX, I_1499\PrevY + 0.1, I_1499\PrevZ)
 				TeleportToRoom(r)
 				If I_1499\PrevRoom\RoomTemplate\RoomID = r_room3_storage And InFacility = LowerFloor
 					For i = 0 To 3
