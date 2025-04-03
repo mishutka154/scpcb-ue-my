@@ -3180,7 +3180,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 	Local IsSceneTriggered% = False
 	
 	If n_I\Curr096 <> Null
-		If n_I\Curr096\State > 1.0 And n_I\Curr096\Target = Null And (InFacility = NullFloor) And me\InsideElevator And (Not chs\NoTarget) Then IsSceneTriggered = True
+		If n_I\Curr096\State > 1.0 And n_I\Curr096\Target = Null And InFacility = NullFloor And me\InsideElevator And (Not chs\NoTarget) Then IsSceneTriggered = True
 	EndIf
 	If (Not IsSceneTriggered)
 		If (Not door1\Open) And (Not door2\Open)
