@@ -11,6 +11,12 @@
 - Fixed SCP-173 not appearing in the intro scene.
 - Fixed Class D mesh culling.
 
+[Known issues]
+- Rooms can overlap and block the way.
+- Tabbing out of the game and tabbing back in freezes the game view/turning off monitor freezes the game.
+- Battery issues caused by having multiple night vision devices.
+- Corrosive door textures not saving correctly.
+
 {v1.5.1}
 
 [Global]
@@ -33,6 +39,12 @@
 - Fixed NPCs' teleportation.
 - Fixed SL_monitors that had images of the old rooms.
 - Fixed Gate B.
+
+[Known issues]
+- Rooms can overlap and block the way.
+- Tabbing out of the game and tabbing back in freezes the game view/turning off monitor freezes the game.
+- Battery issues caused by having multiple night vision devices.
+- Corrosive door textures not saving correctly.
 
 {v1.5}
 
