@@ -674,7 +674,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[1], r\OBJ)
 			
 			If Rand(2) = 1
-				it.Items = CreateItem("Empty Cup", it_emptycup, r\x + 490.0 * RoomScale, r\y + 160.0 * RoomScale, r\z + -232.0 * RoomScale)
+				it.Items = CreateItem("Empty Cup", it_emptycup, r\x + 490.0 * RoomScale, r\y + 160.0 * RoomScale, r\z - 232.0 * RoomScale)
 				EntityParent(it\Collider, r\OBJ)
 			EndIf
 			;[End Block]
@@ -711,6 +711,11 @@ Function FillRoom%(r.Rooms)
 			
 			r\RoomLevers[0] = CreateLever(r, r\x + 657.0 * RoomScale, r\y + 152.0 * RoomScale, r\z + 883.0 * RoomScale, 0.0)
 			r\RoomLevers[1] = CreateLever(r, r\x + 576.0 * RoomScale, r\y + 164.0 * RoomScale, r\z + 896.0 * RoomScale, 0.0)
+			
+			If Rand(2) = 1
+				it.Items = CreateRandomBattery(r\x + 1006.0 * RoomScale, r\y + 101.0 * RoomScale, r\z + 324.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
 			;[End Block]
 		Case r_room2_closets
 			;[Block]

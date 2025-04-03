@@ -5,6 +5,7 @@
 
 [Rooms]
 - Added Document SCP-2022 in «room2_closets_2».
+- Added a random batteries in «room2_7_lcz».
 
 [NPCs]
 - New texture for Rufino.
