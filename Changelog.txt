@@ -3,6 +3,9 @@
 [Global]
 - Removed Level 6 Key Card achievement.
 
+[Rooms]
+- Added Document SCP-2022 in «room2_closets_2».
+
 [NPCs]
 - New texture for Rufino.
 

@@ -784,6 +784,9 @@ Function FillRoom%(r.Rooms)
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z + 576.0 * RoomScale, 90.0, False, OFFICE_DOOR)
 			
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z - 576.0 * RoomScale, 90.0, True, OFFICE_DOOR)
+			
+			it.Items = CreateItem("Document SCP-2022", it_paper, r\x + 727.0 * RoomScale, r\y + 103.0 * RoomScale, r\z - 562.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
 			;[End Block]
 		Case r_room2_elevator
 			;[Block]
