@@ -1997,7 +1997,7 @@ Function UpdateNPCType106%(n.NPCs)
 End Function
 
 Function UpdateNPCType173%(n.NPCs)
-	If n\Idle <> 3 And PlayerInReachableRoom(True)
+	If n\Idle <> 3 And PlayerInReachableRoom(True, True)
 		Local Dist# = EntityDistanceSquared(n\Collider, me\Collider)
 		Local SinValue#
 		
