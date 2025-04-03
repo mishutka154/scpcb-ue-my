@@ -904,7 +904,7 @@ Function UpdateNPCs%()
 End Function
 
 Function TeleportCloser%(n.NPCs)
-	If PlayerInReachableRoom(True) Then Return
+	If (Not PlayerInReachableRoom(True)) Then Return
 	
 	Local ClosestDist# = 0.0
 	Local ClosestWaypoint.WayPoints
@@ -929,17 +929,16 @@ Function TeleportCloser%(n.NPCs)
 		EndIf
 	Next
 	
-	
 	If ClosestWaypoint <> Null
 		Local ShouldTeleport% = False
 		
-		If n\InFacility <> NullFloor Lor SelectedDifficulty\AggressiveNPCs Then
+		If n\InFacility <> NullFloor Lor SelectedDifficulty\AggressiveNPCs
 			ShouldTeleport = True
 		ElseIf EntityY(ClosestWaypoint\OBJ, True) <= 6.5 And EntityY(ClosestWaypoint\OBJ, True) >= -6.5
 			ShouldTeleport = True
 		EndIf
 		If ShouldTeleport
-			TeleportEntity(n\Collider, EntityX(ClosestWaypoint\OBJ, True), EntityY(ClosestWaypoint\OBJ, True) + 0.2, EntityZ(ClosestWaypoint\OBJ, True), n\CollRadius, True)
+			TeleportEntity(n\Collider, EntityX(ClosestWaypoint\OBJ, True), EntityY(ClosestWaypoint\OBJ, True) + 0.23, EntityZ(ClosestWaypoint\OBJ, True), n\CollRadius + 0.12 * (n\NPCType = NPCType173), True)
 			n\CurrSpeed = 0.0
 			n\PathStatus = PATH_STATUS_NO_SEARCH
 			n\PathTimer = 0.0
