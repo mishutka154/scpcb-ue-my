@@ -2191,6 +2191,9 @@ Function LoadGameQuick%(File$)
 				;[End Block]
 			Case e_cont2_1123
 				;[Block]
+				For i = 0 To 2
+					ChangeDoorYPositon(e\room\RoomDoors[i], e\room\y)
+				Next
 				For i = 7 To 8
 					If e\room\Objects[i] <> 0 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
 				Next
