@@ -181,7 +181,7 @@ End Function
 
 Function UpdateLights%(Cam%)
 	Local l.Lights, i%, Random#, Alpha#
-	Local TotalAmbientColor# = 3.0 * (((fog\AmbientR + fog\AmbientG + fog\AmbientB) / 3) / 255.0)
+	Local TotalAmbientColor# = ((fog\AmbientR + fog\AmbientG + fog\AmbientB) / 255.0)
 	
 	For l.Lights = Each Lights
 		If SecondaryLightOn > 0.3
@@ -228,22 +228,22 @@ Function UpdateLights%(Cam%)
 											
 											Random = Rnd(0.36, 0.4)
 											ScaleSprite(l\AdvancedSprite, Random, Random)
-										Else
+										ElseIf (Not LightAdvancedSpriteHidden) Then 
 											; ~ Instead of rendering the sprite invisible, just hiding it if the player is far away from it
-											If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
+											HideEntity(l\AdvancedSprite)
 										EndIf
-									Else
+									ElseIf (Not LightAdvancedSpriteHidden) 
 										; ~ The additional sprites option is disabled, hide the sprites
-										If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
+										HideEntity(l\AdvancedSprite)
 									EndIf
 								Else
 									; ~ Hide the sprites because they aren't visible
 									If (Not LightSpriteHidden) Then HideEntity(l\Sprite)
 									If (Not LightAdvancedSpriteHidden) Then HideEntity(l\AdvancedSprite)
 								EndIf
-							Else
+							ElseIf (Not LightOBJHidden)
 								; ~ Hide the light emitter because it is too far
-								If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+								HideEntity(l\OBJ)
 							EndIf
 						EndIf
 					Else
@@ -264,9 +264,9 @@ Function UpdateLights%(Cam%)
 									SecondaryLightOn = Clamp(SecondaryLightOn - Random, 0.301, 1.0)
 									TempLightVolume = Clamp(TempLightVolume - Random, 0.5, 1.0)
 								EndIf
-							Else
+							ElseIf (Not LightOBJHidden)
 								; ~ Hide the light emitter because it is too far
-								If (Not LightOBJHidden) Then HideEntity(l\OBJ)
+								HideEntity(l\OBJ)
 							EndIf
 						EndIf
 					EndIf
