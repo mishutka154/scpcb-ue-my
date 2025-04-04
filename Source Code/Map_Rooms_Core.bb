@@ -1597,8 +1597,14 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.165, True)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
+			d.Doors = CreateDoor(r, r\x - 256.0 * RoomScale, r\y, r\z + 720.0 * RoomScale, 90.0, False, ONE_SIDED_DOOR, KEY_CARD_1)
+			d\Locked = 1
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.15, True)
+			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
+			
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
+			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room2c_gw_lcz
 			;[Block]
@@ -1721,8 +1727,18 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room3_lcz
 			;[Block]
-			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
+			CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
+			
+			d.Doors = CreateDoor(r, r\x - 256.0 * RoomScale, r\y, r\z + 720.0 * RoomScale, 90.0, False, ONE_SIDED_DOOR, KEY_CARD_1)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.15, True)
+			
+			r\RoomLevers[0] = CreateLever(r, r\x - 883.0 * RoomScale, r\y + 152.0 * RoomScale, r\z + 657.0 * RoomScale, 90.0)
+			r\RoomLevers[1] = CreateLever(r, r\x - 896.0 * RoomScale, r\y + 164.0 * RoomScale, r\z + 576.0 * RoomScale, 90.0)
+			
+			If Rand(2) = 1
+				it.Items = CreateRandomBattery(r\x - 324.0 * RoomScale, r\y + 121.0 * RoomScale, r\z + 1006.0 * RoomScale)
+				EntityParent(it\Collider, r\OBJ)
+			EndIf
 			;[End Block]
 		Case r_room3_storage
 			;[Block]
