@@ -4,6 +4,9 @@
 - Updated SCP-005's achievement icon.
 - Reduce shadow radius for NPCs.
 
+[Rooms]
+- Revert «room2_gw» and «room3_gw» back to level 2 clearance.
+
 [Bug Fixes]
 - Fixed Franklin's speed after loading the game.
 - Fixed doors position in SCP-1123's chamber after loading the game.
