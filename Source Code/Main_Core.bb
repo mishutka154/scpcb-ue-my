@@ -9525,14 +9525,12 @@ Function Update008%()
 			If I_427\Timer < 70.0 * 360.0
 				If I_008\Revert
 					I_008\Timer = Max(I_008\Timer - (fps\Factor[0] * 0.02), 0.0)
-				Else
-					If (Not I_427\Using)
-						I_008\Timer = Min(I_008\Timer + (fps\Factor[0] * 0.002), 100.0)
-						me\BlurTimer = Max(I_008\Timer * 3.0 * (2.0 - me\CrouchState), me\BlurTimer)
-						
-						me\HeartBeatRate = Max(me\HeartBeatRate, 100.0)
-						me\HeartBeatVolume = Max(me\HeartBeatVolume, I_008\Timer / 120.0)
-					EndIf
+				ElseIf (Not I_427\Using)
+					I_008\Timer = Min(I_008\Timer + (fps\Factor[0] * 0.002), 100.0)
+					me\BlurTimer = Max(I_008\Timer * 3.0 * (2.0 - me\CrouchState), me\BlurTimer)
+					
+					me\HeartBeatRate = Max(me\HeartBeatRate, 100.0)
+					me\HeartBeatVolume = Max(me\HeartBeatVolume, I_008\Timer / 120.0)
 				EndIf
 			EndIf
 			
@@ -9717,11 +9715,9 @@ Function Update409%()
 		If I_427\Timer < 70.0 * 360.0
 			If I_409\Revert
 				I_409\Timer = Max(I_409\Timer - (fps\Factor[0] * 0.02), 0.0)
-			Else
-				If (Not I_427\Using)
-					I_409\Timer = Min(I_409\Timer + (fps\Factor[0] * 0.004), 100.0)
-					me\BlurTimer = Max(I_409\Timer * 3.0 * (2.0 - me\CrouchState), me\BlurTimer)
-				EndIf
+			ElseIf (Not I_427\Using)
+				I_409\Timer = Min(I_409\Timer + (fps\Factor[0] * 0.004), 100.0)
+				me\BlurTimer = Max(I_409\Timer * 3.0 * (2.0 - me\CrouchState), me\BlurTimer)
 			EndIf
 		EndIf
 		EntityAlpha(t\OverlayID[7], Min((PowTwo(I_409\Timer * 0.2)) / 1000.0, 0.5))
@@ -10259,10 +10255,8 @@ Function Render294%()
 	
 	If Temp
 		If mo\MouseHit2 Lor (Not I_294\Using) Then HidePointer()
-	Else ; ~ Playing a dispensing sound
-		If (Not ChannelPlaying(PlayerRoom\SoundCHN))
-			If I_294\ToInput <> GetLocalString("misc", "ofr") Then HidePointer()
-		EndIf
+	ElseIf (Not ChannelPlaying(PlayerRoom\SoundCHN)) ; ~ Playing a dispensing sound
+		If I_294\ToInput <> GetLocalString("misc", "ofr") Then HidePointer()
 	EndIf
 End Function
 
@@ -10354,25 +10348,23 @@ Function Update1025%()
 						If I_1025\FineState[i] > 15.0
 							I_1025\FineState[i] = I_1025\FineState[i] + fps\Factor[0]
 							If I_1025\FineState[i] > Random Then I_1025\FineState[i] = 1.0
-						Else
-							If Rand(40) = 1
-								I_1025\FineState[i] = I_1025\FineState[i] + 1.0
-								Select Rand(8)
-									Case 1, 2, 3, 5
-										;[Block]
-										me\BlinkTimer = -10.0
-										;[End Block]
-									Case 4, 5, 6
-										;[Block]
-										me\CameraShake = Rnd(0.5, 2.0)
-										;[End Block]
-									Case 7, 8
-										;[Block]
-										PlaySound_Strict(LoadTempSound("SFX\SCP\294\Retch" + Rand(0, 1) + ".ogg"))
-										me\SndVolume = Max(4.0, me\SndVolume)
-										;[End Block]
-								End Select
-							EndIf
+						ElseIf Rand(40) = 1
+							I_1025\FineState[i] = I_1025\FineState[i] + 1.0
+							Select Rand(8)
+								Case 1, 2, 3, 5
+									;[Block]
+									me\BlinkTimer = -10.0
+									;[End Block]
+								Case 4, 5, 6
+									;[Block]
+									me\CameraShake = Rnd(0.5, 2.0)
+									;[End Block]
+								Case 7, 8
+									;[Block]
+									PlaySound_Strict(LoadTempSound("SFX\SCP\294\Retch" + Rand(0, 1) + ".ogg"))
+									me\SndVolume = Max(4.0, me\SndVolume)
+									;[End Block]
+							End Select
 						EndIf
 					EndIf
 					;[End Block]
