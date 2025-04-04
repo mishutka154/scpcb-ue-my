@@ -426,7 +426,7 @@ Function UpdateParticles_Devil()
 	Local CamPitch# = EntityPitch(ParticleCam, True)
 	Local CamYaw# = EntityYaw(ParticleCam, True)
 	Local CamRoll# = EntityRoll(ParticleCam, True)
-	Local HideDist# = PowTwo(HideDistance)
+	Local HideDist# = PowTwo(HideDistance * LightVolume)
 	
 	For p.Particle = Each Particle
 		If EntityDistanceSquared(p\emitter\Owner, me\Collider) > HideDist Lor p\Age > p\MaxTime

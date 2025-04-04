@@ -148,7 +148,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 					If (PrevFrame < 65.0 And n\Frame >= 65.0) Lor (PrevFrame < 80.0 And n\Frame >= 80.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 7)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
 				EndIf
 				
-				If Dist > PowTwo(HideDistance * 1.5)
+				If Dist > PowTwo(HideDistance * 1.75)
 					If n\IdleTimer < 70.0 * 15.0
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
 					ElseIf Rand(150 - (60 * SelectedDifficulty\AggressiveNPCs)) = 1
@@ -254,7 +254,7 @@ Function UpdateNPCType035_Tentacle%(n.NPCs)
 	If (Not n\IsDead)
 		Local Dist# = EntityDistanceSquared(n\Collider, me\Collider)
 		
-		If Dist < PowTwo(HideDistance)
+		If Dist < PowTwo(HideDistance * 1.75)
 			Local PrevFrame# = n\Frame
 			
 			Select n\State 

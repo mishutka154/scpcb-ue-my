@@ -53,7 +53,7 @@ Function UpdateParticles%()
 	CatchErrors("UpdateParticles()")
 	
 	Local p.Particles
-	Local HideDist# = PowTwo(HideDistance)
+	Local HideDist# = PowTwo(HideDistance * LightVolume)
 	
 	For p.Particles = Each Particles
 		If EntityDistanceSquared(p\OBJ, me\Collider) <= HideDist
