@@ -978,6 +978,8 @@ Function UpdateEndings%()
 			UpdateEvent_Gate_A(e)
 		ElseIf e\EventID = e_gate_b
 			UpdateEvent_Gate_B(e)
+		ElseIf e\EventID = e_dimension_1499
+			UpdateEvent2_Dimension_1499(e)
 		EndIf
 	Next
 	
@@ -990,7 +992,8 @@ Function UpdateDimension106%()
 	For e.Events = Each Events
 		If e\EventID = e_dimension_106
 			UpdateEvent_Dimension_106(e)
-			Exit
+		ElseIf e\EventID = e_dimension_1499
+			UpdateEvent2_Dimension_1499(e)
 		EndIf
 	Next
 End Function
