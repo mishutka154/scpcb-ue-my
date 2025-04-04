@@ -1604,7 +1604,7 @@ Function FillRoom%(r.Rooms)
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
-			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
+			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
 			;[End Block]
 		Case r_room2c_gw_lcz
 			;[Block]
