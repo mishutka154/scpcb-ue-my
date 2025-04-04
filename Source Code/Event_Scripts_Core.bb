@@ -6914,7 +6914,7 @@ Function UpdateEvent_Gate_A%(e.Events)
 								PositionEntity(me\Collider, CurveValue(EntityX(e\room\Objects[3], True), EntityX(me\Collider), Dist), EntityY(me\Collider), CurveValue(EntityZ(e\room\Objects[0], True), EntityZ(me\Collider), Dist))
 							EndIf
 						EndIf
-						
+						PositionEntity(me\Collider, EntityX(me\Collider), EntityY(me\Collider), Min(e\room\z + 450.0 * RoomScale, EntityZ(me\Collider)))
 						If e\EventState3 > 50.0 And e\EventState3 < 230.0
 							SinValue = Sin(e\EventState3 - 50.0)
 							me\CameraShake = SinValue * 3.0
