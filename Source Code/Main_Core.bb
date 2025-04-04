@@ -216,12 +216,10 @@ Repeat
 	
 	Cls()
 	
-	Local ElapsedMilliSecs%
-	
 	MilliSec = MilliSecs()
 	fps\CurrTime = MilliSec
 	
-	ElapsedMilliSecs = fps\CurrTime - fps\PrevTime
+	Local ElapsedMilliSecs% = fps\CurrTime - fps\PrevTime
 	If (ElapsedMilliSecs > 0 And ElapsedMilliSecs < 500) Then fps\Accumulator = fps\Accumulator + Max(0.0, Float(ElapsedMilliSecs) * 70.0 / 1000.0)
 	fps\PrevTime = fps\CurrTime
 	
