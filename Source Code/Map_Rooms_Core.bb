@@ -830,7 +830,7 @@ Function FillRoom%(r.Rooms)
 					EntityParent(it\Collider, r\OBJ)
 				EndIf
 			Else
-				d.Doors = CreateDoor(r, r\x - 458.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_1)
+				d.Doors = CreateDoor(r, r\x - 458.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_2)
 				PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.04, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 1.12, True)
 				PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.04, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.07, True)
 				
@@ -3900,7 +3900,7 @@ Function FillRoom%(r.Rooms)
 		Case r_room3_gw
 			;[Block]
 			; ~ Gateway control room door
-			d.Doors = CreateDoor(r, r\x, r\y, r\z - 458.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_1)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z - 458.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_2)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.07, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.04, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 1.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.04, True)
 			
