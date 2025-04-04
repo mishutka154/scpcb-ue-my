@@ -2190,22 +2190,26 @@ Function UpdateEvent_Room2_Elevator%(e.Events)
 				EndIf
 			Else
 				e\EventState = e\EventState + fps\Factor[0]
-				If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 13.0 Then UpdateLampShaking()
-				If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 7.4
-					me\BigCameraShake = 7.4 - (e\EventState / 70.0)
-					If Rand(2) = 1 Then SetEmitter(Null, EntityX(me\Collider), e\room\y + 769.0 * RoomScale, EntityZ(me\Collider), 26)
-					TempLightVolume = 0.6
-					RemoveNPC(e\room\NPC[0])
-				ElseIf e\EventState > 70.0 * 8.6 And e\EventState < 70.0 * 10.6
-					me\BigCameraShake = 10.6 - (e\EventState / 70.0)
-					If Rand(2) = 1 Then SetEmitter(Null, EntityX(me\Collider), e\room\y + 769.0 * RoomScale, EntityZ(me\Collider), 26)
-					TempLightVolume = 0.6
-				ElseIf e\EventState >= 70.0 * 13.0 And (Not ChannelPlaying(e\SoundCHN))
-					EntityTexture(e\room\RoomDoors[0]\ElevatorPanel[1], d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_IDLE])
-					FreeEntity(e\room\RoomDoors[0]\Buttons[1]) : e\room\RoomDoors[0]\Buttons[1] = 0
-					FreeEntity(e\room\RoomDoors[0]\ElevatorPanel[0]) : e\room\RoomDoors[0]\ElevatorPanel[0] = 0
-					FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
-					RemoveEvent(e)
+				If PlayerInReachableRoom(True)
+					If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 13.0 Then UpdateLampShaking()
+					If e\EventState > 70.0 * 6.7 And e\EventState < 70.0 * 7.4
+						me\BigCameraShake = 7.4 - (e\EventState / 70.0)
+						If Rand(2) = 1 Then SetEmitter(Null, EntityX(me\Collider), e\room\y + 769.0 * RoomScale, EntityZ(me\Collider), 26)
+						TempLightVolume = 0.6
+						RemoveNPC(e\room\NPC[0])
+					ElseIf e\EventState > 70.0 * 8.6 And e\EventState < 70.0 * 10.6
+						me\BigCameraShake = 10.6 - (e\EventState / 70.0)
+						If Rand(2) = 1 Then SetEmitter(Null, EntityX(me\Collider), e\room\y + 769.0 * RoomScale, EntityZ(me\Collider), 26)
+						TempLightVolume = 0.6
+					ElseIf e\EventState >= 70.0 * 13.0 And (Not ChannelPlaying(e\SoundCHN))
+						EntityTexture(e\room\RoomDoors[0]\ElevatorPanel[1], d_I\ElevatorPanelTextureID[ELEVATOR_PANEL_IDLE])
+						FreeEntity(e\room\RoomDoors[0]\Buttons[1]) : e\room\RoomDoors[0]\Buttons[1] = 0
+						FreeEntity(e\room\RoomDoors[0]\ElevatorPanel[0]) : e\room\RoomDoors[0]\ElevatorPanel[0] = 0
+						FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
+						RemoveEvent(e)
+					EndIf
+				Else
+					If e\EventState >= 70.0 * 13.0 Then RemoveEvent(e)
 				EndIf
 			EndIf
 		EndIf
@@ -9353,14 +9357,17 @@ End Function
 Function UpdateEvent_682_Roar%(e.Events)
 	If e\EventState = 0.0
 		If PlayerRoom = e\room Then e\EventState = 70.0 * Rnd(50.0, 100.0)
-	ElseIf PlayerInReachableRoom(True)
+	Else
 		e\EventState = e\EventState - fps\Factor[0]
-		
-		If e\EventState < 70.0 * 17.0
-			UpdateLampShaking()
-			If e\EventState + fps\Factor[0] >= 70.0 * 17.0 Then e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\682\Roar.ogg"))
-			If e\EventState > 70.0 * 14.0 Then me\BigCameraShake = 0.5
-			If e\EventState > 70.0 * 6.0 And e\EventState < 70.0 * 9.5 Then me\BigCameraShake = 2.0
+		If PlayerInReachableRoom(True)
+			If e\EventState < 70.0 * 17.0
+				UpdateLampShaking()
+				If e\EventState + fps\Factor[0] >= 70.0 * 17.0 Then e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\682\Roar.ogg"))
+				If e\EventState > 70.0 * 14.0 Then me\BigCameraShake = 0.5
+				If e\EventState > 70.0 * 6.0 And e\EventState < 70.0 * 9.5 Then me\BigCameraShake = 2.0
+				If e\EventState < 70.0 Then RemoveEvent(e)
+			EndIf
+		Else
 			If e\EventState < 70.0 Then RemoveEvent(e)
 		EndIf
 	EndIf
