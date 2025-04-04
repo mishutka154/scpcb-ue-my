@@ -3051,7 +3051,7 @@ Function CreateRandomBattery.Items(x#, y#, z#)
 	If RandomChance > 0 And RandomChance <= 5
 		BatteryName = "9V Battery"
 		BatteryID = it_bat
-	ElseIf RandomChance > 5 And RandomChance < BatteryChance - 2
+	ElseIf RandomChance > 5 And RandomChance < BatteryChance - 1
 		BatteryName = "4.5V Battery"
 		BatteryID = it_coarsebat
 	Else
