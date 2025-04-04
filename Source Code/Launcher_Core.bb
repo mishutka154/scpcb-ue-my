@@ -159,13 +159,11 @@ Function UpdateLauncher%(lnchr.Launcher)
 				lnchr\GFXModeWidths[lnchr\GFXModes] = GfxModeWidth(i)
 				lnchr\GFXModeHeights[lnchr\GFXModes] = GfxModeHeight(i)
 				lnchr\GFXModes = lnchr\GFXModes + 1
-			Else
-				If GfxModeWidth(i) >= 800 And GfxModeHeight(i) >= 600
-					If opt\GraphicWidth = GfxModeWidth(i) And opt\GraphicHeight = GfxModeHeight(i) Then lnchr\SelectedGFXMode = lnchr\GFXModes
-					lnchr\GFXModeWidths[lnchr\GFXModes] = GfxModeWidth(i)
-					lnchr\GFXModeHeights[lnchr\GFXModes] = GfxModeHeight(i)
-					lnchr\GFXModes = lnchr\GFXModes + 1
-				EndIf
+			ElseIf GfxModeWidth(i) >= 800 And GfxModeHeight(i) >= 600
+				If opt\GraphicWidth = GfxModeWidth(i) And opt\GraphicHeight = GfxModeHeight(i) Then lnchr\SelectedGFXMode = lnchr\GFXModes
+				lnchr\GFXModeWidths[lnchr\GFXModes] = GfxModeWidth(i)
+				lnchr\GFXModeHeights[lnchr\GFXModes] = GfxModeHeight(i)
+				lnchr\GFXModes = lnchr\GFXModes + 1
 			EndIf
 		EndIf
 	Next
@@ -939,13 +937,11 @@ Function UpdateLauncherScrollBar#(Width%, Height%, BarX%, BarY%, BarWidth%, BarH
 			Rect(BarX + 4, BarY + BarHeightHalf - 3, BarWidth - 10, 2)
 			Rect(BarX + 4, BarY + BarHeightHalf + 3, BarWidth - 10, 2)
 		EndIf
-	Else ; ~ Horizontal
-		If Height > 10
-			Color(255, 255, 255)
-			Rect(BarX + BarHeightHalf, BarY + 5, 2, BarHeight - 10)
-			Rect(BarX + BarHeightHalf - 3, BarY + 5, 2, BarHeight - 10)
-			Rect(BarX + BarHeightHalf + 3, BarY + 5, 2, BarHeight - 10)
-		EndIf
+	ElseIf Height > 10 ; ~ Horizontal
+		Color(255, 255, 255)
+		Rect(BarX + BarHeightHalf, BarY + 5, 2, BarHeight - 10)
+		Rect(BarX + BarHeightHalf - 3, BarY + 5, 2, BarHeight - 10)
+		Rect(BarX + BarHeightHalf + 3, BarY + 5, 2, BarHeight - 10)
 	EndIf
 	
 	OnScrollBar = (mo\MouseDown1 And MouseOn(BarX, BarY, BarWidth, BarHeight))

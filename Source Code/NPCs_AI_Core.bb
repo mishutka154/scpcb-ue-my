@@ -723,8 +723,8 @@ Function UpdateNPCType049%(n.NPCs)
 							n\PrevState = 0
 							n\State3 = 0.0
 							n\State = 2.0
-						Else
-							If n\PathStatus <> PATH_STATUS_FOUND Then n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
+						ElseIf n\PathStatus <> PATH_STATUS_FOUND
+							n\PathStatus = FindPath(n, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider))
 						EndIf
 					EndIf
 					
@@ -1469,8 +1469,8 @@ Function UpdateNPCType096%(n.NPCs)
 					n\LastSeen = 0
 					If n\Target = Null
 						If Dist < 64.0 And EntityVisible(me\Collider, n\Collider) Then n\LastSeen = 1
-					Else
-						If Dist < 64.0 And EntityVisible(n\Target\Collider, n\Collider) Then n\LastSeen = 1
+					ElseIf Dist < 64.0 And EntityVisible(n\Target\Collider, n\Collider)
+						n\LastSeen = 1
 					EndIf
 					n\State3 = MilliSecs() + 2000
 				EndIf
@@ -1991,8 +1991,8 @@ Function UpdateNPCType106%(n.NPCs)
 		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
 		
 		RotateEntity(n\OBJ, 0.0, EntityYaw(n\Collider), 0.0)
-	Else
-		If (Not EntityHidden(n\OBJ2)) Then HideEntity(n\OBJ2)
+	ElseIf (Not EntityHidden(n\OBJ2))
+		HideEntity(n\OBJ2)
 	EndIf
 End Function
 

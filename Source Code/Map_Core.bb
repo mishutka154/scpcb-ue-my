@@ -4093,8 +4093,8 @@ Function UpdateDecals%()
 			EndIf
 			
 			If de\Size <= 0.0 Lor de\Alpha <= 0.0 Lor de\LifeTime = 5.0 Then RemoveDecal(de)
-		Else
-			If (Not EntityHidden(de\OBJ)) Then HideEntity(de\OBJ)
+		ElseIf (Not EntityHidden(de\OBJ))
+			 HideEntity(de\OBJ)
 		EndIf
 	Next
 End Function
@@ -4195,13 +4195,11 @@ Function TurnOffSecurityCam%(room.Rooms, TurnOff%)
 					HideEntity(sc\ScrOBJ)
 					sc\Screen = False
 				EndIf
-			Else
-				If (Not sc\Screen)
-					If sc\CoffinEffect = 0 Then sc\CoffinEffect = 2
-					ShowEntity(sc\ScrOverlay)
-					ShowEntity(sc\ScrOBJ)
-					sc\Screen = True
-				EndIf
+			ElseIf (Not sc\Screen)
+				If sc\CoffinEffect = 0 Then sc\CoffinEffect = 2
+				ShowEntity(sc\ScrOverlay)
+				ShowEntity(sc\ScrOBJ)
+				sc\Screen = True
 			EndIf
 			Exit
 		EndIf
@@ -4350,11 +4348,9 @@ Function UpdateSecurityCams%()
 							If Rand(500 - (480 * (Temp < 700))) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 							If Temp >= Rand(700)
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
-							Else
-								If (Not ChannelPlaying(sc\SoundCHN))
-									sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
-									sc\CoffinEffect = 3 : sc\PlayerState = 0
-								EndIf
+							ElseIf (Not ChannelPlaying(sc\SoundCHN))
+								sc\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
+								sc\CoffinEffect = 3 : sc\PlayerState = 0
 							EndIf
 						EndIf
 					EndIf
@@ -4480,11 +4476,11 @@ Function UpdateMonitorSaving%()
 						CameraPitch = CameraPitch - 90.0
 						FreeEntity(Pvt) : Pvt = 0
 					EndIf
-				Else
-					If sc_I\SelectedMonitor = sc Then sc_I\SelectedMonitor = Null
+				ElseIf sc_I\SelectedMonitor = sc
+					sc_I\SelectedMonitor = Null
 				EndIf
-			Else
-				If sc_I\SelectedMonitor = sc Then sc_I\SelectedMonitor = Null
+			ElseIf sc_I\SelectedMonitor = sc
+				sc_I\SelectedMonitor = Null
 			EndIf
 		EndIf
 	Next
@@ -4723,8 +4719,8 @@ End Function
 Function UpdateRedLight%(Light%, Value1#, Value2#)
 	If (MilliSec Mod Value1) < Value2
 		If EntityHidden(Light) Then ShowEntity(Light)
-	Else
-		If (Not EntityHidden(Light)) Then HideEntity(Light)
+	ElseIf (Not EntityHidden(Light))
+		HideEntity(Light)
 	EndIf
 End Function
 

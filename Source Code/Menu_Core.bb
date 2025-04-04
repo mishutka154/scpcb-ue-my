@@ -283,11 +283,9 @@ Function UpdateMainMenu%()
 						
 						If SelectedCustomMap = Null
 							RandomSeed = UpdateMenuInputBox(x + (150 * MenuScale), y + (55 * MenuScale), 200 * MenuScale, 30 * MenuScale, RandomSeed, Font_Default, 2, 15)
-						Else
-							If UpdateMenuButton(x + (370 * MenuScale), y + (55 * MenuScale), 120 * MenuScale, 30 * MenuScale, GetLocalString("menu", "deselect"))
-								ShouldDeleteGadgets = True
-								SelectedCustomMap = Null
-							EndIf
+						ElseIf UpdateMenuButton(x + (370 * MenuScale), y + (55 * MenuScale), 120 * MenuScale, 30 * MenuScale, GetLocalString("menu", "deselect"))
+							ShouldDeleteGadgets = True
+							SelectedCustomMap = Null
 						EndIf
 						
 						opt\IntroEnabled = UpdateMenuTick(x + (280 * MenuScale), y + (110 * MenuScale), opt\IntroEnabled)
@@ -408,16 +406,14 @@ Function UpdateMainMenu%()
 									If DelSave = Null
 										If CurrSave\Version <> VersionNumber
 											UpdateMenuButton(x + (300 * MenuScale), y + (20 * MenuScale), 100 * MenuScale, 30 * MenuScale, GetLocalString("menu", "btnload"), Font_Default, False, True, 255, 0, 0)
-										Else
-											If UpdateMenuButton(x + (300 * MenuScale), y + (20 * MenuScale), 100 * MenuScale, 30 * MenuScale, GetLocalString("menu", "btnload"))
-												LoadEntities()
-												LoadSounds()
-												LoadGame(CurrSave\Name)
-												InitLoadGame()
-												ShouldDeleteGadgets = True
-												MainMenuOpen = False
-												Return
-											EndIf
+										ElseIf UpdateMenuButton(x + (300 * MenuScale), y + (20 * MenuScale), 100 * MenuScale, 30 * MenuScale, GetLocalString("menu", "btnload"))
+											LoadEntities()
+											LoadSounds()
+											LoadGame(CurrSave\Name)
+											InitLoadGame()
+											ShouldDeleteGadgets = True
+											MainMenuOpen = False
+											Return
 										EndIf
 										
 										If UpdateMenuButton(x + (420 * MenuScale), y + (20 * MenuScale), 100 * MenuScale, 30 * MenuScale, GetLocalString("menu", "delete"))

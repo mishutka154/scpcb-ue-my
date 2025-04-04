@@ -544,8 +544,8 @@ Function UpdateGame%()
 				If EntityHidden(t\OverlayID[6]) Then ShowEntity(t\OverlayID[6])
 				EntityAlpha(t\OverlayID[6], Clamp(me\LightFlash + Rnd(-0.2, 0.2), 0.0, 1.0))
 				me\LightFlash = Max(me\LightFlash - (fps\Factor[0] / 70.0), 0.0)
-			Else
-				If (Not EntityHidden(t\OverlayID[6])) Then HideEntity(t\OverlayID[6])
+			ElseIf (Not EntityHidden(t\OverlayID[6]))
+				HideEntity(t\OverlayID[6])
 			EndIf
 			
 			If (Not (SelectedItem = Null Lor InvOpen Lor OtherOpen <> Null))
@@ -557,8 +557,8 @@ Function UpdateGame%()
 			If DarkAlpha <> 0.0
 				If EntityHidden(t\OverlayID[5]) Then ShowEntity(t\OverlayID[5])
 				EntityAlpha(t\OverlayID[5], DarkAlpha)
-			Else
-				If (Not EntityHidden(t\OverlayID[5])) Then HideEntity(t\OverlayID[5])
+			ElseIf (Not EntityHidden(t\OverlayID[5]))
+				HideEntity(t\OverlayID[5])
 			EndIf
 			
 			UpdateNVG()
@@ -674,8 +674,8 @@ Function UpdateGame%()
 		
 		If me\EndingTimer < 0.0
 			If me\SelectedEnding <> -1 Then UpdateEnding()
-		Else
-			If me\SelectedEnding = -1 Then UpdateMenu()
+		ElseIf me\SelectedEnding = -1
+			UpdateMenu()
 		EndIf
 	Wend
 	
@@ -715,8 +715,8 @@ Function RenderGame%()
 	
 	If me\EndingTimer < 0.0
 		If me\SelectedEnding <> -1 Then RenderEnding()
-	Else
-		If me\SelectedEnding = -1 Then RenderMenu()
+	ElseIf me\SelectedEnding = -1
+		RenderMenu()
 	EndIf
 	
 	CatchErrors("Uncaught: RenderGame()")
@@ -2810,8 +2810,8 @@ Function UpdatePlayerModel%()
 		RotateEntity(pm\Pivot, 0.0, EntityYaw(Camera), 0.0, True)
 		
 		If AnimSeq(pm\OBJ) <> pm\AnimID Then Animate(pm\OBJ, 1, pm\AnimationSpeed[pm\AnimID], pm\AnimID, 15.0)
-	Else
-		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
+	ElseIf (Not EntityHidden(pm\OBJ))
+		HideEntity(pm\OBJ)
 	EndIf
 End Function
 

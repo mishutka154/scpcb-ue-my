@@ -71,11 +71,9 @@ Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
 					If snd\InternalHandle = 0
 						If FileType(snd\Name) <> 1
 							OpenConsoleOnError(Format(GetLocalString("runerr", "sound.notfound"), snd\Name))
-						Else
-							If opt\EnableSFXRelease
-								snd\InternalHandle = LoadSound(snd\Name)
-								CreateSubtitlesToken(snd\Name, snd)
-							EndIf
+						ElseIf opt\EnableSFXRelease
+							snd\InternalHandle = LoadSound(snd\Name)
+							CreateSubtitlesToken(snd\Name, snd)
 						EndIf
 						If snd\InternalHandle = 0 Then OpenConsoleOnError(Format(GetLocalString("runerr", "sound.failed.load"), snd\Name))
 					EndIf
@@ -88,11 +86,9 @@ Function PlaySound_Strict%(SoundHandle%, IsVoice% = False)
 				If snd\InternalHandle = 0
 					If FileType(snd\Name) <> 1
 						OpenConsoleOnError(Format(GetLocalString("runerr", "sound.notfound"), snd\Name))
-					Else
-						If opt\EnableSFXRelease
-							snd\InternalHandle = LoadSound(snd\Name)
-							CreateSubtitlesToken(snd\Name, snd)
-						EndIf
+					ElseIf opt\EnableSFXRelease
+						snd\InternalHandle = LoadSound(snd\Name)
+						CreateSubtitlesToken(snd\Name, snd)
 					EndIf
 					If snd\InternalHandle = 0 Then OpenConsoleOnError(Format(GetLocalString("runerr", "sound.failed.load"), snd\Name))
 				EndIf

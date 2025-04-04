@@ -2203,8 +2203,8 @@ Function LoadWayPoints%(LoadingStart% = 55)
 				
 				If w\room\MaxWayPointY = 0.0 Lor w2\room\MaxWayPointY = 0.0
 					CanCreateWayPoint = True
-				Else
-					If IsEqual(EntityY(w\OBJ), EntityY(w2\OBJ), w\room\MaxWayPointY) Then CanCreateWayPoint = True
+				ElseIf IsEqual(EntityY(w\OBJ), EntityY(w2\OBJ), w\room\MaxWayPointY)
+					CanCreateWayPoint = True
 				EndIf
 				
 				If Dist < 7.0
