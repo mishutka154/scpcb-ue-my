@@ -16,10 +16,11 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	If TexName = "" Then Return(0)
 	
 	Local tic.TextureInCache
+	Local StrippedName$ = StripPath(TexName)
 	
 	For tic.TextureInCache = Each TextureInCache
 		If tic\TexName <> "CTUCS"
-			If StripPath(TexName) = tic\TexName
+			If StrippedName = tic\TexName
 				If tic\TexDeleteType < DeleteType Then tic\TexDeleteType = DeleteType
 				Return(tic\Tex)
 			EndIf
@@ -29,7 +30,7 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	Local CurrPath$ = TexName
 	
 	tic.TextureInCache = New TextureInCache
-	tic\TexName = StripPath(TexName)
+	tic\TexName = StrippedName
 	tic\TexDeleteType = DeleteType
 	If FileType(lang\LanguagePath + CurrPath) = 1 Then CurrPath = lang\LanguagePath + CurrPath
 	If tic\Tex = 0 Then tic\Tex = LoadTexture(CurrPath, TexFlags)
@@ -44,10 +45,11 @@ Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Heig
 	If TexName = "" Then Return(0)
 	
 	Local tic.TextureInCache
+	Local StrippedName$ = StripPath(TexName)
 	
 	For tic.TextureInCache = Each TextureInCache
 		If tic\TexName <> "CTUCS"
-			If StripPath(TexName) = tic\TexName
+			If StrippedName = tic\TexName
 				If tic\TexDeleteType < DeleteType Then tic\TexDeleteType = DeleteType
 				Return(tic\Tex)
 			EndIf
@@ -57,7 +59,7 @@ Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Heig
 	Local CurrPath$ = TexName
 	
 	tic.TextureInCache = New TextureInCache
-	tic\TexName = StripPath(TexName)
+	tic\TexName = StrippedName
 	tic\TexDeleteType = DeleteType
 	If FileType(lang\LanguagePath + CurrPath) = 1 Then CurrPath = lang\LanguagePath + CurrPath
 	If tic\Tex = 0 Then tic\Tex = LoadAnimTexture(CurrPath, TexFlags, Width, Height, FirstFrame, Count)
