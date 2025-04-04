@@ -2066,7 +2066,7 @@ Function FillRoom%(r.Rooms)
 			
 			; ~ Fence door
 			d.Doors = CreateDoor(r, r\x - 260.0 * RoomScale, r\y - 10944.0 * RoomScale, r\z + 1660.0 * RoomScale, 90.0, False, FENCE_DOOR)
-			d\Locked = 2 : d\DisableWaypoint = True : d\MTFClose = False
+			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			
 			; ~ Misc Doors
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 64.0 * RoomScale, 0.0, False, HEAVY_DOOR, KEY_CARD_4)
