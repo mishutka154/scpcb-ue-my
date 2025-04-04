@@ -2981,7 +2981,7 @@ Function UpdateNPCType939%(n.NPCs)
 End Function
 
 Function UpdateNPCType966%(n.NPCs)
-	If n\State = -1.0 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_106
+	If n\State = -1.0 Lor PD_event\room = PlayerRoom
 		n\DropSpeed = 0.0
 		Return
 	EndIf

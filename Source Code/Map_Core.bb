@@ -3938,7 +3938,7 @@ Function UpdateShadows%()
 				shdw\Alpha = shdw\Alpha - (fps\Factor[0] * 0.005)
 				EntityAlpha(shdw\OBJ, shdw\Alpha)
 				If shdw\Alpha <= 0.0 Then RemoveShadow(shdw)
-			ElseIf EntityHidden(shdw\ParentOBJ) Lor (forest_event <> Null And forest_event\room = PlayerRoom And forest_event\EventState = 1.0) Lor SecondaryLightOn =< 0.3
+			ElseIf EntityHidden(shdw\ParentOBJ) Lor (forest_event <> Null And forest_event\room = PlayerRoom And forest_event\EventState = 1.0) Lor SecondaryLightOn =< 0.3 Lor (PD_event\room = PlayerRoom And PD_event\EventState2 <> PD_FakeTunnelRoom)
 				If (Not EntityHidden(shdw\OBJ)) Then HideEntity(shdw\OBJ)
 			Else
 				If shdw\UpdateTimer <= 0.0

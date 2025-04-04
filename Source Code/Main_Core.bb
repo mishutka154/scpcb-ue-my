@@ -2924,9 +2924,7 @@ Function UpdateMoving%()
 					EndIf
 					
 					If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
-						Local PlayerPosY# = EntityY(me\Collider)
-						
-						If PlayerPosY < 2000.0 * RoomScale Lor PlayerPosY > 2608.0 * RoomScale
+						If PD_event\EventState2 <> PD_FakeTunnelRoom
 							Speed = 0.015
 							me\Stamina = Max(me\Stamina - (fps\Factor[0] * 0.4), -20.0)
 						EndIf
@@ -3264,9 +3262,7 @@ Function UpdateMouseLook%()
 		RotateEntity(Camera, WrapAngle(CameraPitch + Rnd(-ShakeTimer, ShakeTimer)), WrapAngle(EntityYaw(me\Collider) + Rnd(-ShakeTimer, ShakeTimer)), Roll) ; ~ Pitch the user's camera up and down
 		
 		If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
-			Local PlayerPosY# = EntityY(me\Collider)
-			
-			If PlayerPosY < 2000.0 * RoomScale Lor PlayerPosY > 2608.0 * RoomScale Then RotateEntity(Camera, WrapAngle(EntityPitch(Camera)), WrapAngle(EntityYaw(Camera)), Roll + WrapAngle(Sin(MilliSec / 150.0) * 30.0)) ; ~ Pitch the user's camera up and down
+			If PD_event\EventState2 <> PD_FakeTunnelRoom Then RotateEntity(Camera, WrapAngle(EntityPitch(Camera)), WrapAngle(EntityYaw(Camera)), Roll + WrapAngle(Sin(MilliSec / 150.0) * 30.0)) ; ~ Pitch the user's camera up and down
 		EndIf
 	Else
 		If (Not EntityHidden(me\Collider)) Then HideEntity(me\Collider)
@@ -3444,7 +3440,7 @@ Function UpdateZoneColor%()
 		LightVolume = 1.0
 		CameraFogRange(Camera, 40.0, fog\FarDist)
 		CameraRange(Camera, 0.01, 96.0) ; ~ fog\FarDist * 1.2
-	ElseIf PD_event <> Null And PD_event\room = PlayerRoom
+	ElseIf PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 		LightVolume = 1.0
 		If PD_event\EventState2 = PD_TrenchesRoom Lor PD_event\EventState2 = PD_TowerRoom
 			SetZoneColor(FogColorPDTrench)
@@ -3821,7 +3817,7 @@ Function UpdateGUI%()
 	Local n%, xTemp%, yTemp%, StrTemp$
 	
 	; ~ TODO: Get rid of this as soon as possible. Currently optimized by making a variable instead of calling array
-	If PD_event <> Null And PD_event\room = PlayerRoom
+	If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 		If (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) And PD_event\EventState2 <> PD_FakeTunnelRoom
 			If PD_event\Img2 <> 0
 				StopChannel(PD_event\SoundCHN)
@@ -6636,7 +6632,7 @@ Function RenderHUD%()
 	Else
 		RenderBar(t\ImageID[2], x, y, Width, Height, me\Stamina, 100.0, 50, 50, 50)
 	EndIf
-	If (PlayerRoom\RoomTemplate\RoomID = r_dimension_106 And (PlayerPosY < 2000.0 * RoomScale Lor PlayerPosY > 2608.0 * RoomScale)) Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor me\StaminaMax < 100.0 Lor I_1025\State[0] > 0.0 Lor I_966\HasInsomnia > 0.0
+	If (PlayerRoom\RoomTemplate\RoomID = r_dimension_106 And PD_event\EventState2 <> PD_FakeTunnelRoom) Lor me\Injuries >= 1.5 Lor me\StaminaEffect > 1.0 Lor me\StaminaMax < 100.0 Lor I_1025\State[0] > 0.0 Lor I_966\HasInsomnia > 0.0
 		Color(200, 0, 0)
 		Rect(x - IconColoredRectSpaceX, y - IconColoredRectSpaceY, IconColoredRectSize, IconColoredRectSize)
 	ElseIf chs\InfiniteStamina Lor me\StaminaEffect < 1.0 Lor wi\GasMask >= 3 Lor I_1499\Using = 2 Lor wi\HazmatSuit >= 3 Lor (I_1025\State[6] > 15.0 And I_1025\State[6] < 75.0)
@@ -6978,7 +6974,7 @@ Function RenderGUI%()
 	EndIf
 	
 	; ~ TODO: Get rid of this as soon as possible. Currently optimized by making a variable instead of calling array
-	If PD_event <> Null And PD_event\room = PlayerRoom
+	If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 		If (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) And PD_event\EventState2 <> PD_FakeTunnelRoom
 			If PD_event\Img = 0
 				PD_event\Img = ResizeImageEx(LoadImage_Strict("GFX\Overlays\scp_106_face_overlay.png"), MenuScale, MenuScale)
