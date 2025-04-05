@@ -1526,7 +1526,7 @@ Function FillRoom%(r.Rooms)
 			d.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 544.0 * RoomScale, 0.0, True, ONE_SIDED_DOOR, KEY_CARD_2)
 			RotateEntity(d\Buttons[0], 0.0, 270.0, 0.0, True)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.015, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.4, True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.12, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 1.06, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.031, True)
 			r\RoomDoors.Doors[1] = d
 			
 			d2.Doors = CreateDoor(r, r\x + 912.0 * RoomScale, r\y, r\z + 288.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_2)

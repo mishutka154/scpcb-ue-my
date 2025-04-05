@@ -10,8 +10,16 @@
 
 [Rooms]
 - Added new textures for elevators.
+- Reduced chance of escape from Pocket Dimension on first room.
+- Guard opens the observation room of SCP-895.
 
 - Revert «room2_gw» and «room3_gw» back to level 2 clearance.
+
+[NPCs]
+- More SCP-008-1 will spawn after interacting with SCP-008's event.
+
+[Items]
+- Vest reduces more damage from SCP-939.
 
 [Bug Fixes]
 - Fixed Franklin's speed after loading the game.
@@ -24,6 +32,7 @@
 - Fixed extra frames in the «Falling Back» animation for Class D.
 - Fixed «Sound 860_2\Chase2.ogg not found» error.
 - Fixed some waypoints.
+- Fixed SCP-1123 inner door panel being interactable through window.
 
 [Known issues]
 - Rooms can overlap and block the way.
