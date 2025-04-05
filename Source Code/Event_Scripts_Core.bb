@@ -4811,9 +4811,11 @@ End Function
 Function UpdateEvent_Room2_MT%(e.Events)
 	If PlayerRoom = e\room
 		Local Meshes%[MaxMTModelIDAmount]
+		Local p.Props
 		Local iA%, iB%, iC%, iD%
 		Local TempInt%, TempInt2%
 		Local iX%, iY%
+		Local Scale#
 		
 		If I_Zone\HasCustomMT
 			If e\room\mt\Meshes[0] = 0 Then PlaceMapCreatorMT(e\room)
@@ -5087,8 +5089,11 @@ Function UpdateEvent_Room2_MT%(e.Events)
 						
 						If e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_GENERATOR
 							AddLight(e\room, e\room\x + (iX * 2.0) - (SinValue * 521.0 * RoomScale) + (CosValue * 16.0 * RoomScale), e\room\y + MTGridY + (400.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 521.0 * RoomScale) + (SinValue * 16.0 * RoomScale), 2, 0.425, 255, 200, 200)
-							CreateProp(e\room, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
-							CreateProp(e\room, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
+							Scale = 3.0 * RoomScale
+							p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, Scale, Scale, Scale, True, 0, "")
+							EntityParent(p\OBJ, TempInt)
+							p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, Scale, Scale, Scale, True, 0, "")
+							EntityParent(p\OBJ, TempInt)
 							
 							it.Items = CreateItem("SCP-500-01", it_scp500pill, e\room\x + (iX * 2.0) + (CosValue * (-208.0) * RoomScale) - (SinValue * 1226.0 * RoomScale), e\room\y + MTGridY + (110.0 * RoomScale), e\room\z + (iY * 2.0) + (SinValue * (-208.0) * RoomScale) + (CosValue * 1226.0 * RoomScale))
 							EntityType(it\Collider, HIT_ITEM)
@@ -5097,8 +5102,11 @@ Function UpdateEvent_Room2_MT%(e.Events)
 							EntityType(it\Collider, HIT_ITEM)
 						ElseIf e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_FIRST_ELEVATOR Lor e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_SECOND_ELEVATOR
 							AddLight(e\room, e\room\x + (iX * 2.0) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (469.0 * RoomScale), e\room\z + (iY * 2.0) + (SinValue * 560.0 * RoomScale), 2, 0.25, 255, 200, 200)
-							CreateProp(e\room, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (432.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 270.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
-							CreateProp(e\room, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (432.0 * RoomScale), e\room\z + (iY * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
+							Scale = 400.0 * RoomScale
+							p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (413.6 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 270.0, 90.0, Scale, Scale, Scale, False, 0, "")
+							EntityParent(p\OBJ, TempInt)
+							p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (413.6 * RoomScale), e\room\z + (iY * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 90.0, 90.0, Scale, Scale, Scale, False, 0, "")
+							EntityParent(p\OBJ, TempInt)
 							
 							d.Doors = CreateDoor(Null, e\room\x + (iX * 2.0) + (CosValue * 256.0 * RoomScale), e\room\y + MTGridY, e\room\z + (iY * 2.0) + (SinValue * 256.0 * RoomScale), Angle - 90.0, False, ELEVATOR_DOOR)
 							PositionEntity(d\ElevatorPanel[1], EntityX(d\ElevatorPanel[1], True) + (CosValue * 0.05), EntityY(d\ElevatorPanel[1], True) + 0.1, EntityZ(d\ElevatorPanel[1], True) + (SinValue * (-0.28)), True)
@@ -5298,12 +5306,18 @@ Function UpdateEvent_Room2_MT%(e.Events)
 						
 						If e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_GENERATOR
 							AddLight(e\room, e\room\x + (iX * 2.0) - (SinValue * 521.0 * RoomScale) + (CosValue * 16.0 * RoomScale), e\room\y + MTGridY + (400.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 521.0 * RoomScale) + (SinValue * 16.0 * RoomScale), 2, 0.425, 255, 200, 200)
-							CreateProp(e\room, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
-							CreateProp(e\room, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
+							Scale = 3.0 * RoomScale
+							p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, Scale, Scale, Scale, True, 0, "")
+							EntityParent(p\OBJ, TempInt)
+							p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", e\room\x + (iX * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), e\room\y + MTGridY - (144.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, Angle + 180.0, 0.0, Scale, Scale, Scale, True, 0, "")
+							EntityParent(p\OBJ, TempInt)
 						ElseIf e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_FIRST_ELEVATOR Lor e\room\mt\Grid[iX + (iY * MTGridSize)] = MT_SECOND_ELEVATOR
 							AddLight(e\room, e\room\x + (iX * 2.0) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (469.0 * RoomScale), e\room\z + (iY * 2.0) + (SinValue * 560.0 * RoomScale), 2, 0.25, 255, 200, 200)
-							CreateProp(e\room, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (432.0 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 270.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
-							CreateProp(e\room, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (432.0 * RoomScale), e\room\z + (iY * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
+							Scale = 400.0 * RoomScale
+							p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (413.6 * RoomScale), e\room\z + (iY * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 270.0, 90.0, Scale, Scale, Scale, False, 0, "")
+							EntityParent(p\OBJ, TempInt)
+							p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", e\room\x + (iX * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), e\room\y + MTGridY + (413.6 * RoomScale), e\room\z + (iY * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, Angle + 90.0, 90.0, Scale, Scale, Scale, False, 0, "")
+							EntityParent(p\OBJ, TempInt)
 							
 							d.Doors = CreateDoor(Null, e\room\x + (iX * 2.0) + (CosValue * 256.0 * RoomScale), e\room\y + MTGridY, e\room\z + (iY * 2.0) + (SinValue * 256.0 * RoomScale), Angle - 90.0, False, ELEVATOR_DOOR)
 							PositionEntity(d\ElevatorPanel[1], EntityX(d\ElevatorPanel[1], True) + (CosValue * 0.05), EntityY(d\ElevatorPanel[1], True) + 0.1, EntityZ(d\ElevatorPanel[1], True) + (SinValue * (-0.28)), True)

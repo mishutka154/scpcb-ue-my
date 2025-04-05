@@ -2218,10 +2218,11 @@ End Function
 Function PlaceMapCreatorMT%(r.Rooms)
 	CatchErrors("PlaceMapCreatorMT()")
 	
-	Local d.Doors, it.Items, wayp.WayPoints
+	Local d.Doors, it.Items, wayp.WayPoints, p.Props
 	Local x%, y%, i%, Dist#
 	Local Meshes%[MaxMTModelIDAmount]
 	Local SinValue#, CosValue#
+	Local Scale#
 	
 	For i = 0 To MaxMTModelIDAmount - 1
 		Meshes[i] = CopyEntity(misc_I\MTModelID[i])
@@ -2258,8 +2259,11 @@ Function PlaceMapCreatorMT%(r.Rooms)
 						;[Block]
 						AddLight(r, r\x + (x * 2.0), r\y + MTGridY + (409.0 * RoomScale), r\z + (y * 2.0), 2, 0.25, 255, 200, 200)
 						AddLight(r, r\x + (x * 2.0) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (469.0 * RoomScale), r\z + (y * 2.0) + (SinValue * 560.0 * RoomScale), 2, 0.25, 255, 200, 200)
-						CreateProp(r, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, 90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
-						CreateProp(r, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (432.0 * RoomScale), (y * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, -90.0, 90.0, 400.0, 400.0, 400.0, False, 0, "")
+						Scale = 400.0 * RoomScale
+						p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) + (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (413.6 * RoomScale), (y * 2.0) + (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, 90.0, 90.0, Scale, Scale, Scale, False, 0, "")
+						EntityParent(p\OBJ, Tile_Entity)
+						p.Props = CreateProp(Null, "GFX\Map\Props\lamp_e.b3d", r\x + (x * 2.0) - (SinValue * 252.0 * RoomScale) + (CosValue * 560.0 * RoomScale), r\y + MTGridY + (413.6 * RoomScale), (y * 2.0) - (CosValue * 252.0 * RoomScale) + (SinValue * 560.0 * RoomScale), 0.0, -90.0, 90.0, Scale, Scale, Scale, False, 0, "")
+						EntityParent(p\OBJ, Tile_Entity)
 						
 						d.Doors = CreateDoor(Null, r\x + (x * 2.0) + (CosValue * 256.0 * RoomScale), r\y + MTGridY, r\z + (y * 2.0) + (SinValue * 256.0 * RoomScale), EntityYaw(Tile_Entity, True) - 90.0, False, ELEVATOR_DOOR)
 						PositionEntity(d\ElevatorPanel[1], EntityX(d\ElevatorPanel[1], True) + (CosValue * 0.05), EntityY(d\ElevatorPanel[1], True) + 0.1, EntityZ(d\ElevatorPanel[1], True) + (SinValue * (-0.28)), True)
@@ -2283,8 +2287,11 @@ Function PlaceMapCreatorMT%(r.Rooms)
 					Case 7
 						;[Block]
 						AddLight(r, r\x + (x * 2.0) - (SinValue * 521.0 * RoomScale) + (CosValue * 16.0 * RoomScale), r\y + MTGridY + (396.0 * RoomScale), r\z + (y * 2.0) + (CosValue * 521.0 * RoomScale) + (SinValue * 16.0 * RoomScale), 2, 0.425, 255, 200, 200)
-						CreateProp(r, "GFX\Map\Props\tank2.b3d", r\x + (x * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), r\y + MTGridY - (144.0 * RoomScale), r\z + (y * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
-						CreateProp(r, "GFX\Map\Props\tank2.b3d", r\x + (x * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), r\y + MTGridY - (144.0 * RoomScale), r\z + (y * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, True, 0, "")
+						Scale = 3.0 * RoomScale
+						p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", r\x + (x * 2.0) - (SinValue * 369.0 * RoomScale) + (CosValue * 320.0 * RoomScale), r\y + MTGridY - (144.0 * RoomScale), r\z + (y * 2.0) + (CosValue * 369.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, 0.0, 0.0, Scale, Scale, Scale, True, 0, "")
+						EntityParent(p\OBJ, Tile_Entity)
+						p.Props = CreateProp(Null, "GFX\Map\Props\tank2.b3d", r\x + (x * 2.0) - (SinValue * 977.0 * RoomScale) + (CosValue * 320.0 * RoomScale), r\y + MTGridY - (144.0 * RoomScale), r\z + (y * 2.0) + (CosValue * 977.0 * RoomScale) + (SinValue * 320.0 * RoomScale), 0.0, 0.0, 0.0, Scale, Scale, Scale, True, 0, "")
+						EntityParent(p\OBJ, Tile_Entity)
 						
 						it.Items = CreateItem("SCP-500-01", it_scp500pill, r\x + (x * 2.0) + (CosValue * (-208.0) * RoomScale) - (SinValue * 1226.0 * RoomScale), r\y + MTGridY + (110.0 * RoomScale), r\z + (y * 2.0) + (SinValue * (-208.0) * RoomScale) + (CosValue * 1226.0 * RoomScale))
 						EntityType(it\Collider, HIT_ITEM)

@@ -16,6 +16,7 @@
 - Fixed SCP-173 not appearing in the intro scene.
 - Fixed Class D mesh culling.
 - Fixed the ability to escape from the ending tunnel at Gate A.
+- Fixed scale of the models in Maintenance Tunnels.
 
 [Known issues]
 - Rooms can overlap and block the way.
