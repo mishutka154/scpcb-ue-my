@@ -17,6 +17,7 @@
 - Fixed Class D mesh culling.
 - Fixed the ability to escape from the ending tunnel at Gate A.
 - Fixed scale of the models in Maintenance Tunnels.
+- Fixed extra frames in the «Falling Back» animation for Class D.
 
 [Known issues]
 - Rooms can overlap and block the way.

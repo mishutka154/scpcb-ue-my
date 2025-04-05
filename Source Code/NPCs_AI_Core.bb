@@ -4318,7 +4318,7 @@ Function UpdateNPCTypeD_Clerk%(n.NPCs)
 				;[End Block]
 			Case 0.0 ; ~ Fall backward
 				;[Block]
-				AnimateNPC(n, 1.0, 40.0, 0.5, False)
+				AnimateNPC(n, 1.0, 20.0, 0.5, False)
 				;[End Block]
 			Case 1.0 ; ~ Fall forward
 				;[Block]
