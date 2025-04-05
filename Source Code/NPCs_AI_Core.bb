@@ -2899,7 +2899,7 @@ Function UpdateNPCType939%(n.NPCs)
 					If Temp
 						If DistanceSquared(n\EnemyX, EntityX(n\Collider), n\EnemyZ, EntityZ(n\Collider)) < 2.25
 							PlaySound_Strict(snd_I\DamageSFX[11])
-							InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.2, 0.75))
+							InjurePlayer(Rnd(1.5, 2.5), 0.0, 500.0, Rnd(0.4, 0.9))
 							me\CameraShake = 2.0 * (I_1025\FineState[3] = 0.0)
 						Else
 							SetNPCFrame(n, 449.0)
