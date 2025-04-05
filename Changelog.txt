@@ -14,7 +14,7 @@
 - Revert «room2_gw» and «room3_gw» back to level 2 clearance.
 
 [NPCs]
-- More SCP-008 will spawn after interacting with SCP-008's event.
+- More SCP-008-1 will spawn after interacting with SCP-008's event.
 
 [Items]
 - Vest reduces more damage from SCP-939.
