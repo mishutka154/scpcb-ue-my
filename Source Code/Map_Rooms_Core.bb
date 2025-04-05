@@ -704,7 +704,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room2_7_lcz
 			;[Block]
-			CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, 90.0, False, FENCE_DOOR)
+			CreateDoor(r, r\x + 533.0 * RoomScale, r\y, r\z, 270.0, False, FENCE_DOOR)
 			
 			d.Doors = CreateDoor(r, r\x + 720.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_1)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.15, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
@@ -1457,6 +1457,11 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[0], r\x + 576.0 * RoomScale, r\y + 160.0 * RoomScale, r\z + 632.0 * RoomScale)
 			EntityParent(r\Objects[0], r\OBJ)
 			
+			r\Objects[1] = LoadMesh_Strict("GFX\Map\cont2_500_1499_hb.b3d", r\OBJ)
+			r\ScriptedObject[1] = True
+			EntityPickMode(r\Objects[1], 2)
+			EntityAlpha(r\Objects[1], 0.0)
+			
 			For i = 0 To 1
 				Select i
 					Case 0
@@ -1727,7 +1732,7 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_room3_lcz
 			;[Block]
-			CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 180.0, False, FENCE_DOOR)
+			CreateDoor(r, r\x, r\y, r\z + 533.0 * RoomScale, 0.0, False, FENCE_DOOR)
 			
 			d.Doors = CreateDoor(r, r\x - 256.0 * RoomScale, r\y, r\z + 720.0 * RoomScale, 90.0, False, ONE_SIDED_DOOR, KEY_CARD_1)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.15, True)
@@ -1855,6 +1860,11 @@ Function FillRoom%(r.Rooms)
 			r\Objects[15] = CreatePivot()
 			PositionEntity(r\Objects[15], r\x - 456.0 * RoomScale, r\y - 5550.0 * RoomScale, r\z + 3023.0 * RoomScale)
 			EntityParent(r\Objects[15], r\OBJ)
+			
+			r\Objects[16] = LoadMesh_Strict("GFX\Map\room3_storage_hb.b3d", r\OBJ)
+			r\ScriptedObject[16] = True
+			EntityPickMode(r\Objects[16], 2)
+			EntityAlpha(r\Objects[16], 0.0)
 			
 			emit.Emitter = SetEmitter(r, r\x + 5245.0 * RoomScale, r\y - 5584.0 * RoomScale, r\z - 575.0 * RoomScale, 6)
 			emit\State = 1

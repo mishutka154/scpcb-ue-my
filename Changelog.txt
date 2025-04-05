@@ -21,6 +21,7 @@
 - Fixed scale of the models in Maintenance Tunnels.
 - Fixed extra frames in the «Falling Back» animation for Class D.
 - Fixed «Sound 860_2\Chase2.ogg not found» error.
+- Fixed some waypoints.
 
 [Known issues]
 - Rooms can overlap and block the way.
