@@ -20,6 +20,7 @@
 - Fixed the ability to escape from the ending tunnel at Gate A.
 - Fixed scale of the models in Maintenance Tunnels.
 - Fixed extra frames in the «Falling Back» animation for Class D.
+- Fixed «Sound 860_2\Chase2.ogg not found» error.
 
 [Known issues]
 - Rooms can overlap and block the way.

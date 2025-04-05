@@ -2705,7 +2705,7 @@ Function UpdateNPCType860_2%(n.NPCs)
 					If Dist < 64.0
 						If EntityInView(n\Collider, Camera)
 							If Rand(8) = 1
-								PlaySound_Strict(LoadTempSound("SFX\SCP\860_2\Chase" + Rand(0, 2) + ".ogg"))
+								PlaySound_Strict(LoadTempSound("SFX\SCP\860_2\Chase" + Rand(0, 1) + ".ogg"))
 								
 								PlaySoundEx(LoadTempSound("SFX\SCP\860_2\Cancer" + Rand(0, 2) + ".ogg"), Camera, n\Collider, 10.0, 1.0, True)
 							EndIf
