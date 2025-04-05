@@ -128,7 +128,7 @@ Const PARTICLE_LEAF% = 10
 Const PARTICLE_CONCRETE% = 11
 ;[End Block]
 
-Global ParticleEffect%[27]
+Global ParticleEffect%[28]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -435,7 +435,7 @@ Function LoadParticles%()
 	SetTemplateAlphaVel(ParticleEffect[22], True)
 	SetTemplateFloor(ParticleEffect[22], 0.0, 0.0, 0)
 	
-	; ~ Water rings in "room2_js"
+	; ~ Water rings in "room2_js" and "room2_storage"
 	ParticleEffect[23] = CreateTemplate()
 	SetTemplateEmitterBlend(ParticleEffect[23], 1)
 	SetTemplateEmitterLifeTime(ParticleEffect[23], -1)
@@ -473,14 +473,16 @@ Function LoadParticles%()
 	; ~ Concrete pieces
 	ParticleEffect[26] = CreateTemplate()
 	SetTemplateEmitterBlend(ParticleEffect[26], 1)
-	SetTemplateEmitterLifeTime(ParticleEffect[26], 1)
-	SetTemplateParticleLifeTime(ParticleEffect[26], 140, 140)
-	SetTemplateTexture(ParticleEffect[26], PARTICLE_CONCRETE)
-	SetTemplateOffset(ParticleEffect[26], -4.0, 4.0, 0.0, 0.0, -4.0, 4.0)
+	SetTemplateEmitterLifeTime(ParticleEffect[26], -1)
+	SetTemplateInterval(ParticleEffect[26], 13)
+	SetTemplateParticleLifeTime(ParticleEffect[26], 120, 120)
+	SetTemplateTexture(ParticleEffect[26], PARTICLE_WATER_DROP)
+	SetTemplateOffset(ParticleEffect[26], -0.15, 0.15, 0.0, 0.0, -0.15, 0.15)
 	SetTemplateVelocity(ParticleEffect[26], 0.0, 0.0, -0.042, -0.04, 0.0, 0.0)
-	SetTemplateSize(ParticleEffect[26], 0.012, 0.02, 0.8, 1.3)
+	SetTemplateSize(ParticleEffect[26], 0.012, 0.012, 1.0, 1.5)
 	SetTemplateAlphaVel(ParticleEffect[26], True)
 	SetTemplateFloor(ParticleEffect[26], 0.0, 0.0, 0)
+	SetTemplateColors(ParticleEffect[26], $800000, $800000)
 End Function
 
 Function RemoveParticleInstances%()

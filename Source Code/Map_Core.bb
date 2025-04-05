@@ -4155,16 +4155,16 @@ Function CreateSecurityCam.SecurityCams(room.Rooms, x1#, y1#, z1#, Pitch1#, Scre
 	For sc2.SecurityCams = Each SecurityCams
 		If sc <> sc2
 			sc\BaseOBJ = CopyEntity(sc2\BaseOBJ)
-			sc\CameraOBJ = CopyEntity(sc2\CameraOBJ) : DebugLog("COPIED BASE AND HEAD")
+			sc\CameraOBJ = CopyEntity(sc2\CameraOBJ)
 		EndIf
 	Next
-	If sc\BaseOBJ = 0 Then sc\BaseOBJ = LoadMesh_Strict(PropsPath + sc_I\CamModelName[CAM_BASE_MODEL] + ".b3d") : DebugLog("ORIGINAL BASE")
+	If sc\BaseOBJ = 0 Then sc\BaseOBJ = LoadMesh_Strict(PropsPath + sc_I\CamModelName[CAM_BASE_MODEL] + ".b3d")
 	ScaleEntity(sc\BaseOBJ, 0.0015, 0.0015, 0.0015)
 	PositionEntity(sc\BaseOBJ, x1, y1, z1)
 	If room <> Null Then EntityParent(sc\BaseOBJ, room\OBJ)
 	HideEntity(sc\BaseOBJ)
 	
-	If sc\CameraOBJ = 0 Then sc\CameraOBJ = LoadMesh_Strict(PropsPath + sc_I\CamModelName[CAM_HEAD_MODEL] + ".b3d") : DebugLog("ORIGINAL HEAD")
+	If sc\CameraOBJ = 0 Then sc\CameraOBJ = LoadMesh_Strict(PropsPath + sc_I\CamModelName[CAM_HEAD_MODEL] + ".b3d")
 	ScaleEntity(sc\CameraOBJ, 0.01, 0.01, 0.01)
 	RotateEntity(sc\CameraOBJ, Pitch1, 0.0, 0.0)
 	HideEntity(sc\CameraOBJ)
