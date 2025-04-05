@@ -5,6 +5,8 @@
 - Reduce shadow radius for NPCs.
 
 [Rooms]
+- Added new textures for elevators.
+
 - Revert «room2_gw» and «room3_gw» back to level 2 clearance.
 
 [Bug Fixes]
