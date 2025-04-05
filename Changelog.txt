@@ -4,6 +4,8 @@
 - Updated SCP-005's achievement icon.
 - Reduce shadow radius for NPCs.
 
+- Optimized game...
+
 [Rooms]
 - Added new textures for elevators.
 

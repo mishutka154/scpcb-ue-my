@@ -2571,30 +2571,14 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[5], r\OBJ)
 			HideEntity(r\Objects[5])
 			
-			; ~ Spawnpoint for the scientist used in the "SCP-008-1's scene"
+			; ~ Elevators pivots
 			r\Objects[6] = CreatePivot()
-			PositionEntity(r\Objects[6], r\x + 160.0 * RoomScale, r\y + 670.0 * RoomScale, r\z - 384.0 * RoomScale)
+			PositionEntity(r\Objects[6], r\x + 752.0 * RoomScale, r\y + 240.0 * RoomScale, r\z)
 			EntityParent(r\Objects[6], r\OBJ)
 			
-			; ~ Spawnpoint for the player
 			r\Objects[7] = CreatePivot()
-			PositionEntity(r\Objects[7], r\x, r\y + 672.0 * RoomScale, r\z + 350.0 * RoomScale)
+			PositionEntity(r\Objects[7], r\x + 752.0 * RoomScale, r\y - 4864.0 * RoomScale, r\z)
 			EntityParent(r\Objects[7], r\OBJ)
-			
-			; ~ Elevators pivots
-			r\Objects[8] = CreatePivot()
-			PositionEntity(r\Objects[8], r\x + 752.0 * RoomScale, r\y + 240.0 * RoomScale, r\z)
-			EntityParent(r\Objects[8], r\OBJ)
-			
-			r\Objects[9] = CreatePivot()
-			PositionEntity(r\Objects[9], r\x + 752.0 * RoomScale, r\y - 4864.0 * RoomScale, r\z)
-			EntityParent(r\Objects[9], r\OBJ)
-			
-			r\Objects[10] = LoadRMesh("GFX\Map\cont2_008_mt_generator.rmesh", Null)
-			ScaleEntity(r\Objects[10], RoomScale, RoomScale, RoomScale)
-			PositionEntity(r\Objects[10], r\x, r\y, r\z)
-			EntityParent(r\Objects[10], r\OBJ)
-			HideEntity(r\Objects[10])
 			
 			it.Items = CreateItem("Hazmat Suit", it_hazmatsuit, r\x - 558.0 * RoomScale, r\y - 4895.0 * RoomScale, r\z - 64.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 90.0, 0.0)

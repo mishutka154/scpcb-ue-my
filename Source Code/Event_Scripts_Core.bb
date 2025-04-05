@@ -5911,13 +5911,6 @@ Function UpdateEvent_Cont2_008%(e.Events)
 		Local n.NPCs
 		Local i%
 		
-		If I_008\Timer >= 92.7
-			If EntityHidden(e\room\Objects[10]) Then ShowEntity(e\room\Objects[10])
-			
-			ShouldPlay = 31
-		Else
-			If (Not EntityHidden(e\room\Objects[10])) Then HideEntity(e\room\Objects[10])
-		EndIf
 		If EntityY(me\Collider) < (-4496.0) * RoomScale
 			ShouldPlay = 30
 			me\Zone = 1
@@ -6017,11 +6010,9 @@ Function UpdateEvent_Cont2_008%(e.Events)
 		
 		Local x1# = EntityX(me\Collider, True), y1# = EntityY(me\Collider, True), z1# = EntityZ(me\Collider, True)
 		
-		me\InsideElevator = (IsInsideElevator(x1, y1, z1, e\room\Objects[8]) Lor IsInsideElevator(x1, y1, z1, e\room\Objects[9]))
+		me\InsideElevator = (IsInsideElevator(x1, y1, z1, e\room\Objects[6]) Lor IsInsideElevator(x1, y1, z1, e\room\Objects[7]))
 		ToElevatorFloor = LowerFloor
-		e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[4], e\room\RoomDoors[5], e\room\Objects[8], e\room\Objects[9], e)
-	Else
-		If (Not EntityHidden(e\room\Objects[10])) Then HideEntity(e\room\Objects[10])
+		e\EventState3 = UpdateElevators(e\EventState3, e\room\RoomDoors[4], e\room\RoomDoors[5], e\room\Objects[6], e\room\Objects[7], e)
 	EndIf
 End Function
 

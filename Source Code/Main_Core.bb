@@ -9572,9 +9572,19 @@ Function Update008%()
 							EndIf
 							For r.Rooms = Each Rooms
 								If r\RoomTemplate\RoomID = r_cont2_008
-									PositionEntity(me\Collider, EntityX(r\Objects[7], True), EntityY(r\Objects[7], True), EntityZ(r\Objects[7], True), True)
+									r\Objects[8] = CopyEntity(misc_I\MTModelID[6])
+									ScaleEntity(r\Objects[8], RoomScale, RoomScale, RoomScale)
+									RotateEntity(r\Objects[8], 0.0, r\Angle, 0.0)
+									TFormPoint(0.0, 2048.0, -512.0, r\OBJ, 0)
+									PositionEntity(r\Objects[8], TFormedX(), TFormedY(), TFormedZ(), True)
+									EntityParent(r\Objects[8], r\OBJ)
+									
+									TFormPoint(0.0, 1974.0, -281.0, r\OBJ, 0) 
+									PositionEntity(me\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
 									ResetEntity(me\Collider)
-									r\NPC[0] = CreateNPC(NPCTypeD, EntityX(r\Objects[6], True), EntityY(r\Objects[6], True) + 0.2, EntityZ(r\Objects[6], True))
+									
+									TFormPoint(-160.0, 1974.0, 384.0, r\OBJ, 0) 
+									r\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 									r\NPC[0]\State = -1.0
 									SetNPCFrame(r\NPC[0], 357.0)
 									
@@ -9584,6 +9594,8 @@ Function Update008%()
 									DeleteSingleTextureEntryFromCache(Tex)
 									PlaySound_Strict(LoadTempSound("SFX\SCP\008\KillScientist0.ogg"), True)
 									TeleportToRoom(r)
+									ResetInput()
+									ResetSelectedStuff()
 									Exit
 								EndIf
 							Next
@@ -9592,6 +9604,7 @@ Function Update008%()
 				EndIf
 			EndIf
 		Else
+			ShouldPlay = 31
 			PrevI008Timer = I_008\Timer
 			I_008\Timer = Min(I_008\Timer + (fps\Factor[0] * 0.004), 100.0)
 			
@@ -9618,14 +9631,14 @@ Function Update008%()
 					PointEntity(Camera, PlayerRoom\NPC[0]\Collider)
 					
 					If PrevI008Timer < 94.7
-						PlayerRoom\NPC[0]\State3 = -1.0 : PlayerRoom\NPC[0]\IsDead = True
-						SetNPCFrame(PlayerRoom\NPC[0], 19.0)
+						SetNPCFrame(PlayerRoom\NPC[0], 1.0)
+						PlayerRoom\NPC[0]\IsDead = True
 						
 						PlaySound_Strict(LoadTempSound("SFX\SCP\008\KillScientist1.ogg"), True)
 						
 						msg\DeathMsg = Format(GetLocalString("death", "0081"), SubjectName)
 						
-						de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(PlayerRoom\NPC[0]\Collider), PlayerRoom\y + 544.0 * RoomScale + 0.01, EntityZ(PlayerRoom\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0, 0.8)
+						de.Decals = CreateDecal(DECAL_BLOOD_2, EntityX(PlayerRoom\NPC[0]\Collider), PlayerRoom\y + 1888.0 * RoomScale + 0.005, EntityZ(PlayerRoom\NPC[0]\Collider), 90.0, Rnd(360.0), 0.0, 0.8)
 						EntityParent(de\OBJ, PlayerRoom\OBJ)
 						
 						Kill()
@@ -9641,7 +9654,7 @@ Function Update008%()
 					
 					PositionEntity(me\Head, EntityX(PlayerRoom\NPC[0]\Collider, True), EntityY(PlayerRoom\NPC[0]\Collider, True) + 0.65, EntityZ(PlayerRoom\NPC[0]\Collider, True), True)
 					SinValue = Sin(MilliSec / 5.0)
-					RotateEntity(me\Head, (1.0 + SinValue) * 15.0, PlayerRoom\Angle - 180.0, 0.0, True)
+					RotateEntity(me\Head, (1.0 + SinValue) * 15.0, PlayerRoom\Angle, 0.0, True)
 					MoveEntity(me\Head, 0.0, 0.0, -0.4)
 					TurnEntity(me\Head, 80.0 + SinValue * 30.0, SinValue * 40.0, 0.0)
 				EndIf

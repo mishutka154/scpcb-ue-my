@@ -2405,10 +2405,16 @@ Function LoadGameQuick%(File$)
 	
 	If Sky <> 0 Then FreeEntity(Sky) : Sky = 0
 	For r.Rooms = Each Rooms
-		If r\RoomTemplate\RoomID = r_cont1_035
-			Update035Label(r\Objects[4])
-			Exit
-		EndIf
+		Select r\RoomTemplate\RoomID
+			Case r_cont1_035
+				;[Block]
+				Update035Label(r\Objects[4])
+				;[End Block]
+			Case r_cont2_008
+				;[Block]
+				If r\Objects[8] <> 0 Then FreeEntity(r\Objects[8]) : r\Objects[8] = 0
+				;[End Block]
+		End Select
 	Next
 	
 	; ~ Resetting some stuff (those get changed when going to some areas)
