@@ -2197,7 +2197,8 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[0] = d
 			
 			; ~ Observation room door
-			CreateDoor(r, r\x - 417.0 * RoomScale, r\y, r\z, 90.0, True, DEFAULT_DOOR, KEY_CARD_2)
+			d.Doors = CreateDoor(r, r\x - 417.0 * RoomScale, r\y, r\z, 90.0, True, DEFAULT_DOOR, KEY_CARD_2)
+			r\RoomDoors.Doors[1] = d
 			
 			r\RoomLevers.Levers[0] = CreateLever(r, r\x - 800.0 * RoomScale, r\y + 180.0 * RoomScale, r\z - 339.0 * RoomScale, 180.0, True)
 			

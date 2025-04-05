@@ -4465,6 +4465,7 @@ Function UpdateEvent_Cont1_895%(e.Events)
 				SetNPCFrame(e\room\NPC[0], 270.0)
 				
 				e\room\RoomDoors[0]\Open = True
+				e\room\RoomDoors[1]\Open = True
 			EndIf
 		EndIf
 		
