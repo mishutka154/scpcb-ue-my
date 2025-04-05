@@ -5987,6 +5987,12 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					n.NPCs = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
 					n\State = 3.0
 					
+					n.NPCs = CreateNPC(NPCType008_1, 0.0, -500.0, 0.0)
+					n\State = 3.0 : n\IdleTimer = 70 * -30.0
+					
+					n.NPCs = CreateNPC(NPCType008_1, 0.0, -500.0, 0.0)
+					n\State = 3.0 : n\IdleTimer = 70 * -30.0
+					
 					e\EventState2 = 2.0
 				EndIf
 				RotateEntity(e\room\Objects[1], CurveAngle(0.0, EntityPitch(e\room\Objects[1], True), 15.0), EntityYaw(e\room\Objects[1], True), 0.0, True)
