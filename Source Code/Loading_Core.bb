@@ -688,7 +688,7 @@ Const MaxCamModelIDAmount% = 2
 Const MaxCamTextureIDAmount% = 2
 
 Type SecurityCamInstance
-	Field CamModelName$[MaxCamModelIDAmount]
+	Field CamModelID%[MaxCamModelIDAmount]
 	Field CamTextureID%[MaxCamTextureIDAmount]
 	Field ScreenTex%
 	Field SelectedMonitor.SecurityCams
@@ -718,8 +718,12 @@ Function LoadSecurityCams%()
 		sc_I\CamTextureID[i] = LoadTexture_Strict("GFX\Map\Textures\camera(" + (i + 1) + ").png", 1, DeleteAllTextures)
 	Next
 	
-	sc_I\CamModelName[CAM_BASE_MODEL] = "CamBase"
-	sc_I\CamModelName[CAM_HEAD_MODEL] = "CamHead"
+	sc_I\CamModelID[CAM_BASE_MODEL] = LoadMesh_Strict("GFX\Map\Props\CamBase.b3d")
+	sc_I\CamModelID[CAM_HEAD_MODEL] = LoadMesh_Strict("GFX\Map\Props\CamHead.b3d")
+	
+	For i = 0 To MaxCamModelIDAmount - 1
+		HideEntity(sc_I\CamModelID[i])
+	Next
 	
 	sc_I\ScreenTex = CreateTextureUsingCacheSystem(512, 512, 1 + 256)
 End Function
@@ -727,6 +731,9 @@ End Function
 Function RemoveSecurityCamInstances%()
 	Local i%
 	
+	For i = 0 To MaxCamModelIDAmount - 1
+		FreeEntity(sc_I\CamModelID[i]) : sc_I\CamModelID[i] = 0
+	Next
 	sc_I\ScreenTex = 0
 	For i = CAM_HEAD_DEFAULT_TEXTURE To CAM_HEAD_RED_LIGHT_TEXTURE
 		sc_I\CamTextureID[i] = 0
