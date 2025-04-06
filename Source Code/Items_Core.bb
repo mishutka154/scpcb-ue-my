@@ -955,7 +955,7 @@ Function DropItem%(item.Items, PlayDropSound% = True)
 			Exit
 		EndIf
 	Next
-	me\SndVolume = Max(2.0, me\SndVolume)
+	If PlayDropSound Then me\SndVolume = Max(2.0, me\SndVolume)
 	
 	CatchErrors("Uncaught: DropItem()")
 End Function
