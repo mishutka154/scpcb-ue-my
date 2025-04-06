@@ -886,7 +886,7 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 				Exit
 			EndIf
 		Next
-		me\SndVolume = Max(2.0, me\SndVolume)
+		If PlayPickUpSound Then me\SndVolume = Max(2.0, me\SndVolume)
 	Else
 		CreateMsg(GetLocalString("msg", "cantcarry"))
 	EndIf
