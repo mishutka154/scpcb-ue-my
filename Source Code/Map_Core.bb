@@ -613,7 +613,13 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 			Select Temp1s
 				Case "screen"
 					;[Block]
-					RuntimeErrorEx("Not supported: " + rt\RoomID)
+					; ~ Skip coordinates
+					ReadFloat()
+					ReadFloat()
+					ReadFloat()
+					
+					Temp2s = ReadString(f)
+					RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + Temp2s))
 					;[End Block]
 				Case "save_screen"
 					;[Block]
