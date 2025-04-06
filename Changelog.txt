@@ -7,7 +7,7 @@
 - Reduce shadow radius for NPCs.
 - Level 3 Key Card in SCP-205's containment chamber is now more difficult to obtain.
 
-- Optimized game...
+- Optimized the game...
 
 [Rooms]
 - Added new textures for elevators.
@@ -15,6 +15,8 @@
 - Guard opens the observation room of SCP-895.
 
 - Revert «room2_gw» and «room3_gw» back to level 2 clearance.
+
+- Design improvements for some rooms...
 
 [NPCs]
 - More SCP-008-1 will spawn after interacting with SCP-008's event.
