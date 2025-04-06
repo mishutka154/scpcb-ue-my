@@ -13,6 +13,7 @@
 - Added new textures for elevators.
 - Reduced chance of escape from Pocket Dimension on first room.
 - Guard opens the observation room of SCP-895.
+- SCP-079 can appear on chatscreens.
 
 - Revert «room2_gw» and «room3_gw» back to level 2 clearance.
 

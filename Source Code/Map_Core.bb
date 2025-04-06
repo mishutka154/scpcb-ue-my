@@ -613,6 +613,10 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 			Select Temp1s
 				Case "screen"
 					;[Block]
+					RuntimeErrorEx("Not supported: " + rt\RoomID)
+					;[End Block]
+				Case "save_screen"
+					;[Block]
 					ts.TempScreens = New TempScreens
 					ts\RoomTemplate = rt
 					
@@ -620,8 +624,17 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					ts\y = ReadFloat(f) * RoomScale
 					ts\z = ReadFloat(f) * RoomScale
 					
-					Temp2s = ReadString(f)
-					ts\ImgPath = Temp2s
+					ReadString(f)
+					
+					ts\Pitch = ReadFloat(f)
+					ts\Yaw = ReadFloat(f)
+					ts\Roll = ReadFloat(f)
+					
+					ts\ScaleX = ReadFloat(f) * RoomScale
+					ts\ScaleY = ReadFloat(f) * RoomScale
+					ts\ScaleZ = ReadFloat(f) * RoomScale
+					
+					ts\ImgPath = ReadString(f)
 					;[End Block]
 				Case "waypoint"
 					;[Block]
@@ -4370,7 +4383,9 @@ Function UpdateSecurityCams%()
 							EndIf
 						ElseIf sc\CoffinEffect = 2
 							If sc\PlayerState = 0 Then sc\PlayerState = Rand(55000, 60000) - (20000 * SelectedDifficulty\AggressiveNPCs)
+							
 							Local Temp% = (MilliSec Mod sc\PlayerState)
+							
 							If Rand(500 - (480 * (Temp < 700))) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 							If Temp >= Rand(700)
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
@@ -4604,28 +4619,38 @@ Global SelectedScreen.Screens
 Type Screens
 	Field OBJ%
 	Field ImgPath$
-	Field Img%
+	Field Img%, Texture%
+	Field State#
 	Field room.Rooms
 End Type
 
 Type TempScreens
 	Field ImgPath$
 	Field x#, y#, z#
+	Field Pitch#, Yaw#, Roll#
+	Field ScaleX#, ScaleY#, ScaleZ#
 	Field RoomTemplate.RoomTemplates
 End Type
 
-Function CreateScreen.Screens(room.Rooms, x#, y#, z#, ImgPath$)
-	Local s.Screens
+Function CreateScreen.Screens(room.Rooms, x#, y#, z#, Pitch#, Yaw#, Roll#, ScaleX#, ScaleY#, ScaleZ#, ImgPath$)
+	Local s.Screens, s2.Screens
 	
 	s.Screens = New Screens
-	s\OBJ = CreatePivot()
-	EntityRadius(s\OBJ, 0.1)
-	EntityPickMode(s\OBJ, 1)
-	PositionEntity(s\OBJ, x, y, z)
+	s\OBJ = CopyEntity(misc_I\SaveScreen)
+	PositionEntity(s\OBJ, x, y, z, True)
+	RotateEntity(s\OBJ, Pitch, Yaw, Roll, True)
+	ScaleEntity(s\OBJ, ScaleX, ScaleY, ScaleZ, True)
+	EntityPickMode(s\OBJ, 2)
+	EntityFX(s\OBJ, 1)
 	If room <> Null Then EntityParent(s\OBJ, room\OBJ)
 	
-	s\ImgPath = ImgPath
+	s\ImgPath = "GFX\Map\Screens\" + ImgPath
 	s\room = room
+	For s2.Screens = Each Screens
+		If s2 <> s And s2\ImgPath = ImgPath Then s\Texture = s2\Texture
+	Next
+	If s\Texture = 0 Then s\Texture = LoadTexture_Strict(s\ImgPath, 1, DeleteAllTextures, True, 0.25)
+	EntityTexture(s\OBJ, s\Texture)
 	
 	Return(s)
 End Function
@@ -4637,9 +4662,20 @@ Function UpdateScreens%()
 	
 	For s.Screens = Each Screens
 		If s\room = PlayerRoom
+			; ~ TODO: Optimize somehow?
+			If s\State > 0.0
+				s\State = s\State - fps\Factor[0]
+				If Rand(20) < 3
+					EntityTexture(s\OBJ, s\Texture)
+				Else
+					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
+				EndIf
+			Else
+				EntityTexture(s\OBJ, s\Texture)
+			EndIf
 			If InteractObject(s\OBJ, 1.0, 2)
 				SelectedScreen = s
-				s\Img = ResizeImageEx(LoadImage_Strict("GFX\Map\Screens\" + s\ImgPath), MenuScale, MenuScale)
+				s\Img = ResizeImageEx(LoadImage_Strict(s\ImgPath), MenuScale, MenuScale)
 				PlaySound_Strict(ButtonSFX[0])
 				mo\MouseUp1 = False
 				Exit
@@ -4650,6 +4686,7 @@ End Function
 
 Function RemoveScreen%(s.Screens)
 	FreeEntity(s\OBJ) : s\OBJ = 0
+	s\Texture = 0
 	If s\Img <> 0 Then FreeImage(s\Img) : s\Img = 0
 	Delete(s)
 End Function

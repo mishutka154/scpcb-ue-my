@@ -1050,6 +1050,7 @@ Type MiscInstance
 	Field CupLiquid%
 	Field LightSpriteID[MaxLightSpriteIDAmount]
 	Field AdvancedLightSprite%
+	Field SaveScreen%
 End Type
 
 Global misc_I.MiscInstance
@@ -1080,6 +1081,9 @@ Function LoadMisc%()
 	misc_I\CupLiquid = LoadMesh_Strict("GFX\Items\cup_liquid.b3d")
 	HideEntity(misc_I\CupLiquid)
 	
+	misc_I\SaveScreen = LoadMesh_Strict("GFX\Map\Props\save_screen.b3d")
+	HideEntity(misc_I\SaveScreen)
+	
 	For i = LIGHT_SPRITE_DEFAULT To LIGHT_SPRITE_RED
 		misc_I\LightSpriteID[i] = LoadTexture_Strict("GFX\Particles\light(" + i + ").png", 1, DeleteAllTextures, False)
 	Next
@@ -1093,6 +1097,7 @@ Function RemoveMiscInstances%()
 		FreeEntity(misc_I\MTModelID[i]) : misc_I\MTModelID[i] = 0
 	Next
 	FreeEntity(misc_I\CupLiquid) : misc_I\CupLiquid = 0
+	FreeEntity(misc_I\SaveScreen) : misc_I\SaveScreen = 0
 	For i = LIGHT_SPRITE_DEFAULT To LIGHT_SPRITE_RED
 		misc_I\LightSpriteID[i] = 0
 	Next
