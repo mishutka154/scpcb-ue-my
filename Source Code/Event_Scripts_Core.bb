@@ -2854,7 +2854,7 @@ Function UpdateEvent_Room2_Storage%(e.Events)
 				TurnEntity(e\room\NPC[0]\Collider, 0.0, fps\Factor[0] * 0.1, 0.0)
 				If e\room\NPC[0]\Frame < 61.1
 					If e\room\RoomEmitters[0] = Null
-						e\room\RoomEmitters[0] = SetEmitter(Null, EntityX(e\room\NPC[0]\Collider), EntityY(e\room\NPC[0]\Collider) + 0.3, EntityZ(e\room\NPC[0]\Collider), 26)
+						e\room\RoomEmitters[0] = SetEmitter(Null, EntityX(e\room\NPC[0]\Collider), EntityY(e\room\NPC[0]\Collider) + 0.3, EntityZ(e\room\NPC[0]\Collider), 27)
 						EntityParent(e\room\RoomEmitters[0]\Owner, e\room\NPC[0]\Collider)
 					EndIf
 				EndIf
