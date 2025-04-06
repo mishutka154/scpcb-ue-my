@@ -40,6 +40,7 @@
 - Fixed SCP-1123 inner door panel being interactable through window.
 - Fixed SCP-205 woman not appearing after loading the game.
 - Fixed some animations for SCP-205's demons.
+- Fixed hazmat suit texture (on player's body) after loading the game.
 
 [Known issues]
 - Rooms can overlap and block the way.
