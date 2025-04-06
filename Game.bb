@@ -10,6 +10,7 @@
 ;----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Local InitErrorStr$ = ""
+
 Global ErrorMessageInitialized% = False
 
 If FileSize("BlitzToolbox.dll") = 0 Then InitErrorStr = InitErrorStr + "BlitzToolbox.dll" + Chr(13) + Chr(10)
