@@ -7582,9 +7582,9 @@ Function UpdateEvent_Room2_6_EZ_Guard%(e.Events)
 		Case 1.0
 			;[Block]
 			If e\room\NPC[0]\Sound = 0 Then e\room\NPC[0]\Sound = LoadSound_Strict("SFX\Character\Guard\SuicideGuard0.ogg")
-			If e\room\Dist < 6.0
+			If e\room\Dist < 6.5
 				e\room\NPC[0]\SoundCHN = LoopSoundEx(e\room\NPC[0]\Sound, e\room\NPC[0]\SoundCHN, Camera, e\room\NPC[0]\Collider, 12.0, 1.0, True)
-				If e\room\Dist < 4.0 And me\SndVolume > 1.0 Then e\EventState = 2.0
+				If e\room\Dist < 5.7 And me\SndVolume > 1.0 Then e\EventState = 2.0
 			EndIf
 			;[End Block]
 		Case 2.0
