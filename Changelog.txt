@@ -5,6 +5,7 @@
 
 - Updated SCP-005's achievement icon.
 - Reduce shadow radius for NPCs.
+- Level 3 Key Card in SCP-205's containment chamber is now more difficult to obtain.
 
 - Optimized game...
 
@@ -33,6 +34,8 @@
 - Fixed «Sound 860_2\Chase2.ogg not found» error.
 - Fixed some waypoints.
 - Fixed SCP-1123 inner door panel being interactable through window.
+- Fixed SCP-205 woman not appearing after loading the game.
+- Fixed some animations for SCP-205's demons.
 
 [Known issues]
 - Rooms can overlap and block the way.

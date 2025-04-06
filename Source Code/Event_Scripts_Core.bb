@@ -1585,24 +1585,24 @@ Function UpdateEvent_Cont1_205%(e.Events)
 			
 			Local Temp% = UpdateLever(e\room\RoomLevers[0]\OBJ, e\EventState > 7.0 Lor (e\room\RoomDoors[0]\OpenState > 0.0 And e\room\RoomDoors[0]\OpenState < 180.0))
 			
-			If e\EventState < 65.0
-				If e\EventState > 7.0 And RemoteDoorOn
-					RotateEntity(e\room\RoomLevers[0]\OBJ, CurveAngle(80.0 - (e\room\RoomDoors[0]\Open * 160.0), EntityPitch(e\room\RoomLevers[0]\OBJ), 10.0), EntityYaw(e\room\RoomLevers[0]\OBJ), 0.0)
-					If Rand(150 + (150 * e\room\RoomDoors[0]\Open)) = 1
-						If e\room\RoomDoors[0]\Open
-							PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
-						Else
-							PlaySoundEx(snd_I\DoorOpen079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
-						EndIf
-						OpenCloseDoor(e\room\RoomDoors[0])
-					EndIf
-				Else
-					If Temp
-						If (Not e\room\RoomDoors[0]\Open) Then OpenCloseDoor(e\room\RoomDoors[0])
+			If e\EventState > 7.0 And RemoteDoorOn
+				RotateEntity(e\room\RoomLevers[0]\OBJ, CurveAngle(80.0 - (e\room\RoomDoors[0]\Open * 160.0), EntityPitch(e\room\RoomLevers[0]\OBJ), 10.0), EntityYaw(e\room\RoomLevers[0]\OBJ), 0.0)
+				If Rand(150 + (150 * e\room\RoomDoors[0]\Open)) = 1
+					If e\room\RoomDoors[0]\Open
+						PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 					Else
-						If e\room\RoomDoors[0]\Open Then OpenCloseDoor(e\room\RoomDoors[0])
+						PlaySoundEx(snd_I\DoorOpen079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 					EndIf
+					OpenCloseDoor(e\room\RoomDoors[0])
 				EndIf
+			Else
+				If Temp
+					If (Not e\room\RoomDoors[0]\Open) Then OpenCloseDoor(e\room\RoomDoors[0])
+				Else
+					If e\room\RoomDoors[0]\Open Then OpenCloseDoor(e\room\RoomDoors[0])
+				EndIf
+			EndIf
+			If e\EventState < 65.0
 				If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[1], True), EntityZ(me\Collider), EntityZ(e\room\Objects[1], True)) < 4.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 					PlaySound_Strict(LoadTempSound("SFX\SCP\205\Enter.ogg"))
 					
@@ -1616,10 +1616,6 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					SetAnimTime(e\room\Objects[2], 492.0)
 					SetAnimTime(e\room\Objects[3], 434.0)
 					SetAnimTime(e\room\Objects[4], 434.0)
-					
-					If RemoteDoorOn
-						If (Not e\room\RoomDoors[0]\Open) Then OpenCloseDoor(e\room\RoomDoors[0])
-					EndIf
 				EndIf
 				
 				e\EventState2 = e\EventState2 + fps\Factor[0]
@@ -1632,8 +1628,8 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					For i = 2 To 4
 						If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
 					Next
-					; ~ Sitting
 					If EntityHidden(e\room\Objects[5]) Then ShowEntity(e\room\Objects[5])
+					; ~ Sitting
 					AnimateEx(e\room\Objects[5], AnimTime(e\room\Objects[5]), 526.0, 530.0, 0.2)
 					If e\EventState2 > 70.0 * 20.0 Then e\EventState = e\EventState + 1.0
 					;[End Block]
@@ -1643,8 +1639,8 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					For i = 2 To 4
 						If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
 					Next
-					; ~ Laying down
 					If EntityHidden(e\room\Objects[5]) Then ShowEntity(e\room\Objects[5])
+					; ~ Laying down
 					AnimateEx(e\room\Objects[5], AnimTime(e\room\Objects[5]), 377.0, 525.0, 0.2)
 					If e\EventState2 > 70.0 * 30.0 Then e\EventState = e\EventState + 1.0
 					;[End Block]
@@ -1654,8 +1650,8 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					For i = 2 To 4
 						If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
 					Next
-					; ~ Standing
 					If EntityHidden(e\room\Objects[5]) Then ShowEntity(e\room\Objects[5])
+					; ~ Standing
 					AnimateEx(e\room\Objects[5], AnimTime(e\room\Objects[5]), 228.0, 376.0, 0.2)
 					If e\EventState2 > 70.0 * 40.0 
 						PlaySoundEx(LoadTempSound("SFX\SCP\205\Horror.ogg"), Camera, e\room\Objects[5], 10.0, 0.3)
@@ -1688,7 +1684,7 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					Next
 					; ~ Idle
 					AnimateEx(e\room\Objects[3], AnimTime(e\room\Objects[3]), 2.0, 200.0, 0.2)
-					AnimateEx(e\room\Objects[4], AnimTime(e\room\Objects[4]), 4.0, 125.0, 0.2)
+					AnimateEx(e\room\Objects[4], AnimTime(e\room\Objects[4]), 2.0, 122.0, 0.2)
 					
 					If e\EventState2 > 70.0 * 80.0
 						PlaySound_Strict(LoadTempSound("SFX\SCP\205\Horror.ogg"))
@@ -1701,11 +1697,12 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					For i = 2 To 4
 						If EntityHidden(e\room\Objects[i]) Then ShowEntity(e\room\Objects[i])
 					Next
+					If EntityHidden(e\room\Objects[5]) Then ShowEntity(e\room\Objects[5])
 					
 					; ~ Idle
 					AnimateEx(e\room\Objects[2], AnimTime(e\room\Objects[2]), 2.0, 226.0, 0.2)
 					AnimateEx(e\room\Objects[3], AnimTime(e\room\Objects[3]), 2.0, 200.0, 0.2)
-					AnimateEx(e\room\Objects[4], AnimTime(e\room\Objects[4]), 4.0, 125.0, 0.2)
+					AnimateEx(e\room\Objects[4], AnimTime(e\room\Objects[4]), 2.0, 122.0, 0.2)
 					
 					If e\EventState2 > 70.0 * 85.0 Then e\EventState = e\EventState + 1.0
 					;[End Block]
@@ -1715,6 +1712,7 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					For i = 2 To 4
 						If EntityHidden(e\room\Objects[i]) Then ShowEntity(e\room\Objects[i])
 					Next
+					If EntityHidden(e\room\Objects[5]) Then ShowEntity(e\room\Objects[5])
 					If AnimTime(e\room\Objects[5]) <> 227.0 Then SetAnimTime(e\room\Objects[5], 227.0)
 					
 					AnimateEx(e\room\Objects[2], AnimTime(e\room\Objects[2]), 2.0, 491.0, 0.05)
