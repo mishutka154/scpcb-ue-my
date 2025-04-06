@@ -2736,14 +2736,20 @@ Function UpdateEvent_Room2_Storage%(e.Events)
 					;[End Block]
 				Case 30.0
 					;[Block]
-					i = Rand(0, MaxItemAmount - 1)
-					If Inventory(i) <> Null
-						RemoveWearableItems(Inventory(i))
-						RemoveItem(Inventory(i))
+					k = False
+					For i = 0 To MaxItemAmount - 1
+						If Inventory(i) <> Null
+							RemoveWearableItems(Inventory(i))
+							RemoveItem(Inventory(i))
+							k = True
+							Exit
+						EndIf
+					Next
+					If k
+						it.Items = CreateItem("Strange Note", it_paper, 0.0, 0.0, 0.0)
+						EntityType(it\Collider, HIT_ITEM)
+						PickItem(it, False)
 					EndIf
-					it.Items = CreateItem("Strange Note", it_paper, 0.0, 0.0, 0.0)
-					EntityType(it\Collider, HIT_ITEM)
-					PickItem(it, False)
 					;[End Block]
 				Case 33.0, 34.0, 35.0
 					;[Block]

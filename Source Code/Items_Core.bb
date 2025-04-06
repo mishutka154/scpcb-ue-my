@@ -730,7 +730,13 @@ Function UpdateItems%()
 					EndIf
 					;[End Block]
 			End Select
-			If mo\MouseHit1 Then PickItem(ClosestItem)
+			If mo\MouseHit1
+				If ItemAmount < MaxItemAmount
+					PickItem(ClosestItem)
+				Else
+					CreateMsg(GetLocalString("msg", "cantcarry"))
+				EndIf
+			EndIf
 		EndIf
 	EndIf
 End Function
@@ -742,154 +748,149 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 	
 	Local n%, z%
 	Local itt.ItemTemplates
+	Local CanPickItem% = 1
 	
-	If ItemAmount < MaxItemAmount
-		Local CanPickItem% = 1
-		
-		For n = 0 To MaxItemAmount - 1
-			If Inventory(n) = Null
-				Select item\ItemTemplate\ID
-					Case it_scp1123
-						;[Block]
-						Use1123()
-						If I_714\Using <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then Return
-						;[End Block]
-					Case it_crystal005
-						;[Block]
-						If I_409\Timer = 0.0 And (Not I_427\Using)
-							me\BlurTimer = Max(1000.0, me\BlurTimer)
-							I_409\Timer = 0.001
-						EndIf
-						GiveAchievement("005")
-						;[End Block]
-					Case it_killbat
-						;[Block]
-						me\LightFlash = 1.0
-						PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
-						msg\DeathMsg = Format(GetLocalString("death", "killbat"), SubjectName)
-						Kill()
-						;[End Block]
-					Case it_scp148
-						;[Block]
-						GiveAchievement("148")
-						;[End Block]
-					Case it_keyomni
-						;[Block]
-						GiveAchievement("omni")
-						;[End Block]
-					Case it_scp005, it_coarse005
-						;[Block]
-						GiveAchievement("005")
-						;[End Block]
-					Case it_veryfinevest
-						;[Block]
-						CreateMsg(GetLocalString("msg", "vfvest"))
-						Return
-						;[End Block]
-					Case it_corrvest
-						;[Block]
-						CreateMsg(GetLocalString("msg", "corrvest"))
-						Return
-						;[End Block]
-					Case it_firstaid, it_finefirstaid, it_veryfinefirstaid, it_firstaid2
-						;[Block]
-						item\State = 0.0
-						;[End Block]
-					Case it_navulti
-						;[Block]
-						GiveAchievement("snav")
-						;[End Block]
-					Case it_vest, it_finevest
-						;[Block]
-						For z = 0 To MaxItemAmount - 1
-							If Inventory(z) <> Null
-								If Inventory(z)\ItemTemplate\ID = it_vest Lor Inventory(z)\ItemTemplate\ID = it_finevest
-									CanPickItem = 0
-								ElseIf Inventory(z)\ItemTemplate\ID = it_hazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_finehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_veryfinehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_hazmatsuit148
-									CanPickItem = 2
-								EndIf
+	For n = 0 To MaxItemAmount - 1
+		If Inventory(n) = Null
+			Select item\ItemTemplate\ID
+				Case it_scp1123
+					;[Block]
+					Use1123()
+					If I_714\Using <> 2 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then Return
+					;[End Block]
+				Case it_crystal005
+					;[Block]
+					If I_409\Timer = 0.0 And (Not I_427\Using)
+						me\BlurTimer = Max(1000.0, me\BlurTimer)
+						I_409\Timer = 0.001
+					EndIf
+					GiveAchievement("005")
+					;[End Block]
+				Case it_killbat
+					;[Block]
+					me\LightFlash = 1.0
+					PlaySound_Strict(snd_I\LightSFX[Rand(0, 2)])
+					msg\DeathMsg = Format(GetLocalString("death", "killbat"), SubjectName)
+					Kill()
+					;[End Block]
+				Case it_scp148
+					;[Block]
+					GiveAchievement("148")
+					;[End Block]
+				Case it_keyomni
+					;[Block]
+					GiveAchievement("omni")
+					;[End Block]
+				Case it_scp005, it_coarse005
+					;[Block]
+					GiveAchievement("005")
+					;[End Block]
+				Case it_veryfinevest
+					;[Block]
+					CreateMsg(GetLocalString("msg", "vfvest"))
+					Return
+					;[End Block]
+				Case it_corrvest
+					;[Block]
+					CreateMsg(GetLocalString("msg", "corrvest"))
+					Return
+					;[End Block]
+				Case it_firstaid, it_finefirstaid, it_veryfinefirstaid, it_firstaid2
+					;[Block]
+					item\State = 0.0
+					;[End Block]
+				Case it_navulti
+					;[Block]
+					GiveAchievement("snav")
+					;[End Block]
+				Case it_vest, it_finevest
+					;[Block]
+					For z = 0 To MaxItemAmount - 1
+						If Inventory(z) <> Null
+							If Inventory(z)\ItemTemplate\ID = it_vest Lor Inventory(z)\ItemTemplate\ID = it_finevest
+								CanPickItem = 0
+							ElseIf Inventory(z)\ItemTemplate\ID = it_hazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_finehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_veryfinehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_hazmatsuit148
+								CanPickItem = 2
 							EndIf
-						Next
-						
-						If CanPickItem = 0
-							CreateMsg(GetLocalString("msg", "twovest"))
-							Return
-						ElseIf CanPickItem = 2
-							CreateMsg(GetLocalString("msg", "vestsuit"))
-							Return
-						Else
-							SelectedItem = item
 						EndIf
-						;[End Block]
-					Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
-						;[Block]
-						For z = 0 To MaxItemAmount - 1
-							If Inventory(z) <> Null
-								If Inventory(z)\ItemTemplate\ID = it_hazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_finehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_veryfinehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_hazmatsuit148
-									CanPickItem = 0
-								ElseIf Inventory(z)\ItemTemplate\ID = it_vest Lor Inventory(z)\ItemTemplate\ID = it_finevest
-									CanPickItem = 2
-								EndIf
-							EndIf
-						Next
-						
-						If CanPickItem = 0
-							CreateMsg(GetLocalString("msg", "twosuit"))
-							Return
-						ElseIf CanPickItem = 2
-							CreateMsg(GetLocalString("msg", "vestsuit"))
-							Return
-						Else
-							SelectedItem = item
-						EndIf
-						;[End Block]
-					Case it_e_readerulti
-						;[Block]
-						For itt.ItemTemplates = Each ItemTemplates
-							If itt\ID = it_paper
-								Local i% = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor itt\Name = "Note from Maynard" Lor itt\Name = "SCP-085"))
-								Local k%
-								
-								If i
-									For k = 1 To PossibleEReaderPageAmount - 1
-										If item\EReaderPage[k] = Null
-											item\EReaderPage[k] = itt
-											item\EReaderPageAmount = PossibleEReaderPageAmount - 1
-											itt\Found = True
-											Exit
-										EndIf
-									Next
-								EndIf
-							EndIf
-						Next
-						;[End Block]
-					Case it_scp2022
-						;[Block]
-						If item\State = 0.0 Then item\State = Rand(2, 8)
-						;[End Block]
-				End Select
-				
-				If item\ItemTemplate\SoundID <> 66 And PlayPickUpSound Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
-				item\Picked = True
-				item\Dropped = -1
-				
-				item\ItemTemplate\Found = True
-				If item\InvSlots > 0
-					For z = 0 To item\InvSlots - 1
-						If item\SecondInv[z] <> Null Then item\SecondInv[z]\ItemTemplate\Found = True
 					Next
-				EndIf
-				ItemAmount = ItemAmount + 1
-				
-				Inventory(n) = item
-				HideEntity(item\Collider)
-				Exit
+					
+					If CanPickItem = 0
+						CreateMsg(GetLocalString("msg", "twovest"))
+						Return
+					ElseIf CanPickItem = 2
+						CreateMsg(GetLocalString("msg", "vestsuit"))
+						Return
+					Else
+						SelectedItem = item
+					EndIf
+					;[End Block]
+				Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
+					;[Block]
+					For z = 0 To MaxItemAmount - 1
+						If Inventory(z) <> Null
+							If Inventory(z)\ItemTemplate\ID = it_hazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_finehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_veryfinehazmatsuit Lor Inventory(z)\ItemTemplate\ID = it_hazmatsuit148
+								CanPickItem = 0
+							ElseIf Inventory(z)\ItemTemplate\ID = it_vest Lor Inventory(z)\ItemTemplate\ID = it_finevest
+								CanPickItem = 2
+							EndIf
+						EndIf
+					Next
+					
+					If CanPickItem = 0
+						CreateMsg(GetLocalString("msg", "twosuit"))
+						Return
+					ElseIf CanPickItem = 2
+						CreateMsg(GetLocalString("msg", "vestsuit"))
+						Return
+					Else
+						SelectedItem = item
+					EndIf
+					;[End Block]
+				Case it_e_readerulti
+					;[Block]
+					For itt.ItemTemplates = Each ItemTemplates
+						If itt\ID = it_paper
+							Local i% = (Not (itt\Name = "Leaflet" Lor itt\Name = "Drawing" Lor itt\Name = "Blank Paper" Lor itt\Name = "Note from Maynard" Lor itt\Name = "SCP-085"))
+							Local k%
+							
+							If i
+								For k = 1 To PossibleEReaderPageAmount - 1
+									If item\EReaderPage[k] = Null
+										item\EReaderPage[k] = itt
+										item\EReaderPageAmount = PossibleEReaderPageAmount - 1
+										itt\Found = True
+										Exit
+									EndIf
+								Next
+							EndIf
+						EndIf
+					Next
+					;[End Block]
+				Case it_scp2022
+					;[Block]
+					If item\State = 0.0 Then item\State = Rand(2, 8)
+					;[End Block]
+			End Select
+			
+			If item\ItemTemplate\SoundID <> 66 And PlayPickUpSound Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+			item\Picked = True
+			item\Dropped = -1
+			
+			item\ItemTemplate\Found = True
+			If item\InvSlots > 0
+				For z = 0 To item\InvSlots - 1
+					If item\SecondInv[z] <> Null Then item\SecondInv[z]\ItemTemplate\Found = True
+				Next
 			EndIf
-		Next
-		If PlayPickUpSound Then me\SndVolume = Max(2.0, me\SndVolume)
-	Else
-		CreateMsg(GetLocalString("msg", "cantcarry"))
-	EndIf
+			ItemAmount = ItemAmount + 1
+			
+			Inventory(n) = item
+			HideEntity(item\Collider)
+			Exit
+		EndIf
+	Next
+	If PlayPickUpSound Then me\SndVolume = Max(2.0, me\SndVolume)
 	
 	CatchErrors("Uncaught: PickItem()")
 End Function
