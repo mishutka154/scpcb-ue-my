@@ -2645,7 +2645,7 @@ Function LoadEntities%()
 	LoadMissingTexture()
 	
 	AmbientLightRoomTex = CreateTextureUsingCacheSystem(1, 1, 1 + 256)
-	TextureBlend(AmbientLightRoomTex, 2)
+	TextureBlend(AmbientLightRoomTex, 5 - (3 * opt\NewAtmosphere))
 	SetBuffer(TextureBuffer(AmbientLightRoomTex))
 	ClsColor(0, 0, 0)
 	Cls()

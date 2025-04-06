@@ -1107,7 +1107,7 @@ Function UpdateForest%()
 	Next
 	
 	If Rand(10) = 1 Then SetEmitter(Null, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 24)
-
+	
 	If forest_event\room\NPC[0] = Null And forest_event\EventState4 = 0.0 Then forest_event\room\NPC[0] = CreateNPC(NPCType860_2, 0.0, 0.0, 0.0)
 	me\CurrCameraZoom = Max(me\CurrCameraZoom, (Sin(Float(MilliSec) / 20.0) + 1.0) * 5.0)
 	If forest_event\EventState4 = 1.0

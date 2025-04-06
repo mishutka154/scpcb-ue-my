@@ -6,6 +6,7 @@
 - Updated SCP-005's achievement icon.
 - Reduce shadow radius for NPCs.
 - Level 3 Key Card in SCP-205's containment chamber is now more difficult to obtain.
+- Return back the «Atmosphere» option.
 
 - Optimized the game...
 

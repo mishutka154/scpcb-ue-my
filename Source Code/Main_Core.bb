@@ -7884,6 +7884,10 @@ Function UpdateMenu%()
 							EndIf
 						EndIf
 						
+						y = y + (30 * MenuScale)
+						
+						opt\NewAtmosphere = UpdateMenuTick(x, y, opt\NewAtmosphere, True)
+						
 						y = y + (40 * MenuScale)
 						
 						opt\ScreenGamma = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\ScreenGamma * 50.0, 1) / 50.0
@@ -7981,10 +7985,6 @@ Function UpdateMenu%()
 						For sc.SecurityCams = Each SecurityCams
 							If sc\Screen Then sc\RenderInterval = opt\SecurityCamRenderIntervalLevel
 						Next
-						
-						y = y + (45 * MenuScale)
-						
-						opt\LightingQuality = UpdateMenuSlider3(x, y, 100 * MenuScale, opt\LightingQuality, 7, GetLocalString("options", "slider.low"), GetLocalString("options", "slider.medium"), GetLocalString("options", "slider.high"))
 						;[End Block]
 					Case MenuTab_Options_Audio
 						;[Block]
@@ -8548,8 +8548,21 @@ Function RenderMenu%()
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "shadows"))
 						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_BlobShadows)
 						
+						y = y + (30 * MenuScale)
+						
+						Color(100, 100, 100)
+						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "atmo"))
+						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Atmosphere)
+						If opt\NewAtmosphere
+							TempStr = GetLocalString("options", "atmo.new")
+						Else
+							TempStr = GetLocalString("options", "atmo.old")
+						EndIf
+						TextEx(x + (305 * MenuScale), y + (5 * MenuScale), TempStr)
+						
 						y = y + (40 * MenuScale)
 						
+						Color(255, 255, 255)
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "gamma"))
 						If (MouseOn(x + (270 * MenuScale), y, MouseOnCoord * 5.7, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 1 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_ScreenGamma, opt\ScreenGamma)
 						
@@ -8581,11 +8594,6 @@ Function RenderMenu%()
 						Color(255, 255, 255)
 						TextEx(x, y, GetLocalString("options", "screnderinterval"))
 						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 6 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_SecurityCamRenderInterval)
-						
-						y = y + (45 * MenuScale)
-						
-						TextEx(x, y, GetLocalString("options", "lightingquality"))
-						If (MouseOn(x + (270 * MenuScale), y - (8 * MenuScale), MouseOnCoord * 5.7, 18 * MenuScale) And OnSliderID = 0) Lor OnSliderID = 7 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_LightingQuality)
 						
 						RenderMenuButtons()
 						RenderMenuTicks()

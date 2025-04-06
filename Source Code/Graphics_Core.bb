@@ -98,7 +98,7 @@ Function ScaleImageEx%(SrcImage%, ScaleX#, ScaleY#, Frames% = 1)
 	; ~ Calculate the width and height of the dest image, or the scale
 	Local DestWidth% = Floor(SrcWidth * ScaleX)
 	Local DestHeight% = Floor(SrcHeight * ScaleY)
-
+	
 	; ~ If the image does not need to be scaled, just copy the image and exit the function
 	If SrcWidth = DestWidth And SrcHeight = DestHeight Then Return(SrcImage)
 	

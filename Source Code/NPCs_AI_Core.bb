@@ -1942,7 +1942,7 @@ Function UpdateNPCType106%(n.NPCs)
 					If EntityHidden(n\OBJ2) Then ShowEntity(n\OBJ2)
 					EntityAlpha(n\OBJ2, Clamp(Sqr(Dist) - fog\FarDist * LightVolume * 0.5, 0.0, 1.0))
 				EndIf
-					
+				
 				If n\State3 =< 0.0
 					If (Not EntityInView(n\OBJ, Camera)) And Dist > 25.0
 						PositionEntity(n\Collider, 0.0, -500.0, 0.0)
@@ -3779,9 +3779,9 @@ Function UpdateNPCType1499_1%(n.NPCs)
 	; ~ n\State: Current State of the NPC
 	
 	; ~ n\State2: A second state variable (dependend on the current NPC's n\State)
-
+	
 	; ~ n\State3: Determines if the NPC will always be aggressive against the player
-
+	
 	; ~ n\PrevState: Determines the type / behaviour of the NPC
 	; ~ 0: Normal / Citizen
 	; ~ 1: Stair guard / Guard next to king

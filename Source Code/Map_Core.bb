@@ -420,7 +420,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					EndIf
 				EndIf
 				If Tex[j] <> 0
-					If Temp1i = 1 Then TextureBlend(Tex[j], 5)
+					If Temp1i = 1 Then TextureBlend(Tex[j], 2 + (3 * opt\NewAtmosphere))
 					If Instr(Lower(Temp1s), "_lm") <> 0 Then TextureBlend(Tex[j], 3)
 					IsAlpha = 2
 					If Temp1i = 3 Then IsAlpha = 1
@@ -4133,7 +4133,7 @@ Function UpdateDecals%()
 			
 			If de\Size <= 0.0 Lor de\Alpha <= 0.0 Lor de\LifeTime = 5.0 Then RemoveDecal(de)
 		ElseIf (Not EntityHidden(de\OBJ))
-			 HideEntity(de\OBJ)
+			HideEntity(de\OBJ)
 		EndIf
 	Next
 End Function

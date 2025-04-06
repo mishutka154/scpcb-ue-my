@@ -547,6 +547,10 @@ Function UpdateMainMenu%()
 						
 						opt\BlobShadows = UpdateMenuTick(x, y, opt\BlobShadows)
 						
+						y = y + (30 * MenuScale)
+						
+						opt\NewAtmosphere = UpdateMenuTick(x, y, opt\NewAtmosphere)
+						
 						y = y + (40 * MenuScale)
 						
 						opt\ScreenGamma = UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\ScreenGamma * 50.0, 1) / 50.0
@@ -1469,7 +1473,7 @@ Function RenderMainMenu%()
 			Select mm\MainMenuTab
 				Case MainMenuTab_Options_Graphics
 					;[Block]
-					Height = 485 * MenuScale
+					Height = 510 * MenuScale
 					RenderFrame(x - (20 * MenuScale), y, Width, Height)
 					
 					y = y + (20 * MenuScale)
@@ -1498,9 +1502,18 @@ Function RenderMainMenu%()
 					
 					y = y + (30 * MenuScale)
 					
-					Color(255, 255, 255)
 					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "shadows"))
 					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_BlobShadows)
+					
+					y = y + (30 * MenuScale)
+					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "atmo"))
+					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_Atmosphere)
+					If opt\NewAtmosphere
+						TempStr = GetLocalString("options", "atmo.new")
+					Else
+						TempStr = GetLocalString("options", "atmo.old")
+					EndIf
+					TextEx(x + (325 * MenuScale), y + (5 * MenuScale), TempStr)
 					
 					y = y + (40 * MenuScale)
 					
@@ -2952,51 +2965,52 @@ Const Tooltip_VSync% = 1
 Const Tooltip_AntiAliasing% = 2
 Const Tooltip_RoomLights% = 3
 Const Tooltip_BlobShadows% = 4
-Const Tooltip_ScreenGamma% = 5
-Const Tooltip_TextureLODBias% = 6
-Const Tooltip_ParticleAmount% = 7
-Const Tooltip_FOV% = 8
-Const Tooltip_AnisotropicFiltering% = 9
-Const Tooltip_SecurityCamRenderInterval% = 10
-Const Tooltip_LightingQuality% = 11
+Const Tooltip_Atmosphere% = 5
+Const Tooltip_ScreenGamma% = 6
+Const Tooltip_TextureLODBias% = 7
+Const Tooltip_ParticleAmount% = 8
+Const Tooltip_FOV% = 9
+Const Tooltip_AnisotropicFiltering% = 10
+Const Tooltip_SecurityCamRenderInterval% = 11
+Const Tooltip_LightingQuality% = 12
 ;[End Block]
 
 ; ~ Audio Tooltips Constants
 ;[Block]
-Const Tooltip_MasterVolume% = 12
-Const Tooltip_MusicVolume% = 13
-Const Tooltip_SoundVolume% = 14
-Const Tooltip_VoiceVolume% = 15
-Const Tooltip_SoundAutoRelease% = 16
-Const Tooltip_UserTracksMode% = 17
-Const Tooltip_UserTrackScan% = 18
-Const Tooltip_Subtitles% = 19
-Const Tooltip_SubtitlesColor% = 20
+Const Tooltip_MasterVolume% = 13
+Const Tooltip_MusicVolume% = 14
+Const Tooltip_SoundVolume% = 15
+Const Tooltip_VoiceVolume% = 16
+Const Tooltip_SoundAutoRelease% = 17
+Const Tooltip_UserTracksMode% = 18
+Const Tooltip_UserTrackScan% = 19
+Const Tooltip_Subtitles% = 20
+Const Tooltip_SubtitlesColor% = 21
 ;[End Block]
 
 ; ~ Controls Tooltips Constants
 ;[Block]
-Const Tooltip_MouseSensitivity% = 21
-Const Tooltip_MouseSmoothing% = 22
-Const Tooltip_MouseInvertX% = 23
-Const Tooltip_MouseInvertY% = 24
-Const Tooltip_ControlConfiguration% = 25
+Const Tooltip_MouseSensitivity% = 22
+Const Tooltip_MouseSmoothing% = 23
+Const Tooltip_MouseInvertX% = 24
+Const Tooltip_MouseInvertY% = 25
+Const Tooltip_ControlConfiguration% = 26
 ;[End Block]
 
 ; ~ Advanced Tooltips Constants
 ;[Block]
-Const Tooltip_HUD% = 26
-Const Tooltip_Console% = 27
-Const Tooltip_ConsoleOnError% = 28
-Const Tooltip_AchievementPopups% = 29
-Const Tooltip_FPS% = 30
-Const Tooltip_FrameLimit% = 31
-Const Tooltip_AutoSave% = 32
-Const Tooltip_SmoothBars% = 33
-Const Tooltip_Vignette% = 34
-Const Tooltip_StartupVideos% = 35
-Const Tooltip_Launcher% = 36
-Const Tooltip_ResetOptions% = 37
+Const Tooltip_HUD% = 27
+Const Tooltip_Console% = 28
+Const Tooltip_ConsoleOnError% = 29
+Const Tooltip_AchievementPopups% = 30
+Const Tooltip_FPS% = 31
+Const Tooltip_FrameLimit% = 32
+Const Tooltip_AutoSave% = 33
+Const Tooltip_SmoothBars% = 34
+Const Tooltip_Vignette% = 35
+Const Tooltip_StartupVideos% = 36
+Const Tooltip_Launcher% = 37
+Const Tooltip_ResetOptions% = 38
 ;[End Block]
 
 Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
@@ -3035,6 +3049,12 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_BlobShadows
 			;[Block]
 			Txt = GetLocalString("tooltip", "shadows")
+			;[End Block]
+		Case Tooltip_Atmosphere
+			;[Block]
+			Txt = GetLocalString("tooltip", "atmo")
+			R = 255
+			Txt2 = GetLocalString("tooltip", "cantchange")
 			;[End Block]
 		Case Tooltip_ScreenGamma
 			;[Block]

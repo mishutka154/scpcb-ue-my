@@ -56,10 +56,10 @@ End Function
 
 Function AngleDist#(a0#, a1#)
 	Local b# = a0 - a1
-
+	
 	If b < -180.0 Then Return(b + 360.0)
 	If b > 180.0 Then Return(b - 360.0)
-
+	
 	Return(b)
 End Function
 
