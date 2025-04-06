@@ -614,9 +614,9 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 				Case "screen"
 					;[Block]
 					; ~ Skip coordinates
-					ReadFloat()
-					ReadFloat()
-					ReadFloat()
+					ReadFloat(f)
+					ReadFloat(f)
+					ReadFloat(f)
 					
 					Temp2s = ReadString(f)
 					RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + Temp2s))
