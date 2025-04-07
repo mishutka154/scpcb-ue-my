@@ -4678,6 +4678,10 @@ Function UpdateScreens%()
 				EndIf
 			Else
 				EntityTexture(s\OBJ, s\Texture)
+				If Rand(5000) = 1
+					If EntityInView(s\OBJ, Camera) Then PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
+					s\State = 70.0 * Rnd(0.7, 1.4)
+				EndIf
 			EndIf
 			If InteractObject(s\OBJ, 1.0, 2)
 				SelectedScreen = s

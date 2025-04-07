@@ -360,16 +360,8 @@ Function UpdateGame%()
 					
 					If Rand(50000) = 3
 						me\LightBlink = Rnd(1.0, 2.0)
-						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 7) + ".ogg"), True)
-						
-						Local s.Screens
-						
-						For s.Screens = Each Screens
-							If s\room = PlayerRoom
-								s\State = 70.0
-								Exit
-							EndIf
-						Next
+						i = Rand(0, 7) 
+						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + i + ".ogg"), (i > 2))
 					EndIf
 				EndIf
 			EndIf
