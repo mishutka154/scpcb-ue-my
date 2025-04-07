@@ -1609,6 +1609,8 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[Block]
 			If n_I\Curr049 <> Null
 				n_I\Curr049\Idle = 1
+				PositionEntity(n_I\Curr049\Collider, 0.0, -500.0, 0.0)
+				ResetEntity(n_I\Curr049\Collider)
 				HideEntity(n_I\Curr049\Collider)
 				HideEntity(n_I\Curr049\OBJ)
 			EndIf
@@ -1740,6 +1742,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 				If n\NPCType = NPCType966
 					n\State = -1.0
 					PositionEntity(n\Collider, 0.0, -500.0, 0.0)
+					ResetEntity(n\Collider)
 					HideEntity(n\Collider)
 					HideEntity(n\OBJ)
 				EndIf
