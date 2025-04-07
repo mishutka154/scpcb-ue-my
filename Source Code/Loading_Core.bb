@@ -3271,6 +3271,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	
 	Delete(opttimer) : opttimer = Null
 	
+	DifficultyDMGMult = 0.0
 	UsedConsole = False
 	Delete(chs) : chs = Null
 	WireFrameState = 0
@@ -3521,6 +3522,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	FreeTexture(MissingTexture) : MissingTexture = 0
 	
 	Mesh_MinX = 0.0 : Mesh_MinY = 0.0 : Mesh_MinZ = 0.0
+	Mesh_MidX = 0.0 : Mesh_MidY = 0.0 : Mesh_MidZ = 0.0
 	Mesh_MaxX = 0.0 : Mesh_MaxY = 0.0 : Mesh_MaxZ = 0.0
 	Mesh_MagX = 0.0 : Mesh_MagY = 0.0 : Mesh_MagZ = 0.0
 	
