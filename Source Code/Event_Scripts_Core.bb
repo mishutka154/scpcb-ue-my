@@ -9390,6 +9390,7 @@ Function UpdateEvent_682_Roar%(e.Events)
 			EndIf
 		EndIf
 		If e\EventState < 70.0 Then RemoveEvent(e)
+	EndIf
 End Function
 
 Function UpdateEvent_1048_A%(e.Events)
