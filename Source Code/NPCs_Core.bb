@@ -1738,6 +1738,7 @@ Function ChangeNPCTextureID%(n.NPCs, TextureID%)
 	
 	EntityTexture(n\OBJ, Tex)
 	If n\NPCType = NPCType173 Then EntityTexture(n\OBJ2, Tex)
+	DeleteSingleTextureEntryFromCache(Tex)
 End Function
 
 Function ChangePlayerBodyTexture%(ID%)
