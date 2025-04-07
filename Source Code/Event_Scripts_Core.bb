@@ -9387,12 +9387,9 @@ Function UpdateEvent_682_Roar%(e.Events)
 				If e\EventState + fps\Factor[0] >= 70.0 * 17.0 Then e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\682\Roar.ogg"))
 				If e\EventState > 70.0 * 14.0 Then me\BigCameraShake = 0.5
 				If e\EventState > 70.0 * 6.0 And e\EventState < 70.0 * 9.5 Then me\BigCameraShake = 2.0
-				If e\EventState < 70.0 Then RemoveEvent(e)
 			EndIf
-		Else
-			If e\EventState < 70.0 Then RemoveEvent(e)
 		EndIf
-	EndIf
+		If e\EventState < 70.0 Then RemoveEvent(e)
 End Function
 
 Function UpdateEvent_1048_A%(e.Events)
@@ -9407,7 +9404,7 @@ Function UpdateEvent_Blackout%(e.Events)
 	
 	If Rand(70) = 1
 		If (IsRoomAdjacent(PlayerRoom, e\room) Lor PlayerRoom = e\room) And InFacility = NullFloor
-			If e\EventState2 < 0.5 And InFacility = NullFloor Then me\LightBlink = 1.0
+			If e\EventState2 < 0.5 Then me\LightBlink = 1.0
 			Temp = True
 		EndIf
 	EndIf
