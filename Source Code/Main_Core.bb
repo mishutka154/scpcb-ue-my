@@ -1739,6 +1739,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			For n.NPCs = Each NPCs
 				If n\NPCType = NPCType966
 					n\State = -1.0
+					PositionEntity(n\Collider, 0.0, -500.0, 0.0)
 					HideEntity(n\Collider)
 					HideEntity(n\OBJ)
 				EndIf
