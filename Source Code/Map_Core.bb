@@ -61,11 +61,7 @@ Function UpdateLampShaking%()
 	
 	For p.Props = Each Props
 		If p\IsLamp
-			Local Shake% = False
-			
-			If p\room = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, p\room) Then Shake = True
-			
-			If Shake Then RotateEntity(p\OBJ, ShakeValue, 0.0, 0.0, True)
+			If p\room = PlayerRoom Lor IsRoomAdjacent(PlayerRoom, p\room) Then RotateEntity(p\OBJ, ShakeValue, EntityYaw(p\OBJ, True), EntityRoll(p\OBJ, True), True)
 		EndIf
 	Next
 End Function
@@ -6485,4 +6481,4 @@ Function RemoveChunkPart%(chp.ChunkPart)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS
