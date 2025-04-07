@@ -3693,7 +3693,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 			
 			UpdateNPCBlinking(n)
 			
-			Local PlayerSeeable# = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume, 360.0)
+			Local PlayerSeeable% = NPCSeesPlayer(n, 8.0 - me\CrouchState + me\SndVolume, 360.0)
 			
 			n\State2 = Max(n\State2 - fps\Factor[0], 0.0)
 			If n\State2 > 0.0
