@@ -3048,7 +3048,7 @@ Function UpdateEvent_Cont2_012%(e.Events)
 							EndIf
 							
 							FreeEntity(Pvt) : Pvt = 0
-						ElseIf DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 21.25 And EntityY(me\Collider) < -2.5
+						ElseIf DistanceSquared(EntityX(me\Collider), EntityX(e\room\RoomDoors[0]\FrameOBJ), EntityZ(me\Collider), EntityZ(e\room\RoomDoors[0]\FrameOBJ)) < 25.0 And EntityY(me\Collider) < -2.5
 							CanSave = 0
 							
 							me\Sanity = Max(me\Sanity - (fps\Factor[0] * (0.4 + (0.08 * SelectedDifficulty\OtherFactors)) / (1.0 + I_714\Using)), -1000.0)
