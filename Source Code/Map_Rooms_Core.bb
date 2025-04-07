@@ -4054,8 +4054,7 @@ Function FillRoom%(r.Rooms)
 		Case r_dimension_106
 			;[Block]
 			; ~ The doors inside labyrinth
-			Local RockmossTex% = LoadTexture_Strict("GFX\Map\Textures\rockmoss.jpg")
-			
+			Tex = LoadTexture_Strict("GFX\Map\Textures\rockmoss.jpg")
 			For i = 0 To 9
 				Select i
 					Case 0
@@ -4121,10 +4120,11 @@ Function FillRoom%(r.Rooms)
 				End Select
 				de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x + xTemp * RoomScale, r\y + 2574.0 * RoomScale + 0.05, r\z + 32.0 + zTemp * RoomScale, 90.0, 0.0, 0.0, Rnd(0.8, 1.0))
 				d.Doors = CreateDoor(r, r\x + xTemp * RoomScale, r\y + 2574.0 * RoomScale, r\z + 32.0 + zTemp * RoomScale, Angle, False, DEFAULT_DOOR, KEY_005)
-				EntityTexture(d\OBJ, RockmossTex)
-				If d\OBJ2 <> 0 Then EntityTexture(d\OBJ2, RockmossTex)
-				EntityTexture(d\FrameOBJ, RockmossTex)
+				EntityTexture(d\OBJ, Tex)
+				If d\OBJ2 <> 0 Then EntityTexture(d\OBJ2, Tex)
+				EntityTexture(d\FrameOBJ, Tex)
 			Next
+			DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 			
 			; ~ The doors inside fake tunnel
 			d.Doors = CreateDoor(r, r\x, r\y + 2060.0 * RoomScale, r\z + 32.0 - 1024.0 * RoomScale, 0.0, False, HEAVY_DOOR)
@@ -4236,8 +4236,9 @@ Function FillRoom%(r.Rooms)
 			
 			r\Objects[20] = LoadMesh_Strict("GFX\Map\dimension_106_terrain.b3d")
 			r\ScriptedObject[20] = True
-			EntityTexture(r\Objects[20], RockmossTex)
-			DeleteSingleTextureEntryFromCache(RockmossTex) : RockmossTex = 0
+			Tex = LoadTexture_Strict("GFX\Map\Textures\rockmoss.jpg")
+			EntityTexture(r\Objects[20], Tex)
+			DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 			ScaleEntity(r\Objects[20], RoomScale, RoomScale, RoomScale)
 			EntityType(r\Objects[20], HIT_MAP)
 			PositionEntity(r\Objects[20], r\x, r\y + 16.0 + 2944.0 * RoomScale, r\z + 32.0, True)
