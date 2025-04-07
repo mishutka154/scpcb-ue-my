@@ -57,7 +57,7 @@ End Function
 
 Function UpdateLampShaking%()
 	Local p.Props
-	Local ShakeValue# = Sin(MilliSecs()) * Min(5.0 * me\BigCameraShake, 12.0)
+	Local ShakeValue# = Sin(MilliSecs()) * Min(5.0 * me\BigCameraShake, 15.0)
 	
 	For p.Props = Each Props
 		If p\IsLamp
