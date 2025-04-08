@@ -1,5 +1,18 @@
 {v1.5.2}
 
+[NPCs]
+- Reverted SCP-106's spawntimer changes partially.
+
+[Menu]
+- Changed Foundation loading screen image.
+
+[Bug Fixes]
+- Fixed some deaths not deleting on Keter. Oops.
+- Fixed SCP-966 colliders not being removed when disabled.
+- Fixed some collion issues on props.
+
+{v1.5.2}
+
 [Global]
 - Added blood drips for the corpse in SCP-970's hallway.
 
