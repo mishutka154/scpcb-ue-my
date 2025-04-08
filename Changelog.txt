@@ -8,6 +8,7 @@
 
 [NPCs]
 - Reverted SCP-106's spawntimer changes partially.
+- Increase accuracy of Gate B guard.
 
 [Menu]
 - Changed Foundation loading screen image.
