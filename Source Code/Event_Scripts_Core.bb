@@ -2980,7 +2980,6 @@ Function UpdateEvent_Cont2_012%(e.Events)
 							
 							Local SinValue# = Sin(Float(MilliSec) / 20.0) + 1.0
 							Local de.Decals
-							Local Tex%
 							
 							me\BlurVolume = Max((2.0 - SqrValue) * (e\EventState2 / 800.0) * SinValue, me\BlurVolume)
 							me\CurrCameraZoom = Max(me\CurrCameraZoom, SinValue * 8.0 * Max((3.0 - SqrValue), 0.0))
@@ -2988,6 +2987,8 @@ Function UpdateEvent_Cont2_012%(e.Events)
 							StopBreathSound()
 							
 							If Dist < 0.36
+								Local Tex%
+								
 								If me\Sanity < -800.0 Then MakeMeUnplayable()
 								me\Sanity = Max(me\Sanity - (fps\Factor[0] * (1.0 + (0.2 * SelectedDifficulty\OtherFactors)) / (1.0 + I_714\Using)), -1000.0)
 								If e\EventState3 = 1.0 Then e\EventState2 = Min(e\EventState2 + fps\Factor[0], 70.0 * 86.0)
