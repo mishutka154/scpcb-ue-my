@@ -4384,7 +4384,7 @@ Function UpdateSecurityCams%()
 								EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 							EndIf
 						ElseIf sc\CoffinEffect = 2
-							If sc\PlayerState = 0 Then sc\PlayerState = Rand(55000, 60000) - (20000 * SelectedDifficulty\AggressiveNPCs)
+							If sc\PlayerState = 0 Then sc\PlayerState = Rand(45000, 50000) - (20000 * SelectedDifficulty\AggressiveNPCs)
 							
 							Local Temp% = (MilliSec Mod sc\PlayerState)
 							
