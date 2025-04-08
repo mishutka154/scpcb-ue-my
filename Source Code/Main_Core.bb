@@ -8926,20 +8926,22 @@ Function UpdateEnding%()
 	EndIf
 	
 	GiveAchievement("055")
-	If ((Not UsedConsole) And SelectedCustomMap = Null) Lor opt\DebugMode
+	If (Not UsedConsole) Lor opt\DebugMode
 		GiveAchievement("console")
-		Select SelectedDifficulty\Name
-			Case difficulties[KETER]\Name
-				;[Block]
-				GiveAchievement("keter")
-				;[End Block]
-			Case difficulties[APOLLYON]\Name
-				;[Block]
-				GiveAchievement("keter")
-				GiveAchievement("apollyon")
-				;[End Block]
-		End Select
-		SaveAchievementsFile()
+		If SelectedCustomMap = Null Lor opt\DebugMode
+			Select SelectedDifficulty\Name
+				Case difficulties[KETER]\Name
+					;[Block]
+					GiveAchievement("keter")
+					;[End Block]
+				Case difficulties[APOLLYON]\Name
+					;[Block]
+					GiveAchievement("keter")
+					GiveAchievement("apollyon")
+					;[End Block]
+			End Select
+			SaveAchievementsFile()
+		EndIf
 	EndIf
 	
 	ShouldPlay = 66

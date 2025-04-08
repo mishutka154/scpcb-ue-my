@@ -2,6 +2,7 @@
 
 [Global]
 - Optimized textures.
+- Fair play achievement can be obtained on custom maps.
 
 [NPCs]
 - Reverted SCP-106's spawntimer changes partially.
