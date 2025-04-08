@@ -4623,7 +4623,7 @@ Type Screens
 	Field ImgPath$
 	Field Img%, Texture%
 	Field State#
-	Field Display096%
+	Field Display096% = False
 	Field room.Rooms
 End Type
 
