@@ -1,5 +1,8 @@
 {v1.5.2}
 
+[Global]
+- Optimized textures.
+
 [NPCs]
 - Reverted SCP-106's spawntimer changes partially.
 
@@ -10,6 +13,7 @@
 - Fixed some deaths not deleting on Keter. Oops.
 - Fixed SCP-966 colliders not being removed when disabled.
 - Fixed some collion issues on props.
+- Fixed corner in SCP-012's chamber being safe from the effects.
 
 {v1.5.2}
 
