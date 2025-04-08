@@ -4623,6 +4623,7 @@ Type Screens
 	Field ImgPath$
 	Field Img%, Texture%
 	Field State#
+	Field Display096%
 	Field room.Rooms
 End Type
 
@@ -4667,16 +4668,41 @@ Function UpdateScreens%()
 			; ~ TODO: Optimize somehow?
 			If s\State > 0.0
 				s\State = s\State - fps\Factor[0]
-				If Rand(20) < 3
+				If s\State < 70.0 * 6.0 And s\Display096
+					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[MONITOR_096_OVERLAY])
+					If (Not chs\NoTarget)
+						If wi\SCRAMBLE = 0 And EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
+							If (me\BlinkTimer < -16.0 Lor me\BlinkTimer > -6.0) And I_1025\FineState[4] = 0.0 And (Not wi\IsNVGBlinking)
+								If n_I\Curr096 = Null Then n_I\Curr096 = CreateNPC(NPCType096, 0.0, -500.0, 0.0)
+								If n_I\Curr096\State < 2.0
+									PlaySound_Strict(LoadTempSound("SFX\SCP\096\Triggered.ogg"), True)
+								
+									S2IMapErase(UnlockedAchievements, "096")
+								
+									me\CurrCameraZoom = 10.0
+									
+									If n_I\Curr096\Frame >= 422.0 Then SetNPCFrame(n_I\Curr096, 677.0)
+									
+									StopStream_Strict(n_I\Curr096\SoundCHN) : n_I\Curr096\SoundCHN = 0 : n_I\Curr096\SoundCHN_IsStream = False
+									n_I\Curr096\Sound = 0
+									
+									n_I\Curr096\State = 2.0
+								EndIf
+							EndIf
+						EndIf
+					EndIf
+				ElseIf Rand(20) < 3
 					EntityTexture(s\OBJ, s\Texture)
 				Else
 					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 				EndIf
 			Else
 				EntityTexture(s\OBJ, s\Texture)
-				If Rand(5000) = 1
-					If EntityInView(s\OBJ, Camera) Then PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
-					s\State = 70.0 * Rnd(0.7, 1.4)
+				If Rand(3400) = 1
+					If EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
+						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
+						s\State = 70.0 * Rnd(0.9, 1.7) + (s\Display096 * (70.0 * 6.0))
+					EndIf
 				EndIf
 			EndIf
 			If InteractObject(s\OBJ, 1.0, 2)

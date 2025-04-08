@@ -790,6 +790,7 @@ Const MONITOR_895_OVERLAY_2% = 13
 Const MONITOR_895_OVERLAY_3% = 14
 Const MONITOR_895_OVERLAY_4% = 15
 Const MONITOR_895_OVERLAY_5% = 16
+Const MONITOR_096_OVERLAY% = 17
 ;[End Block]
 
 Function LoadMonitors%()
@@ -814,6 +815,8 @@ Function LoadMonitors%()
 	For i = MONITOR_895_OVERLAY_1 To MONITOR_895_OVERLAY_5
 		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Overlays\scp_895_overlay(" + (i - 11) + ").png", 1, DeleteAllTextures, False)
 	Next
+	
+	mon_I\MonitorOverlayID[MONITOR_096_OVERLAY] = LoadTexture_Strict("GFX\Overlays\scp_096_overlay.png", 1, DeleteAllTextures, False)
 	
 	mon_I\MonitorModelID[MONITOR_DEFAULT_MODEL] = LoadMesh_Strict("GFX\Map\Props\monitor2.b3d")
 	mon_I\MonitorModelID[MONITOR_CHECKPOINT_MODEL] = LoadMesh_Strict("GFX\Map\Props\monitor_checkpoint.b3d")

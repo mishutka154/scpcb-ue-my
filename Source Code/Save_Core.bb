@@ -548,6 +548,13 @@ Function SaveGame%(File$)
 		WriteInt(f, sc\PlayerState)
 	Next
 	
+	Local s.Screens
+	
+	For s.Screens = Each Screens
+		WriteByte(f, s\Display096)
+		WriteFloat(f, s\State)
+	Next
+	
 	CloseFile(f)
 	
 	If SelectedDifficulty\SaveType = SAVE_ON_SCREENS
@@ -1438,6 +1445,13 @@ Function LoadGame%(File$)
 	For sc.SecurityCams = Each SecurityCams
 		sc\CoffinEffect = ReadByte(f)
 		sc\PlayerState = ReadInt(f)
+	Next
+	
+	Local s.Screens
+	
+	For s.Screens = Each Screens
+		s\Display096 = ReadByte(f)
+		s\State = ReadFloat(f)
 	Next
 	
 	CloseFile(f)
@@ -2380,6 +2394,13 @@ Function LoadGameQuick%(File$)
 	For sc.SecurityCams = Each SecurityCams
 		sc\CoffinEffect = ReadByte(f)
 		sc\PlayerState = ReadInt(f)
+	Next
+	
+	Local s.Screens
+	
+	For s.Screens = Each Screens
+		s\Display096 = ReadByte(f)
+		s\State = ReadFloat(f)
 	Next
 	
 	CloseFile(f)

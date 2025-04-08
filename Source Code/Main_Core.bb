@@ -9280,6 +9280,12 @@ Function UpdateMTF%()
 				EndIf
 			Next
 			
+			Local s.Screens
+	
+			For s.Screens = Each Screens
+				s\Display096 = True
+			Next
+			
 			If entrance <> Null
 				If me\Zone = 2
 					PlayAnnouncement("SFX\Character\MTF\AnnouncEnter.ogg")
