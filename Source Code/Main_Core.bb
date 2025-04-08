@@ -2677,6 +2677,8 @@ Function Kill%(IsBloody% = False, Animated% = True)
 			FreeEntity(Pvt) : Pvt = 0
 		EndIf
 		
+		DelSaveOnKeter()
+		
 		If Animated
 			me\KillAnim = Rand(0, 1) : me\ForceMove = 0.0
 			PlaySound_Strict(snd_I\DamageSFX[0])
