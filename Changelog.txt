@@ -3,9 +3,12 @@
 [Global]
 - Optimized textures.
 - Fair play achievement can be obtained on custom maps.
+- SCP-096's face can appear on screens randomly once the player reaches Entrance Zone.
+- Increase chances for SCP-895 to spread to monitors.
 
 [NPCs]
 - Reverted SCP-106's spawntimer changes partially.
+- Increase accuracy of Gate B guard.
 
 [Menu]
 - Changed Foundation loading screen image.

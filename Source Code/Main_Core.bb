@@ -9280,8 +9280,15 @@ Function UpdateMTF%()
 				EndIf
 			Next
 			
+			
 			If entrance <> Null
 				If me\Zone = 2
+					Local s.Screens
+			
+					For s.Screens = Each Screens
+						s\Display096 = True
+					Next
+					
 					PlayAnnouncement("SFX\Character\MTF\AnnouncEnter.ogg")
 					
 					MTFTimer = fps\Factor[0]
