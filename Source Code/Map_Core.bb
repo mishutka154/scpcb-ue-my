@@ -4696,6 +4696,8 @@ Function UpdateScreens%()
 				Else
 					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 				EndIf
+				
+				Return
 			Else
 				EntityTexture(s\OBJ, s\Texture)
 				If Rand(3400) = 1
