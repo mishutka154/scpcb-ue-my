@@ -4700,7 +4700,7 @@ Function UpdateScreens%()
 				Return
 			Else
 				EntityTexture(s\OBJ, s\Texture)
-				If Rand(3400) = 1
+				If Rand(4000 - (1000 * SelectedDifficulty\AggressiveNPCs)) = 1
 					If EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
 						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
 						s\State = 70.0 * Rnd(0.9, 1.7) + (s\Display096 * (70.0 * 6.0))
