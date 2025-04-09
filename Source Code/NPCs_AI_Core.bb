@@ -3712,7 +3712,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 			Else
 				n\State = 0.0
 			EndIf
-			If Dist < 3.0 And EntityVisible(n\Collider, me\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+			If Dist < 1.44 And EntityVisible(n\Collider, me\Collider) And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 				SetNPCFrame(n, 400.0)
 				n\State = 2.0
 				Return
