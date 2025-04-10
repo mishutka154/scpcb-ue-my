@@ -9,6 +9,7 @@
 [NPCs]
 - Reverted SCP-106's spawntimer changes partially.
 - Increase accuracy of Gate B guard.
+- Increased distance SCP-1048-A can affect the player.
 
 [Menu]
 - Changed Foundation loading screen image.
