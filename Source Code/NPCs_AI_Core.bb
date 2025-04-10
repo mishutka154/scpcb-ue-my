@@ -477,7 +477,7 @@ Function UpdateNPCType049%(n.NPCs)
 									Else
 										TeleportEntity(n\Collider, PlayerRoom\Adjacent[i]\Adjacent[j]\x, PlayerRoom\Adjacent[i]\Adjacent[j]\y + 0.5, PlayerRoom\Adjacent[i]\Adjacent[j]\z, n\CollRadius, True)
 									EndIf
-									n\CurrentRoom = PlayerRoom\Adjacent[i]\Adjacent
+									n\CurrentRoom = PlayerRoom\Adjacent[i]\Adjacent[j]
 									Exit
 								EndIf
 							EndIf
