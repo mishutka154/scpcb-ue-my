@@ -6010,7 +6010,7 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					n\State = 3.0 : n\IdleTimer = 70 * -30.0
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
-					n\State = 3.0 : n\IdleTimer = 70 * -30.0
+					n\State = 3.0 : n\IdleTimer = 70 * -45.0
 					
 					e\EventState2 = 2.0
 				EndIf
