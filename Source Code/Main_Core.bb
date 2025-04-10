@@ -3619,12 +3619,6 @@ Function UpdateNVG%()
 			n_I\Curr173\NVGX = EntityX(n_I\Curr173\OBJ, True)
 			n_I\Curr173\NVGY = EntityY(n_I\Curr173\OBJ, True) + 0.5
 			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\OBJ, True)
-			
-			If n_I\Curr049 <> Null And (Not n_I\Curr049\HideFromNVG)
-				n_I\Curr049\NVGX = EntityX(n_I\Curr049\OBJ, True)
-				n_I\Curr049\NVGY = EntityY(n_I\Curr049\OBJ, True) + 0.5
-				n_I\Curr049\NVGZ = EntityZ(n_I\Curr049\OBJ, True)
-			EndIf
 		ElseIf wi\NightVision = 2
 			If wi\NVGTimer <= 0.0
 				For np.NPCs = Each NPCs
@@ -3668,25 +3662,6 @@ Function RenderNVG%()
 			; ~ NPCs box
 			Local MaxRectWidth% = 15 * MenuScale
 			Local MaxRectHeight% = 50 * MenuScale
-			Local ScaleFactor#
-			Local RectWidth#, RectHeight#
-			
-			If n_I\Curr049 <> Null And (Not n_I\Curr049\HideFromNVG)
-				Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr049\NVGX, EntityY(me\Collider, True), n_I\Curr049\NVGY, EntityZ(me\Collider, True), n_I\Curr049\NVGZ)
-				If Dist < 256.0 ; ~ Don't draw box if SCP-049 is too far away
-					If EntityInView(n_I\Curr049\Collider, Camera)
-						CameraProject(Camera, n_I\Curr049\NVGX, n_I\Curr049\NVGY, n_I\Curr049\NVGZ)
-						
-						ProjX = ProjectedX() : ProjY = ProjectedY()
-						
-						ScaleFactor = 16.0 / Sqr(Dist)
-						RectWidth = MaxRectWidth * ScaleFactor
-						RectHeight = MaxRectHeight * ScaleFactor
-						
-						Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
-					EndIf
-				EndIf
-			EndIf
 			
 			Dist = DistanceSquared(EntityX(me\Collider, True), n_I\Curr173\NVGX, EntityY(me\Collider, True), n_I\Curr173\NVGY, EntityZ(me\Collider, True), n_I\Curr173\NVGZ)
 			If Dist < 256.0 ; ~ Don't draw box if SCP-173 is too far away
@@ -3695,9 +3670,9 @@ Function RenderNVG%()
 					
 					ProjX = ProjectedX() : ProjY = ProjectedY()
 					
-					ScaleFactor = 16.0 / Sqr(Dist)
-					RectWidth = MaxRectWidth * ScaleFactor
-					RectHeight = MaxRectHeight * ScaleFactor
+					Local ScaleFactor# = 16.0 / Sqr(Dist)
+					Local RectWidth# = MaxRectWidth * ScaleFactor
+					Local RectHeight# = MaxRectHeight * ScaleFactor
 					
 					Rect(ProjX - RectWidth / 2, ProjY - RectHeight / 2, RectWidth, RectHeight, False)
 				EndIf
