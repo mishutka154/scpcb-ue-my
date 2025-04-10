@@ -477,6 +477,7 @@ Function UpdateNPCType049%(n.NPCs)
 									Else
 										TeleportEntity(n\Collider, PlayerRoom\Adjacent[i]\Adjacent[j]\x, PlayerRoom\Adjacent[i]\Adjacent[j]\y + 0.5, PlayerRoom\Adjacent[i]\Adjacent[j]\z, n\CollRadius, True)
 									EndIf
+									n\CurrentRoom = PlayerRoom\Adjacent[i]\Adjacent
 									Exit
 								EndIf
 							EndIf
@@ -1077,6 +1078,7 @@ Function UpdateNPCType066%(n.NPCs)
 							If DistanceSquared(EntityX(w\OBJ, True), EntityX(n\Collider), EntityZ(w\OBJ, True), EntityZ(n\Collider)) < 16.0
 								PositionEntity(n\Collider, EntityX(w\OBJ, True), EntityY(w\OBJ, True) + 200.0 * RoomScale, EntityZ(w\OBJ, True))
 								ResetEntity(n\Collider)
+								n\CurrentRoom = w\room
 								Exit
 							EndIf
 						EndIf
@@ -6268,7 +6270,10 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 				If MyBossIsNotDead
 					If n\State = MTF_WANDERING_AROUND Lor n\State = MTF_096_SPOTTED
 						If EntityDistanceSquared(n\Collider, MyBoss\Collider) > 256.0
-							If (Not EntityInView(n\Collider, Camera)) And (Not EntityInView(MyBoss\Collider, Camera)) Then TeleportEntity(n\Collider, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.28, EntityZ(MyBoss\Collider, True), n\CollRadius, True)
+							If (Not EntityInView(n\Collider, Camera)) And (Not EntityInView(MyBoss\Collider, Camera))
+								TeleportEntity(n\Collider, EntityX(MyBoss\Collider, True), EntityY(MyBoss\Collider, True) + 0.28, EntityZ(MyBoss\Collider, True), n\CollRadius, True)
+								n\CurrentRoom = MyBoss\CurrentRoom
+							EndIf
 						EndIf
 					EndIf
 				EndIf

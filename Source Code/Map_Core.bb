@@ -3532,6 +3532,7 @@ Function UpdateElevators#(State#, door1.Doors, door2.Doors, FirstPivot%, SecondP
 					RotateEntity(n_I\Curr096\Collider, 0.0, EntityYaw(n_I\Curr096\Collider), 0.0)
 					MoveEntity(n_I\Curr096\Collider, 0.0, 0.0, -0.5)
 					ResetEntity(n_I\Curr096\Collider)
+					n_I\Curr096\CurrentRoom = PlayerRoom
 					n_I\Curr096\State = 6.0
 					SetNPCFrame(n_I\Curr096, 0.0)
 					LoadEventSound(event, "SFX\SCP\096\ElevatorSlam.ogg")
@@ -6544,4 +6545,4 @@ Function RemoveChunkPart%(chp.ChunkPart)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS
