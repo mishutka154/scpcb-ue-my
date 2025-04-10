@@ -1247,7 +1247,7 @@ Function UpdateNPCType096%(n.NPCs)
 			If Inventory(i) <> Null
 				If (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\ID = it_scramble) Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\ID = it_finescramble)
 					If Inventory(i)\State > 0.0
-						Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.08 / wi\SCRAMBLE)))
+						Inventory(i)\State = Max(0.0, Inventory(i)\State - (fps\Factor[0] * (0.04 / wi\SCRAMBLE)))
 						HasBatteryForScramble = True
 						Exit
 					EndIf
