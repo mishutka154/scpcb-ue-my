@@ -2768,6 +2768,13 @@ Function LoadEntities%()
 	Next
 	t\OverlayTextureID[3] = LoadTexture_Strict("GFX\Overlays\tesla_overlay.png", 1 + 2, DeleteAllTextures, False)
 	
+	wi\SCRAMBLESpriteScreen = CreateSprite()
+	PositionEntity(wi\SCRAMBLESpriteScreen, 0.0, -500.0, 0.0)
+	ScaleSprite(wi\SCRAMBLESpriteScreen, 0.07, 0.08)
+	EntityOrder(wi\SCRAMBLESpriteScreen, -5)
+	EntityTexture(wi\SCRAMBLESpriteScreen, t\OverlayTextureID[2])
+	HideEntity(wi\SCRAMBLESpriteScreen)
+	
 	LoadDecals()
 	
 	CreateShadow(me\Collider, 0.4, 0.4)
@@ -3371,6 +3378,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	FreeEntity(pm\OBJ) : pm\OBJ = 0
 	FreeEntity(pm\Pivot) : pm\Pivot = 0
 	Delete(pm) : pm = Null
+	FreeEntity(wi\SCRAMBLESpriteScreen) : wi\SCRAMBLESpriteScreen = 0
 	Delete(wi) : wi = Null
 	Delete(fog) : fog = Null
 	

@@ -3206,7 +3206,7 @@ Type WearableItems
 	Field BallisticVest%
 	Field BallisticHelmet%
 	Field NightVision%, NVGTimer#, IsNVGBlinking%, NVGPower%
-	Field SCRAMBLE%
+	Field SCRAMBLE%, SCRAMBLESpriteScreen%
 End Type
 
 Global wi.WearableItems
@@ -9259,7 +9259,7 @@ Function UpdateMTF%()
 			If entrance <> Null
 				If me\Zone = 2
 					Local s.Screens
-			
+					
 					For s.Screens = Each Screens
 						s\Display096 = True
 					Next

@@ -4620,11 +4620,11 @@ End Function
 Global SelectedScreen.Screens
 
 Type Screens
-	Field OBJ%, OBJ2%
+	Field OBJ%
 	Field ImgPath$
 	Field Img%, Texture%
 	Field State#
-	Field Display096
+	Field Display096%
 	Field room.Rooms
 End Type
 
@@ -4647,12 +4647,6 @@ Function CreateScreen.Screens(room.Rooms, x#, y#, z#, Pitch#, Yaw#, Roll#, Scale
 	EntityPickMode(s\OBJ, 2)
 	EntityFX(s\OBJ, 1)
 	If room <> Null Then EntityParent(s\OBJ, room\OBJ)
-	s\OBJ2 = CreateSprite()
-	ScaleSprite(s\OBJ2, 0.07, 0.08)
-	EntityOrder(s\OBJ2, -5)
-	EntityTexture(s\OBJ2, t\OverlayTextureID[2])
-	EntityParent(s\OBJ2, s\OBJ)
-	HideEntity(s\OBJ2)
 	
 	s\ImgPath = "GFX\Map\Screens\" + ImgPath
 	s\room = room
@@ -4666,12 +4660,14 @@ Function CreateScreen.Screens(room.Rooms, x#, y#, z#, Pitch#, Yaw#, Roll#, Scale
 End Function
 
 Function UpdateScreens%()
-	If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor SecondaryLightOn =< 0.3 Then Return
-	
 	Local s.Screens
 	
 	For s.Screens = Each Screens
 		If s\room = PlayerRoom
+			If SecondaryLightOn =< 0.3
+				EntityTexture(s\OBJ, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY])
+				Return
+			EndIf
 			; ~ TODO: Optimize somehow?
 			If s\State > 0.0
 				s\State = s\State - fps\Factor[0]
@@ -4679,14 +4675,14 @@ Function UpdateScreens%()
 					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[MONITOR_096_OVERLAY])
 					If EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
 						If wi\SCRAMBLE = 0
-							If (Not EntityHidden(s\OBJ2)) Then HideEntity(s\OBJ2)
+							If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 							If (me\BlinkTimer < -16.0 Lor me\BlinkTimer > -6.0) And I_1025\FineState[4] = 0.0 And (Not wi\IsNVGBlinking) And (Not chs\NoTarget)
 								If n_I\Curr096 = Null Then n_I\Curr096 = CreateNPC(NPCType096, 0.0, -500.0, 0.0)
 								If n_I\Curr096\State < 2.0
 									PlaySound_Strict(LoadTempSound("SFX\SCP\096\Triggered.ogg"), True)
-								
+									
 									S2IMapErase(UnlockedAchievements, "096")
-								
+									
 									me\CurrCameraZoom = 10.0
 									
 									If n_I\Curr096\Frame >= 422.0 Then SetNPCFrame(n_I\Curr096, 677.0)
@@ -4699,7 +4695,8 @@ Function UpdateScreens%()
 							EndIf
 						Else
 							Local HasBatteryForScramble% = False
-			
+							Local i%
+							
 							For i = 0 To MaxItemAmount - 1
 								If Inventory(i) <> Null
 									If (wi\SCRAMBLE = 1 And Inventory(i)\ItemTemplate\ID = it_scramble) Lor (wi\SCRAMBLE = 2 And Inventory(i)\ItemTemplate\ID = it_finescramble)
@@ -4713,16 +4710,16 @@ Function UpdateScreens%()
 							Next
 							If HasBatteryForScramble
 								SCRAMBLECHN = LoopSoundLocal(snd_I\SCRAMBLESFX, SCRAMBLECHN)
-								If EntityHidden(s\OBJ2) Then ShowEntity(s\OBJ2)
-								ScaleSprite(s\OBJ2, Rnd(0.06, 0.08), Rnd(0.07, 0.09))
-								PositionEntity(s\OBJ2, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05, Rnd(0.1) - 0.05)
+								If EntityHidden(wi\SCRAMBLESpriteScreen) Then ShowEntity(wi\SCRAMBLESpriteScreen)
+								ScaleSprite(wi\SCRAMBLESpriteScreen, Rnd(0.06, 0.08), Rnd(0.07, 0.09))
+								PositionEntity(wi\SCRAMBLESpriteScreen, EntityX(s\OBJ, True) + Rnd(0.1) - 0.05, EntityY(s\OBJ, True) + Rnd(0.1) - 0.05, EntityZ(s\OBJ, True) + Rnd(0.1) - 0.05, True)
 							Else
-								If (Not EntityHidden(s\OBJ2)) Then HideEntity(s\OBJ2)
+								If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 								If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
 							EndIf
 						EndIf
 					Else
-						If (Not EntityHidden(s\OBJ2)) Then HideEntity(s\OBJ2)
+						If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 						If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
 					EndIf
 				ElseIf Rand(20) < 3
@@ -4730,10 +4727,9 @@ Function UpdateScreens%()
 				Else
 					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
 				EndIf
-				
 				Return
 			Else
-				If (Not EntityHidden(s\OBJ2)) Then HideEntity(s\OBJ2)
+				If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 				If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
 				EntityTexture(s\OBJ, s\Texture)
 				If Rand(4000 - (1000 * SelectedDifficulty\AggressiveNPCs)) = 1
