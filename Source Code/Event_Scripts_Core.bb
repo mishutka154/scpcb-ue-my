@@ -6003,14 +6003,15 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					OpenCloseDoor(e\room\RoomDoors[2])
 					
 					TFormPoint(-240.0, -5052.8, -635.0, e\room\OBJ, 0)
-					n.NPCs = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
+					n.NPCs = CreateNPC(NPCType008_1_Surgeon, TFormedX(), TFormedY(), TFormedZ())
 					n\State = 3.0
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
-					n\State = 3.0 : n\IdleTimer = 70 * -30.0
+					n\State = 3.0 : n\IdleTimer = 70.0 * -30.0
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
-					n\State = 3.0 : n\IdleTimer = 70 * -45.0
+					ChangeNPCTextureID(n, NPC_008_1_TEXTURE)
+					n\State = 3.0 : n\IdleTimer = 70.0 * -45.0
 					
 					e\EventState2 = 2.0
 				EndIf
@@ -7716,7 +7717,7 @@ Function UpdateEvent_Room2_Medibay%(e.Events)
 	If PlayerRoom = e\room
 		If e\EventState = 0.0
 			TFormPoint(-820.0, 200.0, -464.0, e\room\OBJ, 0)
-			e\room\NPC[0] = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
+			e\room\NPC[0] = CreateNPC(NPCType008_1_Surgeon, TFormedX(), TFormedY(), TFormedZ())
 			RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0, True)
 			
 			e\EventState = 1.0
