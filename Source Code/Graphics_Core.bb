@@ -531,16 +531,16 @@ Function TextEx%(x%, y%, Txt$, AlignX% = False, AlignY% = False)
 	Text(x, y + TextOffset, Txt, AlignX, AlignY)
 End Function
 
-Function GetRescaledTexture%(Texture$, Flags%, Width%, Height%, Brush% = False)
-	If FileType(lang\LanguagePath + Texture) = 1 Then Texture = lang\LanguagePath + Texture
+Function GetRescaledTexture%(Brush% = False, TexName$, Flags%, TexDeleteType%, Width%, Height%)
+	If FileType(lang\LanguagePath + TexName) = 1 Then TexName = lang\LanguagePath + TexName
 	
 	; ~ Load the original image
-	Local ImgType% = FI_GetFIFFromFilename(Texture)
-	Local SrcImg% = FI_Load(ImgType, Texture, Flags)
+	Local ImgType% = FI_GetFIFFromFilename(TexName)
+	Local SrcImg% = FI_Load(ImgType, TexName, Flags)
 	
 	; ~ Rescale the image
 	Local RescaledImg% = FI_Rescale(SrcImg, Width, Height, 0)
-	Local TexPath$ = GetEnv("Temp") + "\" + StripPath(Texture)
+	Local TexPath$ = GetEnv("Temp") + "\" + StripPath(TexName)
 	
 	; ~ Save the rescaled image to a temporary file
 	FI_Save(ImgType, RescaledImg, TexPath, Flags)
@@ -551,7 +551,7 @@ Function GetRescaledTexture%(Texture$, Flags%, Width%, Height%, Brush% = False)
 	If Brush
 		Ret = LoadBrush_Strict(TexPath, Flags)
 	Else
-		Ret = LoadTexture_Strict(TexPath, Flags)
+		Ret = LoadTexture_Strict(TexPath, Flags, TexDeleteType)
 	EndIf
 	; ~ Unload the original and rescaled images
 	FI_Unload(SrcImg) : SrcImg = 0

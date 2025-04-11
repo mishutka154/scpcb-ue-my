@@ -4653,7 +4653,7 @@ Function CreateScreen.Screens(room.Rooms, x#, y#, z#, Pitch#, Yaw#, Roll#, Scale
 	For s2.Screens = Each Screens
 		If s2 <> s And s2\ImgPath = ImgPath Then s\Texture = s2\Texture
 	Next
-	If s\Texture = 0 Then s\Texture = LoadTexture_Strict(s\ImgPath, 1, DeleteAllTextures, True, 0.25)
+	If s\Texture = 0 Then s\Texture = GetRescaledTexture(False, s\ImgPath, 1, DeleteAllTextures, 256, 192)
 	EntityTexture(s\OBJ, s\Texture)
 	
 	Return(s)
