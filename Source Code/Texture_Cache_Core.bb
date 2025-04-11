@@ -27,7 +27,7 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 		EndIf
 	Next
 	
-	Local CurrPath$ = TexName
+	Local CurrPath$ = StripAbsolutePath(TexName, "gfx\")
 	
 	tic.TextureInCache = New TextureInCache
 	tic\TexName = StrippedName
@@ -56,7 +56,7 @@ Function LoadAnimTextureCheckingIfInCache%(TexName$, TexFlags% = 1, Width%, Heig
 		EndIf
 	Next
 	
-	Local CurrPath$ = TexName
+	Local CurrPath$ = StripAbsolutePath(TexName, "gfx\")
 	
 	tic.TextureInCache = New TextureInCache
 	tic\TexName = StrippedName
