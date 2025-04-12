@@ -4711,8 +4711,8 @@ Function UpdateScreens%()
 							If HasBatteryForScramble
 								SCRAMBLECHN = LoopSoundLocal(snd_I\SCRAMBLESFX, SCRAMBLECHN)
 								If EntityHidden(wi\SCRAMBLESpriteScreen) Then ShowEntity(wi\SCRAMBLESpriteScreen)
-								ScaleSprite(wi\SCRAMBLESpriteScreen, Rnd(0.06, 0.08), Rnd(0.07, 0.09))
-								PositionEntity(wi\SCRAMBLESpriteScreen, EntityX(s\OBJ, True) + Rnd(0.1) - 0.05, EntityY(s\OBJ, True) + Rnd(0.1) - 0.05, EntityZ(s\OBJ, True) + Rnd(0.1) - 0.05, True)
+								ScaleSprite(wi\SCRAMBLESpriteScreen, Rnd(0.04, 0.05), Rnd(0.05, 0.06))
+								PositionEntity(wi\SCRAMBLESpriteScreen, EntityX(s\OBJ, True) + Rnd(-0.025, 0.025), EntityY(s\OBJ, True) + Rnd(-0.025, 0.025) + 0.05, EntityZ(s\OBJ, True) + Rnd(-0.025, 0.025), True)
 							Else
 								If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 								If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
