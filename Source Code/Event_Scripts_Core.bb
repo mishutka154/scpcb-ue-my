@@ -8003,6 +8003,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		Local RoomExist%
 		Local Teleport% = False, Random% = Rand(39)
 		
+		If e\EventState2 <> PD_TrenchesRoom And Sky106 <> 0 Then FreeEntity(Sky106) : Sky106 = 0
 		Select e\EventState2
 			Case PD_StartRoom
 				;[Block]
@@ -8157,10 +8158,9 @@ Function UpdateEvent_Dimension_106%(e.Events)
 			Case PD_TrenchesRoom
 				;[Block]
 				ShouldPlay = 14
-				
 				DecalStep = 1
-				fog\FarDist = 8.0
-				CameraFogRange(Camera, 0.1, 8.0)
+				If Sky106 = 0 Then Sky106 = CreateSky("GFX\Map\Textures\106sky")
+				UpdateSky(Sky106, True)
 				
 				For i = 17 To 20
 					If i > 18
@@ -8716,6 +8716,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		HideRoomsNoColl(e\room)
 		e\EventState = 0.0
 		e\EventState3 = 0.0
+		If Sky106 <> 0 Then FreeEntity(Sky106) : Sky106 = 0
 		e\EventState2 = PD_StartRoom
 	EndIfEnd Function
 
