@@ -11,6 +11,9 @@
 - Increase accuracy of Gate B guard.
 - Increased distance SCP-1048-A can affect the player.
 
+[Items]
+- Fine SCRAMBLE Gear cannot detect SCP-049 through walls.
+
 [Menu]
 - Changed Foundation loading screen image.
 
