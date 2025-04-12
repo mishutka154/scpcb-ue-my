@@ -3200,7 +3200,7 @@ Function InitLoadGame%()
 				HideEntity(e\room\Objects[0])
 				e\room\ScriptedObject[0] = True
 				
-				I_1499\Sky = CreateSky("GFX\Map\sky\1499sky")
+				I_1499\Sky = CreateSky("GFX\Map\Textures\1499sky")
 				
 				For i = 1 To 15
 					e\room\Objects[i] = LoadRMesh("GFX\Map\dimension1499\dimension_1499_object(" + i + ").rmesh", Null, False)
