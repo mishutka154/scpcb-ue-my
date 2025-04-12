@@ -2,11 +2,11 @@ Include "Source Code\NPCs_AI_Core.bb"
 
 ; ~ NPC ID Constants
 ;[Block]
-Const NPCType008_1% = 0, NPCType035_Tentacle% = 1, NPCType049% = 2, NPCType049_2% = 3, NPCType066% = 4, NPCType096% = 5
-Const NPCType106% = 6, NPCType173% = 7, NPCType372% = 8, NPCType513_1% = 9, NPCType860_2% = 10, NPCType939% = 11
-Const NPCType966% = 12, NPCType1048% = 13, NPCType1048_A% = 14, NPCType1499_1% = 15;, NPCType999% = 13
+Const NPCType008_1% = 0, NPCType008_1_Surgeon% = 1, NPCType035_Tentacle% = 2, NPCType049% = 3, NPCType049_2% = 4, NPCType066% = 5, NPCType096% = 6
+Const NPCType106% = 7, NPCType173% = 8, NPCType372% = 9, NPCType513_1% = 10, NPCType860_2% = 11, NPCType939% = 12
+Const NPCType966% = 13, NPCType1048% = 14, NPCType1048_A% = 15, NPCType1499_1% = 16;, NPCType999% = 17
 
-Const NPCTypeApache% = 16, NPCTypeClerk% = 17, NPCTypeD% = 18, NPCTypeGuard% = 19, NPCTypeMTF% = 20
+Const NPCTypeApache% = 17, NPCTypeClerk% = 18, NPCTypeD% = 19, NPCTypeGuard% = 20, NPCTypeMTF% = 21
 ;[End Block]
 
 Const MaxPathLocations% = 21
@@ -73,6 +73,25 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 	n\FallingPickDistance = 10.0
 	n\HasAnim = True
 	Select NPCType
+		Case NPCType008_1_Surgeon
+			;[Block]
+			n\NVGName = GetLocalString("npc", "human")
+			n\Speed = IniGetFloat(NPCsFile, "SCP-008-1 Surgeon", "Speed") / 100.0
+			n\HP = 100
+			
+			n\Collider = CreatePivot()
+			EntityRadius(n\Collider, n\CollRadius)
+			EntityType(n\Collider, HIT_PLAYER)
+			
+			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_008_1_SURGEON_MODEL])
+			Temp = IniGetFloat(NPCsFile, "SCP-008-1 Surgeon", "Scale") / MeshWidth(n\OBJ)
+			ScaleEntity(n\OBJ, Temp, Temp, Temp)
+			MeshW = MeshWidth(n\OBJ) : MeshH = MeshHeight(n\OBJ) : MeshD = MeshDepth(n\OBJ)
+			MeshCullBox(n\OBJ, -MeshW, -MeshH, -MeshD, MeshW * 2.0, MeshH * 2.0, MeshD * 2.0)
+			SetNPCFrame(n, 11.0)
+			
+			If NPCSound[SOUND_NPC_008_1_BREATH] = 0 Then NPCSound[SOUND_NPC_008_1_BREATH] = LoadSound_Strict("SFX\SCP\008_1\Breath.ogg")
+			;[End Block]
 		Case NPCType008_1
 			;[Block]
 			n\NVGName = GetLocalString("npc", "human")
@@ -664,6 +683,10 @@ Function UpdateNPCs%()
 		n\InFacility = IsInFacility(EntityY(n\Collider))
 		
 		Select n\NPCType
+			Case NPCType008_1_Surgeon
+				;[Block]
+				UpdateNPCType008_1_Surgeon(n)
+				;[End Block]
 			Case NPCType008_1
 				;[Block]
 				UpdateNPCType008_1(n)
@@ -1344,9 +1367,15 @@ Function ConsoleSpawnNPC%(Name$, NPCState$ = "")
 	Local PlayerPosX#, PlayerPosY#, PlayerPosZ#
 	
 	Select Name 
-		Case "008", "008zombie", "008-1", "infectedhuman", "humaninfected", "scp008-1", "scp-008-1", "scp0081", "0081", "scp-0081", "008_1", "scp_008_1"
+		Case "008", "008-1", "infectedhuman", "scp008-1", "scp-008-1", "scp0081", "0081", "scp-0081", "008_1", "scp_008_1"
 			;[Block]
 			n.NPCs = CreateNPC(NPCType008_1, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
+			n\State = 1.0
+			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "008"))
+			;[End Block]
+		Case "008 surgeon", "008-1 surgeon", "surgeon", "infectedsurgeon", "scp008-1 surgeon", "scp-008-1 surgeon", "scp0081 surgeon", "0081 surgeon", "scp-0081 surgeon", "008_1 surgeon", "scp_008_1 surgeon"
+			;[Block]
+			n.NPCs = CreateNPC(NPCType008_1_Surgeon, EntityX(me\Collider), EntityY(me\Collider) + 0.2, EntityZ(me\Collider))
 			n\State = 1.0
 			ConsoleMsg = Format(GetLocalString("console", "spawn"), GetLocalString("npc", "008"))
 			;[End Block]

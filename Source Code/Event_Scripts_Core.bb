@@ -6003,14 +6003,15 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					OpenCloseDoor(e\room\RoomDoors[2])
 					
 					TFormPoint(-240.0, -5052.8, -635.0, e\room\OBJ, 0)
-					n.NPCs = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
+					n.NPCs = CreateNPC(NPCType008_1_Surgeon, TFormedX(), TFormedY(), TFormedZ())
 					n\State = 3.0
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
-					n\State = 3.0 : n\IdleTimer = 70 * -30.0
+					n\State = 3.0 : n\IdleTimer = 70.0 * -30.0
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
-					n\State = 3.0 : n\IdleTimer = 70 * -45.0
+					ChangeNPCTextureID(n, NPC_008_1_TEXTURE)
+					n\State = 3.0 : n\IdleTimer = 70.0 * -45.0
 					
 					e\EventState2 = 2.0
 				EndIf
@@ -6344,7 +6345,7 @@ Function UpdateEvent_Room3_HCZ_1048%(e.Events)
 					itt\ImgPath = ItemHUDTexturePath + DrawingName
 					itt\TexPath = itt\ImgPath
 					
-					Local Tex% = LoadTexture_Strict(itt\TexPath, 1, DeleteMapTextures, True, 0.25)
+					Local Tex% = GetRescaledTexture(False, itt\TexPath, 1, DeleteMapTextures, 145, 204)
 					
 					EntityTexture(itt\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
@@ -6352,7 +6353,7 @@ Function UpdateEvent_Room3_HCZ_1048%(e.Events)
 				EndIf
 			Next
 			
-			Local Brush% = GetRescaledTexture(ItemHUDTexturePath + DrawingName, 1, 256, 256, True)
+			Local Brush% = GetRescaledTexture(True, ItemHUDTexturePath + DrawingName, 1, DeleteMapTextures, 145, 204)
 			Local SurfCount% = CountSurfaces(e\room\NPC[0]\OBJ)
 			Local i%, SF%, b%, BT%, TexName$
 			
@@ -7716,7 +7717,7 @@ Function UpdateEvent_Room2_Medibay%(e.Events)
 	If PlayerRoom = e\room
 		If e\EventState = 0.0
 			TFormPoint(-820.0, 200.0, -464.0, e\room\OBJ, 0)
-			e\room\NPC[0] = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
+			e\room\NPC[0] = CreateNPC(NPCType008_1_Surgeon, TFormedX(), TFormedY(), TFormedZ())
 			RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0, True)
 			
 			e\EventState = 1.0
@@ -8002,6 +8003,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		Local RoomExist%
 		Local Teleport% = False, Random% = Rand(39)
 		
+		If e\EventState2 <> PD_TrenchesRoom And Sky106 <> 0 Then FreeEntity(Sky106) : Sky106 = 0
 		Select e\EventState2
 			Case PD_StartRoom
 				;[Block]
@@ -8156,10 +8158,9 @@ Function UpdateEvent_Dimension_106%(e.Events)
 			Case PD_TrenchesRoom
 				;[Block]
 				ShouldPlay = 14
-				
 				DecalStep = 1
-				fog\FarDist = 8.0
-				CameraFogRange(Camera, 0.1, 8.0)
+				If Sky106 = 0 Then Sky106 = CreateSky("GFX\Map\Textures\106sky")
+				UpdateSky(Sky106, True)
 				
 				For i = 17 To 20
 					If i > 18
@@ -8715,6 +8716,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		HideRoomsNoColl(e\room)
 		e\EventState = 0.0
 		e\EventState3 = 0.0
+		If Sky106 <> 0 Then FreeEntity(Sky106) : Sky106 = 0
 		e\EventState2 = PD_StartRoom
 	EndIfEnd Function
 

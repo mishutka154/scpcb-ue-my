@@ -3206,7 +3206,7 @@ Type WearableItems
 	Field BallisticVest%
 	Field BallisticHelmet%
 	Field NightVision%, NVGTimer#, IsNVGBlinking%, NVGPower%
-	Field SCRAMBLE%
+	Field SCRAMBLE%, SCRAMBLESpriteScreen%
 End Type
 
 Global wi.WearableItems
@@ -3451,6 +3451,11 @@ Function UpdateZoneColor%()
 		LightVolume = 1.0
 		If PD_event\EventState2 = PD_TrenchesRoom Lor PD_event\EventState2 = PD_TowerRoom
 			SetZoneColor(FogColorPDTrench)
+			If PD_event\EventState2 = PD_TrenchesRoom
+				fog\FarDist = 30.0
+				CameraFogRange(Camera, 5.0, fog\FarDist)
+				CameraRange(Camera, 0.01, 35.0) ; ~ fog\FarDist * 1.2
+			EndIf
 		ElseIf PD_event\EventState2 = PD_FakeTunnelRoom
 			SetZoneColor(FogColorHCZ, AmbientColorHCZ)
 		Else
@@ -9259,7 +9264,7 @@ Function UpdateMTF%()
 			If entrance <> Null
 				If me\Zone = 2
 					Local s.Screens
-			
+					
 					For s.Screens = Each Screens
 						s\Display096 = True
 					Next

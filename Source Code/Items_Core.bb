@@ -222,7 +222,7 @@ Function CreateItemTemplate.ItemTemplates(DisplayName$, Name$, ID%, OBJPath$, In
 		Next
 		If Texture = 0
 			If Left(TexturePath, ItemHUDTexturePathLen) = ItemHUDTexturePath
-				Texture = LoadTexture_Strict(TexturePath, TexFlags, DeleteMapTextures, True, 0.25)
+				Texture = GetRescaledTexture(False, TexturePath, TexFlags, DeleteMapTextures, 145, 204)
 			Else
 				Texture = LoadTexture_Strict(TexturePath, TexFlags)
 			EndIf
@@ -1553,7 +1553,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					n.NPCs = CreateNPC(NPCType008_1, x, y, z)
+					n.NPCs = CreateNPC(NPCType008_1_Surgeon, x, y, z)
 					n\State = 3.0
 					;[End Block]
 			End Select
@@ -2390,7 +2390,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(2) = 1
-						n.NPCs = CreateNPC(NPCType008_1, x, y, z)
+						n.NPCs = CreateNPC(NPCType008_1_Surgeon, x, y, z)
 						n\State = 2.0
 					Else
 						it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
@@ -2407,7 +2407,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					n.NPCs = CreateNPC(NPCType008_1, x, y, z)
+					n.NPCs = CreateNPC(NPCType008_1_Surgeon, x, y, z)
 					n\State = 2.0
 					;[End Block]	
 				Case FINE

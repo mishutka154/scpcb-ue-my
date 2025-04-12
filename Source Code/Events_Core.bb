@@ -1068,7 +1068,7 @@ Function Update035Label%(OBJ%)
 			
 			For it.Items = Each Items
 				If it\ItemTemplate\Name = itt\Name
-					Tex = GetRescaledTexture(itt\TexPath, 1, 256, 256)
+					Tex = GetRescaledTexture(False, itt\TexPath, 1, DeleteMapTextures, 145, 204)
 					EntityTexture(it\OBJ, Tex)
 					DeleteSingleTextureEntryFromCache(Tex) : Tex = 0
 					Exit

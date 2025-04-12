@@ -127,6 +127,14 @@ Function StripPath$(File$)
 	Return(Right(File, FileLen - LastSlash))
 End Function
 
+Function StripAbsolutePath$(File$, Dir$)
+	Local Pos% = Instr(Lower(File), Dir)
+	
+	If Pos > 0 Then File = Mid(File, Pos)
+	
+	Return(File)
+End Function
+
 Function Piece$(s$, Entry%, Char$ = " ")
 	Local n%, p%, a$
 	
