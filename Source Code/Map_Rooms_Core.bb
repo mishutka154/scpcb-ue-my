@@ -3703,7 +3703,6 @@ Function FillRoom%(r.Rooms)
 			; ~ Dr. L's office door
 			d.Doors = CreateDoor(r, r\x - 352.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_MISC, CODE_DR_L)
 			d\MTFClose = False : d\DisableWaypoint = True
-			FreeEntity(d\Buttons[1]) : d\Buttons[1] = 0
 			AffectDecayDoor(d)
 			r\RoomDoors.Doors[0] = d
 			
