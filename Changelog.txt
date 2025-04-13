@@ -22,6 +22,7 @@
 - Fixed SCP-966 colliders not being removed when disabled.
 - Fixed some collion issues on props.
 - Fixed corner in SCP-012's chamber being safe from the effects.
+- Fixed SCP-500 bottle giving SCP-427 when you already have one.
 
 {v1.5.2}
 

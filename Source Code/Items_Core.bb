@@ -2497,7 +2497,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Exit
 						EndIf
 					Next
-					If (Not NO427Spawn)
+					If NO427Spawn
 						If Rand(2) = 1
 							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 							
