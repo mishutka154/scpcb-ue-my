@@ -9592,7 +9592,7 @@ Function Update008%()
 									r\NPC[0]\State = -1.0
 									SetNPCFrame(r\NPC[0], 357.0)
 									
-									Local Tex% = LoadTexture_Strict("GFX\NPCs\scientist.png") 
+									Local Tex% = LoadTexture_Strict("GFX\NPCs\maintenance(2).png") 
 									
 									EntityTexture(r\NPC[0]\OBJ, Tex)
 									DeleteSingleTextureEntryFromCache(Tex)
