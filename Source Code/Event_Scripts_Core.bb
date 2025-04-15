@@ -1774,7 +1774,7 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					;[End Block]
 			End Select
 		EndIf
-	Else
+	ElseIf e\room\Objects[2] <> 0
 		For i = 2 To 4
 			If e\room\Objects[i] <> 0
 				If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
