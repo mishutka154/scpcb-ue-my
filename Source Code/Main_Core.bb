@@ -3807,7 +3807,7 @@ Function UpdateGUI%()
 	If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 		If (wi\NightVision > 0 Lor wi\SCRAMBLE > 0) And PD_event\EventState2 <> PD_FakeTunnelRoom
 			If PD_event\Img2 <> 0
-				StopChannel(PD_event\SoundCHN)
+				StopChannel(PD_event\SoundCHN) : PD_event\SoundCHN = 0
 				FreeImage(PD_event\Img2) : PD_event\Img2 = 0
 			EndIf
 			

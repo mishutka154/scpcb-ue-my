@@ -1042,8 +1042,8 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 								For i = 3 To 4
 									If e\room\NPC[i]\Sound <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound) : e\room\NPC[i]\Sound = 0
 									If e\room\NPC[i]\Sound2 <> 0 Then FreeSound_Strict(e\room\NPC[i]\Sound2) : e\room\NPC[i]\Sound2 = 0
-									StopChannel(e\room\NPC[i]\SoundCHN)
-									StopChannel(e\room\NPC[i]\SoundCHN2)
+									StopChannel(e\room\NPC[i]\SoundCHN) : e\room\NPC[i]\SoundCHN = 0
+									StopChannel(e\room\NPC[i]\SoundCHN2) : e\room\NPC[i]\SoundCHN2 = 0
 								Next
 								e\room\NPC[3]\State3 = 0.0
 								LoadNPCSound(e\room\NPC[3], "SFX\Room\Intro\Guard\Ulgrin\EscortDone" + Rand(0, 4) + ".ogg")
