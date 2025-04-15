@@ -434,18 +434,22 @@ Function UpdateEvent_Cont1_173%(e.Events)
 			
 			If e\room\Objects[1] <> 0
 				If EntityY(e\room\Objects[1], True) > e\room\y - 100.0 * RoomScale
-					PositionEntity(e\room\Objects[0], EntityX(e\room\Objects[0], True), -Max(e\EventState - 1300.0, 0.0) / 4500.0, EntityZ(e\room\Objects[0], True), True)
-					RotateEntity(e\room\Objects[0], 90.0 - Max(e\EventState - 1320.0, 0.0) / 130.0, 45.0, -Max(e\EventState - 1300.0, 0.0) / 40.0, True)
-					
 					PositionEntity(e\room\Objects[1], EntityX(e\room\Objects[1], True), -Max(e\EventState - 1800.0, 0.0) / 5000.0, EntityZ(e\room\Objects[1], True), True)
 					RotateEntity(e\room\Objects[1], -Max(e\EventState - 2040.0, 0.0) / 135.0, 225.0, 90.0 - Max(e\EventState - 2040.0, 0.0) / 43.0, True)
 				Else
-					For i = 0 To 1
-						FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
-					Next
+					FreeEntity(e\room\Objects[1]) : e\room\Objects[1] = 0
 				EndIf
-				If Rand(300) = 2
-					If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25 Then PlaySoundEx(snd_I\DecaySFX[Rand(3)], Camera, e\room\Objects[0], 3.0)
+			EndIf
+			If e\room\Objects[0] <> 0
+				If EntityY(e\room\Objects[0], True) > e\room\y - 100.0 * RoomScale
+					PositionEntity(e\room\Objects[0], EntityX(e\room\Objects[0], True), -Max(e\EventState - 1300.0, 0.0) / 4500.0, EntityZ(e\room\Objects[0], True), True)
+					RotateEntity(e\room\Objects[0], 90.0 - Max(e\EventState - 1320.0, 0.0) / 130.0, 45.0, -Max(e\EventState - 1300.0, 0.0) / 40.0, True)
+					
+					If Rand(300) = 2
+						If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25 Then PlaySoundEx(snd_I\DecaySFX[Rand(3)], Camera, e\room\Objects[0], 3.0)
+					EndIf
+				Else
+					FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
 				EndIf
 			EndIf
 		EndIf
@@ -1406,8 +1410,6 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 												ResetEntity(e\room\NPC[i]\Collider)
 											Next
 											
-											
-											
 											FreeSound_Strict(snd_I\IntroSFX[2]) : snd_I\IntroSFX[2] = 0
 											For i = 4 To 6
 												FreeSound_Strict(snd_I\IntroSFX[i]) : snd_I\IntroSFX[i] = 0
@@ -1772,9 +1774,11 @@ Function UpdateEvent_Cont1_205%(e.Events)
 					;[End Block]
 			End Select
 		EndIf
-	ElseIf e\room\Objects[2] <> 0
+	Else
 		For i = 2 To 4
-			If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
+			If e\room\Objects[i] <> 0
+				If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
+			EndIf
 		Next
 	Else
 		e\EventState = 0.0
@@ -3642,11 +3646,7 @@ Function UpdateEvent_Room3_Storage%(e.Events)
 			
 			ShouldPlay = 7
 			
-			If e\room\NPC[0] = Null
-				For i = 0 To 3
-					e\room\NPC[i] = CreateNPC(NPCType939, 0.0, 0.0, 0.0)
-				Next
-				
+			If e\room\NPC[3] = Null
 				TFormPoint(3372.0, -5580.8, 6294.0, e\room\OBJ, 0)
 				e\room\NPC[4] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 				e\room\NPC[4]\State3 = -1.0 : e\room\NPC[4]\IsDead = True
@@ -3660,6 +3660,10 @@ Function UpdateEvent_Room3_Storage%(e.Events)
 				ChangeNPCTextureID(e\room\NPC[5], NPC_CLASS_D_VICTIM_939_2_TEXTURE)
 				SetNPCFrame(e\room\NPC[5], 19.0)
 				RotateEntity(e\room\NPC[5]\Collider, 0.0, e\room\Angle, 0.0, True)
+				
+				For i = 0 To 3
+					e\room\NPC[i] = CreateNPC(NPCType939, 0.0, 0.0, 0.0)
+				Next
 			Else
 				If e\EventState = 0.0
 					; ~ Instance # 1
@@ -5562,8 +5566,8 @@ Function UpdateEvent_Room2_Nuke%(e.Events)
 			UpdateLever(e\room\RoomLevers[1]\OBJ)
 			
 			If e\EventState = 1.0
-				If e\room\RoomEmitters[7] = Null
-					For i = 0 To 7
+				For i = 0 To 7
+					If e\room\RoomEmitters[i] = Null
 						Select i
 							Case 0
 								;[Block]
@@ -5609,14 +5613,12 @@ Function UpdateEvent_Room2_Nuke%(e.Events)
 						y1 = 3010.0
 						TFormPoint(x1, y1, z1, e\room\OBJ, 0)
 						e\room\RoomEmitters[i] = SetEmitter(e\room, TFormedX(), TFormedY(), TFormedZ(), 10)
-					Next
-				EndIf
+					EndIf
+				Next
 			Else
-				If e\room\RoomEmitters[7] <> Null
-					For i = 0 To 7
-						FreeEmitter(e\room\RoomEmitters[i])
-					Next
-				EndIf
+				For i = 0 To 7
+					If e\room\RoomEmitters[i] <> Null Then FreeEmitter(e\room\RoomEmitters[i])
+				Next
 			EndIf
 		EndIf
 		x1 = EntityX(me\Collider, True) : y1 = EntityY(me\Collider, True) : z1 = EntityZ(me\Collider, True)
@@ -8722,13 +8724,13 @@ Function UpdateEvent_Dimension_106%(e.Events)
 
 Function UpdateEvent2_Dimension_1499%(e.Events)
 	If PlayerRoom <> e\room
-		If e\room\Objects[0] <> 0
-			Local i%
-			
-			For i = 1 To 15
+		Local i%
+		
+		For i = 1 To 15
+			If e\room\Objects[i] <> 0
 				If (Not EntityHidden(e\room\Objects[i])) Then HideEntity(e\room\Objects[i])
-			Next
-		EndIf
+			EndIf
+		Next
 		If EntityY(me\Collider) > EntityY(e\room\OBJ) - 0.5 Then PlayerRoom = e\room
 	EndIf
 	If e\EventState = 2.0

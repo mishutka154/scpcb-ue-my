@@ -2879,11 +2879,7 @@ Function UpdateNPCType860_2%(n.NPCs)
 					If Rand(860 - DocChance) = 1
 						If EntityHidden(ForestNPC) Then ShowEntity(ForestNPC)
 						ForestNPCData[2] = 1.0
-						If Rand(2) = 1
-							ForestNPCData[0] = 0.0
-						Else
-							ForestNPCData[0] = 2.0
-						EndIf
+						ForestNPCData[0] = 2.0 - (2.0 * (Rand(2) = 1))
 						ForestNPCData[1] = 0.0
 						PositionEntity(ForestNPC, EntityX(n\Collider), EntityY(n\Collider) + 0.5, EntityZ(n\Collider))
 						RotateEntity(ForestNPC, 0.0, EntityYaw(n\Collider), 0.0)

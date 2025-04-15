@@ -2163,10 +2163,9 @@ Function LoadGameQuick%(File$)
 				;[Block]
 				; ~ A hacky fix for the case that the intro objects aren't loaded when they should
 				; ~ Altough I'm too lazy to add those objects there because at the time where you can save, those objects are already in the ground anyway -- ENDSHN
-				If e\room\Objects[0] = 0
-					e\room\Objects[0] = CreatePivot()
-					e\room\Objects[1] = CreatePivot()
-				EndIf
+				For i = 0 To 1
+					If e\room\Objects[i] = 0 Then e\room\Objects[i] = CreatePivot()
+				Next
 				;[End Block]
 			Case e_dimension_1499
 				;[Block]
@@ -2236,20 +2235,13 @@ Function LoadGameQuick%(File$)
 				;[End Block]
 			Case r_gate_a ; ~ Erase endings stuff
 				;[Block]
-				If e\room\Objects[0] <> 0
-					FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
-					FreeEntity(e\room\Objects[4]) : e\room\Objects[4] = 0
-					FreeEntity(e\room\Objects[5]) : e\room\Objects[5] = 0
-					FreeEntity(e\room\Objects[7]) : e\room\Objects[7] = 0
-					FreeEntity(e\room\Objects[8]) : e\room\Objects[8] = 0
-					FreeEntity(e\room\Objects[13]) : e\room\Objects[13] = 0
-				EndIf
-				If e\room\Objects[9] <> 0
-					FreeEntity(e\room\Objects[12]) : e\room\Objects[12] = 0
-					FreeEntity(e\room\Objects[11]) : e\room\Objects[11] = 0
-					FreeEntity(e\room\Objects[10]) : e\room\Objects[10] = 0
-					FreeEntity(e\room\Objects[9]) : e\room\Objects[9] = 0
-				EndIf
+				If e\room\Objects[0] <> 0 Then FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
+				
+				For i = 4 To 13
+					If i <> 6
+						If e\room\Objects[i] <> 0 Then FreeEntity(e\room\Objects[i]) : e\room\Objects[i] = 0
+					EndIf
+				Next
 				;[End Block]
 			Case r_gate_b
 				;[Block]
