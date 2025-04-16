@@ -1,5 +1,9 @@
 If you experience a MAV error during loading/launching the game (or low FPS), and the video driver name in the error window includes terms like "UHD Graphics [number]"
 move three files from dgVoodoo folder into the game folder (the one where the .exe file is located). This should help.
+
+If you are still having problems running the game, try downloading the DirectX packages:
+https://www.microsoft.com/en-US/download/details.aspx?id=35
+
 After these adjustments, the game may run properly but with some minor issues (e.g., gamma problems). Please, contact us if you have any questions (links are available in the game launcher).
 Thanks for understanding.
 
