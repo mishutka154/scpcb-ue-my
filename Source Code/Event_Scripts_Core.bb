@@ -9416,7 +9416,11 @@ Function UpdateEvent_Blackout%(e.Events)
 	EndIf
 	If PlayerRoom = e\room
 		If e\room\Objects[0] = 0
-			TFormPoint(906.0, 106.0, 876.0, e\room\OBJ, 0)
+			If e\room\RoomTemplate\RoomID = e_room2_7_lcz
+				TFormPoint(906.0, 106.0, 876.0, e\room\OBJ, 0)
+			Else
+				TFormPoint(876.0, 106.0, 906.0, e\room\OBJ, 0)
+			EndIf
 			e\room\Objects[0] = CreatePivot()
 			PositionEntity(e\room\Objects[0], TFormedX(), TFormedY(), TFormedZ(), True)
 		Else
