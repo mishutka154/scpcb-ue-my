@@ -9318,64 +9318,62 @@ Function UpdateEvent_106_Victim_Wall%(e.Events)
 End Function
 
 Function UpdateEvent_173_Spawn%(e.Events)
-	If e\room\Dist < 6.0 And (PlayerRoom <> e\room)
-		If n_I\Curr173\Idle > 1
+	If e\room\Dist < 6.0
+		If n_I\Curr173\Idle > 1 Lor PlayerRoom = e\room
 			RemoveEvent(e)
-		Else
-			If n_I\Curr173\Idle = 0
-				If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 16.0 And (Not PlayerSees173(n_I\Curr173))
-					Select e\room\RoomTemplate\RoomID
+		ElseIf n_I\Curr173\Idle = 0
+			If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 16.0 And (Not PlayerSees173(n_I\Curr173))
+				Select e\room\RoomTemplate\RoomID
 						Case r_room2_4_lcz, r_room2_4_hcz
-							;[Block]
-							TFormPoint(640.0, 100.0, -896.0, e\room\OBJ, 0)
-							;[End Block]
-						Case r_room2_6_lcz
-							;[Block]
-							TFormPoint(-832.0, 100.0, 0.0, e\room\OBJ, 0)
-							;[End Block]
-						Case r_room2c_gw_lcz
-							;[Block]
-							TFormPoint(-410.0, 100.0, 410.0, e\room\OBJ, 0)
-							;[End Block]
-						Case r_room3_2_ez, r_room3_3_ez
-							;[Block]
-							Select Rand(3)
-								Case 1
-									;[Block]
-									TFormPoint(576.0, -512.0, 256.0, e\room\OBJ, 0)
-									;[End Block]
-								Case 2
-									;[Block]
-									TFormPoint(-512.0, -512.0, 256.0, e\room\OBJ, 0)
-									;[End Block]
-								Case 3
-									;[Block]
-									TFormPoint(-920.0, -512.0, 480.0, e\room\OBJ, 0)
-									;[End Block]
-							End Select
-							;[End Block]
-						Case r_room2_7_ez
-							;[Block]
-							Select Rand(3)
-								Case 1
-									;[Block]
-									TFormPoint(905.0, -512.0, 507.0, e\room\OBJ, 0)
-									;[End Block]
-								Case 2
-									;[Block]
-									TFormPoint(-34.0, -512.0, 594.0, e\room\OBJ, 0)
-									;[End Block]
-								Case 3
-									;[Block]
-									TFormPoint(256.0, -512.0, -911.0, e\room\OBJ, 0)
-									;[End Block]
-							End Select
-							;[End Block]
-					End Select
-					PositionEntity(n_I\Curr173\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
-					ResetEntity(n_I\Curr173\Collider)
-					RemoveEvent(e)
-				EndIf
+						;[Block]
+						TFormPoint(640.0, 100.0, -896.0, e\room\OBJ, 0)
+						;[End Block]
+					Case r_room2_6_lcz
+						;[Block]
+						TFormPoint(-832.0, 100.0, 0.0, e\room\OBJ, 0)
+						;[End Block]
+					Case r_room2c_gw_lcz
+						;[Block]
+						TFormPoint(-410.0, 100.0, 410.0, e\room\OBJ, 0)
+						;[End Block]
+					Case r_room3_2_ez, r_room3_3_ez
+						;[Block]
+						Select Rand(3)
+							Case 1
+								;[Block]
+								TFormPoint(576.0, -512.0, 256.0, e\room\OBJ, 0)
+								;[End Block]
+							Case 2
+								;[Block]
+								TFormPoint(-512.0, -512.0, 256.0, e\room\OBJ, 0)
+								;[End Block]
+							Case 3
+								;[Block]
+								TFormPoint(-920.0, -512.0, 480.0, e\room\OBJ, 0)
+								;[End Block]
+						End Select
+						;[End Block]
+					Case r_room2_7_ez
+						;[Block]
+						Select Rand(3)
+							Case 1
+								;[Block]
+								TFormPoint(905.0, -512.0, 507.0, e\room\OBJ, 0)
+								;[End Block]
+							Case 2
+								;[Block]
+								TFormPoint(-34.0, -512.0, 594.0, e\room\OBJ, 0)
+								;[End Block]
+							Case 3
+								;[Block]
+								TFormPoint(256.0, -512.0, -911.0, e\room\OBJ, 0)
+								;[End Block]
+						End Select
+						;[End Block]
+				End Select
+				PositionEntity(n_I\Curr173\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
+				ResetEntity(n_I\Curr173\Collider)
+				RemoveEvent(e)
 			EndIf
 		EndIf
 	EndIf
