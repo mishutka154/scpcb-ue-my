@@ -1963,6 +1963,7 @@ Function LoadEvents%()
 	CreateEvent(e_room2_ez_035, r_room2_ez, 0)
 	
 	CreateEvent(e_trick_item, r_room2_lcz, 0, 0.4)
+	CreateEvent(e_trick_item, r_room2c_lcz, 0, 0.15)
 	CreateEvent(e_trick_item, r_room2c_2_ez, 0, 0.15)
 	CreateEvent(e_trick_item, r_room4_2_ez, 1, 0.15)
 	CreateEvent(e_trick_item, r_room2_4_ez, 0, 0.2)
