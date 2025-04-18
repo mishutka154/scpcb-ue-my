@@ -9408,7 +9408,7 @@ Function UpdateEvent_Brownout%(e.Events)
 	
 	If Rand(70) = 1
 		If (IsRoomAdjacent(PlayerRoom, e\room) Lor PlayerRoom = e\room) And InFacility = NullFloor
-			If e\EventState2 < 0.5 Then me\LightBlink = 1.0
+			If e\EventState2 < 0.5 Then me\LightBlink = Max(1.0, me\LightBlink)
 			Temp = True
 		EndIf
 	EndIf
