@@ -1,3 +1,17 @@
+{v1.5.4}
+
+[NPCs]
+- Buffed SCP-966 insomnia to reduce stamina regeneration from 66.6% -> 50%
+- NPCs can hear you further away.
+
+[Rooms]
+- Made HCZ and EZ slightly darker.
+- Added blackout event to «room2c_2_lcz».
+- Decrease clearance level of HCZ to EZ checkpoint to level 4.
+
+[Bug Fixes]
+- Fixed SCP-173's spawning events.
+
 {v1.5.3}
 
 [Global]
