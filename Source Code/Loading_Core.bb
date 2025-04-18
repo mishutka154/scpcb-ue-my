@@ -1973,8 +1973,8 @@ Function LoadEvents%()
 	CreateEvent(e_1048_a, r_room2_3_lcz, 1, 0.3 + (0.3 * SelectedDifficulty\AggressiveNPCs))
 	CreateEvent(e_1048_a, r_room2_5_lcz, 0, 0.2 + (0.2 * SelectedDifficulty\AggressiveNPCs))
 	
-	CreateEvent(e_blackout, r_room2c_2_lcz, 0, 0.5)
-	CreateEvent(e_blackout, r_room2_7_lcz, 0, 0.4)
+	CreateEvent(e_brownout, r_room2c_2_lcz, 0, 0.5)
+	CreateEvent(e_brownout, r_room2_7_lcz, 0, 0.4)
 	
 	CreateEvent(e_room2_storage, r_room2_storage, 0)
 	

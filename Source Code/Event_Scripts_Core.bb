@@ -9403,7 +9403,7 @@ Function UpdateEvent_1048_A%(e.Events)
 	EndIf
 End Function
 
-Function UpdateEvent_Blackout%(e.Events)
+Function UpdateEvent_Brownout%(e.Events)
 	Local Temp% = False
 	
 	If Rand(70) = 1

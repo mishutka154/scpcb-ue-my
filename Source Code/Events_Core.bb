@@ -82,7 +82,7 @@ Const e_106_victim% = 62, e_106_victim_wall% = 63
 Const e_173_spawn% = 64
 Const e_682_roar% = 65
 Const e_1048_a% = 66
-Const e_blackout% = 67
+Const e_brownout% = 67
 Const e_checkpoint% = 68
 Const e_door_closing% = 69
 Const e_gateway% = 70
@@ -366,9 +366,9 @@ Function FindEventID%(EventName$)
 			;[Block]
 			Return(e_1048_a)
 			;[End Block]
-		Case "blackout"
+		Case "brownout"
 			;[Block]
-			Return(e_blackout)
+			Return(e_brownout)
 			;[End Block]
 		Case "checkpoint"
 			;[Block]
@@ -919,9 +919,9 @@ Function UpdateEvents%()
 				;[Block]
 				UpdateEvent_1048_A(e)
 				;[End Block]
-			Case e_blackout
+			Case e_brownout
 				;[Block]
-				UpdateEvent_Blackout(e)
+				UpdateEvent_Brownout(e)
 				;[End Block]
 			Case e_checkpoint
 				;[Block]
