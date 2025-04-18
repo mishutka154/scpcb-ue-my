@@ -359,7 +359,7 @@ Function UpdateGame%()
 					ShouldPlay = Min(me\Zone, 2)
 					
 					If Rand(50000) = 3
-						me\LightBlink = Rnd(1.0, 2.0)
+						me\LightBlink = Max(Rnd(1.0, 2.0), me\LightBlink)
 						i = Rand(0, 7) 
 						PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + i + ".ogg"), (i > 2))
 					EndIf
