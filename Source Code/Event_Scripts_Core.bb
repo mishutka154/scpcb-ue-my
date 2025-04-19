@@ -9784,7 +9784,7 @@ Function UpdateEvent_Tesla%(e.Events)
 									;[End Block]
 								Case NPCType049
 									;[Block]
-									n\State = 5.0
+									If n\State <> 3.0 Then n\State = 5.0
 									;[End Block]
 								Case NPCType173
 									;[Block]
