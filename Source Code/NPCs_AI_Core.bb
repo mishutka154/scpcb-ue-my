@@ -438,7 +438,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 							EndIf
 						EndIf
 					Next
-					n\TargetUpdateTimer = fps\Factor[0] * 45.0
+					n\TargetUpdateTimer = 35.0
 				Else
 					n\TargetUpdateTimer = n\TargetUpdateTimer - fps\Factor[0]
 				EndIf
