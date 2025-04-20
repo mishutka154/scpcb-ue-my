@@ -4736,7 +4736,7 @@ Function UpdateScreens%()
 					If s\Display096
 						If EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
 							PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
-							s\State = 70.0 * Rnd(7.0, 7.8))
+							s\State = 70.0 * Rnd(7.0, 7.8)
 						EndIf
 					EndIf
 				EndIf
