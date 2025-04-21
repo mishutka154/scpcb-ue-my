@@ -5637,6 +5637,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 			; ~ Close the doors when the player enters the room
 			For i = 0 To 1
 				OpenCloseDoor(e\room\RoomDoors[i])
+				PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[i]\FrameOBJ, 3.5)
 				e\room\RoomDoors[i]\Locked = 1
 			Next
 			
@@ -5785,6 +5786,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 			If e\EventState >= 70.0 * 35.0 And e\EventState - fps\Factor[0] < 70.0 * 35.0 ; ~ Open them again to let the player in
 				For i = 0 To 1
 					OpenCloseDoor(e\room\RoomDoors[i])
+					PlaySoundEx(snd_I\DoorOpen079, Camera, e\room\RoomDoors[i]\FrameOBJ, 3.5)
 				Next
 				If e\Sound <> 0 Then FreeSound_Strict(e\Sound) : e\Sound = 0
 			EndIf
