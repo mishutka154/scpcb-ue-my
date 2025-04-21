@@ -104,9 +104,9 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 								If n\Path[n\PathLocation]\door = Null
 									If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 								EndIf
+								UseDoorNPC(n)
 							EndIf
 						EndIf
-						UseDoorNPC(n)
 					EndIf
 					n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 				Else
@@ -354,9 +354,9 @@ Function UpdateNPCType008_1%(n.NPCs)
 								If n\Path[n\PathLocation]\door = Null
 									If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 								EndIf
+								UseDoorNPC(n)
 							EndIf
 						EndIf
-						UseDoorNPC(n)
 					EndIf
 					n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 				Else
@@ -1148,9 +1148,9 @@ Function UpdateNPCType049_2%(n.NPCs)
 								If n\Path[n\PathLocation]\door = Null
 									If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 								EndIf
+								UseDoorNPC(n)
 							EndIf
 						EndIf
-						UseDoorNPC(n)
 					EndIf
 					n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 				Else
@@ -3438,9 +3438,9 @@ Function UpdateNPCType966%(n.NPCs)
 										If n\Path[n\PathLocation]\door = Null
 											If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 										EndIf
+										UseDoorNPC(n)
 									EndIf
 								EndIf
-								UseDoorNPC(n)
 							EndIf
 							n\PathTimer = 70.0 * 10.0 ; ~ Search again after 10 seconds
 						Else
@@ -5205,9 +5205,9 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 								If n\Path[n\PathLocation]\door = Null
 									If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 								EndIf
+								UseDoorNPC(n)
 							EndIf
 						EndIf
-						UseDoorNPC(n)
 					EndIf
 					n\PathTimer = 70.0 * (Rnd(6.0, 10.0) - 2.0 * MyBossIsNotDead) ; ~ Search again after 6-10 seconds
 				ElseIf n\PathTimer <= 70.0 * 2.5 And MyBoss = Null
@@ -6094,9 +6094,9 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 									If n\Path[n\PathLocation]\door = Null
 										If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 									EndIf
+									UseDoorNPC(n)
 								EndIf
 							EndIf
-							UseDoorNPC(n)
 						EndIf
 						n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 					ElseIf n\PathTimer <= 70.0 * 2.5
@@ -6213,9 +6213,9 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 									If n\Path[n\PathLocation]\door = Null
 										If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 									EndIf
+									UseDoorNPC(n)
 								EndIf
 							EndIf
-							UseDoorNPC(n)
 						EndIf
 						n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 					Else
@@ -6320,9 +6320,9 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 									If n\Path[n\PathLocation]\door = Null
 										If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 									EndIf
+									UseDoorNPC(n)
 								EndIf
 							EndIf
-							UseDoorNPC(n)
 						EndIf
 						n\PathTimer = 70.0 * (Rnd(6.0, 10.0) - 2.0 * MyBossIsNotDead) ; ~ Search again after 6-10 seconds
 					ElseIf n\PathTimer <= 70.0 * 2.5 And MyBoss = Null
@@ -6465,9 +6465,9 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 										If n\Path[n\PathLocation]\door = Null
 											If Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation]\OBJ)) > Abs(DeltaYaw(n\Collider, n\Path[n\PathLocation + 1]\OBJ)) Then n\PathLocation = n\PathLocation + 1
 										EndIf
+										UseDoorNPC(n)
 									EndIf
 								EndIf
-								UseDoorNPC(n)
 							EndIf
 							n\PathTimer = 70.0 * Rnd(6.0, 10.0) ; ~ Search again after 6-10 seconds
 						Else
