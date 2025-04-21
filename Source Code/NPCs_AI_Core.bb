@@ -3578,7 +3578,7 @@ Function UpdateNPCType966%(n.NPCs)
 		RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 	Else
 		If (Not EntityHidden(n\OBJ)) Then HideEntity(n\OBJ)
-		If Rand(950 - (250 * SelectedDifficulty\AggressiveNPCs)) = 1
+		If Rand(850 - (250 * SelectedDifficulty\AggressiveNPCs)) = 1
 			TeleportCloser(n)
 			n\State3 = 0.0
 			n\State = 0.0
