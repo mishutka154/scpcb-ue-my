@@ -3,6 +3,8 @@
 [NPCs]
 - Buffed SCP-966 insomnia to reduce stamina regeneration from 66.6% -> 50%
 - NPCs can hear you further away.
+- SCP-966's spawnrate increased.
+- NPCs less likely to spawn when Remote Door Controls are off.
 
 [Rooms]
 - Made HCZ and EZ slightly darker.
@@ -11,6 +13,7 @@
 
 [Bug Fixes]
 - Fixed SCP-173's spawning events.
+- Fixed Map Creator issues.
 
 {v1.5.3}
 
