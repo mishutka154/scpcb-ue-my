@@ -152,7 +152,7 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 				If Dist > PowTwo(HideDistance * 1.5)
 					If n\IdleTimer < 70.0 * 15.0
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
-					ElseIf Rand(250 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * RemoteDoorOn)) = 1
+					ElseIf Rand(250 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
 							TeleportCloser(n)
 							n\IdleTimer = 0.0
@@ -406,7 +406,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 				If Dist > PowTwo(HideDistance * 1.5)
 					If n\IdleTimer < 70.0 * 15.0
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
-					ElseIf Rand(250 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * RemoteDoorOn)) = 1
+					ElseIf Rand(250 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
 							TeleportCloser(n)
 							n\IdleTimer = 0.0
@@ -961,7 +961,7 @@ Function UpdateNPCType049%(n.NPCs)
 					If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
 					If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2) : n\SoundCHN2 = 0
 					If PlayerInReachableRoom(True) And InFacility = NullFloor ; ~ Player is in a room where SCP-049 can teleport to
-						If Rand(4 - (2 * SelectedDifficulty\AggressiveNPCs) + (2 * RemoteDoorOn)) = 1
+						If Rand(4 - (2 * SelectedDifficulty\AggressiveNPCs) + (2 * (Not RemoteDoorOn))) = 1
 							TeleportCloser(n)
 						Else
 							n\Idle = 70.0 * 60.0
@@ -1200,7 +1200,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 				If Dist > PowTwo(HideDistance * 2.0)
 					If n\IdleTimer < 70.0 * 15.0
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
-					ElseIf Rand(320 - (120 * SelectedDifficulty\AggressiveNPCs) + (120 * RemoteDoorOn)) = 1
+					ElseIf Rand(320 - (120 * SelectedDifficulty\AggressiveNPCs) + (120 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
 							TeleportCloser(n)
 							n\IdleTimer = 0.0
@@ -3578,7 +3578,7 @@ Function UpdateNPCType966%(n.NPCs)
 		RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 	Else
 		If (Not EntityHidden(n\OBJ)) Then HideEntity(n\OBJ)
-		If Rand(850 - (250 * SelectedDifficulty\AggressiveNPCs) + (250 * RemoteDoorOn)) = 1
+		If Rand(850 - (250 * SelectedDifficulty\AggressiveNPCs) + (250 * (Not RemoteDoorOn))) = 1
 			TeleportCloser(n)
 			n\State3 = 0.0
 			n\State = 0.0
