@@ -47,7 +47,7 @@ CameraClsColor(Camera, opt\FogR, opt\FogG, opt\FogB)
 CameraRange(Camera, 0.05, opt\CamRange)
 PositionEntity(Camera, 0.0, 1.0, 0.0)
 
-Global AmbientLightRoomTex% = CreateTextureUsingCacheSystem(2, 2, 1 + 256)
+Global AmbientLightRoomTex% = CreateTextureUsingCacheSystem(1, 1, 1 + 256)
 
 TextureBlend(AmbientLightRoomTex, 5)
 SetBuffer(TextureBuffer(AmbientLightRoomTex))
@@ -94,13 +94,12 @@ Global CurrSelectedRoom.Rooms
 
 ; ~ Objects Constants
 ;[Block]
-Const MaxDoorModelIDAmount% = 3
 Const MaxMiscModelIDAmount% = 1
 ;[End Block]
 
 Type Objects
-	Field DoorModelID[MaxDoorModelIDAmount]
 	Field MiscModelID%[MaxMiscModelIDAmount]
+	Field SaveScreen%
 End Type
 
 Global o.Objects = New Objects
@@ -109,27 +108,18 @@ ChangeDir("..")
 
 Const FontsPath$ = "Data\fonts.ini"
 
-Global ConsoleFont% = LoadFont_Strict("GFX\fonts\" + IniGetString(LanguagePath + FontsPath, "Console", "File", IniGetString(FontsPath, "Console", "File")), IniGetString(LanguagePath + FontsPath, "Console", "Size", IniGetString(FontsPath, "Console", "Size")))
+Global ConsoleFont% = LoadFont_Strict("GFX\Fonts\" + IniGetString(LanguagePath + FontsPath, "Console", "File", IniGetString(FontsPath, "Console", "File")), IniGetString(LanguagePath + FontsPath, "Console", "Size", IniGetString(FontsPath, "Console", "Size")))
 
 Function LoadEntities%()
 	Local i%
 	
-	; ~ [DOORS]
-	
-	o\DoorModelID[0] = LoadMesh_Strict("GFX\map\Props\Door01.b3d") ; ~ Default Door
-	
-	o\DoorModelID[1] = LoadMesh_Strict("GFX\map\Props\ContDoorLeft.b3d") ; ~ Big Door Left
-	
-	o\DoorModelID[2] = LoadMesh_Strict("GFX\map\Props\ContDoorRight.b3d") ; ~ Big Door Right
-	
-	For i = 0 To MaxDoorModelIDAmount - 1
-		HideEntity(o\DoorModelID[i])
-	Next
-	
 	; ~ [MISC]
 	
-	o\MiscModelID[0] = LoadRMesh("GFX\map\cont2_860_1_wall.rmesh")
+	o\MiscModelID[0] = LoadRMesh("GFX\Map\cont2_860_1_wall.rmesh")
 	HideEntity(o\MiscModelID[0])
+	
+	o\SaveScreen = LoadMesh_Strict("GFX\Map\Props\save_screen.b3d")
+	HideEntity(o\SaveScreen)
 End Function
 
 LoadEntities()
@@ -606,7 +596,7 @@ Function CreateRoomTemplate.RoomTemplates(MeshPath$)
 	Local rt.RoomTemplates
 	
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\" + MeshPath
+	rt\OBJPath = "GFX\Map\" + MeshPath
 	rt\ID = RoomTempID
 	RoomTempID = RoomTempID + 1
 	
@@ -675,31 +665,31 @@ Function LoadRoomTemplateMeshes%()
 	Local MT_Prefix$ = "maintenance tunnel "
 	
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt1.rmesh"
+	rt\OBJPath = "GFX\Map\mt1.rmesh"
 	rt\Name = MT_Prefix + "endroom"
 	rt\Shape = ROOM1
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt2.rmesh"
+	rt\OBJPath = "GFX\Map\mt2.rmesh"
 	rt\Name = MT_Prefix + "corridor"
 	rt\Shape = ROOM2
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt2c.rmesh"
+	rt\OBJPath = "GFX\Map\mt2c.rmesh"
 	rt\Name = MT_Prefix + "corner"
 	rt\Shape = ROOM2C
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt3.rmesh"
+	rt\OBJPath = "GFX\Map\mt3.rmesh"
 	rt\Name = MT_Prefix + "t-shaped room"
 	rt\Shape = ROOM3
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt4.rmesh"
+	rt\OBJPath = "GFX\Map\mt4.rmesh"
 	rt\Name = MT_Prefix + "4-way room"
 	rt\Shape = ROOM4
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt2_elevator.rmesh"
+	rt\OBJPath = "GFX\Map\mt2_elevator.rmesh"
 	rt\Name = MT_Prefix + "elevator"
 	rt\Shape = ROOM2
 	rt.RoomTemplates = New RoomTemplates
-	rt\OBJPath = "GFX\map\mt1_generator.rmesh"
+	rt\OBJPath = "GFX\Map\mt1_generator.rmesh"
 	rt\Name = MT_Prefix + "generator room"
 	rt\Shape = ROOM1
 	
@@ -708,19 +698,19 @@ Function LoadRoomTemplateMeshes%()
 	Next
 	
 	Local hMap%[5], Mask%[5]
-	Local GroundTexture% = LoadTexture_Strict("GFX\map\textures\forestfloor.png", 1)
-	Local PathTexture% = LoadTexture_Strict("GFX\map\textures\forestpath.png", 1)
+	Local GroundTexture% = LoadTexture_Strict("GFX\Map\Textures\forestfloor.png")
+	Local PathTexture% = LoadTexture_Strict("GFX\Map\Textures\forestpath.png")
 	
-	hMap[ROOM1] = LoadImage_Strict("GFX\map\forest\forest1h.png")
-	Mask[ROOM1] = LoadTexture_Strict("GFX\map\forest\forest1h_mask.png", 1 + 2 + 256)
-	hMap[ROOM2] = LoadImage_Strict("GFX\map\forest\forest2h.png")
-	Mask[ROOM2] = LoadTexture_Strict("GFX\map\forest\forest2h_mask.png", 1 + 2 + 256)
-	hMap[ROOM2C] = LoadImage_Strict("GFX\map\forest\forest2Ch.png")
-	Mask[ROOM2C] = LoadTexture_Strict("GFX\map\forest\forest2Ch_mask.png", 1 + 2 + 256)
-	hMap[ROOM3] = LoadImage_Strict("GFX\map\forest\forest3h.png")
-	Mask[ROOM3] = LoadTexture_Strict("GFX\map\forest\forest3h_mask.png", 1 + 2 + 256)
-	hMap[ROOM4] = LoadImage_Strict("GFX\map\forest\forest4h.png")
-	Mask[ROOM4] = LoadTexture_Strict("GFX\map\forest\forest4h_mask.png", 1 + 2 + 256)
+	hMap[ROOM1] = LoadImage_Strict("GFX\Map\Forest\forest1h.png")
+	Mask[ROOM1] = LoadTexture_Strict("GFX\Map\Forest\forest1h_mask.png", 1 + 2 + 256)
+	hMap[ROOM2] = LoadImage_Strict("GFX\Map\Forest\forest2h.png")
+	Mask[ROOM2] = LoadTexture_Strict("GFX\Map\Forest\forest2h_mask.png", 1 + 2 + 256)
+	hMap[ROOM2C] = LoadImage_Strict("GFX\Map\Forest\forest2Ch.png")
+	Mask[ROOM2C] = LoadTexture_Strict("GFX\Map\Forest\forest2Ch_mask.png", 1 + 2 + 256)
+	hMap[ROOM3] = LoadImage_Strict("GFX\Map\Forest\forest3h.png")
+	Mask[ROOM3] = LoadTexture_Strict("GFX\Map\Forest\forest3h_mask.png", 1 + 2 + 256)
+	hMap[ROOM4] = LoadImage_Strict("GFX\Map\Forest\forest4h.png")
+	Mask[ROOM4] = LoadTexture_Strict("GFX\Map\Forest\forest4h_mask.png", 1 + 2 + 256)
 	
 	Local FR_Prefix$ = "scp-860-1 "
 	
@@ -807,38 +797,11 @@ Type Props
 	Field OBJ%
 End Type
 
-Function CheckForPropModel%(File$)
-	Local Path$ = "GFX\map\Props\"
-	
-	Select File
-		Case Path + "door01.b3d"
-			;[Block]
-			Return(CopyEntity(o\DoorModelID[0]))
-			;[End Block]
-		Case Path + "contdoorleft.b3d"
-			;[Block]
-			Return(CopyEntity(o\DoorModelID[1]))
-			;[End Block]
-		Case Path + "contdoorright.b3d"
-			;[Block]
-			Return(CopyEntity(o\DoorModelID[2]))
-			;[End Block]
-		Default
-			;[Block]
-			Return(LoadMesh_Strict(File))
-			;[End Block]
-	End Select
-End Function
-
 Function CreateProp%(File$)
 	Local p.Props
 	
 	; ~ A hacky way to use .b3d format
-	If Right(File, 2) = ".x"
-		File = Left(File, Len(File) - 2)
-	ElseIf Right(File, 4) = ".b3d"
-		File = Left(File, Len(File) - 4)
-	EndIf
+	If FileExtension(File) = "b3d" Then File = Left(File, Len(File) - 4)
 	File = File + ".b3d"
 	
 	For p.Props = Each Props
@@ -847,8 +810,7 @@ Function CreateProp%(File$)
 	
 	p.Props = New Props
 	p\File = File
-	; ~ A hacky optimization (just copy models that loaded as variable). Also fixes wrong models folder if the CBRE was used
-	p\OBJ = CheckForPropModel(File)
+	p\OBJ = LoadMesh_Strict(File)
 	Return(p\OBJ)
 End Function
 
@@ -938,6 +900,8 @@ Function CreateOverLapBox%(r.Rooms)
 	
 	If r\RoomTemplate\Name = "gate_b" Then Return
 	If r\RoomTemplate\Name = "gate_a" Then Return
+	If r\RoomTemplate\Name = "dimension_106" Then Return
+	If r\RoomTemplate\Name = "dimension_1499" Then Return
 	If r\RoomTemplate\Name = "cont2_049" Then Return
 	If r\RoomTemplate\Name = "cont2_008" Then Return
 	If r\RoomTemplate\Name = "cont2_409" Then Return
@@ -980,9 +944,9 @@ Function CreateOverLapBox%(r.Rooms)
 End Function
 
 Function LoadRoomMesh%(rt.RoomTemplates)
-	If Instr(rt\OBJPath, ".rmesh") <> 0 ; ~ File is RoomMesh
+	If FileExtension(rt\OBJPath) = "rmesh" ; ~ File is RoomMesh
 		rt\OBJ = LoadRMesh(rt\OBJPath)
-	ElseIf Instr(rt\OBJPath, ".b3d") <> 0 ; ~ File is .b3d
+	ElseIf FileExtension(rt\OBJPath) = "b3d" ; ~ File is .b3d
 		RuntimeError(Format(GetLocalString("runerr", "b3d"), rt\OBJPath))
 	Else ; ~ File not found
 		RuntimeError(Format(GetLocalString("runerr", "notfound"), rt\OBJPath))
@@ -1179,7 +1143,7 @@ Function LoadRMesh%(File$)
 ;		Next
 ;	EndIf
 	
-	Local Model%
+	Local Model% = 0, Texture% = 0
 	
 	Count = ReadInt(f) ; ~ Point entities
 	For i = 1 To Count
@@ -1187,10 +1151,44 @@ Function LoadRMesh%(File$)
 		Select Temp1s
 			Case "screen"
 				;[Block]
+				; ~ Skip coordinates
 				ReadFloat(f)
 				ReadFloat(f)
 				ReadFloat(f)
+				
+				Temp2s = ReadString(f)
+				RuntimeError(Format(Format(GetLocalString("runerr", "screen.support"), File), "GFX\Map\Screens\" + Temp2s))
+				;[End Block]
+			Case "save_screen"
+				;[Block]
+				Model = CopyEntity(o\SaveScreen)
+				
+				Temp1 = ReadFloat(f) * RoomScale
+				Temp2 = ReadFloat(f) * RoomScale
+				Temp3 = ReadFloat(f) * RoomScale
+				
+				PositionEntity(Model, Temp1, Temp2, Temp3)
+				
 				ReadString(f)
+				
+				Temp1 = ReadFloat(f)
+				Temp2 = ReadFloat(f)
+				Temp3 = ReadFloat(f)
+				
+				RotateEntity(Model, Temp1, Temp2, Temp3)
+				
+				Temp1 = ReadFloat(f) * RoomScale
+				Temp2 = ReadFloat(f) * RoomScale
+				Temp3 = ReadFloat(f) * RoomScale
+				
+				ScaleEntity(Model, Temp1, Temp2, Temp3)
+				
+				Temp2s = ReadString(f)
+				If Temp2s <> ""
+					Texture = LoadTexture_Strict("GFX\Map\Textures\cable_black.jpg")
+					EntityTexture(Model, Texture)
+					DeleteSingleTextureEntryFromCache(Texture)
+				EndIf
 				;[End Block]
 			Case "waypoint"
 				;[Block]
@@ -1237,7 +1235,7 @@ Function LoadRMesh%(File$)
 				Temp1 = ReadFloat(f) : Temp2 = ReadFloat(f) : Temp3 = ReadFloat(f)
 				
 				File = ReadString(f)
-				Model = CreateProp("GFX\map\Props\" + File)
+				Model = CreateProp("GFX\Map\Props\" + File)
 				
 				PositionEntity(Model, Temp1, Temp2, Temp3)
 				
@@ -1253,8 +1251,7 @@ Function LoadRMesh%(File$)
 				
 				Temp2s = ReadString(f)
 				If Temp2s <> ""
-					Local Texture% = LoadTextureCheckingIfInCache(Temp2s)
-					
+					Texture = LoadTextureCheckingIfInCache(Temp2s)
 					EntityTexture(Model, Texture)
 					DeleteSingleTextureEntryFromCache(Texture) : Texture = 0
 				EndIf

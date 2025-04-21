@@ -242,8 +242,8 @@ End Type
 Global opt.Options = New Options
 
 opt\GFXDriversAmount = CountGfxDrivers()
-opt\TotalVidMemory% = TotalVidMem() / 1024
-opt\TotalPhysMemory% = TotalPhys() / 1024
+opt\TotalVidMemory = TotalVidMem() / 1024
+opt\TotalPhysMemory = TotalPhys() / 1024
 
 Function LoadOptionsINI%()
 	; ~ [GRAPHICS]
@@ -698,4 +698,4 @@ Function ResetOptionsINI%()
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS

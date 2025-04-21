@@ -1886,4 +1886,4 @@ Function WriteOptions%()
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#BlitzPlus
+;~C#Blitz3D

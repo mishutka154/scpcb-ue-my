@@ -1,6 +1,6 @@
 ; ~ Texture Cache Constants
 ;[Block]
-Const MapTexturesFolder$ = "GFX\map\textures\"
+Const MapTexturesFolder$ = "GFX\Map\Textures\"
 
 Const DeleteMapTextures% = 0
 Const DeleteAllTextures% = 1
@@ -16,20 +16,21 @@ Function LoadTextureCheckingIfInCache%(TexName$, TexFlags% = 1, DeleteType% = De
 	If TexName = "" Then Return(0)
 	
 	Local tic.TextureInCache
+	Local StrippedName$ = StripPath(TexName)
 	
 	For tic.TextureInCache = Each TextureInCache
 		If tic\TexName <> "CreateTexture"
-			If StripPath(TexName) = tic\TexName
+			If StrippedName = tic\TexName
 				If tic\TexDeleteType < DeleteType Then tic\TexDeleteType = DeleteType
 				Return(tic\Tex)
 			EndIf
 		EndIf
 	Next
 	
-	Local CurrPath$ = TexName
+	Local CurrPath$ = StripAbsolutePath(TexName, "gfx\")
 	
 	tic.TextureInCache = New TextureInCache
-	tic\TexName = StripPath(TexName)
+	tic\TexName = StrippedName
 	tic\TexDeleteType = DeleteType
 	If FileType(LanguagePath + CurrPath) = 1 Then CurrPath = LanguagePath + CurrPath
 	If tic\Tex = 0 Then tic\Tex = LoadTexture(CurrPath, TexFlags)
@@ -47,11 +48,11 @@ Function DeleteTextureEntriesFromCache%(DeleteType%)
 	Next
 End Function
 
-Function DeleteSingleTextureEntryFromCache%(Texture%)
+Function DeleteSingleTextureEntryFromCache%(Texture%, DeleteType% = DeleteMapTextures)
 	Local tic.TextureInCache
 	
 	For tic.TextureInCache = Each TextureInCache
-		If tic\Tex = Texture
+		If tic\Tex = Texture And tic\TexDeleteType <= DeleteType
 			If tic\Tex <> 0 Then FreeTexture(tic\Tex) : tic\Tex = 0
 			Delete(tic)
 		EndIf
@@ -96,7 +97,7 @@ End Function
 Global MissingTexture%
 
 Function LoadMissingTexture%()
-	MissingTexture = CreateTexture(1 , 1, 1 + 256)
+	MissingTexture = CreateTexture(1, 1, 1 + 256)
 	TextureBlend(MissingTexture, 3)
 	SetBuffer(TextureBuffer(MissingTexture))
 	ClsColor(0, 0, 0)
@@ -115,13 +116,7 @@ Function CheckForTexture%(Tex%, TexFlags% = 1)
 	
 	Local Texture% = LoadTextureCheckingIfInCache(Name, TexFlags)
 	
-	If Texture <> 0
-		If ((TexFlags Shr 1) Mod 2) = 0
-			TextureBlend(Texture, 5)
-		Else
-			TextureBlend(Texture, 1)
-		EndIf
-	EndIf
+	If Texture <> 0 Then TextureBlend(Texture, 1 + 4 * (((TexFlags Shr 1) Mod 2) = 0))
 	Return(Texture)
 End Function
 

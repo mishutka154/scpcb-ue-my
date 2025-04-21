@@ -89,6 +89,14 @@ Function StripPath$(File$)
 	Return(Right(File, FileLen - LastSlash))
 End Function
 
+Function StripAbsolutePath$(File$, Dir$)
+	Local Pos% = Instr(Lower(File), Dir)
+	
+	If Pos > 0 Then File = Mid(File, Pos)
+	
+	Return(File)
+End Function
+
 Global OptionFileMC$ = GetEnv("AppData") + "\scpcb-ue\Data\options_MC.ini"
 
 Type Options
@@ -112,17 +120,17 @@ Function LoadOptionsINI%()
 	
 	opt\FogB = IniGetInt(OptionFileMC, "3-D Scene", "BG Color B", 0)
 	
-	opt\CursorR% = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color R", 255)
+	opt\CursorR = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color R", 255)
 	
-	opt\CursorG% = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color G", 0)
+	opt\CursorG = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color G", 0)
 	
-	opt\CursorB% = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color B", 0)
+	opt\CursorB = IniGetInt(OptionFileMC, "3-D Scene", "Cursor Color B", 0)
 	
-	opt\VSync% = IniGetInt(OptionFileMC, "3-D Scene", "VSync", True)
+	opt\VSync = IniGetInt(OptionFileMC, "3-D Scene", "VSync", True)
 	
-	opt\ShowFPS% = IniGetInt(OptionFileMC, "3-D Scene", "Show FPS", False)
+	opt\ShowFPS = IniGetInt(OptionFileMC, "3-D Scene", "Show FPS", False)
 	
-	opt\CamRange# = IniGetFloat(OptionFileMC, "3-D Scene", "Camera Range", 50.0)
+	opt\CamRange = IniGetFloat(OptionFileMC, "3-D Scene", "Camera Range", 50.0)
 End Function
 
 opt\TotalVidMemory = TotalVidMem()
