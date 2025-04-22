@@ -1050,8 +1050,8 @@ Function UpdateNPCType049%(n.NPCs)
 				;[Block]
 				If n\Frame < 1120.0
 					SetNPCFrame(n, 1121.0)
-					MoveEntity(n\Collider, 0.0, 0.0, 0.5)
 				Else
+					If n\Frame < 1138.0 Then MoveEntity(n\Collider, 0.0, 0.0, 0.02)
 					AnimateNPC(n, 1121.0, 1224.0, 0.3, False)
 					
 					If n\Frame > 1223.9 Then n\State = 2.0
