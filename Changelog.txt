@@ -17,6 +17,7 @@
 - SCP-966's spawnrate increased.
 - NPCs less likely to spawn when Remote Door Controls are off.
 - Changed Apache helicopter's texture.
+- Changed SCP-173's texture.
 
 [Bug Fixes]
 - Fixed SCP-173's spawning events.
