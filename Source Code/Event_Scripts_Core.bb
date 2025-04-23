@@ -9417,7 +9417,7 @@ Function UpdateEvent_Brownout%(e.Events)
 	EndIf
 	If PlayerRoom = e\room
 		If e\room\Objects[0] = 0
-			If e\room\RoomTemplate\RoomID = e_room2_7_lcz
+			If e\room\RoomTemplate\RoomID = r_room2_7_lcz
 				TFormPoint(906.0, 106.0, 876.0, e\room\OBJ, 0)
 			Else
 				TFormPoint(-876.0, 106.0, 906.0, e\room\OBJ, 0)
