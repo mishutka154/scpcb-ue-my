@@ -803,13 +803,13 @@ Function UpdateNPCType049%(n.NPCs)
 							MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 							
 							If Dist < 9.0
-								AnimateNPC(n, Clamp(AnimTime(n\OBJ), 387.0, 428.0), 463.0, n\CurrSpeed * 38.0) ; ~ WALK CYCLE 8 + WALK CYCLE 7
+								AnimateNPC(n, Clamp(AnimTime(n\OBJ), 394.0, 428.0), 463.0, n\CurrSpeed * 38.0)
 							Else
-								If n\Frame > 428.0
-									AnimateNPC(n, Min(AnimTime(n\OBJ), 463.0), 498.0, n\CurrSpeed * 38.0, False)  ; ~ WALK CYCLE 7 + WALK CYCLE 6
+								If n\Frame > 427.9
+									AnimateNPC(n, Min(AnimTime(n\OBJ), 464.0), 498.0, n\CurrSpeed * 38.0, False)
 									If n\Frame > 497.9 Then SetNPCFrame(n, 358.0)
 								Else
-									AnimateNPC(n, Clamp(AnimTime(n\OBJ), 346.0, 358.0), 393.0, n\CurrSpeed * 38.0) ; IDLE TO WALK + WALK CYCLE 3
+									AnimateNPC(n, Clamp(AnimTime(n\OBJ), 346.0, 358.0), 393.0, n\CurrSpeed * 38.0)
 								EndIf
 							EndIf
 						EndIf
