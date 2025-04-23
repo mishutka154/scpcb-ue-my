@@ -4677,7 +4677,6 @@ Function UpdateScreens%()
 						If wi\SCRAMBLE = 0
 							If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 							If (me\BlinkTimer < -16.0 Lor me\BlinkTimer > -6.0) And I_1025\FineState[4] = 0.0 And (Not wi\IsNVGBlinking) And (Not chs\NoTarget)
-								If n_I\Curr096 = Null Then n_I\Curr096 = CreateNPC(NPCType096, 0.0, -500.0, 0.0)
 								If n_I\Curr096\State < 2.0
 									PlaySound_Strict(LoadTempSound("SFX\SCP\096\Triggered.ogg"), True)
 									
