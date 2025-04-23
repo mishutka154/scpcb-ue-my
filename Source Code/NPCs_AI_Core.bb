@@ -4398,10 +4398,10 @@ Function UpdateNPCType1499_1%(n.NPCs)
 End Function
 
 Function UpdateNPCTypeApache%(n.NPCs)
-	Local Dist2#
-	Local Target%
+	Local RotorSpeed# = 20.0 * fps\Factor[0]
+	Local Dist2#, Target%
 	
-	If EntityDistanceSquared(me\Collider, n\Collider) < 3600.0
+	If EntityDistanceSquared(me\Collider, n\Collider) < 3600.0 And n\State < 4.0
 		If PlayerRoom\RoomTemplate\RoomID = r_gate_b
 			Dist2 = Clamp(EntityDistance(n\Collider, PlayerRoom\Objects[7]) / (8000.0 * RoomScale), 0.0, 1.0)
 		Else
@@ -4415,8 +4415,8 @@ Function UpdateNPCTypeApache%(n.NPCs)
 	Select n\State
 		Case 0.0, 1.0
 			;[Block]
-			TurnEntity(n\OBJ2, 0.0, 20.0 * fps\Factor[0], 0.0)
-			TurnEntity(n\OBJ3, 20.0 * fps\Factor[0], 0.0, 0.0)
+			TurnEntity(n\OBJ2, 0.0, RotorSpeed, 0.0)
+			TurnEntity(n\OBJ3, RotorSpeed, 0.0, 0.0)
 			
 			If n\State = 1.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 				If Rand(20) = 1
@@ -4440,8 +4440,8 @@ Function UpdateNPCTypeApache%(n.NPCs)
 				PositionEntity(Target, n\EnemyX, n\EnemyY, n\EnemyZ, True)
 			EndIf
 			
-			TurnEntity(n\OBJ2, 0.0, 20.0 * fps\Factor[0], 0.0)
-			TurnEntity(n\OBJ3, 20.0 * fps\Factor[0], 0.0, 0.0)
+			TurnEntity(n\OBJ2, 0.0, RotorSpeed, 0.0)
+			TurnEntity(n\OBJ3, RotorSpeed, 0.0, 0.0)
 			
 			If DistanceSquared(EntityX(Target), EntityX(n\Collider), EntityZ(Target), EntityZ(n\Collider)) < 3025.0
 				If IsEqual(EntityY(Target), EntityY(n\Collider), 20.0)
@@ -4473,7 +4473,7 @@ Function UpdateNPCTypeApache%(n.NPCs)
 								
 								PositionEntity(Pvt, EntityX(n\Collider), EntityY(n\Collider), EntityZ(n\Collider))
 								RotateEntity(Pvt, EntityPitch(n\Collider), EntityYaw(n\Collider), EntityRoll(n\Collider))
-								MoveEntity(Pvt, 0.0, 0.023, 0.188)
+								MoveEntity(Pvt, 0.0, 0.27, 1.65)
 								PointEntity(Pvt, Target)
 								
 								If WrapAngle(EntityYaw(Pvt) - EntityYaw(n\Collider)) < 10.0
@@ -4508,8 +4508,8 @@ Function UpdateNPCTypeApache%(n.NPCs)
 		Case 4.0 ; ~ Crashes
 			;[Block]
 			If n\State2 < 300.0
-				TurnEntity(n\OBJ2, 0.0, 20.0 * fps\Factor[0], 0.0)
-				TurnEntity(n\OBJ3, 20.0 * fps\Factor[0], 0.0, 0.0)
+				TurnEntity(n\OBJ2, 0.0, RotorSpeed, 0.0)
+				TurnEntity(n\OBJ3, RotorSpeed, 0.0, 0.0)
 				
 				TurnEntity(n\Collider, 0.0, (-fps\Factor[0]) * 7.0, 0.0)
 				n\State2 = n\State2 + fps\Factor[0] * 0.3
