@@ -45,9 +45,9 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 					n\CurrSpeed = CurveValue(n\Speed, n\CurrSpeed, 20.0)
 					
 					If Dist < 9.0
-						AnimateNPC(n, Min(AnimTime(n\OBJ), 94.0), 125.0, n\CurrSpeed * 30.0)
+						AnimateNPC(n, Clamp(AnimTime(n\OBJ), 94.0, 95.0), 125.0, n\CurrSpeed * 25.0)
 					Else
-						AnimateNPC(n, Min(AnimTime(n\OBJ), 64.0), 93.0, n\CurrSpeed * 30.0)
+						AnimateNPC(n, Min(AnimTime(n\OBJ), 64.0), 93.0, n\CurrSpeed * 25.0)
 					EndIf
 					MoveEntity(n\Collider, 0.0, 0.0, n\CurrSpeed * fps\Factor[0])
 					n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
@@ -59,9 +59,9 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 					If Dist < 0.49
 						SetNPCFrame(n, 126.0)
 						n\State = 4.0
+						Return
 					EndIf
-					
-					If (PrevFrame < 65.0 And n\Frame >= 65.0) Lor (PrevFrame < 80.0 And n\Frame >= 80.0) Lor (PrevFrame < 95.0 And n\Frame >= 95.0) Lor (PrevFrame < 113.0 And n\Frame >= 113.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 7)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
+					If (PrevFrame < 65.0 And n\Frame >= 65.0) Lor (PrevFrame < 80.0 And n\Frame >= 80.0) Lor (PrevFrame < 97.0 And n\Frame >= 97.0) Lor (PrevFrame < 113.0 And n\Frame >= 113.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 7)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
 				Else
 					n\Target = Null
 					n\State = 3.0
@@ -145,7 +145,7 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 				If n\CurrSpeed < 0.005
 					AnimateNPC(n, 323.0, 344.0, 0.2)
 				Else
-					AnimateNPC(n, 64.0, 93.0, n\CurrSpeed * 30.0)
+					AnimateNPC(n, 64.0, 93.0, n\CurrSpeed * 25.0)
 					If (PrevFrame < 65.0 And n\Frame >= 65.0) Lor (PrevFrame < 80.0 And n\Frame >= 80.0) Then PlaySoundEx(StepSFX(GetStepSound(n\Collider), 0, Rand(0, 7)), Camera, n\Collider, 8.0, Rnd(0.3, 0.5))
 				EndIf
 				
