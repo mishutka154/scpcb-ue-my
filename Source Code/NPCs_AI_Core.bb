@@ -406,7 +406,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 				If Dist > PowTwo(HideDistance * 1.5)
 					If n\IdleTimer < 70.0 * 15.0
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
-					ElseIf Rand(250 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * (Not RemoteDoorOn))) = 1
+					ElseIf Rand(300 - (70 * SelectedDifficulty\AggressiveNPCs) + (70 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
 							TeleportCloser(n)
 							n\IdleTimer = 0.0

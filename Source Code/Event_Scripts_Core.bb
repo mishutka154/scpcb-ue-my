@@ -5979,12 +5979,13 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					
 					If InteractObject(e\room\Objects[1], 0.8, 1)
 						DrawArrowIcon[2] = True
-						RotateEntity(e\room\Objects[1], Clamp(EntityPitch(e\room\Objects[1]) + Clamp(-mo\Mouse_Y_Speed_1, -10.0, 10.0), 35.0, 89.0), EntityYaw(e\room\Objects[1]), 0.0)
+						RotateEntity(e\room\Objects[1], Clamp(EntityPitch(e\room\Objects[1], True) + Clamp(-mo\Mouse_Y_Speed_1, -10.0, 10.0), 35.0, 89.0), EntityYaw(e\room\Objects[1], True), 0.0, True)
+					Else
+						RotateEntity(e\room\Objects[1], EntityPitch(e\room\Objects[1], True) + Min(Cos(MilliSec) * 0.1, 89.0), EntityYaw(e\room\Objects[1], True), 0.0, True)
 					EndIf
 					If I_008\Timer = 0.0
 						If me\Bloodloss > 0.0 Then InjurePlayer(0.0, 0.001)
 					EndIf
-					
 					If wi\GasMask = 0 And wi\HazmatSuit = 0 Then me\EyeIrritation = Max(70.0, me\EyeIrritation)
 				EndIf
 				
@@ -6015,7 +6016,7 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					
 					n.NPCs = CreateNPC(NPCType008_1, e\room\x, -250.0, e\room\z)
 					ChangeNPCTextureID(n, NPC_008_1_TEXTURE)
-					n\State = 3.0 : n\IdleTimer = 70.0 * -45.0
+					n\State = 3.0 : n\IdleTimer = 70.0 * -60.0
 					
 					e\EventState2 = 2.0
 				EndIf
