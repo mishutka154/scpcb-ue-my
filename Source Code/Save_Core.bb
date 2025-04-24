@@ -795,10 +795,10 @@ Function LoadGame%(File$)
 				;[Block]
 				n_I\Curr066 = n
 				;[End Block]
-;			Case NPCType999
-;				;[Block]
-;				n_I\Curr999 = n
-;				;[End Block]
+			Case NPCType999
+				;[Block]
+				n_I\Curr999 = n
+				;[End Block]
 		End Select
 		
 		x = ReadFloat(f)
@@ -872,10 +872,12 @@ Function LoadGame%(File$)
 				;[End Block]
 		End Select
 	Next
-;	If n_I\Curr999\State3 > 1
-;		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-;		EntityFX(n\OBJ, 1)
-;	EndIf
+	If n_I\Curr999 <> Null
+		If n_I\Curr999\State3 > 1
+			EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+			EntityFX(n\OBJ, 1)
+		EndIf
+	EndIf
 	
 	For n.NPCs = Each NPCs
 		If n\TargetID <> 0
@@ -1793,10 +1795,10 @@ Function LoadGameQuick%(File$)
 				;[Block]
 				n_I\Curr066 = n
 				;[End Block]
-;			Case NPCType999
-;				;[Block]
-;				n_I\Curr999 = n
-;				;[End Block]
+			Case NPCType999
+				;[Block]
+				n_I\Curr999 = n
+				;[End Block]
 		End Select
 		
 		x = ReadFloat(f)
@@ -1870,10 +1872,12 @@ Function LoadGameQuick%(File$)
 				;[End Block]
 		End Select
 	Next
-;	If n_I\Curr999\State3 > 1
-;		EntityColor(n\OBJ, 255.0, 255.0, 140.0)
-;		EntityFX(n\OBJ, 1)
-;	EndIf
+	If n_I\Curr999 <> Null
+		If n_I\Curr999\State3 > 1
+			EntityColor(n\OBJ, 255.0, 255.0, 140.0)
+			EntityFX(n\OBJ, 1)
+		EndIf
+	EndIf
 	
 	For n.NPCs = Each NPCs
 		If n\TargetID <> 0

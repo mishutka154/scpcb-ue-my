@@ -7797,13 +7797,13 @@ Function UpdateEvent_Room2_Medibay%(e.Events)
 	EndIf
 End Function
 
-;Function UpdateEvent_Room2_Office%(e.Events)
-;	If e\room\Dist < 6.0
-;		TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
-;		n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
-;		RemoveEvent(e)
-;	EndIf
-;End Function
+Function UpdateEvent_Room2_Office%(e.Events)
+	If e\room\Dist < 6.0
+		TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
+		n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
+		RemoveEvent(e)
+	EndIf
+End Function
 
 Function UpdateEvent_Room2_Scientists_2%(e.Events)
 	If PlayerRoom = e\room
@@ -9834,14 +9834,14 @@ Function UpdateEvent_Tesla%(e.Events)
 									;[Block]
 									ShowEntity(n\OBJ)
 									;[End Block]
-;											Case NPCType999
-;												;[Block]
-;												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
-;												n\EnemyX = 0.0
-;												n\EnemyY = 0.0
-;												n\EnemyZ = 0.0
-;												n\State = 4.0
-;												;[End Block]
+											Case NPCType999
+												;[Block]
+												ChangeNPCTextureID(n, NPC_999_TESLA_TEXTURE)
+												n\EnemyX = 0.0
+												n\EnemyY = 0.0
+												n\EnemyZ = 0.0
+												n\State = 4.0
+												;[End Block]
 								Case NPCTypeClerk
 									;[Block]
 									ChangeNPCTextureID(n, NPC_CLERK_TESLA_TEXTURE)
