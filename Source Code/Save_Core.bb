@@ -1554,7 +1554,7 @@ Function LoadGameQuick%(File$)
 	me\Zombie = False
 	me\Deaf = False
 	me\DeafTimer = 0.0
-	me\Playable = True
+	me\Playable = 2
 	me\SelectedEnding = -1
 	
 	ReadString(f)
@@ -2465,6 +2465,7 @@ Function LoadGameQuick%(File$)
 	Else
 		ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
 	EndIf
+	EntityColor(pm\OBJ, 255.0, 255.0, 255.0)
 	
 	CatchErrors("Uncaught: LoadGameQuick(" + File + ")")
 End Function
@@ -2475,7 +2476,7 @@ Global CanSave%
 Function UpdateSaveState%()
 	If SelectedDifficulty\SaveType <> NO_SAVES
 		CanSave = 3
-		If QuickLoadPercent > -1 Lor me\FallTimer < 0.0 Lor (Not me\Playable) Then CanSave = 0
+		If QuickLoadPercent > -1 Lor me\FallTimer < 0.0 Lor me\Playable < 2 Then CanSave = 0
 	EndIf
 End Function
 
@@ -2487,7 +2488,7 @@ End Type
 Global as.AutoSave
 
 Function UpdateAutoSave%()
-	If (Not opt\AutoSaveEnabled) Lor SelectedDifficulty\SaveType <> SAVE_ANYWHERE Lor me\Terminated Lor CanSave < 3 Lor (Not me\Playable) Lor me\Zombie
+	If (Not opt\AutoSaveEnabled) Lor SelectedDifficulty\SaveType <> SAVE_ANYWHERE Lor me\Terminated Lor CanSave < 3 Lor me\Playable < 2 Lor me\Zombie
 		If as\Timer <= 70.0 * 5.0 Then CancelAutoSave()
 		Return
 	EndIf
