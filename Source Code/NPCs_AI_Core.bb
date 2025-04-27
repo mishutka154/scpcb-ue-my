@@ -3629,9 +3629,11 @@ Function UpdateNPCType966%(n.NPCs)
 End Function
 
 Function UpdateNPCType999%(n.NPCs)
-	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
-	Local i%
-	Local de.Decals
+	If n\State = 66.0
+		PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - n\CollRadius, EntityZ(n\Collider))
+		RotateEntity(n\OBJ, 0.0, n\Angle + 90.0, 0.0)
+		Return
+	EndIf
 	
 	; ~ n\State: Main state
 	
@@ -3642,6 +3644,10 @@ Function UpdateNPCType999%(n.NPCs)
 	; ~ 1.0 = Only SCP-500-01 eaten
 	; ~ 2.0 = Only SCP-2022-01 eaten
 	; ~ 3.0 = Both pills eaten
+	
+	Local Dist# = EntityDistanceSquared(me\Collider, n\Collider)
+	Local i%
+	Local de.Decals
 	
 	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
