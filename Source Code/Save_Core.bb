@@ -1994,7 +1994,6 @@ Function LoadGameQuick%(File$)
 		For r.Rooms = Each Rooms
 			If IsInsideBox(n\Collider, r\BoundingBox)
 				n\CurrentRoom = r
-				DebugLog(n\NVGName + ": " + n\CurrentRoom\RoomTemplate\Name)
 				Exit
 			EndIf
 		Next
