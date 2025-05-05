@@ -897,9 +897,11 @@ Function PickItem%(item.Items, PlayPickUpSound% = True)
 			Exit
 		EndIf
 	Next
-	If PlayPickUpSound Then me\SndVolume = Max(2.0, me\SndVolume)
-	;pm\AnimID = PLAYER_ANIM_PICK_UP + me\Crouch
-	pm\AnimID = PLAYER_ANIM_INTERACT + me\Crouch
+	If PlayPickUpSound
+		me\SndVolume = Max(2.0, me\SndVolume)
+		SetPlayerAnimation(PLAYER_ANIM_LEFT_PICK_UP + me\Crouch, item\Collider)
+	EndIf
+	
 	CatchErrors("Uncaught: PickItem()")
 End Function
 
