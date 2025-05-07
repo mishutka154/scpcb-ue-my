@@ -7174,7 +7174,7 @@ Function UpdateEvent_Gate_A%(e.Events)
 							me\CurrSpeed = 0.0
 							If (Not ChannelPlaying(e\SoundCHN))
 								ClearCheats()
-							
+								
 								me\SelectedEnding = Ending_A2
 								PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
 								msg\DeathMsg = ""
