@@ -7890,13 +7890,13 @@ Function UpdateEvent_Room2_Medibay%(e.Events)
 	EndIf
 End Function
 
-;Function UpdateEvent_Room2_Office%(e.Events)
-;	If e\room\Dist < 6.0
-;		TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
-;		n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
-;		RemoveEvent(e)
-;	EndIf
-;End Function
+Function UpdateEvent_Room2_Office%(e.Events)
+	If e\room\Dist < 6.0
+		TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
+		n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
+		RemoveEvent(e)
+	EndIf
+End Function
 
 Function UpdateEvent_Room2_Scientists_2%(e.Events)
 	If PlayerRoom = e\room
