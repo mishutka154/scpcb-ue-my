@@ -2465,9 +2465,7 @@ Function LoadGameQuick%(File$)
 		Local p.Props
 		
 		For p.Props = Each Props
-			For p.Props = Each Props
-				If p\IsLamp Then RotateEntity(p\OBJ, 0.0, EntityYaw(p\OBJ, True), EntityRoll(p\OBJ, True), True)
-			Next
+			If p\IsLamp Then RotateEntity(p\OBJ, 0.0, EntityYaw(p\OBJ, True), EntityRoll(p\OBJ, True), True)
 		Next
 	EndIf
 	
