@@ -201,7 +201,7 @@
 		},
 		{
 			"id": "o5",
-			"image": "AchvO5.png",
+			"image": "AchvCMR.png",
 			"scp": false
 		},
  		{
@@ -238,6 +238,11 @@
             "id": "apollyon",
             "image": "AchvApollyon.png",
             "scp": false
+		},
+		{
+			"id": "cmr",
+			"image": "AchvCMR.png",
+			"scp": false
 		}
 	],
 	"translations": {
