@@ -11,7 +11,8 @@
 - Fixed textures in some rooms.
 - Fixed position of the SCP-012 box.
 - Fixed SCP-035 tentacle's gravity.
-- Fixed SCP-049 still appearing in the elevator after being crystallized.
+- Fixed SCP-049 still appearing in the elevator/surveillance room after being crystallized.
+- Fixed memory leaks.
 
 [Known issues]
 - Rooms can overlap and block the way.
