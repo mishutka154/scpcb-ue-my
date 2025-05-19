@@ -1,9 +1,12 @@
 {v1.6}
 
 [Global]
-- Added SCP-999
+- Added SCP-999.
 
 {1.5.4.1}
+
+[Global]
+- Better bumps.
 
 [Bug Fixes]
 - Fixed MAV in Maintenance Tunnels.
