@@ -888,7 +888,7 @@ Function RemoveMonitorInstances%()
 	Delete(mon_I) : mon_I = Null
 End Function
 
-Const MaxNPCModelIDAmount% = 33
+Const MaxNPCModelIDAmount% = 34
 Const MaxNPCTextureID% = 28
 
 Type NPCInstance
@@ -937,10 +937,11 @@ Const NPC_APACHE_ROTOR_1_MODEL% = 25
 Const NPC_APACHE_ROTOR_2_MODEL% = 26
 Const NPC_CLERK_MODEL% = 27
 Const NPC_CLASS_D_MODEL% = 28
-Const NPC_DUCK_MODEL% = 29
-Const NPC_GUARD_MODEL% = 30
-Const NPC_MTF_MODEL% = 31
-Const NPC_VEHICLE_MODEL% = 32
+Const NPC_COCKROACH_MODEL% = 29
+Const NPC_DUCK_MODEL% = 30
+Const NPC_GUARD_MODEL% = 31
+Const NPC_MTF_MODEL% = 32
+Const NPC_VEHICLE_MODEL% = 33
 ;[End Block]
 
 ; ~ NPC Texture ID Constants
@@ -1065,6 +1066,8 @@ Function LoadNPCs%()
 	n_I\NPCModelID[NPC_CLERK_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\clerk.b3d")
 	
 	n_I\NPCModelID[NPC_CLASS_D_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\class_d.b3d")
+	
+	n_I\NPCModelID[NPC_COCKROACH_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\cockroach.b3d")
 	
 	n_I\NPCModelID[NPC_DUCK_MODEL] = LoadAnimMesh_Strict("GFX\NPCs\duck.b3d")
 	
