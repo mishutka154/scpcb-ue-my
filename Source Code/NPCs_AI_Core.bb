@@ -4214,6 +4214,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 			
 			de\SizeChange = Rnd(0.001, 0.0015) : de\MaxSize = de\Size + Rnd(0.008, 0.009)
 		EndIf
+		FreeEntity(Pvt) : Pvt = 0
 		n\IsDead = True
 	EndIf
 End Function
