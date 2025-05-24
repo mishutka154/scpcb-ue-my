@@ -32,6 +32,49 @@
 - Battery issues caused by having multiple night vision devices.
 - Corrosive door textures not saving correctly.
 
+{1.5.6}
+
+[Global]
+- Better bumps.
+- Asav Harn's body has been moved to SCP-966's containment chamber.
+
+[NPCs]
+- Added cockroach.
+- Can only be afflicted by SCP-009 when it is liquified.
+
+[Rooms]
+- SCP-009's cooling is faster.
+- Change hand scanner type of »room2c_gw_lcz» to black.
+
+[Bug Fixes]
+- Fixed double achievement of Command room.
+- Fixed Gate B lighting.
+
+{1.5.5}
+
+[Global]
+- Better bumps.
+
+[Rooms]
+- Placed some items in «room3_storage» and »room2_closets_2».
+
+[Bug Fixes]
+- Fixed MAV in Maintenance Tunnels.
+- Fixed MAV after opening the door leading to Command Meeting Room.
+- Fixed textures in some rooms.
+- Fixed position of the SCP-012 box.
+- Fixed SCP-035 tentacle's gravity.
+- Fixed SCP-049 still appearing in the elevator/surveillance room after being crystallized.
+- Fixed memory leaks.
+- Fixed S-Nav Navigator working without batteries.
+- Fixed color of the elevator buttons that can be called to player.
+
+[Known issues]
+- Rooms can overlap and block the way.
+- Tabbing out of the game and tabbing back in freezes the game view/turning off monitor freezes the game.
+- Battery issues caused by having multiple night vision devices.
+- Corrosive door textures not saving correctly.
+
 {v1.5.4}
 
 [Global]
