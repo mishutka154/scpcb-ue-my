@@ -199,6 +199,11 @@
 			"image": "AchvMaynard.png",
 			"scp": false
 		},
+		{
+			"id": "cmr",
+			"image": "AchvCMR.png",
+			"scp": false
+		},
  		{
 			"id": "omni",
 			"image": "AchvOmni.png",
@@ -233,11 +238,6 @@
             "id": "apollyon",
             "image": "AchvApollyon.png",
             "scp": false
-		},
-		{
-			"id": "cmr",
-			"image": "AchvCMR.png",
-			"scp": false
 		}
 	],
 	"translations": {
@@ -401,17 +401,21 @@
 			"name": "The Containment Breach",
 			"description": "Entered Doctor Maynard's office."
 		},
+		"cmr": {
+			"name": "Control Over the Foundation",
+			"description": "Entered the Command Meeting Room."
+		},
 		"omni": {
 			"name": "Unlimited Access",
 			"description": "Acquired an Omni-level Key Сard."
 		},
-		"pocketdimension": {
-			"name": "No Man's Land",
-			"description": "Escaped the Old Man's Pocket Dimension."
-		},
 		"snav": {
 			"name": "Technical Accomplishments",
 			"description": "Acquired the S-NAV Navigator Ultimate."
+		},
+		"pocketdimension": {
+			"name": "No Man's Land",
+			"description": "Escaped the Old Man's Pocket Dimension."
 		},
 		"tesla": {
 			"name": "Shell Shocked",
@@ -424,10 +428,6 @@
 		"apollyon": {
 			"name": "The Great Survivor",
 			"description": "Beat the game on \"Apollyon\" difficulty."
-		},
-		"cmr": {
-			"name": "Control Over the Foundation",
-			"description": "Entered the Command Meeting Room."
 		}
 	}
 }
