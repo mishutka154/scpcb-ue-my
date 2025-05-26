@@ -3403,11 +3403,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Document SCP-895", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 368.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			If Rand(2) = 1
-				it.Items = CreateItem("Document SCP-860", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 464.0 * RoomScale)
-			Else
-				it.Items = CreateItem("SCP-093 Recovered Materials", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 464.0 * RoomScale)
-			EndIf
+			it.Items = CreateItem("SCP-093 Recovered Materials", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 464.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("S-NAV Navigator", it_nav, r\x - 336.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 480.0 * RoomScale)
