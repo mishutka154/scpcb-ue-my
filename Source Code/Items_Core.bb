@@ -413,6 +413,7 @@ Type Items
 	Field R%, G%, B%, Alpha#
 	Field Dist#, Nearby%
 	Field State#, State2#, State3#
+	Field UsageTimer#
 	Field Picked%, Dropped%
 	Field InvImg%
 	Field SecondInv.Items[20]
