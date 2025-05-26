@@ -256,6 +256,12 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Document SCP-173", it_paper, r\x + 173.0 * 4.85 * RoomScale, r\y + 173.0 * RoomScale, r\z + 173.0 * 14.33 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
+			it.Items = CreateItem("Warning Labels #1", it_paper, r\x + 1324.0 * RoomScale, r\y + 150.0 * RoomScale, r\z + 1370.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Security Clearance Levels", it_paper, r\x + 1262.0 * RoomScale, r\y + 160.0 * RoomScale, r\z + 3680.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			it.Items = CreateItem("Note From Bryan", it_paper, r\x + 1642.0 * RoomScale, r\y + 550.0 * RoomScale, r\z + 1332 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
@@ -774,6 +780,9 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Incident Report SCP-1048-A", it_paper, r\x + 736.0 * RoomScale, r\y + 224.0 * RoomScale, r\z - 480.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
+			it.Items = CreateItem("Risk Classes", it_paper, r\x - 508.0 * RoomScale, r\y - 240.0 * RoomScale, r\z - 378.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
 			it.Items = CreateItem("Gas Mask", it_gasmask, r\x - 896.0 * RoomScale, r\y - 248.0 * RoomScale, r\z + 898.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
@@ -793,6 +802,9 @@ Function FillRoom%(r.Rooms)
 			CreateDoor(r, r\x + 279.0 * RoomScale, r\y, r\z - 576.0 * RoomScale, 90.0, True, OFFICE_DOOR)
 			
 			it.Items = CreateItem("Document SCP-2022", it_paper, r\x + 727.0 * RoomScale, r\y + 103.0 * RoomScale, r\z - 562.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Warning Labels #3", it_paper, r\x + 737.0 * RoomScale, r\y + 100.0 * RoomScale, r\z + 470.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Syringe", it_syringe, r\x + 734.0 * RoomScale, r\y + 164.0 * RoomScale, r\z + 470.0 * RoomScale)
