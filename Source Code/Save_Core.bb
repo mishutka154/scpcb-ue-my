@@ -1371,8 +1371,6 @@ Function LoadGame%(File$)
 		it\Name = Name
 		it\DisplayName = DisplayName
 		
-		EntityType(it\Collider, HIT_ITEM)
-		
 		x = ReadFloat(f)
 		y = ReadFloat(f)
 		RotateEntity(it\Collider, x, y, 0.0)
@@ -2349,8 +2347,6 @@ Function LoadGameQuick%(File$)
 		it.Items = CreateItem(IttName, ID, x, y, z, Red, Green, Blue, Alpha)
 		it\Name = Name
 		it\DisplayName = DisplayName
-		
-		EntityType(it\Collider, HIT_ITEM)
 		
 		x = ReadFloat(f)
 		y = ReadFloat(f)
