@@ -4579,7 +4579,7 @@ Function UpdateNPCTypeApache%(n.NPCs)
 		Else
 			Dist2 = 1.0
 		EndIf
-		n\SoundCHN = LoopSoundEx(snd_I\ApacheSFX, n\SoundCHN, Camera, n\Collider, 25.0, Dist2)
+		n\SoundCHN = LoopSoundEx(NPCSound[SOUND_NPC_APACHE_PROPELLER], n\SoundCHN, Camera, n\Collider, 25.0, Dist2)
 	EndIf
 	
 	n\DropSpeed = 0.0
@@ -5266,7 +5266,7 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 				AnimateNPC(n, 623.0, 642.0, 0.3)
 				
 				If ChannelPlaying(n\SoundCHN2) Then StopChannel(n\SoundCHN2) : n\SoundCHN2 = 0
-				n\SoundCHN = LoopSoundEx(snd_I\VehicleSFX[0], n\SoundCHN, Camera, n\OBJ2, 10.0, 1.0)
+				n\SoundCHN = LoopSoundEx(NPCSound[SOUND_NPC_VEHICLE_IDLE], n\SoundCHN, Camera, n\OBJ2, 10.0, 1.0)
 				
 				n\CurrSpeed = CurveValue(0.0, n\CurrSpeed, 5.0)
 			Else
@@ -5281,7 +5281,7 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 				AnimateNPC(n, 623.0, 642.0, 0.3)
 				
 				If ChannelPlaying(n\SoundCHN) Then StopChannel(n\SoundCHN) : n\SoundCHN = 0
-				n\SoundCHN2 = LoopSoundEx(snd_I\VehicleSFX[1], n\SoundCHN2, Camera, n\OBJ2, 12.0, 1.0)
+				n\SoundCHN2 = LoopSoundEx(NPCSound[SOUND_NPC_VEHICLE_MOVING], n\SoundCHN2, Camera, n\OBJ2, 12.0, 1.0)
 				
 				n\CurrSpeed = CurveValue(n\Speed * 0.9, n\CurrSpeed, 20.0)
 				AnimateEx(n\OBJ2, AnimTime(n\OBJ2), 1.0, 20.0, n\CurrSpeed * 5.0)
@@ -5614,7 +5614,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 								LoadNPCSound(n, "SFX\Character\MTF\096\Spotted" + Rand(0, 1) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
-							PlaySoundEx(snd_I\NVGSFX[0], Camera, n\Collider, 5.0)
+							PlaySoundEx(LoadTempSound("SFX\Interact\NVGOn.ogg"), Camera, n\Collider, 5.0)
 							
 							n\EnemyX = EntityX(n_I\Curr096\Collider, True)
 							n\EnemyY = EntityY(n_I\Curr096\Collider, True)
@@ -5988,7 +5988,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 								LoadNPCSound(n, "SFX\Character\MTF\096\Spotted" + Rand(0, 1) + ".ogg")
 								PlayMTFSound(n\Sound, n)
 							EndIf
-							PlaySoundEx(snd_I\NVGSFX[0], Camera, n\Collider, 5.0)
+							PlaySoundEx(LoadTempSound("SFX\Interact\NVGOn.ogg"), Camera, n\Collider, 5.0)
 							
 							n\EnemyX = EntityX(n_I\Curr096\Collider, True)
 							n\EnemyY = EntityY(n_I\Curr096\Collider, True)
@@ -6638,7 +6638,7 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 					EndIf
 				Else
 					StopChannel(n\SoundCHN) : n\SoundCHN = 0
-					PlaySoundEx(snd_I\NVGSFX[1], Camera, n\Collider, 5.0)
+					PlaySoundEx(LoadTempSound("SFX\Interact\NVGOff.ogg"), Camera, n\Collider, 5.0)
 					n\Target = Null
 					n\EnemyX = 0.0 : n\EnemyY = 0.0 : n\EnemyZ = 0.0
 					n\State2 = 0.0
@@ -6848,4 +6848,4 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS
