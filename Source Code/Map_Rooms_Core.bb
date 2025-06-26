@@ -653,6 +653,10 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
 			
+			it.Items = CreateItem("SCP-914 Test Logs", it_paper, r\x - 1341.0 * RoomScale, r\y + 178.0 * RoomScale, r\z - 158.0 * RoomScale)
+			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
+			
 			it.Items = CreateItem("First Aid Kit", it_firstaid, r\x - 1376.0 * RoomScale, r\y + 112.0 * RoomScale, r\z - 686.0 * RoomScale)
 			RotateEntity(it\Collider, 0.0, 270.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)
