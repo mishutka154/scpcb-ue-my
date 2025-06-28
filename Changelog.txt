@@ -9,6 +9,8 @@
 
 [Rooms]
 - Improved labels for SCPs.
+- Remove Level 5 Key Card from SCP-106 and SCP-409.
+- Add Level 5 Key Card to SCP-009 and Site Director room with a new way to obtain it. (Make a deal with SCP-079)
 
 {1.5.6}
 

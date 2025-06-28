@@ -68,6 +68,7 @@ Const e_room2_ez_035% = 49
 Const e_room2_2_ez_duck% = 50
 Const e_room2_6_ez_guard% = 51
 Const e_room2_office% = 52
+Const e_room2_office_3% = 78 ; ~ reorganize later
 Const e_room2_cafeteria% = 53
 Const e_room2_ic% = 54
 Const e_room2_medibay% = 55
@@ -298,6 +299,10 @@ Function FindEventID%(EventName$)
 		Case "room2_office"
 			;[Block]
 			Return(e_room2_office)
+			;[End Block]
+		Case "room2_office_3"
+			;[Block]
+			Return(e_room2_office_3)
 			;[End Block]
 		Case "room2_cafeteria"
 			;[Block]
@@ -875,6 +880,10 @@ Function UpdateEvents%()
 			Case e_room2_office
 				;[Block]
 				UpdateEvent_Room2_Office(e)
+				;[End Block]
+			Case e_room2_office_3
+				;[Block]
+				UpdateEvent_Room2_Office_3(e)
 				;[End Block]
 			Case e_room2_scientists_2
 				;[Block]

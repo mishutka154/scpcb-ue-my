@@ -2189,6 +2189,7 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 							e\EventState3 = 1.0
 							e\room\RoomDoors[1]\Open = True
 						EndIf
+						If e\EventID = e_room2_office_3 Then e\EventState = 1.0
 					Next
 					CreateConsoleMsg(GetLocalString("console", "ue"))
 					;[End Block]

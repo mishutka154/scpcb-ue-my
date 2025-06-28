@@ -4309,6 +4309,7 @@ Function UpdateEvent_Cont1_079%(e.Events)
 			
 			For e2.Events = Each Events
 				If e2\EventID = e_gate_b_entrance Lor e2\EventID = e_gate_a_entrance Then e2\EventState3 = 1.0
+				If e2\EventID = e_room2_office_3 Then e2\EventState = 1.0
 			Next
 			
 			e\EventState2 = 2.0
@@ -6364,24 +6365,22 @@ Function UpdateEvent_Cont2_409%(e.Events)
 			me\Zone = 1
 			
 			If e\EventState = 0.0
-				TFormPoint(-4843.8, -4440.8, 1729.0, e\room\OBJ, 0)
-				
-				Local x2# = TFormedX(), y2# = TFormedY(), z2# = TFormedZ()
-				
-				e\room\NPC[0] = CreateNPC(NPCTypeD, x2, y2, z2)
-				e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
-				ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_409_TEXTURE)
-				SetNPCFrame(e\room\NPC[0], 19.0)
-				RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle, 0.0, True)
-				
-				de.Decals = CreateDecal(DECAL_409, x2, y2 - (56.2 * RoomScale) + 0.005, z2, 90.0, Rnd(360.0), 0.0, 0.85, 0.8)
-				EntityParent(de\OBJ, e\room\OBJ)
-				
-				TFormPoint(-5000.0, -4409.0, 1520.0, e\room\OBJ, 0)
 				If I_005\ChanceToSpawn = 2
+					TFormPoint(-4843.8, -4440.8, 1729.0, e\room\OBJ, 0)
+					
+					Local x2# = TFormedX(), y2# = TFormedY(), z2# = TFormedZ()
+					
+					e\room\NPC[0] = CreateNPC(NPCTypeD, x2, y2, z2)
+					e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
+					ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_409_TEXTURE)
+					SetNPCFrame(e\room\NPC[0], 19.0)
+					RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle, 0.0, True)
+					
+					de.Decals = CreateDecal(DECAL_409, x2, y2 - (56.2 * RoomScale) + 0.005, z2, 90.0, Rnd(360.0), 0.0, 0.85, 0.8)
+					EntityParent(de\OBJ, e\room\OBJ)
+					
+					TFormPoint(-5000.0, -4409.0, 1520.0, e\room\OBJ, 0)
 					it.Items = CreateItem("Crystallized SCP-005", it_crystal005, TFormedX(), TFormedY(), TFormedZ())
-				Else
-					it.Items = CreateItem("Level 5 Key Card", it_key5, TFormedX(), TFormedY(), TFormedZ())
 				EndIf
 				
 				TFormPoint(-4105.0, -4336.0, 2207.0, e\room\OBJ, 0)
@@ -6391,11 +6390,13 @@ Function UpdateEvent_Cont2_409%(e.Events)
 				e\EventState = 1.0
 			Else
 				If I_409\Timer = 0.0
-					If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.81
-						GiveAchievement("409")
-						If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0
-							me\BlurTimer = 1000.0
-							I_409\Timer = 0.001
+					If I_005\ChanceToSpawn = 2
+						If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.81
+							GiveAchievement("409")
+							If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0
+								me\BlurTimer = 1000.0
+								I_409\Timer = 0.001
+							EndIf
 						EndIf
 					EndIf
 					
@@ -6546,20 +6547,20 @@ Function UpdateEvent_Cont3_009%(e.Events)
 			
 			If (Not EntityHidden(e\room\Objects[1])) Then HideEntity(e\room\Objects[1])
 			
-			If e\EventState > 0.35
-				e\EventState = Max(e\EventState - (fps\Factor[0] * 0.0001), 0.35)
-			ElseIf e\EventState = 0.35
-				For i = 0 To 2
+			If e\EventState > 0.33
+				e\EventState = Max(e\EventState - (fps\Factor[0] * 0.00007), 0.33)
+			ElseIf e\EventState = 0.33
+				For i = 0 To 4
 					e\room\RoomDoors[i]\Locked = 0
 				Next
 				EntityPickMode(e\room\Objects[2], 0)
 				EntityType(e\room\Objects[2], 0)
 				If e\room\Objects[3] <> 0
-					it.Items = CreateItem("Level 4 Key Card", it_key4, EntityX(e\room\Objects[3]), EntityY(e\room\Objects[3]) + 0.015, EntityZ(e\room\Objects[3]))
+					it.Items = CreateItem("Level 5 Key Card", it_key5, EntityX(e\room\Objects[3]), EntityY(e\room\Objects[3]) + 0.015, EntityZ(e\room\Objects[3]))
 					RotateEntity(it\Collider, 0.0, EntityYaw(e\room\Objects[3]), 0.0)
 					FreeEntity(e\room\Objects[3]) : e\room\Objects[3] = 0
 				EndIf
-				e\EventState = 0.34
+				e\EventState = 0.32
 			EndIf
 			EntityAlpha(e\room\Objects[2], e\EventState)
 		EndIf
@@ -6579,7 +6580,7 @@ Function UpdateEvent_Cont3_009%(e.Events)
 		If e\EventState = 0.0
 			UpdateRedLight(e\room\Objects[1], 1500, 800)
 			If UpdateLever(e\room\RoomLevers[0]\OBJ)
-				For i = 0 To 2
+				For i = 0 To 4
 					If e\room\RoomDoors[i]\Open Then OpenCloseDoor(e\room\RoomDoors[i])
 					e\room\RoomDoors[i]\Locked = 1
 				Next
@@ -6587,25 +6588,25 @@ Function UpdateEvent_Cont3_009%(e.Events)
 				SetEmitter(e\room, EntityX(e\room\RoomLevers[0]\OBJ, True), EntityY(e\room\RoomLevers[0]\OBJ, True), EntityZ(e\room\RoomLevers[0]\OBJ, True), 19)
 				PlaySoundEx(snd_I\SparkShortSFX, Camera, e\room\RoomLevers[0]\OBJ, 3.0, 0.4)
 				PlaySound_Strict(snd_I\AlarmSFX[2])
-				e\EventState = 1.0
+				e\EventState = 0.8
 			EndIf
 		EndIf
 		
-		If e\EventState <> 0.34
+		If e\EventState <> 0.32
 			If e\room\Objects[3] = 0
 				Local itt.ItemTemplates
 				
 				For itt.ItemTemplates = Each ItemTemplates
-					If itt\ID = it_key4
+					If itt\ID = it_key5
 						e\room\Objects[3] = CopyEntity(itt\OBJ)
-						TFormPoint(405.0, -510.0, -391.0, e\room\OBJ, 0)
+						TFormPoint(384.0, -510.0, -391.0, e\room\OBJ, 0)
 						PositionEntity(e\room\Objects[3], TFormedX(), TFormedY(), TFormedZ())
 						RotateEntity(e\room\Objects[3], 0.0, 45.0, 0.0)
 						Exit
 					EndIf
 				Next
 			EndIf
-		ElseIf e\EventState = 0.34
+		ElseIf e\EventState = 0.32
 			UpdateBreathSteam()
 			
 			Local n.NPCs
@@ -7977,6 +7978,21 @@ Function UpdateEvent_Room2_Office%(e.Events)
 		TFormPoint(820.0, -256.0, 0.0, e\room\OBJ, 0)
 		n_I\Curr999 = CreateNPC(NPCType999, TFormedX(), TFormedY(), TFormedZ())
 		RemoveEvent(e)
+	EndIf
+End Function
+
+Function UpdateEvent_Room2_Office_3%(e.Events)
+	If PlayerRoom = e\room
+		If e\EventState = 1.0 And RemoteDoorOn
+			If EntityDistanceSquared(me\Collider, e\room\RoomDoors[1]\OBJ) < 4.0
+				If (Not e\room\RoomDoors[0]\Open) Then OpenCloseDoor(e\room\RoomDoors[0])
+				If (Not e\room\RoomDoors[1]\Open)
+					OpenCloseDoor(e\room\RoomDoors[1])
+				Else
+					RemoveEvent(e)
+				EndIf
+			EndIf
+		EndIf
 	EndIf
 End Function
 
