@@ -3455,7 +3455,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x - 368.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 80.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-895", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 368.0 * RoomScale)
+			it.Items = CreateItem("Warning Labels #2", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 368.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-093 Recovered Materials", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 464.0 * RoomScale)
