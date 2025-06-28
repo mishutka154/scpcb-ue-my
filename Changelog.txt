@@ -4,7 +4,7 @@
 - Added SCP-999.
 
 [Items]
-- Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, containment zones, and updated the security clearance levels.
+- Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, SCP-914 Test logs, containment zones, and updated the security clearance levels.
 - 
 
 [Rooms]
