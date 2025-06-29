@@ -2247,9 +2247,6 @@ Function FillRoom%(r.Rooms)
 			RotateEntity(r\Objects[5], 0.0, 180.0, 0.0)
 			EntityParent(r\Objects[5], r\OBJ)
 			
-			it.Items = CreateItem("Level 5 Key Card", it_key5, r\x - 1275.0 * RoomScale, r\y - 7910.0 * RoomScale, r\z + 3106.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
 			it.Items = CreateItem("Dr. Allok's Note", it_paper, r\x - 87.0 * RoomScale, r\y - 7904.0 * RoomScale, r\z + 2535.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
@@ -2912,12 +2909,23 @@ Function FillRoom%(r.Rooms)
 		Case r_cont3_009
 			;[Block]
 			; ~ Doors leading to containment chamber
-			d.Doors = CreateDoor(r, r\x + 640.0 * RoomScale, r\y, r\z, 270.0, True, HEAVY_DOOR, KEY_CARD_3)
+			d.Doors = CreateDoor(r, r\x + 640.0 * RoomScale, r\y, r\z, 270.0, True, HEAVY_DOOR, KEY_CARD_4)
 			r\RoomDoors[0] = d
-			d.Doors = CreateDoor(r, r\x - 640.0 * RoomScale, r\y, r\z, 270.0, True, HEAVY_DOOR, KEY_CARD_3)
+			d.Doors = CreateDoor(r, r\x - 640.0 * RoomScale, r\y, r\z, 270.0, True, HEAVY_DOOR, KEY_CARD_4)
 			r\RoomDoors[1] = d
-			d.Doors = CreateDoor(r, r\x, r\y, r\z - 640.0 * RoomScale, 0.0, True, HEAVY_DOOR, KEY_CARD_3)
+			d.Doors = CreateDoor(r, r\x, r\y, r\z - 640.0 * RoomScale, 0.0, True, HEAVY_DOOR, KEY_CARD_4)
 			r\RoomDoors[2] = d
+			
+			; ~ Observation room doors
+			d.Doors = CreateDoor(r, r\x - 832.0 * RoomScale, r\y, r\z + 352.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_4)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.08, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
+			r\RoomDoors[3] = d
+			
+			d.Doors = CreateDoor(r, r\x + 832.0 * RoomScale, r\y, r\z + 352.0 * RoomScale, 180.0, False, ONE_SIDED_DOOR, KEY_CARD_4)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.08, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
+			r\RoomDoors[4] = d
 			
 			; ~ DNA door
 			d.Doors = CreateDoor(r, r\x + 656.0 * RoomScale, r\y, r\z - 656.0 * RoomScale, 135.0, False, HEAVY_DOOR)
@@ -2932,15 +2940,6 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.08, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 			
-			; ~ Observation room doors
-			d.Doors = CreateDoor(r, r\x - 832.0 * RoomScale, r\y, r\z + 352.0 * RoomScale, 0.0, False, ONE_SIDED_DOOR, KEY_CARD_3)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.08, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
-			
-			d.Doors = CreateDoor(r, r\x + 832.0 * RoomScale, r\y, r\z + 352.0 * RoomScale, 180.0, False, ONE_SIDED_DOOR, KEY_CARD_3)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.08, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
-			
 			r\Objects[0] = LoadMesh_Strict("GFX\Map\cont3_009_hb.b3d", r\OBJ)
 			r\ScriptedObject[0] = True
 			EntityPickMode(r\Objects[0], 2)
@@ -2954,6 +2953,7 @@ Function FillRoom%(r.Rooms)
 			r\Objects[2] = LoadMesh_Strict("GFX\Map\Props\scp_009.b3d")
 			ScaleEntity(r\Objects[2], RoomScale, RoomScale, RoomScale)
 			PositionEntity(r\Objects[2], r\x, r\y, r\z)
+			EntityAlpha(r\Objects[2], 0.85)
 			EntityPickMode(r\Objects[2], 2)
 			EntityType(r\Objects[2], HIT_MAP)
 			EntityParent(r\Objects[2], r\OBJ)
@@ -3455,7 +3455,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Level 1 Key Card", it_key1, r\x - 368.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 80.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-895", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 368.0 * RoomScale)
+			it.Items = CreateItem("Warning Labels #2", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z + 368.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("SCP-093 Recovered Materials", it_paper, r\x - 800.0 * RoomScale, r\y - 48.0 * RoomScale, r\z - 464.0 * RoomScale)
@@ -3732,13 +3732,13 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Sticky Note", it_paper, r\x - 991.0 * RoomScale, r\y - 242.0 * RoomScale, r\z + 904.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-999", it_paper, r\x - 1504.0 * RoomScale, r\y - 287.0 * RoomScale, r\z - 706.0 * RoomScale)
+			it.Items = CreateItem("Document SCP-999", it_paper, r\x - 1472.0 * RoomScale, r\y - 287.0 * RoomScale, r\z - 706.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Note from Gears", it_paper, r\x - 777.0 * RoomScale, r\y - 184.0 * RoomScale, r\z + 349.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateRandomBattery(r\x - 1507.0 * RoomScale, r\y - 221.0 * RoomScale, r\z - 508.0 * RoomScale)
+			it.Items = CreateRandomBattery(r\x - 1475.0 * RoomScale, r\y - 221.0 * RoomScale, r\z - 508.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Quarter", it_25ct, r\x - 530.0 * RoomScale, r\y - 221.0 * RoomScale, r\z + 943.0 * RoomScale)
@@ -3779,9 +3779,11 @@ Function FillRoom%(r.Rooms)
 			; ~ Director Rosewood door
 			d.Doors = CreateDoor(r, r\x + 1284.0 * RoomScale, r\y + 224.0 * RoomScale, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_5)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.1, True)
+			r\RoomDoors.Doors[0] = d
 			
 			d.Doors = CreateDoor(r, r\x + 320.0 * RoomScale, r\y, r\z, 90.0, False, DEFAULT_DOOR, KEY_CARD_5)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.1, True)
+			r\RoomDoors.Doors[1] = d
 			
 			d.Doors = CreateDoor(r, r\x - 234.0 * RoomScale, r\y, r\z + 768.0 * RoomScale, 270.0, False, OFFICE_DOOR)
 			d\Locked = 2 : d\MTFClose = False : d\DisableWaypoint = True
@@ -3792,7 +3794,7 @@ Function FillRoom%(r.Rooms)
 			it.Items = CreateItem("Some SCP-420-J", it_scp420j, r\x + 1690.0 * RoomScale, r\y + 400.0 * RoomScale, r\z + 433.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("E-Reader", it_e_reader, r\x + 2100.0 * RoomScale, r\y + 392.0 * RoomScale, r\z + 387.0 * RoomScale)
+			it.Items = CreateItem("Level 5 Key Card", it_key5, r\x + 2100.0 * RoomScale, r\y + 392.0 * RoomScale, r\z + 387.0 * RoomScale)
 			it\State = Rnd(100.0)
 			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
 			EntityParent(it\Collider, r\OBJ)

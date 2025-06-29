@@ -2,13 +2,16 @@
 
 [Global]
 - Added SCP-999.
+- Player can now obtain SCP-009 achievement when wearing hazmat suit.
 
 [Items]
-- Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, containment zones, and updated the security clearance levels.
+- Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, SCP-914 Test logs, containment zones, and updated the security clearance levels.
 - 
 
 [Rooms]
 - Improved labels for SCPs.
+- Remove Level 5 Key Card from SCP-106 and SCP-409.
+- Add Level 5 Key Card to SCP-009 and Site Director room with a new way to obtain it. (Make a deal with SCP-079)
 
 {1.5.6}
 
