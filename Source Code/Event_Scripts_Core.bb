@@ -1942,7 +1942,7 @@ Function UpdateEvent_Cont1_914%(e.Events)
 			e\EventState = e\EventState + fps\Factor[0]
 			CanSave = 0
 			If (Not n_I\Curr106\Contained)
-				If n_I\Curr106\State2 > 0.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * (0.5 + (0.5 * SelectedDifficulty\AggressiveNPCs)))
+				If n_I\Curr106\State = 1.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * (0.5 + (0.5 * SelectedDifficulty\AggressiveNPCs)))
 			EndIf
 			e\room\RoomDoors[1]\Open = False
 			If e\EventState > 70.0 * 2.0
@@ -8017,8 +8017,8 @@ Function UpdateEvent_Room2_Scientists_2%(e.Events)
 					me\HeartBeatVolume = CurveValue(0.5, me\HeartBeatVolume, 5.0)
 					me\HeartBeatRate = CurveValue(120.0, me\HeartBeatRate, 150.0) 
 					e\SoundCHN = LoopSoundEx(snd_I\SCP106SFX[4], e\SoundCHN, Camera, e\room\OBJ, 5.0, 0.3, True)
-					If (Not n_I\Curr106\Contained) And n_I\Curr106\State = 1.0
-						If n_I\Curr106\State2 > 0.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * 3.0)
+					If (Not n_I\Curr106\Contained)
+						If n_I\Curr106\State = 1.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * 3.0)
 					EndIf
 					me\Injuries = me\Injuries + (fps\Factor[0] * 0.00005)
 				EndIf
