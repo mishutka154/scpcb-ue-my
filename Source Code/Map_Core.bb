@@ -4772,7 +4772,7 @@ Function UpdateScreens%()
 				If (Not EntityHidden(wi\SCRAMBLESpriteScreen)) Then HideEntity(wi\SCRAMBLESpriteScreen)
 				If ChannelPlaying(SCRAMBLECHN) Then StopChannel(SCRAMBLECHN) : SCRAMBLECHN = 0
 				EntityTexture(s\OBJ, s\Texture)
-				If Rand(5000 - (2000 * SelectedDifficulty\AggressiveNPCs)) = 1
+				If Rand(6000 - (2000 * (Not RemoteDoorOn)) - (2000 * SelectedDifficulty\AggressiveNPCs)) = 1
 					If s\Display096
 						If EntityInView(s\OBJ, Camera) And EntityVisible(s\OBJ, Camera)
 							PlaySound_Strict(LoadTempSound("SFX\SCP\079\Broadcast" + Rand(0, 2) + ".ogg"))
