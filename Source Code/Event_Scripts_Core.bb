@@ -155,8 +155,7 @@ Function UpdateEvent_Cont1_005%(e.Events)
 								PositionEntity(n_I\Curr106\Collider, TFormedX(), 0.0, TFormedZ(), True)
 								ResetEntity(n_I\Curr106\Collider)
 								n_I\Curr106\State = 3.0
-								n_I\Curr106\State2 = 0.0
-								n_I\Curr106\State3 = Rnd(3000.0, 3500.0)
+								n_I\Curr106\State2 = Rnd(3000.0, 3500.0)
 								
 								FreeEntity(e\room\Objects[0]) : e\room\Objects[0] = 0
 								e\EventState = 1.0
@@ -4410,8 +4409,7 @@ Function UpdateEvent_Cont1_106%(e.Events)
 							n_I\Curr106\Contained = False
 							n_I\Curr106\Idle = 0
 							n_I\Curr106\State = 3.0
-							n_I\Curr106\State2 = 0.0
-							n_I\Curr106\State3 = Rnd(3000.0, 3500.0)
+							n_I\Curr106\State2 = Rnd(3000.0, 3500.0)
 							
 							e\EventState = 2.0
 							Return
@@ -4453,8 +4451,7 @@ Function UpdateEvent_Cont1_106%(e.Events)
 								n_I\Curr106\Contained = False
 								n_I\Curr106\Idle = 0
 								n_I\Curr106\State = 3.0
-								n_I\Curr106\State2 = 0.0
-								n_I\Curr106\State3 = Rnd(3000.0, 3500.0)
+								n_I\Curr106\State2 = Rnd(3000.0, 3500.0)
 								e\EventState = 2.0
 								Return
 							EndIf
@@ -4722,8 +4719,7 @@ Function UpdateEvent_Room2_2_HCZ_106%(e.Events)
 					If WrapAngle(EntityYaw(Pvt) - EntityYaw(n_I\Curr106\Collider)) < 80.0 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 						n_I\Curr106\Idle = 0
 						n_I\Curr106\State = 3.0
-						n_I\Curr106\State2 = 0.0
-						n_I\Curr106\State3 = Rnd(3000.0, 3500.0)
+						n_I\Curr106\State2 = Rnd(3000.0, 3500.0)
 						PlaySound_Strict(snd_I\HorrorSFX[10])
 						FreeEntity(Pvt) : Pvt = 0
 						RemoveEvent(e)
@@ -8021,7 +8017,7 @@ Function UpdateEvent_Room2_Scientists_2%(e.Events)
 					me\HeartBeatVolume = CurveValue(0.5, me\HeartBeatVolume, 5.0)
 					me\HeartBeatRate = CurveValue(120.0, me\HeartBeatRate, 150.0) 
 					e\SoundCHN = LoopSoundEx(snd_I\SCP106SFX[4], e\SoundCHN, Camera, e\room\OBJ, 5.0, 0.3, True)
-					If (Not n_I\Curr106\Contained)
+					If (Not n_I\Curr106\Contained) And n_I\Curr106\State = 1.0
 						If n_I\Curr106\State2 > 0.0 Then n_I\Curr106\State2 = n_I\Curr106\State2 - (fps\Factor[0] * 3.0)
 					EndIf
 					me\Injuries = me\Injuries + (fps\Factor[0] * 0.00005)
@@ -8200,8 +8196,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 		If EntityDistanceSquared(me\Collider, n_I\Curr106\Collider) < 0.09 And n_I\Curr106\State <> 3.0
 			n_I\Curr106\Idle = 0
 			n_I\Curr106\State = 3.0
-			n_I\Curr106\State2 = 0.0
-			n_I\Curr106\State3 = 100000.0
+			n_I\Curr106\State2 = 100000.0
 		EndIf
 		CanSave = 1
 		If e\EventState2 <> PD_FakeTunnelRoom
@@ -8265,8 +8260,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 						PlaySound_Strict(snd_I\HorrorSFX[8])
 						n_I\Curr106\Idle = 0
 						n_I\Curr106\State = 3.0
-						n_I\Curr106\State2 = 0.0
-						n_I\Curr106\State3 = 100000.0
+						n_I\Curr106\State2 = 100000.0
 						e\EventState = 601.0
 					EndIf
 				EndIf
@@ -8640,16 +8634,14 @@ Function UpdateEvent_Dimension_106%(e.Events)
 						me\CameraShake = 1.0
 						n_I\Curr106\Idle = 0
 						n_I\Curr106\State = 3.0
-						n_I\Curr106\State2 = 0.0
-						n_I\Curr106\State3 = 100000.0
+						n_I\Curr106\State2 = 100000.0
 						PositionEntity(n_I\Curr106\Collider, EntityX(e\room\Objects[e\EventState3], True), e\room\y - 1.0, EntityZ(e\room\Objects[e\EventState3], True))
 						ResetEntity(n_I\Curr106\Collider)
 					EndIf
 				Else
 					n_I\Curr106\Idle = 0
 					n_I\Curr106\State = 3.0
-					n_I\Curr106\State2 = 0.0
-					n_I\Curr106\State3 = 100000.0
+					n_I\Curr106\State2 = 100000.0
 				EndIf
 				
 				If EntityY(me\Collider) < (-1600.0) * RoomScale
@@ -8872,8 +8864,7 @@ Function UpdateEvent_Dimension_106%(e.Events)
 					n_I\Curr106\Speed = n_I\Curr106\Speed / 2.8
 					n_I\Curr106\Idle = 0
 					n_I\Curr106\State = 3.0
-					n_I\Curr106\State2 = 0.0
-					n_I\Curr106\State3 = 100000.0
+					n_I\Curr106\State2 = 100000.0
 					PositionEntity(n_I\Curr106\Collider, EntityX(e\room\Objects[25], True), EntityY(e\room\Objects[25], True), EntityZ(e\room\Objects[25], True))
 					ResetEntity(n_I\Curr106\Collider)
 					

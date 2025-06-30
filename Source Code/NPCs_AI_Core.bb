@@ -2056,9 +2056,9 @@ Function UpdateNPCType106%(n.NPCs)
 	
 	; ~ n\State: Main state
 	
-	; ~ n\State2: Spawn timer
+	; ~ n\State2: Spawn/Chasing timer
 	
-	; ~ n\State3: Chasing timer
+	; ~ n\State2: Post-Entrance Zone Spawntimer boost
 	
 	Local e.Events, de.Decals
 	Local Pvt%
@@ -2106,7 +2106,7 @@ Function UpdateNPCType106%(n.NPCs)
 			Case 1.0 ; ~ Idling outside the map
 				;[Block]
 				If PlayerRoom\RoomTemplate\DisableDecals < 3
-					Local TimerCountDown# = fps\Factor[0] * (1.0 + SelectedDifficulty\AggressiveNPCs)
+					Local TimerCountDown# = fps\Factor[0] * ((1.0 + n\State3) + SelectedDifficulty\AggressiveNPCs)
 					
 					Select PlayerRoom\RoomTemplate\DisableDecals
 						Case 0
@@ -2149,7 +2149,6 @@ Function UpdateNPCType106%(n.NPCs)
 					PlaySound_Strict(snd_I\DecaySFX[0])
 					
 					n\State2 = 0.0
-					n\State3 = 0.0
 					n\EnemyX = 0.0 : n\EnemyY = 0.0 : n\EnemyZ = 0.0
 				Else
 					If n\Frame < 259.0
@@ -2161,7 +2160,7 @@ Function UpdateNPCType106%(n.NPCs)
 					Else
 						GiveAchievement("106")
 						n\State = 3.0
-						n\State3 = Rnd(3000.0, 3500.0)
+						n\State2 = Rnd(3000.0, 3500.0)
 					EndIf
 				EndIf
 				;[End Block]
@@ -2187,7 +2186,7 @@ Function UpdateNPCType106%(n.NPCs)
 						EndIf
 					EndIf
 				Else
-					n\State3 = Max(0.0, n\State3 - fps\Factor[0])
+					n\State2 = Max(0.0, n\State2 - fps\Factor[0])
 				EndIf
 				
 				If PlayerRoom\RoomTemplate\RoomID <> r_gate_a And PlayerRoom\RoomTemplate\RoomID <> r_dimension_106 Then ShouldPlay = 10
@@ -2358,7 +2357,7 @@ Function UpdateNPCType106%(n.NPCs)
 					EndIf
 					n\Reload = Max(0.0, n\Reload - fps\Factor[0])
 					
-					If n\State3 =< 0.0
+					If n\State2 =< 0.0
 						If (Not EntityInView(n\OBJ, Camera)) And Dist > 25.0
 							n\State2 = Rnd(22000.0, 27000.0)
 							n\State = 0.0

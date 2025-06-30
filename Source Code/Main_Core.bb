@@ -9328,7 +9328,7 @@ Function UpdateMTF%()
 			
 			If entrance <> Null
 				If me\Zone = 2
-					Local s.Screens
+					n_I\Curr106\State3 = 1.0
 					
 					PlayAnnouncement("SFX\Character\MTF\AnnouncEnter.ogg")
 					
