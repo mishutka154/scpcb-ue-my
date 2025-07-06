@@ -3762,7 +3762,6 @@ Function UpdateNPCType999%(n.NPCs)
 	If Dist < PowTwo(HideDistance)
 		Local Pvt%, Visible%
 		
-		n\LastSeen = 0
 		If n\State < 4.0
 			If ((PlayerRoom\RoomTemplate\RoomID = r_gate_a_entrance Lor PlayerRoom\RoomTemplate\RoomID = r_gate_b_entrance) And me\InsideElevator Lor n_I\Curr106\State > 1.0)
 				n\State = 4.0
