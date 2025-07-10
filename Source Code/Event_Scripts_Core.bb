@@ -9931,7 +9931,6 @@ Function UpdateEvent_Tesla%(e.Events)
 								n\PathTimer = 0.0
 								n\PathStatus = PATH_STATUS_NO_SEARCH
 								n\State3 = 70.0 * 10.0
-								
 								n\State = MTF_DISABLING_TESLA
 								e\room\NPC[1] = n
 							EndIf
@@ -10109,6 +10108,7 @@ Function UpdateEvent_Broken_Tesla%(e.Events)
 								
 								n\State = MTF_DISABLING_TESLA
 								e\room\NPC[1] = n
+								Exit
 							EndIf
 						EndIf
 					EndIf
