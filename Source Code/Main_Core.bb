@@ -3981,7 +3981,7 @@ Function UpdateGUI%()
 				SelectedItem = Null
 			EndIf
 		EndIf
-		If ShouldDrawHUD
+		If ShouldDrawHUD And d_I\ClosestButton <> 0
 			HideEntity(pm\OBJ) ; ~ Hide player body model
 			
 			Local ButtonPosX# = EntityX(d_I\ClosestButton, True)
@@ -7236,7 +7236,7 @@ Function RenderGUI%()
 		If SelectedItem <> Null
 			If SelectedItem\ItemTemplate\ID = it_scp005 Lor SelectedItem\ItemTemplate\ID = it_coarse005 Lor SelectedItem\ItemTemplate\ID = it_crystal005 Then ShouldDrawHUD = False
 		EndIf
-		If ShouldDrawHUD
+		If ShouldDrawHUD And d_I\ClosestButton <> 0
 			Local ButtonPosX# = EntityX(d_I\ClosestButton, True)
 			Local ButtonPosY# = EntityY(d_I\ClosestButton, True)
 			Local ButtonPosZ# = EntityZ(d_I\ClosestButton, True)
