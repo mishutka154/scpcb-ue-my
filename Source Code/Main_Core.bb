@@ -3296,7 +3296,7 @@ Function UpdateMouseLook%()
 			
 			If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Then StopMouseMovement()
 			
-			Local MouselookInc# = Mouselook_Inc / (1.0 + wi\BallisticVest)
+			Local MouselookInc# = Mouselook_Inc
 			Local The_Yaw# = mo\Mouse_X_Speed_1 * MouselookInc
 			Local The_Pitch# = mo\Mouse_Y_Speed_1 * MouselookInc
 			
