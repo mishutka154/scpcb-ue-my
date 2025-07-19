@@ -156,7 +156,7 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 				EndIf
 				
 				If Dist > PowTwo(HideDistance * 1.5)
-					If n\IdleTimer < 70.0 * 15.0
+					If n\IdleTimer < 70.0 * (25.0 - (10.0 * SelectedDifficulty\AggressiveNPCs))
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
 					ElseIf Rand(260 - (80 * SelectedDifficulty\AggressiveNPCs) + (80 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
@@ -430,7 +430,7 @@ Function UpdateNPCType008_1%(n.NPCs)
 				EndIf
 				
 				If Dist > PowTwo(HideDistance * 1.5)
-					If n\IdleTimer < 70.0 * 15.0
+					If n\IdleTimer < 70.0 * (25.0 - (10.0 * SelectedDifficulty\AggressiveNPCs))
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
 					ElseIf Rand(260 - (80 * SelectedDifficulty\AggressiveNPCs) + (80 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
@@ -1326,7 +1326,7 @@ Function UpdateNPCType049_2%(n.NPCs)
 				EndIf
 				
 				If Dist > PowTwo(HideDistance * 2.0)
-					If n\IdleTimer < 70.0 * 15.0
+					If n\IdleTimer < 70.0 * (25.0 - (10.0 * SelectedDifficulty\AggressiveNPCs))
 						n\IdleTimer = n\IdleTimer + fps\Factor[0]
 					ElseIf Rand(350 - (120 * SelectedDifficulty\AggressiveNPCs) + (120 * (Not RemoteDoorOn))) = 1
 						If PlayerInReachableRoom()
