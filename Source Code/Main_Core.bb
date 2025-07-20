@@ -2968,7 +2968,7 @@ Function UpdateMoving%()
 					If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
 						If PD_event\EventState2 <> PD_FakeTunnelRoom
 							Speed = 0.015
-							me\Stamina = Max(me\Stamina - (fps\Factor[0] * 0.4), -20.0)
+							me\Stamina = Max(me\Stamina - (fps\Factor[0] * 0.28), -20.0)
 						EndIf
 					EndIf
 					
