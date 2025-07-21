@@ -2964,7 +2964,7 @@ Function UpdateMoving%()
 			If me\Playable = 2 And me\FallTimer >= 0.0 And (Not me\Terminated)
 				If (KeyDown(key\MOVEMENT_DOWN) Xor KeyDown(key\MOVEMENT_UP)) Lor (KeyDown(key\MOVEMENT_RIGHT) Xor KeyDown(key\MOVEMENT_LEFT)) Lor me\ForceMove > 0.0 
 					If (Not me\Crouch) And (Not me\Zombie) And (KeyDown(key\SPRINT) And (Not InvOpen) And OtherOpen = Null) And me\Stamina > 0.0
-						me\Stamina = me\Stamina - (fps\Factor[0] * (0.28  + (0.28 * I_966\HasInsomnia)) * me\StaminaEffect)
+						me\Stamina = me\Stamina - (fps\Factor[0] * (0.28 + (0.28 * I_966\HasInsomnia)) * me\StaminaEffect)
 						If me\Stamina <= 0.0 Then me\Stamina = -20.0
 						Sprint = 2.5
 					EndIf
