@@ -3720,7 +3720,7 @@ Function NullGame%(PlayButtonSFX% = True)
 		If mt <> Null Then DestroyMT(mt, False)
 		Delete(mt)
 	Next
-	For i = 0 To 4095
+	For i = 0 To MaxChunkData - 1
 		CHUNKDATA[i] = 0
 	Next
 	For ch.Chunk = Each Chunk
@@ -3798,6 +3798,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	If FresizeCam <> 0 Then FreeEntity(FresizeCam) : FresizeCam = 0
 	
 	RenderTween = 0.0
+	ShouldDisableHUD = False
 	
 	ClearCollisions()
 	ClearWorld()
