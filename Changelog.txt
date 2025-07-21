@@ -2,19 +2,22 @@
 
 [Global]
 - Player can now obtain SCP-009 achievement when wearing hazmat suit.
+- More stamina in Pocket Dimension to use.
 
 [Items]
 - Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, SCP-914 Test logs, containment zones, and updated the security clearance levels.
 - 
 
 [Rooms]
+- Room improvements...
 - Improved labels for SCPs.
-- Remove Level 5 Key Card from SCP-106 and SCP-409.
+- Remove Level 5 Key Card from «cont1_106» and «cont2_409».
 - Add Level 5 Key Card to SCP-009 and Site Director room with a new way to obtain it. (Make a deal with SCP-079)
 
 [NPCs]
 - Added SCP-999.
-- Increased SCP-106's spawnrate once the player has entered Entrance Zone. 
+- Increased SCP-106's spawnrate once the player has entered Entrance Zone.
+- SCP-008-1 and SCP-049-2's spawntimer scales with «AggressiveNPCs».
 
 {1.5.6}
 
