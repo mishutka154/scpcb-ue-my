@@ -1186,12 +1186,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					If Rand(5) = 1
-						it2.Items = CreateItem("Fine SCRAMBLE Gear", it_finescramble, x, y, z)
-						it2\State = Rnd(0.0, 1000.0)
-					Else
-						it2.Items = CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
-					EndIf
+					it2.Items = CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
