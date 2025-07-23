@@ -5851,8 +5851,26 @@ Function CreateMap%()
 	SetRoom(0, ROOM2C, "cont2c_066_1162_arc", 0.0)
 	SetRoom(0, ROOM2C, "room2c_gw_lcz", 0.5)
 	
-	SetRoom(0, ROOM3, "room3_storage", Rnd(0.2, 0.6))
-	SetRoom(0, ROOM3, "cont3_372", 0.8)
+	Select Rand(3)
+		Case 1
+			;[Block]
+			SetRoom(0, ROOM3, "room3_storage", 0.2)
+			SetRoom(0, ROOM3, "cont3_513", 0.5)
+			SetRoom(0, ROOM3, "cont3_372", 0.8)
+			;[End Block]
+		Case 2
+			;[Block]
+			SetRoom(0, ROOM3, "cont3_372", 0.2)
+			SetRoom(0, ROOM3, "cont3_513", 0.5)
+			SetRoom(0, ROOM3, "room3_storage", 0.8)
+			;[End Block]
+		Case 3
+			;[Block]
+			SetRoom(0, ROOM3, "cont3_372", 0.2)
+			SetRoom(0, ROOM3, "room3_storage", 0.5)
+			SetRoom(0, ROOM3, "cont3_513", 0.8)
+			;[End Block]
+	End Select
 	
 	SetRoom(0, ROOM4, "room4_ic", 0.3)
 	;[End Block]
@@ -5877,7 +5895,6 @@ Function CreateMap%()
 	SetRoom(1, ROOM2C, "cont2c_096", 0.5)
 	
 	SetRoom(1, ROOM3, "cont3_009", 0.2)
-	SetRoom(1, ROOM3, "cont3_513", 0.5)
 	SetRoom(1, ROOM3, "cont3_966", 0.8)
 	
 	SetRoom(1, ROOM4, "room4_gw", 0.3)

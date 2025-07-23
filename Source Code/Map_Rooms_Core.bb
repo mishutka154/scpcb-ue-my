@@ -2981,90 +2981,27 @@ Function FillRoom%(r.Rooms)
 			;[End Block]
 		Case r_cont3_513
 			;[Block]
-			d.Doors = CreateDoor(r, r\x - 704.0 * RoomScale, r\y + 64.0 * RoomScale, r\z + 304.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_3)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) + 0.061, True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) - 0.061, True)
+			d.Doors = CreateDoor(r, r\x - 704.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_3)
 			
-			d.Doors = CreateDoor(r, r\x - 512.0 * RoomScale, r\y + 64.0 * RoomScale, r\z + 654.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_3)
+			d.Doors = CreateDoor(r, r\x - 512.0 * RoomScale, r\y, r\z + 622.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_3)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.031, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
 			
 			; ~ Dust decals
-			For i = 0 To 11
+			For i = 0 To 2
 				Select i
 					Case 0
-						;[Block]
-						xTemp = 0.0
-						zTemp = 300.0
-						Scale = Rnd(0.8, 1.0)
-						;[End Block]
-					Case 1
 						;[Block]
 						xTemp = -87.0
 						zTemp = 466.0
 						Scale = Rnd(0.1, 0.2)
 						;[End Block]
-					Case 2
+					Case 1
 						;[Block]
 						xTemp = -177.0
 						zTemp = 467.0
 						Scale = Rnd(0.2, 0.3)
 						;[End Block]
-					Case 3
-						;[Block]
-						xTemp = -104.0
-						zTemp = 185.0
-						Scale = Rnd(0.3, 0.4)
-						;[End Block]
-					Case 4
-						;[Block]
-						xTemp = -13.0
-						zTemp = 201.0
-						Scale = Rnd(0.1, 0.15)
-						;[End Block]
-					Case 5
-						;[Block]
-						xTemp = 85.0
-						zTemp = 97.0
-						Scale = Rnd(0.2, 0.3)
-						;[End Block]
-					Case 6
-						;[Block]
-						xTemp = 205.0
-						zTemp = 180.0
-						Scale = Rnd(0.1, 0.2)
-						;[End Block]
-					Case 7
-						;[Block]
-						xTemp = 235.0
-						zTemp = 114.0
-						Scale = Rnd(0.1, 0.2)
-						;[End Block]
-					Case 8
-						;[Block]
-						xTemp = 182.0
-						zTemp = 47.0
-						Scale = Rnd(0.1, 0.2)
-						;[End Block]
-					Case 9
-						;[Block]
-						xTemp = 52.0
-						zTemp = 200.0
-						Scale = Rnd(0.2, 0.3)
-						;[End Block]
-					Case 10
-						;[Block]
-						xTemp = 26.0
-						zTemp = 86.0
-						Scale = Rnd(0.8, 1.0)
-						;[End Block]
-					Case 11
-						;[Block]
-						xTemp = -193.0
-						zTemp = 138.0
-						Scale = Rnd(0.3, 0.4)
-						;[End Block]
 				End Select
-				yTemp = 3.0 * (i > 2)
 				de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x + xTemp * RoomScale, r\y + yTemp * RoomScale + 0.005, r\z + zTemp * RoomScale, 90.0, Rnd(360.0), 0.0, Scale, Rnd(0.6, 0.8), 1)
 				EntityParent(de\OBJ, r\OBJ)
 			Next
@@ -3072,13 +3009,13 @@ Function FillRoom%(r.Rooms)
 			sc.SecurityCams = CreateSecurityCam(r, r\x - 450.0 * RoomScale, r\y + 448.0 * RoomScale, r\z + 250.0 * RoomScale, 20.0)
 			sc\Angle = 135.0 : sc\Turn = 0.0
 			
-			it.Items = CreateItem("SCP-513", it_scp513, r\x, r\y + 196.0 * RoomScale, r\z + 655.0 * RoomScale)
+			it.Items = CreateItem("SCP-513", it_scp513, r\x, r\y + 196.0 * RoomScale, r\z + 640.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Blood-stained Note", it_paper, r\x + 736.0 * RoomScale, r\y + 0.4, r\z + 48.0 * RoomScale)
+			it.Items = CreateItem("Blood-stained Note", it_paper, r\x + 392.0 * RoomScale, r\y + 130.0 * RoomScale, r\z - 280.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-513", it_paper, r\x - 470.0 * RoomScale, r\y + 104.0 * RoomScale, r\z - 75.0 * RoomScale)
+			it.Items = CreateItem("Document SCP-513", it_paper, r\x - 318.0 * RoomScale, r\y + 104.0 * RoomScale, r\z - 360.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Wallet", it_wallet, r\x - 422.0 * RoomScale, r\y + 150.0 * RoomScale, r\z - 948.0 * RoomScale)

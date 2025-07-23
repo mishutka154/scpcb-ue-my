@@ -2120,10 +2120,8 @@ Function LoadEvents%()
 	
 	If Rand(2) = 1
 		CreateEvent(e_106_victim, r_room3_lcz, Rand(2))
-		CreateEvent(e_106_sinkhole, r_room3_2_lcz, Rand(2, 3))
 	Else
 		CreateEvent(e_106_victim, r_room3_2_lcz, Rand(2))
-		CreateEvent(e_106_sinkhole, r_room3_lcz, Rand(2, 3))
 	EndIf
 	CreateEvent(e_106_sinkhole, r_room4_lcz, Rand(2))
 	
@@ -2140,6 +2138,8 @@ Function LoadEvents%()
 	CreateEvent(e_cont1_106, r_cont1_106, 0)
 	
 	CreateEvent(e_cont3_372, r_cont3_372, 0)
+	
+	CreateEvent(e_106_sinkhole, r_cont3_513, 0)
 	
 	CreateEvent(e_cont1_914, r_cont1_914, 0)
 	
