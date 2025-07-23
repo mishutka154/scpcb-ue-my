@@ -5880,7 +5880,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 			Local s.Screens
 			
 			For s.Screens = Each Screens
-				If s\room\RoomTemplate\RoomID <> r_gate_b Then s\Display096 = True
+				s\Display096 = True
 			Next
 			
 			If PlayerRoom = e\room
