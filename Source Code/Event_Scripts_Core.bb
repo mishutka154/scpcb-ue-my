@@ -643,6 +643,15 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 			DeleteSingleTextureEntryFromCache(Tex)
 			HideEntity(e\room\NPC[14]\OBJ)
 			
+			TFormPoint(-7875.0, 56.0, -1775.0, e\room\OBJ, 0)
+			e\room\NPC[15] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
+			RotateEntity(e\room\NPC[15]\Collider, 0.0, e\room\Angle, 0.0)
+			e\room\NPC[15]\State = 3.0
+			Tex = LoadTexture_Strict("GFX\NPCs\security(2).png")
+			EntityTexture(e\room\NPC[15]\OBJ, Tex)
+			DeleteSingleTextureEntryFromCache(Tex)
+			HideEntity(e\room\NPC[15]\OBJ)
+			
 			HideEntity(e\room\RoomDoors[6]\OBJ)
 			HideEntity(e\room\RoomDoors[6]\OBJ2)
 			HideEntity(e\room\RoomDoors[6]\FrameOBJ)
@@ -815,6 +824,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 								ShowEntity(e\room\NPC[i]\OBJ)
 							Next
 							ShowEntity(e\room\NPC[14]\OBJ)
+							ShowEntity(e\room\NPC[15]\OBJ)
 							ShowEntity(e\room\NPC[11]\OBJ2)
 							ShowEntity(e\room\Objects[4])
 							
@@ -1169,6 +1179,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 								
 								RemoveNPC(e\room\NPC[4])
 								RemoveNPC(e\room\NPC[14])
+								RemoveNPC(e\room\NPC[15])
 								RemoveNPC(e\room\NPC[3])
 							EndIf
 						EndIf
