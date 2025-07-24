@@ -7987,6 +7987,9 @@ Function UpdateEvent_Room2_Office_3%(e.Events)
 					RemoveEvent(e)
 				EndIf
 			EndIf
+			If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+			e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Reward.ogg", opt\VoiceVolume * opt\MasterVolume)
+			e\SoundCHN_IsStream = True
 		EndIf
 	EndIf
 End Function
