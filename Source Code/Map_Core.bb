@@ -3635,7 +3635,7 @@ Function UseDoor%(PlaySFX% = True)
 			;[Block]
 			If SelectedItem = Null
 				If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "key.require"))
-				PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
+				PlaySound_Strict(ButtonSFX[0])
 				Return
 			Else
 				If Temp <= KEY_MISC
@@ -3670,13 +3670,13 @@ Function UseDoor%(PlaySFX% = True)
 					SelectedItem = Null
 				EndIf
 				If (d_I\ClosestDoor\Locked <> 1) And (((Temp > KEY_MISC) And (Temp <> KEY_CARD_6) And (Temp >= d_I\ClosestDoor\KeyCard)) Lor (Temp = KEY_005))
-					PlaySoundEx(snd_I\KeyCardSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\KeyCardSFX[0])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				Else
 					If Temp <= KEY_MISC
-						PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
+						PlaySound_Strict(ButtonSFX[0])
 					Else
-						PlaySoundEx(snd_I\KeyCardSFX[1], Camera, d_I\ClosestButton)
+						PlaySound_Strict(snd_I\KeyCardSFX[1])
 					EndIf
 					Return
 				EndIf
@@ -3686,7 +3686,7 @@ Function UseDoor%(PlaySFX% = True)
 			;[Block]
 			If SelectedItem = Null
 				If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "dna.denied_1"))
-				PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
+				PlaySound_Strict(snd_I\ScannerSFX[1])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				Return
 			Else
@@ -3714,10 +3714,10 @@ Function UseDoor%(PlaySFX% = True)
 					SelectedItem = Null
 				EndIf
 				If (d_I\ClosestDoor\Locked = 0) And ((Temp = d_I\ClosestDoor\KeyCard) Lor (Temp = KEY_005))
-					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[0])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				Else
-					PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[1])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 					Return
 				EndIf
@@ -3727,9 +3727,9 @@ Function UseDoor%(PlaySFX% = True)
 			;[Block]
 			If SelectedItem = Null
 				If (d_I\ClosestDoor\Locked = 0) And (d_I\ClosestDoor\Code <> CODE_LOCKED) And (d_I\ClosestDoor\Code = Int(msg\KeyPadInput))
-					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[0])
 				Else
-					PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[1])
 					Return
 				EndIf
 			Else
@@ -3744,10 +3744,10 @@ Function UseDoor%(PlaySFX% = True)
 				SelectedItem = Null
 				
 				If (d_I\ClosestDoor\Locked = 0) And (d_I\ClosestDoor\Code <> CODE_LOCKED) And (Temp = KEY_005)
-					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[0])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				Else
-					PlaySoundEx(snd_I\ScannerSFX[1], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\ScannerSFX[1])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 					Return
 				EndIf
@@ -3778,10 +3778,10 @@ Function UseDoor%(PlaySFX% = True)
 				If SelectedItem = Null
 					If msg\Timer < 70.0 * 5.0 Then CreateMsg(GetLocalString("msg", "wood.wontbudge"))
 					If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
-						PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
+						PlaySound_Strict(snd_I\DoorBudgeSFX[0])
 						SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 					Else
-						PlaySoundEx(snd_I\DoorBudgeSFX[1], Camera, d_I\ClosestButton)
+						PlaySound_Strict(snd_I\DoorBudgeSFX[1])
 					EndIf
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				Else
@@ -3820,19 +3820,19 @@ Function UseDoor%(PlaySFX% = True)
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 					If (Temp > KEY_860) And (Temp <> KEY_005)
 						If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
-							PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
+							PlaySound_Strict(snd_I\DoorBudgeSFX[0])
 							SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 						Else
-							PlaySoundEx(snd_I\DoorBudgeSFX[1], Camera, d_I\ClosestButton)
+							PlaySound_Strict(snd_I\DoorBudgeSFX[1])
 						EndIf
 					Else
-						PlaySoundEx(snd_I\DoorLockSFX, Camera, d_I\ClosestButton)
+						PlaySound_Strict(snd_I\DoorLockSFX)
 					EndIf
 				EndIf
 				Return
 			Else
 				If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR
-					PlaySoundEx(snd_I\DoorBudgeSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(snd_I\DoorBudgeSFX[0])
 					SetAnimTime(d_I\AnimDoor\OBJ, 1.0)
 				EndIf
 			EndIf
@@ -3842,7 +3842,7 @@ Function UseDoor%(PlaySFX% = True)
 			If d_I\ClosestDoor\Locked = 1
 				If (Not d_I\ClosestDoor\IsElevatorDoor > 0)
 					CreateMsg(GetLocalString("msg", "elev.broken"))
-					PlaySoundEx(ButtonSFX[1], Camera, d_I\ClosestButton)
+					PlaySound_Strict(ButtonSFX[1])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 					SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 					Return
@@ -3873,13 +3873,13 @@ Function UseDoor%(PlaySFX% = True)
 					Else
 						CreateMsg(GetLocalString("msg", "elev.already"))
 					EndIf
-					PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
+					PlaySound_Strict(ButtonSFX[0])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 					SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 					Return
 				EndIf
 			Else
-				PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
+				PlaySound_Strict(ButtonSFX[0])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 			EndIf
@@ -3892,12 +3892,12 @@ Function UseDoor%(PlaySFX% = True)
 				Else
 					CreateMsg(GetLocalString("msg", "button.locked"))
 				EndIf
-				PlaySoundEx(ButtonSFX[1], Camera, d_I\ClosestButton)
+				PlaySound_Strict(ButtonSFX[1])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				SetAnimTime(d_I\AnimButton, 1.0)
 				Return
 			Else
-				PlaySoundEx(ButtonSFX[0], Camera, d_I\ClosestButton)
+				PlaySound_Strict(ButtonSFX[0])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
 				SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 			EndIf

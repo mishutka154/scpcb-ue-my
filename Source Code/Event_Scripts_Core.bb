@@ -5979,7 +5979,7 @@ Function UpdateEvent_Room2_Shaft%(e.Events)
 		UpdateButton(e\room\Objects[1])
 		If d_I\ClosestButton = e\room\Objects[1] And mo\MouseHit1
 			CreateMsg(GetLocalString("msg", "elev.broken"))
-			PlaySoundEx(ButtonSFX[1], Camera, e\room\Objects[1])
+			PlaySound_Strict(ButtonSFX[1])
 			mo\MouseHit1 = False
 		EndIf
 	EndIf
@@ -6228,7 +6228,7 @@ Function UpdateEvent_Cont2_049%(e.Events)
 						e\EventState4 = 0.0
 					EndIf
 				ElseIf d_I\ClosestButton = e\room\Objects[5] And mo\MouseHit1 And x2
-					PlaySoundEx(ButtonSFX[0], Camera, e\room\Objects[5])
+					PlaySound_Strict(ButtonSFX[0])
 					mo\MouseHit1 = False
 					If e\EventState4 = 0.0
 						If opt\ParticleAmount > 0
