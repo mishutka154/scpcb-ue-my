@@ -2478,6 +2478,9 @@ Function UpdateEvent_Room2_SL%(e.Events)
 							If (Not IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(e\room\NPC[0]\Collider), 1.0))
 								If IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(me\Collider, True), 1.0)
 									If e\room\RoomDoors[0]\Open
+										If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+										e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Stairs.ogg", opt\VoiceVolume * opt\MasterVolume)
+										e\SoundCHN_IsStream = True
 										PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 										e\room\NPC[0]\State3 = 4.0
 										e\room\RoomDoors[0]\FastOpen = True

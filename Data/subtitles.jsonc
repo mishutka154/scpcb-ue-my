@@ -2919,6 +2919,13 @@
 			"color": "announcement"
 		}
 	],
+	"SFX\\SCP\\079\\Stairs.ogg": [
+		{
+			"text": "CHECK THE STAIRS.",
+			"delay": 1.25,
+			"color": "announcement"
+		}
+	],
 	"SFX\\SCP\\079\\TestroomWarning.ogg": [
 		{
 			"text": "YOU..-",
