@@ -3796,6 +3796,13 @@ Function UpdateEvent_Room3_Storage%(e.Events)
 				
 				PlayerFallingPickDistance = 0.0
 				
+				UpdateButton(e\room\Objects[18])
+				If d_I\ClosestButton = e\room\Objects[18] And mo\MouseHit1
+					CreateMsg(GetLocalString("msg", "elev.broken"))
+					PlaySound_Strict(ButtonSFX[1])
+					mo\MouseHit1 = False
+				EndIf
+				RotateEntity(e\room\Objects[17], Sin(Float(MilliSec * 0.05)), 0.0, -Sin(Float(MilliSec * 0.03)))
 				If EntityY(me\Collider) < -6400.0 * RoomScale
 					If (Not chs\GodMode) And (Not me\Terminated) And me\FallTimer >= 0.0
 						msg\DeathMsg = Format(GetLocalString("death", "939.shaft"), SubjectName)

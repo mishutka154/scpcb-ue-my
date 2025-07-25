@@ -1925,6 +1925,14 @@ Function FillRoom%(r.Rooms)
 			EntityPickMode(r\Objects[16], 2)
 			EntityAlpha(r\Objects[16], 0.0)
 			
+			r\Objects[17] = LoadRMesh("GFX\Map\room3_storage_elevator.rmesh", Null, False)
+			ScaleEntity(r\Objects[17], RoomScale, RoomScale, RoomScale)
+			PositionEntity(r\Objects[17], r\x + 4099.0 * RoomScale, r\y - 4862.0 * RoomScale, r\z - 1982.0 * RoomScale)
+			RotateEntity(r\Objects[17], 0.0, 0.0, 0.0)
+			EntityParent(r\Objects[17], r\OBJ)
+			
+			r\Objects[18] = CreateButton(BUTTON_DEFAULT, r\x + 3950.0 * RoomScale, r\y - 5446.0 * RoomScale, r\z - 1495.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ)
+			
 			emit.Emitter = SetEmitter(r, r\x + 5245.0 * RoomScale, r\y - 5584.0 * RoomScale, r\z - 575.0 * RoomScale, 6)
 			emit\State = 1
 			
@@ -4473,4 +4481,4 @@ Function FillRoom%(r.Rooms)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS
