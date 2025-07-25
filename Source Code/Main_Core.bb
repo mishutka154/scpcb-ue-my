@@ -470,15 +470,15 @@ Function UpdateGame%()
 							;[End Block]
 						Case NORMAL
 							;[Block]
-							me\BLINKFREQ = Rnd(630.0, 770.0)  ; ~ 9 - 11 seconds
+							me\BLINKFREQ = Rnd(630.0, 770.0) ; ~ 9 - 11 seconds
 							;[End Block]
 						Case HARD
 							;[Block]
-							me\BLINKFREQ = Rnd(490.0, 630.0)  ; ~ 7 - 9 seconds
+							me\BLINKFREQ = Rnd(490.0, 630.0) ; ~ 7 - 9 seconds
 							;[End Block]
 						Case EXTREME
 							;[Block]
-							me\BLINKFREQ = Rnd(350.0, 490.0)  ; ~ 5 - 7 seconds
+							me\BLINKFREQ = Rnd(350.0, 490.0) ; ~ 5 - 7 seconds
 							;[End Block]
 					End Select
 					me\BlinkTimer = me\BLINKFREQ
@@ -500,11 +500,7 @@ Function UpdateGame%()
 			EndIf
 			
 			me\LightBlink = Max(me\LightBlink - (fps\Factor[0] / 35.0), 0.0)
-			If IsBlackOut Lor me\LightBlink > 0.0
-				SecondaryLightOn = CurveValue(0.0, SecondaryLightOn * LightVolume, 10.0)
-			Else
-				SecondaryLightOn = CurveValue(1.0, SecondaryLightOn * LightVolume, 10.0)
-			EndIf
+			SecondaryLightOn = CurveValue((Not (IsBlackOut Lor me\LightBlink > 0.0)), SecondaryLightOn * LightVolume, 10.0)
 			
 			If I_294\Using Then DarkAlpha = 1.0
 			
