@@ -8540,17 +8540,26 @@ Function RenderMenu%()
 		If igm\AchievementsMenu > 0
 			TempStr = GetLocalString("menu", "achievements")
 		ElseIf igm\OptionsMenu > 0
-			If igm\OptionsMenu = 1
-				TempStr = GetLocalString("menu", "options")
-			ElseIf igm\OptionsMenu = MenuTab_Options_Graphics
-				TempStr = GetLocalString("options", "grap")
-			ElseIf igm\OptionsMenu = MenuTab_Options_Audio
-				TempStr = GetLocalString("options", "audio")
-			ElseIf igm\OptionsMenu = MenuTab_Options_Controls
-				TempStr = GetLocalString("options", "ctrl")
-			ElseIf igm\OptionsMenu = MenuTab_Options_Advanced
-				TempStr = GetLocalString("options", "avc")
-			EndIf
+			Select igm\OptionsMenu
+				Case 1 ; ~ Options Tab
+					TempStr = GetLocalString("menu", "options")
+				Case MenuTab_Options_Graphics
+					;[Block]
+					TempStr = GetLocalString("options", "grap")
+					;[End Block]
+				Case MenuTab_Options_Audio
+					;[Block]
+					TempStr = GetLocalString("options", "audio")
+					;[End Block]
+				Case MenuTab_Options_Controls
+					;[Block]
+					TempStr = GetLocalString("options", "ctrl")
+					;[End Block]
+				Case MenuTab_Options_Advanced
+					;[Block]
+					TempStr = GetLocalString("options", "avc")
+					;[End Block]
+			End Select
 		ElseIf igm\QuitMenu > 0
 			TempStr = GetLocalString("menu", "quit?")
 		ElseIf (Not (me\Terminated Lor me\Zombie)) Lor me\SelectedEnding <> -1
@@ -8688,13 +8697,20 @@ Function RenderMenu%()
 						
 						Color(255, 255, 255)
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "trackmode"))
-						If opt\UserTrackMode = 0
-							TempStr = GetLocalString("options", "track.disabled")
-						ElseIf opt\UserTrackMode = 1
-							TempStr = GetLocalString("options", "track.repeat")
-						ElseIf opt\UserTrackMode = 2
-							TempStr = GetLocalString("options", "track.random")
-						EndIf
+						Select opt\UserTrackMode
+							Case 0
+								;[Block]
+								TempStr = GetLocalString("options", "track.disabled")
+								;[End Block]
+							Case 1
+								;[Block]
+								TempStr = GetLocalString("options", "track.repeat")
+								;[End Block]
+							Case 2
+								;[Block]
+								TempStr = GetLocalString("options", "track.random")
+								;[End Block]
+						End Select
 						TextEx(x + (310 * MenuScale), y + (5 * MenuScale), TempStr)
 						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_UserTracksMode)
 						If opt\UserTrackMode > 0
@@ -8912,18 +8928,20 @@ Function RenderMenu%()
 				Local Achievements% = JsonGetArray(JsonGetValue(AchievementsArray, "achievements"))
 				Local AchvXIMG% = x + (22 * MenuScale)
 				Local SeparationConst% = 101 * MenuScale
+				Local ArraySize% = ((igm\AchievementsMenu - 1) * 12)
+				Local AchvIndexSize% = S2IMapSize(AchievementsIndex)
 				
 				For i = 0 To 11
-					If i + ((igm\AchievementsMenu - 1) * 12) < S2IMapSize(AchievementsIndex)
-						RenderAchvIMG(AchvXIMG, y + ((i / 4) * 120 * MenuScale), i, JsonGetString(JsonGetValue(JsonGetArrayValue(Achievements, i + ((igm\AchievementsMenu - 1) * 12)), "id")))
+					If i + ArraySize < AchvIndexSize
+						RenderAchvIMG(AchvXIMG, y + ((i / 4) * 120 * MenuScale), i, JsonGetString(JsonGetValue(JsonGetArrayValue(Achievements, i + ArraySize), "id")))
 					Else
 						Exit
 					EndIf
 				Next
 				For i = 0 To 11
-					If i + ((igm\AchievementsMenu - 1) * 12) < S2IMapSize(AchievementsIndex)
+					If i + ArraySize < AchvIndexSize
 						If MouseOn(AchvXIMG + ((i Mod 4) * SeparationConst), y + ((i / 4) * 120 * MenuScale), 85 * MenuScale, 85 * MenuScale)
-							AchievementTooltip(JsonGetString(JsonGetValue(JsonGetArrayValue(Achievements, i + ((igm\AchievementsMenu - 1) * 12)), "id")))
+							AchievementTooltip(JsonGetString(JsonGetValue(JsonGetArrayValue(Achievements, i + ArraySize), "id")))
 							Exit
 						EndIf
 					Else
@@ -9835,8 +9853,7 @@ Global I_268.SCP268
 
 Function Update268%()
     If I_268\Using > 1
-		Local FPSFactorEX# = fps\Factor[0] / (1.0 + (I_268\Using = 3))
-		Local Factor268# = FPSFactorEX * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
+		Local Factor268# = (fps\Factor[0] / (1.0 + (I_268\Using = 3))) * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
 		
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
 		I_268\InvisibilityOn = (I_268\Timer > 0.0)
@@ -9862,6 +9879,7 @@ Global I_409.SCP409
 Function Update409%()
 	If I_409\Timer > 0.0
 		Local PrevI409Timer# = I_409\Timer
+		Local Clr# = 255.0 - I_409\Timer
 		
 		If EntityHidden(t\OverlayID[7]) Then ShowEntity(t\OverlayID[7])
 		If I_427\Timer < 70.0 * 360.0
@@ -9873,7 +9891,7 @@ Function Update409%()
 			EndIf
 		EndIf
 		EntityAlpha(t\OverlayID[7], Min((PowTwo(I_409\Timer * 0.2)) / 1000.0, 0.5))
-		SetPlayerModelColor(Max(100.0, 255.0 - (I_409\Timer * 1.56)), Max(230.0, 255.0 - I_409\Timer), Max(240.0, 255.0 - I_409\Timer))
+		SetPlayerModelColor(Max(100.0, Clr * 1.56), Max(230.0, Clr), Max(240.0, Clr))
 		If I_409\Revert
 			If I_409\Timer <= 35.0 And PrevI409Timer > 35.0
 				CreateMsg(GetLocalString("msg", "409legs_1"))

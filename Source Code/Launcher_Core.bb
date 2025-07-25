@@ -465,8 +465,11 @@ Function UpdateLanguageSelector%()
 			lan\FileSize = JsonGetInt(JsonGetValue(LanguageIt, "size")) ; ~ Size of localization
 			lan\Compatible = JsonGetString(JsonGetValue(LanguageIt, "compatible")) ; ~ Compatible version
 			If FileType(BasePath + "flags/" + lan\Flag) <> 1 Then DownloadFile(ServerURI + "flags/" + lan\Flag, BasePath + "flags/" + lan\Flag) ; ~ Flags of languages
-			If (Not S2IMapContains(CountryFlags, lan\Flag)) Then S2IMapSet(CountryFlags, lan\Flag, LoadImage(BasePath + "flags\" + lan\Flag))
-			If (Not S2IMapContains(CountryFlags, lan\Flag)) Then Return(True)
+			
+			Local NotCountryContains% = (Not S2IMapContains(CountryFlags, lan\Flag))
+			
+			If NotCountryContains Then S2IMapSet(CountryFlags, lan\Flag, LoadImage(BasePath + "flags\" + lan\Flag))
+			If NotCountryContains Then Return(True)
 		Next
 	Else
 		If File <> 0 Then JsonFreeDocument(File) : File = 0
