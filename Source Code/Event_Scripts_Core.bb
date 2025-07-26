@@ -6844,12 +6844,12 @@ Function UpdateEvent_Gate_A%(e.Events)
 				e\room\NPC[i]\State = (Not n_I\Curr106\Contained)
 			Next
 			
-			TFormPoint(1824.0, 200.0, 7056.0, e\room\OBJ, 0)
+			TFormPoint(1824.0, 128.0, 7056.0, e\room\OBJ, 0)
 			TargetX = TFormedX() : TargetY = TFormedY() : TargetZ = TFormedZ()
 			e\room\NPC[5] = CreateNPC(NPCTypeMTF, TargetX, TargetY, TargetZ)
 			e\room\NPC[6] = CreateNPC(NPCTypeMTF, TargetX + 0.8, TargetY, TargetZ + 0.8)
 			
-			TFormPoint(-1824.0, 200.0, 7056.0, e\room\OBJ, 0)
+			TFormPoint(-1824.0, 128.0, 7056.0, e\room\OBJ, 0)
 			TargetX = TFormedX() : TargetY = TFormedY() : TargetZ = TFormedZ()
 			e\room\NPC[7] = CreateNPC(NPCTypeMTF, TargetX, TargetY, TargetZ)
 			e\room\NPC[8] = CreateNPC(NPCTypeMTF, TargetX + 0.8, TargetY, TargetZ + 0.8)
@@ -6864,7 +6864,7 @@ Function UpdateEvent_Gate_A%(e.Events)
 			If n_I\Curr106\Contained
 				PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
 				ResetEntity(e\room\NPC[5]\Collider)
-				TFormPoint(-1473.0, 200.0, 4251.0, e\room\OBJ, 0)
+				TFormPoint(-1473.0, 128.0, 4251.0, e\room\OBJ, 0)
 				PositionEntity(e\room\NPC[7]\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
 				ResetEntity(e\room\NPC[7]\Collider)
 			EndIf
