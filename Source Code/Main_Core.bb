@@ -3296,9 +3296,8 @@ Function UpdateMouseLook%()
 			
 			If InvOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Then StopMouseMovement()
 			
-			Local MouselookInc# = Mouselook_Inc
-			Local The_Yaw# = mo\Mouse_X_Speed_1 * MouselookInc
-			Local The_Pitch# = mo\Mouse_Y_Speed_1 * MouselookInc
+			Local The_Yaw# = mo\Mouse_X_Speed_1 * Mouselook_Inc
+			Local The_Pitch# = mo\Mouse_Y_Speed_1 * Mouselook_Inc
 			
 			TurnEntity(me\Collider, 0.0, -The_Yaw, 0.0) ; ~ Turn the user on the Y (Yaw) axis
 			CameraPitch = CameraPitch + The_Pitch
