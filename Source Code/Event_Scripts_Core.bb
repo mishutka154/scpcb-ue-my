@@ -6862,9 +6862,6 @@ Function UpdateEvent_Gate_A%(e.Events)
 			Next
 			
 			If n_I\Curr106\Contained
-				e\room\RoomDoors[0]\Locked = 1
-				e\room\RoomDoors[0]\DisableWaypoint = True
-				
 				PositionEntity(e\room\NPC[5]\Collider, EntityX(e\room\Objects[6], True), EntityY(e\room\Objects[6], True), EntityZ(e\room\Objects[6], True), True)
 				ResetEntity(e\room\NPC[5]\Collider)
 				TFormPoint(-1473.0, 200.0, 4251.0, e\room\OBJ, 0)
@@ -7067,7 +7064,76 @@ Function UpdateEvent_Gate_A%(e.Events)
 						EndIf
 					EndIf
 					
-					If e\EventState3 = 0.0
+				
+				Else
+					If e\EventState2 = 0.0
+						For i = 2 To 4
+							e\room\NPC[i]\State = 0.0
+						Next
+						
+						For i = 5 To 8
+							e\room\NPC[i]\EnemyX = EntityX(me\Collider)
+							e\room\NPC[i]\EnemyY = EntityY(me\Collider)
+							e\room\NPC[i]\EnemyZ = EntityZ(me\Collider)
+							e\room\NPC[i]\State = MTF_FOLLOW_PATH
+						Next
+						e\EventState2 = 1.0
+					Else
+						For i = 5 To 8
+							e\room\NPC[i]\EnemyX = EntityX(me\Collider)
+							e\room\NPC[i]\EnemyY = EntityY(me\Collider)
+							e\room\NPC[i]\EnemyZ = EntityZ(me\Collider)
+						Next
+						If e\EventState2 = 1.0
+							Local Temp% = False
+							
+							For i = 5 To 8
+								If NPCSeesPlayer(e\room\NPC[i], 6.0 - me\CrouchState + me\SndVolume) = 1
+									Temp = True
+									Exit
+								EndIf
+							Next
+							If Temp
+								For i = 5 To 8
+									e\room\NPC[i]\State = MTF_LOOKING_AT_SOME_TARGET
+								Next
+								e\EventState2 = 2.0
+							EndIf
+						ElseIf e\EventState2 = 2.0
+							If (S2IMapSize(UnlockedAchievements) - S2IMapContains(UnlockedAchievements, "apollyon") - S2IMapContains(UnlockedAchievements, "keter")) => (S2IMapSize(AchievementsIndex) - 4)
+								MakeMeUnplayable()
+								e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\Ending\GateA\STOPRIGHTTHERE.ogg"), True)
+								e\EventState2 = 3.0
+							Else
+								For i = 5 To 8
+									e\room\NPC[i]\State = MTF_SHOOTING_AT_PLAYER
+								Next
+							EndIf
+						ElseIf e\EventState2 = 3.0
+							ShouldPlay = 0
+							me\CurrSpeed = 0.0
+							If (Not ChannelPlaying(e\SoundCHN))
+								ClearCheats()
+								
+								me\SelectedEnding = Ending_A2
+								PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
+								msg\DeathMsg = ""
+								
+								For n.NPCs = Each NPCs
+									RemoveNPC(n)
+								Next
+								
+								me\LightFlash = 1.0
+								me\Terminated = True
+								me\BlinkTimer = -10.0
+								
+								RemoveEvent(e)
+								Return
+							EndIf
+						EndIf
+					EndIf
+				EndIf
+				If e\EventState3 = 0.0
 						If IsEqual(EntityY(me\Collider, True), EntityY(e\room\Objects[3], True), 1.0)
 							If DistanceSquared(EntityX(me\Collider), EntityX(e\room\Objects[3], True), EntityZ(me\Collider), EntityZ(e\room\Objects[3], True)) < 144.0
 								n_I\Curr106\State = 0.0
@@ -7206,74 +7272,6 @@ Function UpdateEvent_Gate_A%(e.Events)
 							EndIf
 						EndIf
 					EndIf
-				Else
-					If e\EventState2 = 0.0
-						For i = 2 To 4
-							e\room\NPC[i]\State = 0.0
-						Next
-						
-						For i = 5 To 8
-							e\room\NPC[i]\EnemyX = EntityX(me\Collider)
-							e\room\NPC[i]\EnemyY = EntityY(me\Collider)
-							e\room\NPC[i]\EnemyZ = EntityZ(me\Collider)
-							e\room\NPC[i]\State = MTF_FOLLOW_PATH
-						Next
-						e\EventState2 = 1.0
-					Else
-						For i = 5 To 8
-							e\room\NPC[i]\EnemyX = EntityX(me\Collider)
-							e\room\NPC[i]\EnemyY = EntityY(me\Collider)
-							e\room\NPC[i]\EnemyZ = EntityZ(me\Collider)
-						Next
-						If e\EventState2 = 1.0
-							Local Temp% = False
-							
-							For i = 5 To 8
-								If NPCSeesPlayer(e\room\NPC[i], 6.0 - me\CrouchState + me\SndVolume) = 1
-									Temp = True
-									Exit
-								EndIf
-							Next
-							If Temp
-								For i = 5 To 8
-									e\room\NPC[i]\State = MTF_LOOKING_AT_SOME_TARGET
-								Next
-								e\EventState2 = 2.0
-							EndIf
-						ElseIf e\EventState2 = 2.0
-							If (S2IMapSize(UnlockedAchievements) - S2IMapContains(UnlockedAchievements, "apollyon") - S2IMapContains(UnlockedAchievements, "keter")) => (S2IMapSize(AchievementsIndex) - 4)
-								MakeMeUnplayable()
-								e\SoundCHN = PlaySound_Strict(LoadTempSound("SFX\Ending\GateA\STOPRIGHTTHERE.ogg"), True)
-								e\EventState2 = 3.0
-							Else
-								For i = 5 To 8
-									e\room\NPC[i]\State = MTF_SHOOTING_AT_PLAYER
-								Next
-							EndIf
-						ElseIf e\EventState2 = 3.0
-							ShouldPlay = 0
-							me\CurrSpeed = 0.0
-							If (Not ChannelPlaying(e\SoundCHN))
-								ClearCheats()
-								
-								me\SelectedEnding = Ending_A2
-								PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Bang2.ogg"))
-								msg\DeathMsg = ""
-								
-								For n.NPCs = Each NPCs
-									RemoveNPC(n)
-								Next
-								
-								me\LightFlash = 1.0
-								me\Terminated = True
-								me\BlinkTimer = -10.0
-								
-								RemoveEvent(e)
-								Return
-							EndIf
-						EndIf
-					EndIf
-				EndIf
 			EndIf
 		EndIf
 	Else
