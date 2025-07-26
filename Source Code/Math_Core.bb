@@ -214,14 +214,13 @@ Function GetMeshExtents%(Mesh%, Height# = 99999999.0)
 			y = VertexY(s, v)
 			z = VertexZ(s, v)
 			
-			If Abs(y) =< Height
-				MinX = Min(MinX, x)
-				MaxX = Max(MaxX, x)
-				MinY = Min(MinY, y)
-				MaxY = Max(MaxY, y)
-				MinZ = Min(MinZ, z)
-				MaxZ = Max(MaxZ, z)
-			EndIf
+			If Abs(y) > Height Then Continue
+			MinX = Min(MinX, x)
+			MaxX = Max(MaxX, x)
+			MinY = Min(MinY, y)
+			MaxY = Max(MaxY, y)
+			MinZ = Min(MinZ, z)
+			MaxZ = Max(MaxZ, z)
 		Next
 	Next
 	
@@ -420,4 +419,4 @@ End Function
 ;End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS
