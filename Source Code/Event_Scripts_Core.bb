@@ -7011,13 +7011,6 @@ Function UpdateEvent_Gate_A%(e.Events)
 								
 								If n_I\Curr106\Frame =< 151.0
 									e\EventState2 = 0.0
-									For i = 2 To 4 ; ~ Helicopters attack the player
-										e\room\NPC[i]\State = 2.0
-									Next
-									For i = 5 To 8 ; ~ MTFs attack the player
-										e\room\NPC[i]\Speed = e\room\NPC[i]\Speed * Rnd(1.0, 1.3)
-										e\room\NPC[i]\State = MTF_SEARCHING_PLAYER : e\room\NPC[i]\State2 = 70.0 * 3600.0
-									Next
 								EndIf
 							Else
 								If Dist < 72.25
@@ -7062,9 +7055,9 @@ Function UpdateEvent_Gate_A%(e.Events)
 								EndIf
 							EndIf
 						EndIf
+					ElseIf n_I\Curr106\State = 1.0
+						 n_I\Curr106\Contained = True
 					EndIf
-					
-				
 				Else
 					If e\EventState2 = 0.0
 						For i = 2 To 4
