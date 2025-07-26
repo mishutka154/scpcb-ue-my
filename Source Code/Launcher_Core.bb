@@ -618,34 +618,47 @@ Function UpdateLanguageSelector%()
 		Local InfoBoxContent$ = GetLocalString("language", "more")
 		
 		Color(100, 100, 100)
-		If CurrentStatus = LANGUAGE_STATUS_DOWNLOAD_REQUEST
-			InfoBoxContent = GetLocalString("language", "downloading")
-			If (Not opt\NoProgressBar) Then UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, "0%", Font_Default, False, True)
-			CurrentStatus = LANGUAGE_STATUS_DOWNLOAD_START
-		ElseIf CurrentStatus = LANGUAGE_STATUS_DOWNLOAD_START
-			If RequestLanguage\MajorOnly
-				CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
-			Else 
-				CurrentStatus = LANGUAGE_STATUS_DOWNLOADING
-			EndIf
-		ElseIf CurrentStatus = LANGUAGE_STATUS_DOWNLOADING
-			If (Not opt\NoProgressBar)
-				InfoBoxContent = Format(Format(GetLocalString("language", "downloading.filesize"), SimpleFileSize(GetDownloadFileThreadSize()), "{0}"), SimpleFileSize(RequestLanguage\FileSize), "{1}")
-				UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, Str(Int(Ceil((Float(GetDownloadFileThreadSize()) / Float(RequestLanguage\FileSize)) * 100))) + "%", Font_Default, False, True)
-				If GetDownloadFileThreadSize() >= RequestLanguage\FileSize Then CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
-			Else
-				CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
-			EndIf
-		ElseIf CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
-			InfoBoxContent = GetLocalString("language", "unpacking")
-			UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, "100%", Font_Default, False, True)
-			CurrentStatus = LANGUAGE_STATUS_UNPACK_START
-		ElseIf CurrentStatus = LANGUAGE_STATUS_UNINSTALLING_REQUEST
-			InfoBoxContent = GetLocalString("language", "uninstalling")
-			CurrentStatus = LANGUAGE_STATUS_UNINSTALLING_START
-		ElseIf CurrentStatus = LANGUAGE_STATUS_DONE
-			InfoBoxContent = GetLocalString("language", "done")
-		EndIf
+		Select CurrentStatus
+			Case LANGUAGE_STATUS_DOWNLOAD_REQUEST
+				;[Block]
+				InfoBoxContent = GetLocalString("language", "downloading")
+				If (Not opt\NoProgressBar) Then UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, "0%", Font_Default, False, True)
+				;[End Block]
+				CurrentStatus = LANGUAGE_STATUS_DOWNLOAD_START
+			Case LANGUAGE_STATUS_DOWNLOAD_START
+				;[Block]
+				If RequestLanguage\MajorOnly
+					CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
+				Else 
+					CurrentStatus = LANGUAGE_STATUS_DOWNLOADING
+				EndIf
+				;[End Block]
+			Case LANGUAGE_STATUS_DOWNLOADING
+				;[Block]
+				If (Not opt\NoProgressBar)
+					InfoBoxContent = Format(Format(GetLocalString("language", "downloading.filesize"), SimpleFileSize(GetDownloadFileThreadSize()), "{0}"), SimpleFileSize(RequestLanguage\FileSize), "{1}")
+					UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, Str(Int(Ceil((Float(GetDownloadFileThreadSize()) / Float(RequestLanguage\FileSize)) * 100))) + "%", Font_Default, False, True)
+					If GetDownloadFileThreadSize() >= RequestLanguage\FileSize Then CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
+				Else
+					CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
+				EndIf
+				;[End Block]
+			Case LANGUAGE_STATUS_UNPACK_REQUEST
+				;[Block]
+				InfoBoxContent = GetLocalString("language", "unpacking")
+				UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, "100%", Font_Default, False, True)
+				CurrentStatus = LANGUAGE_STATUS_UNPACK_START
+				;[End Block]
+			Case LANGUAGE_STATUS_UNINSTALLING_REQUEST
+				;[Block]
+				InfoBoxContent = GetLocalString("language", "uninstalling")
+				CurrentStatus = LANGUAGE_STATUS_UNINSTALLING_START
+				;[End Block]
+			Case LANGUAGE_STATUS_DONE
+				;[Block]
+				InfoBoxContent = GetLocalString("language", "done")
+				;[End Block]
+		End Select
 		
 		Color(0, 0, 1)
 		RowText(InfoBoxContent, LauncherWidth - 159, LauncherHeight - 281, 151, 102)
