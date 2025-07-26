@@ -4,6 +4,8 @@
 - Player can now obtain SCP-009 achievement when wearing hazmat suit.
 - More stamina in Pocket Dimension to use.
 - Reduced blink timer by 1 second on all difficulties.
+- Ending A2 can now be obtained via SCP-268.
+- Ending A1 can be obtained regardless of whether or not SCP-106 is contained as long as the player has all the achievements(barring ending achievements).
 
 [Items]
 - Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, SCP-914 Test logs, containment zones, and updated the security clearance levels.
