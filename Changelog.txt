@@ -23,6 +23,7 @@
 - Added SCP-999.
 - Increased SCP-106's spawnrate once the player has entered Entrance Zone.
 - SCP-008-1 and SCP-049-2's spawntimer scales with «AggressiveNPCs».
+- More voicelines from SCP-079.
 
 {1.5.6}
 
