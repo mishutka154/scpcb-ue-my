@@ -3197,8 +3197,9 @@ Function UpdateMoving%()
 				me\HeartBeatVolume = 0.0
 				Kill(True)
 			ElseIf me\Bloodloss > 80.0
-				me\HeartBeatRate = Max(150.0 - (me\Bloodloss - 80.0) * 5.0, me\HeartBeatRate)
-				me\HeartBeatVolume = Max(me\HeartBeatVolume, 0.75 + (me\Bloodloss - 80.0) * 0.0125)
+				Temp3 = me\Bloodloss - 80.0
+				me\HeartBeatRate = Max(150.0 - Temp3 * 5.0, me\HeartBeatRate)
+				me\HeartBeatVolume = Max(me\HeartBeatVolume, 0.75 + Temp3 * 0.0125)
 			ElseIf me\Bloodloss > 35.0
 				me\HeartBeatRate = Max(70.0 + me\Bloodloss, me\HeartBeatRate)
 				me\HeartBeatVolume = Max(me\HeartBeatVolume, (me\Bloodloss - 35.0) / 60.0)
