@@ -4177,6 +4177,11 @@ Function UpdateDecals%()
 			EndIf
 			If de\LifeTime > 0.0 Then de\LifeTime = Max(de\LifeTime - fps\Factor[0], 5.0)
 			
+			If de\Size <= 0.0 Lor de\Alpha <= 0.0 Lor de\LifeTime = 5.0
+				RemoveDecal(de)
+				Continue
+			EndIf
+			
 			Local Dist# = DistanceSquared(EntityX(me\Collider), EntityX(de\OBJ, True), EntityZ(me\Collider), EntityZ(de\OBJ, True))
 			Local ActualSize# = PowTwo(de\Size * 0.8)
 			
@@ -4198,8 +4203,6 @@ Function UpdateDecals%()
 						;[End Block]
 				End Select
 			EndIf
-			
-			If de\Size <= 0.0 Lor de\Alpha <= 0.0 Lor de\LifeTime = 5.0 Then RemoveDecal(de)
 		ElseIf (Not EntityHidden(de\OBJ))
 			HideEntity(de\OBJ)
 		EndIf
