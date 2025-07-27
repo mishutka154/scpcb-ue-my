@@ -4886,10 +4886,10 @@ Function UpdateNPCTypeGuard%(n.NPCs)
 				
 				; ~ If at Gate B increase his distance so that he can shoot the player from a distance after they are spotted.
 				If PlayerRoom\RoomTemplate\RoomID = r_gate_b
-					DetectDistance = 484.0
+					DetectDistance = 512.0
 					
 					; ~ Increase accuracy if the player is going slow
-					ShootAccuracy = 0.62 - (14.0 * me\CurrSpeed)
+					ShootAccuracy = 0.6 - (14.0 * me\CurrSpeed)
 				EndIf
 				
 				If Dist < DetectDistance
