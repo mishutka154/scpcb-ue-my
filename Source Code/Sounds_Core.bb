@@ -281,7 +281,10 @@ Function ResumeSounds%()
 	
 	If IsUsingRadio
 		For i = 0 To 5
-			If SelectedItem\State2 = i Then ResumeChannel(RadioCHN[i])
+			If SelectedItem\State2 = i
+				ResumeChannel(RadioCHN[i])
+				Exit
+			EndIf
 		Next
 		StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
 	EndIf
