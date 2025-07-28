@@ -240,10 +240,10 @@ Function UpdateEvent_Cont1_173%(e.Events)
 			EndIf
 			
 			If e\room\NPC[1] <> Null
-				PositionEntity(e\room\NPC[1]\Collider, e\room\x, e\room\y + 0.5, e\room\z - 1.0 + 2048.0 * RoomScale, True)
+				PositionEntity(e\room\NPC[1]\Collider, e\room\x, e\room\y + 0.3, e\room\z - 1.0 + 2048.0 * RoomScale, True)
 				ResetEntity(e\room\NPC[1]\Collider)
 			Else
-				e\room\NPC[1] = CreateNPC(NPCTypeD, e\room\x, e\room\y + 0.5, e\room\z - 1.0 + 2048.0 * RoomScale)
+				e\room\NPC[1] = CreateNPC(NPCTypeD, e\room\x, e\room\y + 0.3, e\room\z - 1.0 + 2048.0 * RoomScale)
 				ChangeNPCTextureID(e\room\NPC[1], NPC_CLASS_D_FRANKLIN_TEXTURE)
 			EndIf
 			
@@ -261,10 +261,10 @@ Function UpdateEvent_Cont1_173%(e.Events)
 			e\room\NPC[1]\Sound = LoadSound_Strict("SFX\Room\Intro\WhatThe0a.ogg")
 			
 			If e\room\NPC[2] <> Null
-				PositionEntity(e\room\NPC[2]\Collider, e\room\x, e\room\y + 0.5, e\room\z + 2576.0 * RoomScale, True)
+				PositionEntity(e\room\NPC[2]\Collider, e\room\x, e\room\y + 0.3, e\room\z + 2576.0 * RoomScale, True)
 				ResetEntity(e\room\NPC[2]\Collider)
 			Else
-				e\room\NPC[2] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y + 0.5, e\room\z + 2576.0 * RoomScale)
+				e\room\NPC[2] = CreateNPC(NPCTypeGuard, e\room\x, e\room\y + 0.3, e\room\z + 2576.0 * RoomScale)
 			EndIf
 			e\room\NPC[2]\State = 7.0
 			; ~ Preload this sound cause of huge file size
