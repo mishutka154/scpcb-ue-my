@@ -402,7 +402,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 								Else
 									PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
 									CreateHintMsg(Format(GetLocalString("msg", "run"), key\Name[key\SPRINT]), 6.0, True)
-									PositionEntity(n_I\Curr173\Collider, 0.0, -500.0, 0.0)
+									PositionEntity(n_I\Curr173\Collider, e\room\x, -500.0, e\room\z)
 									If n_I\Curr173\Shadow <> Null Then PositionEntity(n_I\Curr173\Shadow\OBJ, 0.0, -500.0, 0.0, True)
 								EndIf
 								ResetEntity(n_I\Curr173\Collider)
