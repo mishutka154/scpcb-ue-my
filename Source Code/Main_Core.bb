@@ -3688,11 +3688,6 @@ Function UpdateNVG%()
 			n_I\Curr173\NVGZ = EntityZ(n_I\Curr173\OBJ, True)
 		ElseIf wi\NightVision = 2
 			If wi\NVGTimer <= 0.0
-				For np.NPCs = Each NPCs
-					np\NVGX = EntityX(np\Collider, True)
-					np\NVGY = EntityY(np\Collider, True)
-					np\NVGZ = EntityZ(np\Collider, True)
-				Next
 				wi\IsNVGBlinking = True
 				If wi\NVGTimer <= -10.0 Then wi\NVGTimer = 450.0
 			EndIf

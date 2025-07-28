@@ -802,6 +802,11 @@ Function UpdateNPCs%()
 		
 		Local GravityDist# = DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider))
 		
+		If wi\NVGPower > 0 And wi\NightVision = 2 And wi\NVGTimer <= 0.0
+			n\NVGX = EntityX(n\Collider, True)
+			n\NVGY = EntityY(n\Collider, True)
+			n\NVGZ = EntityZ(n\Collider, True)
+		EndIf
 		If n\IsDead
 			If n\GravityMult = 1.0
 				EntityType(n\Collider, HIT_DEAD)
