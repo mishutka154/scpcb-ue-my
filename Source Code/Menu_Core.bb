@@ -880,6 +880,10 @@ Function UpdateMainMenu%()
 						
 						y = y + (30 * MenuScale)
 						
+						opt\FirstPersonBodyEnabled = UpdateMenuTick(x, y, opt\FirstPersonBodyEnabled)
+						
+						y = y + (30 * MenuScale)
+						
 						Local PrevCanOpenConsole% = opt\CanOpenConsole
 						
 						opt\CanOpenConsole = UpdateMenuTick(x, y, opt\CanOpenConsole)
@@ -1703,7 +1707,7 @@ Function RenderMainMenu%()
 					;[End Block]
 				Case MainMenuTab_Options_Advanced
 					;[Block]
-					Height = (460 - (50.0 * (opt\CurrFrameLimit = 0.0))) * MenuScale
+					Height = (490 - (50.0 * (opt\CurrFrameLimit = 0.0))) * MenuScale
 					RenderFrame(x - (20 * MenuScale), y, Width, Height)
 					
 					y = y + (20 * MenuScale)
@@ -1711,6 +1715,11 @@ Function RenderMainMenu%()
 					SetFontEx(fo\FontID[Font_Default])
 					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hud"))
 					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUD)
+					
+					y = y + (30 * MenuScale)
+					
+					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "fpb"))
+					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FirstPersonBody)
 					
 					y = y + (30 * MenuScale)
 					
@@ -3000,17 +3009,18 @@ Const Tooltip_ControlConfiguration% = 26
 ; ~ Advanced Tooltips Constants
 ;[Block]
 Const Tooltip_HUD% = 27
-Const Tooltip_Console% = 28
-Const Tooltip_ConsoleOnError% = 29
-Const Tooltip_AchievementPopups% = 30
-Const Tooltip_FPS% = 31
-Const Tooltip_FrameLimit% = 32
-Const Tooltip_AutoSave% = 33
-Const Tooltip_SmoothBars% = 34
-Const Tooltip_Vignette% = 35
-Const Tooltip_StartupVideos% = 36
-Const Tooltip_Launcher% = 37
-Const Tooltip_ResetOptions% = 38
+Const Tooltip_FirstPersonBody% = 28
+Const Tooltip_Console% = 29
+Const Tooltip_ConsoleOnError% = 30
+Const Tooltip_AchievementPopups% = 31
+Const Tooltip_FPS% = 32
+Const Tooltip_FrameLimit% = 33
+Const Tooltip_AutoSave% = 34
+Const Tooltip_SmoothBars% = 35
+Const Tooltip_Vignette% = 36
+Const Tooltip_StartupVideos% = 37
+Const Tooltip_Launcher% = 38
+Const Tooltip_ResetOptions% = 39
 ;[End Block]
 
 Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
@@ -3188,6 +3198,10 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_HUD
 			;[Block]
 			Txt = GetLocalString("tooltip", "hud")
+			;[End Block]
+		Case Tooltip_FirstPersonBody
+			;[Block]
+			Txt = GetLocalString("tooltip", "fpb")
 			;[End Block]
 		Case Tooltip_Console
 			;[Block]

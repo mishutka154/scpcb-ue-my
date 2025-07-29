@@ -214,6 +214,7 @@ Type Options
 	Field AchvMsgEnabled%
 	Field CanOpenConsole%
 	Field HUDEnabled%
+	Field FirstPersonBodyEnabled%
 	Field ShowFPS%
 	Field ConsoleOpening%
 	Field FrameLimit%, CurrFrameLimit#
@@ -411,6 +412,8 @@ Function LoadOptionsINI%()
 	;[Block]
 	opt\HUDEnabled = IniGetInt(OptionFile, "Advanced", "Enable HUD", True)
 	
+	opt\FirstPersonBodyEnabled = IniGetInt(OptionFile, "Advanced", "First Person Body", True)
+	
 	opt\CanOpenConsole = IniGetInt(OptionFile, "Advanced", "Enable Console", False)
 	
 	opt\ConsoleOpening = IniGetInt(OptionFile, "Advanced", "Console Auto Opening", False)
@@ -545,6 +548,8 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	;[Block]
 	IniWriteString(OptionFile, "Advanced", "Enable HUD", opt\HUDEnabled)
 	
+	IniWriteString(OptionFile, "Advanced", "First Person Body", opt\FirstPersonBodyEnabled)
+	
 	IniWriteString(OptionFile, "Advanced", "Enable Console", opt\CanOpenConsole)
 	
 	IniWriteString(OptionFile, "Advanced", "Console Auto Opening", opt\ConsoleOpening)
@@ -668,6 +673,8 @@ Function ResetOptionsINI%()
 	
 	opt\HUDEnabled = True
 	
+	opt\FirstPersonBodyEnabled = True
+	
 	opt\CanOpenConsole = False
 	
 	opt\ConsoleOpening = False
@@ -698,4 +705,4 @@ Function ResetOptionsINI%()
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

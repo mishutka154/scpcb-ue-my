@@ -2817,6 +2817,8 @@ Function RefillCup%()
 End Function
 
 Function SetPlayerModelAnimation%(ID%, InteractionOBJ% = 0)
+	If (Not opt\FirstPersonBodyEnabled) Then Return
+	
 	If InteractionOBJ <> 0
 		Local Pvt% = CreatePivot()
 		
@@ -2846,6 +2848,11 @@ Function SetPlayerModelFX%(FX%)
 End Function
 
 Function UpdatePlayerModel%()
+	If (Not opt\FirstPersonBodyEnabled)
+		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
+		Return
+	EndIf
+	
 	If (Not me\Terminated) And me\FallTimer >= 0.0
 		If EntityHidden(pm\OBJ) Then ShowEntity(pm\OBJ)
 		PositionEntity(pm\Pivot, EntityX(Camera), EntityY(Camera) - 0.87, EntityZ(Camera))
@@ -8228,6 +8235,10 @@ Function UpdateMenu%()
 						
 						y = y + (30 * MenuScale)
 						
+						opt\FirstPersonBodyEnabled = UpdateMenuTick(x, y, opt\FirstPersonBodyEnabled)
+						
+						y = y + (30 * MenuScale)
+						
 						Local PrevCanOpenConsole% = opt\CanOpenConsole
 						
 						opt\CanOpenConsole = UpdateMenuTick(x, y, opt\CanOpenConsole)
@@ -8833,6 +8844,11 @@ Function RenderMenu%()
 						;[Block]
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hud"))
 						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUD)
+						
+						y = y + (30 * MenuScale)
+						
+						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "fpb"))
+						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_FirstPersonBody)
 						
 						y = y + (30 * MenuScale)
 						
