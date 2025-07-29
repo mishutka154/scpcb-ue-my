@@ -10615,10 +10615,10 @@ Function UpdateLeave1499%()
 					EndIf
 				Next
 				For n.NPCs = Each NPCs
-					If (Not n\IsDead) And n\NPCType <> NPCType1048 And n\NPCType <> NPCTypeCockroach
-						PositionEntity(n\Collider, EntityX(n\Collider, True), EntityY(n\Collider, True) + 0.125, EntityZ(n\Collider, True), True)
-						ResetEntity(n\Collider)
-					EndIf
+					If n\GravityMult = 0.0 Then Continue
+					
+					PositionEntity(n\Collider, EntityX(n\Collider, True), EntityY(n\Collider, True) + 0.125, EntityZ(n\Collider, True), True)
+					ResetEntity(n\Collider)
 				Next
 				r1499 = Null
 				fog\FarDist = 6.0

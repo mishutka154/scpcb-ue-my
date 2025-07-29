@@ -970,18 +970,18 @@ Function TeleportCloser%(n.NPCs)
 	Local Dist2# = PowTwo(16.0 - (6.0 * SelectedDifficulty\AggressiveNPCs))
 	
 	For w.WayPoints = Each WayPoints
-		If w\door = Null
-			If w\room\RoomTemplate\RoomID <> r_cont3_009
-				Dist = DistanceSquared(EntityX(w\OBJ, True), EntityX(n\Collider, True), EntityZ(w\OBJ, True), EntityZ(n\Collider, True))
-				If Dist > 1.0 And Dist < 100.0
-					If EntityDistanceSquared(me\Collider, w\OBJ) > Dist2
-						; ~ Teleports to the nearby waypoint that takes it closest to the player
-						Local NewDist# = EntityDistanceSquared(me\Collider, w\OBJ)
-						
-						If NewDist < ClosestDist Lor ClosestWaypoint = Null
-							ClosestDist = NewDist
-							ClosestWaypoint = w
-						EndIf
+		If w\door <> Null Then Continue
+		
+		If w\room\RoomTemplate\RoomID <> r_cont3_009
+			Dist = DistanceSquared(EntityX(w\OBJ, True), EntityX(n\Collider, True), EntityZ(w\OBJ, True), EntityZ(n\Collider, True))
+			If Dist > 1.0 And Dist < 100.0
+				If EntityDistanceSquared(me\Collider, w\OBJ) > Dist2
+					; ~ Teleports to the nearby waypoint that takes it closest to the player
+					Local NewDist# = EntityDistanceSquared(me\Collider, w\OBJ)
+					
+					If NewDist < ClosestDist Lor ClosestWaypoint = Null
+						ClosestDist = NewDist
+						ClosestWaypoint = w
 					EndIf
 				EndIf
 			EndIf
