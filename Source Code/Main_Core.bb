@@ -7694,7 +7694,6 @@ Function RenderGUI%()
 								x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
 								y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
 								
-								Color(170 * Offline + 30, 30 * Offline, 30 * Offline)
 								If (MilliSec Mod 800) < 200
 									If Offline Then TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), GetLocalString("msg", "nav.data"))
 									
