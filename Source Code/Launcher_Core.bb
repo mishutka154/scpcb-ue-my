@@ -429,7 +429,7 @@ Function UpdateLanguageSelector%()
 	
 	Local ServerURI$
 	
-	If GetUserLanguage() = "zh-CN"
+	If GetUserLanguage() = "zh-CN" Lor GetUserLanguage() = "ru-RU"
 		ServerURI = "https://files.ziyuebot.cn/cbue/"
 	Else
 		ServerURI = "https://files.ziyuesinicization.site/cbue/"
