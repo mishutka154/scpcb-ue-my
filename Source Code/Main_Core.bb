@@ -3767,17 +3767,16 @@ Function RenderNVG%()
 			TextEx(mo\Viewport_Center_X, 140 * MenuScale, Trim(Right(RefreshHint, Len(RefreshHint) - InstrRefreshHint - 1)), True)
 			
 			For np.NPCs = Each NPCs
-				If (Not np\HideFromNVG) ; ~ Don't waste your time if the string is empty
-					Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
-					If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
-						If (Not wi\IsNVGBlinking)
-							CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
-							
-							ProjX = ProjectedX() : ProjY = ProjectedY()
-							
-							TextEx(ProjX, ProjY, np\NVGName, True, True)
-							TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
-						EndIf
+				If np\HideFromNVG Then Continue
+				Dist = DistanceSquared(EntityX(me\Collider, True), np\NVGX, EntityY(me\Collider, True), np\NVGY, EntityZ(me\Collider, True), np\NVGZ)
+				If Dist < 256.0 ; ~ Don't draw text if the NPC is too far away
+					If (Not wi\IsNVGBlinking)
+						CameraProject(Camera, np\NVGX, np\NVGY + 0.5, np\NVGZ)
+						
+						ProjX = ProjectedX() : ProjY = ProjectedY()
+						
+						TextEx(ProjX, ProjY, np\NVGName, True, True)
+						TextEx(ProjX, ProjY - (25 * MenuScale), FloatToString(Sqr(Dist), 1) + " m", True, True)
 					EndIf
 				EndIf
 			Next
@@ -7733,14 +7732,13 @@ Function RenderGUI%()
 											Select np\NPCType
 												Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType066
 													;[Block]
-													If (Not np\HideFromNVG)
-														Dist = EntityDistanceSquared(Camera, np\Collider)
-														If Dist < 900.0
-															SqrValue = Sqr(Dist)
-															Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
-															TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
-															SCPs_Found = SCPs_Found + 1
-														EndIf
+													If np\HideFromNVG Then Continue
+													Dist = EntityDistanceSquared(Camera, np\Collider)
+													If Dist < 900.0
+														SqrValue = Sqr(Dist)
+														Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
+														TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
+														SCPs_Found = SCPs_Found + 1
 													EndIf
 													;[End Block]
 											End Select
