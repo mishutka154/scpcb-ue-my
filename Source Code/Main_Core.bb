@@ -2847,6 +2847,10 @@ Function SetPlayerModelFX%(FX%)
 	EntityFX(pm\OBJ, FX)
 End Function
 
+Function SetPlayerModelAlpha%(Alpha#)
+	EntityAlpha(pm\OBJ, Alpha)
+End Function
+
 Function UpdatePlayerModel%()
 	If (Not opt\FirstPersonBodyEnabled)
 		If (Not EntityHidden(pm\OBJ)) Then HideEntity(pm\OBJ)
@@ -9859,14 +9863,14 @@ End Type
 Global I_268.SCP268
 
 Function Update268%()
-	EntityAlpha(pm\OBJ, 1.0)
+	SetPlayerModelAlpha(1.0)
     If I_268\Using > 1
 		Local Factor268# = (fps\Factor[0] / (1.0 + (I_268\Using = 3))) * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
 		
 		I_268\Timer = Max(I_268\Timer - Factor268, 0.0)
 		If I_268\Timer > 0.0
 			I_268\InvisibilityOn = True
-			EntityAlpha(pm\OBJ, 0.5)
+			SetPlayerModelAlpha(0.5)
 		EndIf
 		I_268\PauseCharge = 140.0
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
