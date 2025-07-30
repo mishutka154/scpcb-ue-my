@@ -9152,40 +9152,26 @@ Function UpdateEvent_Dimension_1499%(e.Events)
 					EndIf
 				EndIf
 			Next
+			
+			Local AnimShift#
+			
 			For du.Dummy1499_1 = Each Dummy1499_1
 				If e\EventState3 < 70.0 * 30.0
-					If du\Anim
-						If AnimTime(du\OBJ) <= 360.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 321.0, 361.0, 0.2, False)
-						ElseIf AnimTime(du\OBJ) > 361.5 And AnimTime(du\OBJ) <= 401.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 362.0, 402.0, 0.2, False)
-						Else
-							i = Rand(False, True)
-							SetAnimTime(du\OBJ, 321.0 + (41.0 * i))
-						EndIf
+					AnimShift = ((Not du\Anim) * 92.0)
+					If AnimTime(du\OBJ) <= 360.5 + AnimShift
+						AnimateEx(du\OBJ, AnimTime(du\OBJ), 321.0 + AnimShift, 361.0 + AnimShift, 0.2, False)
+					ElseIf AnimTime(du\OBJ) > 361.5 + AnimShift And AnimTime(du\OBJ) <= 401.5 + AnimShift
+						AnimateEx(du\OBJ, AnimTime(du\OBJ), 362.0 + AnimShift, 402.0 + AnimShift, 0.2, False)
 					Else
-						If AnimTime(du\OBJ) <= 452.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 413.0, 453.0, 0.2, False)
-						ElseIf AnimTime(du\OBJ) > 453.5 And AnimTime(du\OBJ) <= 497.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 454.0, 498.0, 0.2, False)
-						Else
-							i = Rand(False, True)
-							SetAnimTime(du\OBJ, 413.0 + (41.0 * i))
-						EndIf
+						i = Rand(False, True)
+						SetAnimTime(du\OBJ, 321.0 + (41.0 * i) + AnimShift)
 					EndIf
 				Else
-					If du\Anim
-						If AnimTime(du\OBJ) <= 411.5 And AnimTime(du\OBJ) > 320.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 403.0, 412.0, 0.2, False)
-						Else
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 296.0, 320.0, 0.2)
-						EndIf
+					AnimShift = ((Not du\Anim) * 96.0)
+					If AnimTime(du\OBJ) <= 411.5 + AnimShift And AnimTime(du\OBJ) > 320.5
+						AnimateEx(du\OBJ, AnimTime(du\OBJ), 403.0 + AnimShift, 412.0 + AnimShift, 0.2, False)
 					Else
-						If AnimTime(du\OBJ) <= 507.5 And AnimTime(du\OBJ) > 320.5
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 499.0, 508.0, 0.2, False)
-						Else
-							AnimateEx(du\OBJ, AnimTime(du\OBJ), 296.0, 320.0, 0.2)
-						EndIf
+						AnimateEx(du\OBJ, AnimTime(du\OBJ), 296.0, 320.0, 0.2)
 					EndIf
 					
 					Local Pvt% = CreatePivot()
