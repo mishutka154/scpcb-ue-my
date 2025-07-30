@@ -1927,7 +1927,7 @@ Function FillRoom%(r.Rooms)
 			
 			r\Objects[17] = LoadRMesh("GFX\Map\room3_storage_elevator.rmesh", Null, False)
 			ScaleEntity(r\Objects[17], RoomScale, RoomScale, RoomScale)
-			PositionEntity(r\Objects[17], r\x + 4099.0 * RoomScale, r\y - 4862.0 * RoomScale, r\z - 1982.0 * RoomScale)
+			PositionEntity(r\Objects[17], r\x + 4099.0 * RoomScale, r\y - 4862.0 * RoomScale, r\z - 1835.0 * RoomScale)
 			RotateEntity(r\Objects[17], 0.0, 0.0, 0.0)
 			EntityParent(r\Objects[17], r\OBJ)
 			

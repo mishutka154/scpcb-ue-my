@@ -3806,6 +3806,11 @@ Function UpdateEvent_Room3_Storage%(e.Events)
 					mo\MouseHit1 = False
 				EndIf
 				RotateEntity(e\room\Objects[17], Sin(Float(MilliSec * 0.05)), 0.0, -Sin(Float(MilliSec * 0.03)))
+				If AmbientSFX(3, 9) = 0
+					AmbientSFX(3, 9) = LoadSound_Strict("SFX\Ambient\General\Ambient9.ogg")
+				Else
+					e\SoundCHN = LoopSoundEx(AmbientSFX(3, 9), e\SoundCHN, Camera, e\room\Objects[17], 6.0, 1.5)
+				EndIf
 				If EntityY(me\Collider) < -6400.0 * RoomScale
 					If (Not chs\GodMode) And (Not me\Terminated) And me\FallTimer >= 0.0
 						msg\DeathMsg = Format(GetLocalString("death", "939.shaft"), SubjectName)
