@@ -3201,20 +3201,18 @@ Function FillRoom%(r.Rooms)
 		Case r_gate_a
 			;[Block]
 			; ~ Misc doors
-			d.Doors = CreateDoor(r, r\x, r\y, r\z - 1024.0 * RoomScale, 0.0)
+			d.Doors = CreateDoor(r, r\x + 1528.0 * RoomScale, r\y, r\z - 64.0 * RoomScale, 90.0)
 			d\AutoClose = False : d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
 			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
-			d.Doors = CreateDoor(r, r\x - 630.0 * RoomScale, r\y, r\z - 480.0 * RoomScale, 0.0)
+			d.Doors = CreateDoor(r, r\x - 1528.0 * RoomScale, r\y, r\z - 840.0 * RoomScale, 270.0, False, ELEVATOR_DOOR)
 			d\AutoClose = False : d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
-			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
-			d.Doors = CreateDoor(r, r\x - 1090.0 * RoomScale, r\y, r\z - 480.0 * RoomScale, 0.0)
+			d.Doors = CreateDoor(r, r\x - 1528.0 * RoomScale, r\y, r\z - 64.0 * RoomScale, 270.0, False, ELEVATOR_DOOR)
 			d\AutoClose = False : d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
-			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			d.Doors = CreateDoor(r, r\x, r\y, r\z + 2336.0 * RoomScale, 0.0, True, BIG_DOOR)
 			d\Locked = 1 : d\MTFClose = False
@@ -3242,11 +3240,10 @@ Function FillRoom%(r.Rooms)
 			For r2.Rooms = Each Rooms
 				If r2\RoomTemplate\RoomID = r_gate_a_entrance
 					; ~ Elevator door
-					d.Doors = CreateDoor(r, r\x + 1528.0 * RoomScale, r\y, r\z - 64.0 * RoomScale, -90.0, False, ELEVATOR_DOOR)
+					d.Doors = CreateDoor(r, r\x, r\y, r\z - 1792.0 * RoomScale, 0.0, False, ELEVATOR_DOOR)
 					r\RoomDoors.Doors[1] = d
-					
 					r2\Objects[1] = CreatePivot()
-					PositionEntity(r2\Objects[1], r\x + 1832.0 * RoomScale, r\y, r\z - 64.0 * RoomScale)
+					PositionEntity(r2\Objects[1], r\x, r\y, r\z - 2095.0 * RoomScale)
 					EntityParent(r2\Objects[1], r\OBJ)
 					Exit
 				EndIf
