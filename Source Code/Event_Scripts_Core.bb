@@ -5749,7 +5749,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 				e\room\RoomDoors[i]\Locked = 1
 			Next
 			
-			TFormPoint(-352.0, 150.0, 0.0, e\room\OBJ, 0)
+			TFormPoint(-352.0, 128.0, 0.0, e\room\OBJ, 0)
 			If n_I\Curr096 <> Null
 				TeleportEntity(n_I\Curr096\Collider, TFormedX(), TFormedY(), TFormedZ(), n_I\Curr096\CollRadius, True)
 				n_I\Curr096\CurrentRoom = e\room
@@ -5763,7 +5763,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 			LoadEventSound(e, "SFX\Character\Guard\096ServerRoom0.ogg")
 			e\SoundCHN = PlaySoundEx(e\Sound, Camera, n_I\Curr096\OBJ, 10.0, 1.0, True)
 			
-			TFormPoint(-1328.0, 150.0, 528.0, e\room\OBJ, 0)
+			TFormPoint(-1328.0, 128.0, 528.0, e\room\OBJ, 0)
 			e\room\NPC[0] = CreateNPC(NPCTypeGuard, TFormedX(), TFormedY(), TFormedZ())
 			
 			GiveAchievement("096")
