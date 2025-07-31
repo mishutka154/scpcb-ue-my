@@ -6909,10 +6909,7 @@ Function RenderHUD%()
 		Else
 			RenderBar(BlinkMeterIMG, x, y, Width, Height, I_268\Timer, 700.0)
 		EndIf
-		If I_268\Timer =< 0.0
-			Color(150, 150, 0)
-			Rect(x - IconColoredRectSpaceX, y - IconColoredRectSpaceY, IconColoredRectSize, IconColoredRectSize)
-		ElseIf I_714\Using > 0 Lor wi\GasMask = 4
+		If I_714\Using > 0 Lor wi\GasMask = 4
 			Color(200, 0, 0)
 			Rect(x - IconColoredRectSpaceX, y - IconColoredRectSpaceY, IconColoredRectSize, IconColoredRectSize)
 		ElseIf I_268\Using = 3
