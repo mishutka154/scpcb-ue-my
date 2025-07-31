@@ -9860,7 +9860,6 @@ End Type
 Global I_268.SCP268
 
 Function Update268%()
-	SetPlayerModelAlpha(1.0)
     If I_268\Using > 1
 		Local Factor268# = (fps\Factor[0] / (1.0 + (I_268\Using = 3))) * (1.0 + (I_714\Using * 0.5) + (wi\GasMask = 4))
 		
@@ -9868,6 +9867,9 @@ Function Update268%()
 		If I_268\Timer > 0.0
 			I_268\InvisibilityOn = True
 			SetPlayerModelAlpha(0.5)
+		Else
+			I_268\InvisibilityOn = False
+			SetPlayerModelAlpha(1.0)
 		EndIf
 		I_268\PauseCharge = 140.0
 		If I_268\Timer >= 1.0 And I_268\Timer - Factor268 < 1.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
@@ -9878,6 +9880,7 @@ Function Update268%()
 			I_268\PauseCharge = I_268\PauseCharge - fps\Factor[0]
 		EndIf
 		I_268\InvisibilityOn = False
+		SetPlayerModelAlpha(1.0)
     EndIf
 End Function 
 
