@@ -11,7 +11,7 @@
 - Added documents: Risk classification, disruption classification, warning labels #1, #2, and #3, SCP-914 Test logs, containment zones, and updated the security clearance levels.
 - Removed mouse effect from Ballistic Vests.
 - Improved SCP-268's model.
-- SCP-268's makes the player transparent for better feedback to the player replacing the yellow indicator.
+- SCP-268 makes the player transparent for better feedback to the player replacing the yellow indicator.
 
 [Rooms]
 - Room improvements...
