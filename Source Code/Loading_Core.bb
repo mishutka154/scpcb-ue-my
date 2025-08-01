@@ -138,7 +138,7 @@ Const PARTICLE_FIRE% = 13
 Const PARTICLE_SNOW_SHINE% = 14
 ;[End Block]
 
-Global ParticleEffect%[33]
+Global ParticleEffect%[34]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -566,6 +566,16 @@ Function LoadParticles%()
 	SetTemplateTexture(ParticleEffect[32], PARTICLE_SNOW_SHINE)
 	SetTemplateAlphaVel(ParticleEffect[32], True)
 	SetTemplateSize(ParticleEffect[32], 0.06, 0.06, 0.5, 1.0)
+	
+	; ~ Explosion
+	ParticleEffect[33] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[33], 3)
+	SetTemplateEmitterLifeTime(ParticleEffect[33], 1)
+	SetTemplateParticleLifeTime(ParticleEffect[33], 1200, 1200)
+	SetTemplateTexture(ParticleEffect[33], PARTICLE_WHITE_SMOKE)
+	SetTemplateAlphaVel(ParticleEffect[33], True)
+	SetTemplateSize(ParticleEffect[33], 1.0, 1.0, 0.5, 1.0)
+	SetTemplateSizeVel(ParticleEffect[33], 0.01, 1.045)
 End Function
 
 Function RemoveParticleInstances%()

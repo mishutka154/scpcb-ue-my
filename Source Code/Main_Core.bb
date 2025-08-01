@@ -9440,6 +9440,7 @@ End Function
 
 Function UpdateExplosion%()
 	Local i%
+	Local e.Events
 	
 	; ~ This here is necessary because the SCP-294's drinks with explosion effect didn't worked anymore -- ENDSHN
 	If me\ExplosionTimer > 0.0
@@ -9447,6 +9448,13 @@ Function UpdateExplosion%()
 		If me\ExplosionTimer < 140.0
 			If me\ExplosionTimer - fps\Factor[0] < 5.0
 				PlaySound_Strict(LoadTempSound("SFX\Ending\GateB\Nuke0.ogg"))
+				For e.Events = Each Events
+					If e\room = PlayerRoom
+						TFormPoint(4417.0, -32.0, -8116.0, e\room\OBJ, 0)
+						SetEmitter(Null, TFormedX(), TFormedY(), TFormedZ(), 33)
+						Exit
+					EndIf
+				Next
 				me\BigCameraShake = 10.0
 				me\ExplosionTimer = 5.0
 			EndIf
