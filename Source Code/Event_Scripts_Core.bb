@@ -239,6 +239,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 				SetNPCFrame(e\room\NPC[0], 74.0)
 			EndIf
 			
+			SetEmitter(e\room, e\room\x, e\room\y, e\room\z, 32)
 			If e\room\NPC[1] <> Null
 				PositionEntity(e\room\NPC[1]\Collider, e\room\x, e\room\y + 0.3, e\room\z - 1.0 + 2048.0 * RoomScale, True)
 				ResetEntity(e\room\NPC[1]\Collider)
@@ -7408,6 +7409,7 @@ Function UpdateEvent_Gate_B%(e.Events)
 			ScaleEntity(e\room\Objects[0], RoomScale, RoomScale, RoomScale, True)
 			RotateEntity(e\room\Objects[0], 0.0, e\room\Angle, 0.0, True)
 			PositionEntity(e\room\Objects[0], e\room\x + 4356.0 * RoomScale, e\room\y - 1017.0 * RoomScale, e\room\z + 2588.0 * RoomScale, True)
+			EntityPickMode(e\room\Objects[0], 2)
 			
 			RenderLoading(60, GetLocalString("loading", "ending"))
 			
@@ -7437,13 +7439,30 @@ Function UpdateEvent_Gate_B%(e.Events)
 			CanSave = 1
 			
 			Local r.Rooms, e2.Events
-			Local i%, TargetX#, TargetY#, TargetZ#, Temp#
+			Local i%, TargetX#, TargetY#, TargetZ#, Temp#, Pvt%
 			
 			For r.Rooms = Each Rooms
 				HideRoomsNoColl(r)
 			Next
 			ShowRoomsNoColl(e\room)
 			ShowRoomsColl(e\room)
+			
+			If e\room\NPC[1] = Null
+				TFormPoint(Rnd(2500.0, 3905.0), 1400.0, Rnd(1224.0, 2423.0), e\room\OBJ, 0)
+				If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -15.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY() + 0.1, PickedZ(), 32)
+				
+				TFormPoint(Rnd(1561.0, 2235.0), 1400.0, Rnd(3850.0, 2423.0), e\room\OBJ, 0)
+				If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -15.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY() + 0.1, PickedZ(), 32)
+				
+				TFormPoint(Rnd(2235.0, 2709.0), 1400.0, Rnd(2423.0, 2690.0), e\room\OBJ, 0)
+				If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -15.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY() + 0.1, PickedZ(), 32)
+				
+				TFormPoint(Rnd(4844.0, 5813.0), 1400.0, Rnd(1000.0, 2756.0), e\room\OBJ, 0)
+				If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -15.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY() + 0.1, PickedZ(), 32)
+				
+				TFormPoint(Rnd(3794.0, 5419.0), 1400.0, Rnd(3345.0, 4108.0), e\room\OBJ, 0)
+				If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -15.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY() + 0.1, PickedZ(), 32)
+			EndIf
 			
 			If e\room\NPC[6] <> Null
 				If EntityX(me\Collider, True) > e\room\x - 250.0 * RoomScale Then e\room\NPC[6]\State = 16.0

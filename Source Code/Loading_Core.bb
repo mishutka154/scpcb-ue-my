@@ -99,7 +99,7 @@ Function RemoveDecalInstances%()
 	Delete(de_I) : de_I = Null
 End Function
 
-Const MaxParticleTextureIDAmount% = 14
+Const MaxParticleTextureIDAmount% = 15
 
 Type ParticleInstance
 	Field ParticleTextureID%[MaxParticleTextureIDAmount]
@@ -134,9 +134,11 @@ Const PARTICLE_CONCRETE% = 11
 Const PARTICLE_FLY% = 12
 
 Const PARTICLE_FIRE% = 13
+
+Const PARTICLE_SNOW_SHINE% = 14
 ;[End Block]
 
-Global ParticleEffect%[32]
+Global ParticleEffect%[33]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -166,6 +168,8 @@ Function LoadParticles%()
 	p_I\ParticleTextureID[PARTICLE_FLY] = LoadTexture_Strict("GFX\Particles\fly.png", 1 + 2, DeleteAllTextures, False)
 	
 	p_I\ParticleTextureID[PARTICLE_FIRE] = LoadTexture_Strict("GFX\Particles\fire.png", 1 + 2, DeleteAllTextures, False)
+	
+	p_I\ParticleTextureID[PARTICLE_SNOW_SHINE] = LoadTexture_Strict("GFX\Particles\snow_shine.png", 1 + 2, DeleteAllTextures, False)
 	
 	; ~ Black smoke in "room2c_gw_lcz"/"room2_6_hcz"/"cont1_035"
 	ParticleEffect[0] = CreateTemplate()
@@ -553,6 +557,15 @@ Function LoadParticles%()
 	SetTemplateAlphaVel(ParticleEffect[31], True)
 	SetTemplateSize(ParticleEffect[31], 0.04, 0.04, 0.5, 1.0)
 	SetTemplateSizeVel(ParticleEffect[31], 0.01, 1.01)
+	
+	; ~ Snow shining
+	ParticleEffect[32] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[32], 3)
+	SetTemplateEmitterLifeTime(ParticleEffect[32], 1)
+	SetTemplateParticleLifeTime(ParticleEffect[32], 6, 10)
+	SetTemplateTexture(ParticleEffect[32], PARTICLE_SNOW_SHINE)
+	SetTemplateAlphaVel(ParticleEffect[32], True)
+	SetTemplateSize(ParticleEffect[32], 0.06, 0.06, 0.5, 1.0)
 End Function
 
 Function RemoveParticleInstances%()
