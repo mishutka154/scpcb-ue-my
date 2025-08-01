@@ -3873,6 +3873,7 @@ Function UpdateEvent_Cont1_035%(e.Events)
 			e\EventState = 1.0
 		ElseIf e\EventState > 0.0
 			Local Temp%, i%
+			Local Visible% = (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 			
 			ShouldPlay = 26
 			
@@ -3911,12 +3912,16 @@ Function UpdateEvent_Cont1_035%(e.Events)
 							e\EventState3 = Abs(e\EventState3) + fps\Factor[0]
 							If e\EventState3 > 1.0 And e\EventState3 - fps\Factor[0] <= 1.0
 								e\room\NPC[0]\State = 0.0
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Gased0.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Gased0.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 							ElseIf e\EventState3 > 70.0 * 15.0 And e\EventState3 < 70.0 * 25.0
 								If e\EventState3 - fps\Factor[0] <= 70.0 * 15.0
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Gased1.ogg")
-									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Gased1.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 									SetNPCFrame(e\room\NPC[0], 553.0)
 								EndIf
 								e\room\NPC[0]\State = 6.0
@@ -3935,10 +3940,11 @@ Function UpdateEvent_Cont1_035%(e.Events)
 									If e\room\NPC[0]\Frame > 552.9 Then e\room\NPC[0]\State = 0.0
 								EndIf
 								
-								If e\EventState3 - fps\Factor[0] <= 70.0 * 35.0 
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedKilled0.ogg")
-									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
-									
+								If e\EventState3 - fps\Factor[0] <= 70.0 * 35.0
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedKilled0.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 									PlaySound_Strict(LoadTempSound("SFX\SCP\035\KilledGetUp.ogg"))
 									
 									I_035\Sad = True
@@ -3987,77 +3993,110 @@ Function UpdateEvent_Cont1_035%(e.Events)
 						If e\EventState3 > 0.0
 							e\EventState3 = -e\EventState3
 							If e\EventState3 < (-70.0) * 35.0 ; ~ The host is dead
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedKilled1.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedKilled1.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 								e\EventState = 70.0 * 60.0
 							Else
 								If e\EventState3 < (-70.0) * 20.0
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedStop1.ogg")
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedStop1.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 								Else
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedStop0.ogg")
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedStop0.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 									e\EventState3 = (-70.0) * 21.0
 								EndIf
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
 								e\EventState = 70.0 * 61.0
 							EndIf
 						Else
 							e\EventState = e\EventState + fps\Factor[0]
 							If e\EventState > 70.0 * 4.0 And e\EventState - fps\Factor[0] <= 70.0 * 4.0
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Help0.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Help0.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 								e\EventState = 70.0 * 10.0
 							ElseIf e\EventState > 70.0 * 20.0 And e\EventState - fps\Factor[0] <= 70.0 * 20.0
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Help1.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Help1.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 							ElseIf e\EventState > 70.0 * 40.0 And e\EventState - fps\Factor[0] <= 70.0 * 40.0
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle0.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle0.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 							ElseIf e\EventState > 70.0 * 50.0 And e\EventState - fps\Factor[0] <= 70.0 * 50.0
-								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle1.ogg")
-								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								If Visible
+									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle1.ogg")
+									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+								EndIf
 							ElseIf e\EventState > 70.0 * 80.0 And e\EventState - fps\Factor[0] <= 70.0 * 80.0
 								If e\EventState2 ; ~ Skip the closet part if player has already opened it
 									e\EventState = 70.0 * 130.0
 								Else
 									If e\EventState3 < (-70.0) * 30.0 ; ~ The host is dead
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedCloset.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										If Visible
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedCloset.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 									ElseIf e\EventState3 = 0.0 ; ~ The gas valves haven't been opened
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet0.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										If Visible
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet0.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 									Else ; ~ Gas valves have been opened but 035 isn't dead
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedCloset.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										If Visible
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedCloset.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 									EndIf
 								EndIf
 							ElseIf e\EventState > 70.0 * 80.0
 								If e\EventState2 Then e\EventState = Max(e\EventState, 70.0 * 100.0)
 								If e\EventState > 70.0 * 110.0 And e\EventState - fps\Factor[0] <= 70.0 * 110.0
 									If e\EventState2
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet1.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										If Visible
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet1.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 										e\EventState = 70.0 * 130.0
 									Else
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle2.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										If Visible
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle2.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 									EndIf
 								ElseIf e\EventState > 70.0 * 125.0 And e\EventState - fps\Factor[0] <= 70.0 * 125.0
-									If e\EventState2
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet0.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
-									Else
-										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle3.ogg")
-										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									If Visible
+										If e\EventState2
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Closet0.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										Else
+											LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle3.ogg")
+											e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+										EndIf
 									EndIf
 								ElseIf e\EventState > 70.0 * 150.0 And e\EventState - fps\Factor[0] <= 70.0 * 150.0
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle4.ogg")
-									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle4.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 								ElseIf e\EventState > 70.0 * 200.0 And e\EventState - fps\Factor[0] <= 70.0 * 200.0
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle5.ogg")
-									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle5.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 								ElseIf e\EventState > 70.0 * 250.0 And e\EventState - fps\Factor[0] <= 70.0 * 250.0
-									LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle6.ogg")
-									e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									If Visible
+										LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Idle6.ogg")
+										e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+									EndIf
 								EndIf
 							EndIf
 						EndIf
@@ -4072,14 +4111,20 @@ Function UpdateEvent_Cont1_035%(e.Events)
 						Next
 						
 						If e\EventState3 = 0.0
-							LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Escape.ogg")
-							e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							If Visible
+								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\Escape.ogg")
+								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							EndIf
 						ElseIf Abs(e\EventState3) > 70.0 * 35.0
-							LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\KilledEscape.ogg")
-							e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							If Visible
+								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\KilledEscape.ogg")
+								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							EndIf
 						Else
-							LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedEscape.ogg")
-							e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							If Visible
+								LoadNPCSound(e\room\NPC[0], "SFX\SCP\035\GasedEscape.ogg")
+								e\room\NPC[0]\SoundCHN = PlaySound_Strict(e\room\NPC[0]\Sound, True)
+							EndIf
 						EndIf
 						e\EventState2 = 20.0
 					EndIf
