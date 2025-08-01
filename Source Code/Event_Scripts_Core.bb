@@ -2478,9 +2478,11 @@ Function UpdateEvent_Room2_SL%(e.Events)
 							If (Not IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(e\room\NPC[0]\Collider), 1.0))
 								If IsEqual(EntityY(e\room\RoomDoors[0]\FrameOBJ), EntityY(me\Collider, True), 1.0)
 									If e\room\RoomDoors[0]\Open
-										If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-										e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Stairs.ogg", opt\VoiceVolume * opt\MasterVolume)
-										e\SoundCHN_IsStream = True
+										If (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+											If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+											e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Stairs.ogg", opt\VoiceVolume * opt\MasterVolume)
+											e\SoundCHN_IsStream = True
+										EndIf
 										PlaySoundEx(snd_I\DoorClose079, Camera, e\room\RoomDoors[0]\FrameOBJ, 7.0)
 										e\room\NPC[0]\State3 = 4.0
 										e\room\RoomDoors[0]\FastOpen = True
@@ -4317,26 +4319,28 @@ Function UpdateEvent_Cont1_079%(e.Events)
 				e\room\RoomDoors[0]\Locked = 2
 			Else
 				e\room\RoomDoors[0]\Locked = 0
-				If e\EventState = 1.0
-					If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 9.0
-						GiveAchievement("079")
-						
-						If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-						e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Speech.ogg", opt\VoiceVolume * opt\MasterVolume)
-						e\SoundCHN_IsStream = True
-						
-						e\EventState = 2.0
-						e\EventState2 = 1.0
-					EndIf
-				ElseIf e\EventState >= 2.0
-					e\EventState = e\EventState + fps\Factor[0]
-					If e\EventState > 5000.0
-						If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25
+				If (Not (chs\NoTarget Lor I_268\InvisibilityOn))
+					If e\EventState = 1.0
+						If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 9.0
+							GiveAchievement("079")
+							
 							If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
-							e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Refuse.ogg", opt\VoiceVolume * opt\MasterVolume)
+							e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Speech.ogg", opt\VoiceVolume * opt\MasterVolume)
 							e\SoundCHN_IsStream = True
 							
-							e\EventState = 1.5
+							e\EventState = 2.0
+							e\EventState2 = 1.0
+						EndIf
+					ElseIf e\EventState >= 2.0
+						e\EventState = e\EventState + fps\Factor[0]
+						If e\EventState > 5000.0
+							If EntityDistanceSquared(e\room\Objects[0], me\Collider) < 6.25
+								If e\SoundCHN <> 0 Then StopStream_Strict(e\SoundCHN) : e\SoundCHN = 0 : e\SoundCHN_IsStream = False
+								e\SoundCHN = StreamSound_Strict("SFX\SCP\079\Refuse.ogg", opt\VoiceVolume * opt\MasterVolume)
+								e\SoundCHN_IsStream = True
+								
+								e\EventState = 1.5
+							EndIf
 						EndIf
 					EndIf
 				EndIf
