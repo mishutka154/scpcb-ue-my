@@ -7797,7 +7797,7 @@ Function UpdateEvent_Toilets_789_J%(e.Events)
 		Case 1.0
 			;[Block]
 			If PlayerRoom = e\room
-				If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 0.36
+				If EntityDistanceSquared(me\Collider, e\room\Objects[0]) < 0.36 And (Not (chs\NoTarget Lor I_268\InvisibilityOn))
 					GiveAchievement("789j")
 					e\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\Joke\789J.ogg"), Camera, e\room\Objects[0], 10.0, 1.0, True)
 					
