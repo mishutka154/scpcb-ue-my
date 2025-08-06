@@ -1540,26 +1540,26 @@ Const r_room2c_gw_lcz% = 30, r_room2c_gw_2_lcz% = 31
 Const r_cont2c_066_1162_arc% = 32
 Const r_room3_storage% = 33
 Const r_room3_lcz% = 34, r_room3_2_lcz% = 35, r_room3_3_lcz% = 36
-Const r_cont3_372% = 37
-Const r_room4_lcz% = 38, r_room4_2_lcz% = 39
-Const r_room4_ic% = 40
+Const r_cont3_372% = 37, r_cont3_513% = 38
+Const r_room4_lcz% = 39, r_room4_2_lcz% = 40
+Const r_room4_ic% = 41
 ; ~ CHECKPOINT
-Const r_room2_checkpoint_lcz_hcz% = 41
+Const r_room2_checkpoint_lcz_hcz% = 42
 ; ~ HCZ
-Const r_room1_dead_end_hcz% = 42
-Const r_cont1_035% = 43, r_cont1_079% = 44, r_cont1_106% = 45, r_cont1_895% = 46
-Const r_room2_hcz% = 47, r_room2_2_hcz% = 48, r_room2_3_hcz% = 49, r_room2_4_hcz% = 50, r_room2_5_hcz% = 51, r_room2_6_hcz% = 52, r_room2_7_hcz% = 53
-Const r_room2_mt% = 54
-Const r_room2_nuke% = 55
-Const r_room2_servers_hcz% = 56
-Const r_room2_shaft% = 57
-Const r_room2_tesla_hcz% = 58, r_room2_tesla_2_hcz% = 59
-Const r_room2_test_hcz% = 60
-Const r_cont2_008% = 61, r_cont2_049% = 62, r_cont2_409% = 63
-Const r_room2c_hcz% = 64, r_room2c_2_hcz% = 65, r_room2c_3_hcz% = 66
-Const r_cont2c_096% = 67
-Const r_room3_hcz% = 68, r_room3_2_hcz% = 69, r_room3_3_hcz% = 70
-Const r_cont3_009% = 71, r_cont3_513% = 72, r_cont3_966% = 73
+Const r_room1_dead_end_hcz% = 43
+Const r_cont1_035% = 44, r_cont1_079% = 45, r_cont1_106% = 46, r_cont1_895% = 47
+Const r_room2_hcz% = 48, r_room2_2_hcz% = 49, r_room2_3_hcz% = 50, r_room2_4_hcz% = 51, r_room2_5_hcz% = 52, r_room2_6_hcz% = 53, r_room2_7_hcz% = 54
+Const r_room2_mt% = 55
+Const r_room2_nuke% = 56
+Const r_room2_servers_hcz% = 57
+Const r_room2_shaft% = 58
+Const r_room2_tesla_hcz% = 59, r_room2_tesla_2_hcz% = 60
+Const r_room2_test_hcz% = 61
+Const r_cont2_008% = 62, r_cont2_049% = 63, r_cont2_409% = 64
+Const r_room2c_hcz% = 65, r_room2c_2_hcz% = 66, r_room2c_3_hcz% = 67
+Const r_cont2c_096% = 68
+Const r_room3_hcz% = 69, r_room3_2_hcz% = 70, r_room3_3_hcz% = 71
+Const r_cont3_009% = 72, r_cont3_966% = 73
 Const r_room4_hcz% = 74, r_room4_2_hcz% = 75, r_room4_3_hcz% = 76
 Const r_room4_gw% = 77
 ; ~ CHECKPOINT
@@ -1742,6 +1742,10 @@ Function FindRoomID%(RoomName$)
 			;[Block]
 			Return(r_cont3_372)
 			;[End Block]
+		Case "cont3_513"
+			;[Block]
+			Return(r_cont3_513)
+			;[End Block]
 		Case "room4_lcz"
 			;[Block]
 			Return(r_room4_lcz)
@@ -1877,10 +1881,6 @@ Function FindRoomID%(RoomName$)
 		Case "cont3_009"
 			;[Block]
 			Return(r_cont3_009)
-			;[End Block]
-		Case "cont3_513"
-			;[Block]
-			Return(r_cont3_513)
 			;[End Block]
 		Case "cont3_966"
 			;[Block]

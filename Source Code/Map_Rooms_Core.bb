@@ -551,36 +551,6 @@ Function FillRoom%(r.Rooms)
 			
 			CreateCustomCenter(r, r\x + 188.0 * RoomScale, r\z - 724.0 * RoomScale)
 			;[End Block]
-		Case r_cont3_372
-			;[Block]
-			; ~ SCP-372 Chamber door
-			d.Doors = CreateDoor(r, r\x + 576.0 * RoomScale, r\y, r\z + 176.0 * RoomScale, 90.0, False, BIG_DOOR, KEY_CARD_2)
-			PositionEntity(d\Buttons[0], r\x + 486.0 * RoomScale, EntityY(d\Buttons[0], True), r\z - 296.0 * RoomScale, True)
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.025, True)
-			TurnEntity(d\Buttons[0], 0.0, 90.0, 0.0)
-			r\RoomDoors.Doors[0] = d
-			
-			; ~ Observation Room door
-			d.Doors = CreateDoor(r, r\x + 101.0 * RoomScale, r\y, r\z + 380.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_2)
-			d\MTFClose = False : d\AutoClose = False
-			
-			; ~ Maintenance Room 4D door
-			d.Doors = CreateDoor(r, r\x - 840.0 * RoomScale, r\y, r\z + 258.0 * RoomScale, 180.0, False, DEFAULT_DOOR, KEY_CARD_2)
-			d\Locked = 1 : d\DisableWaypoint = True
-			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
-			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
-			FreeEntity(d\OBJ2) : d\OBJ2 = 0
-			
-			it.Items = CreateItem("Document SCP-372", it_paper, r\x + 350.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 564.0 * RoomScale)
-			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Radio Transceiver", it_radio, r\x + 186.0 * RoomScale, r\y + 112.0 * RoomScale, r\z - 427.0 * RoomScale)
-			it\State = Rnd(100.0)
-			EntityParent(it\Collider, r\OBJ)
-			
-			CreateCustomCenter(r, r\x + 704.0 * RoomScale, r\z)
-			;[End Block]
 		Case r_cont1_914
 			;[Block]
 			; ~ SCP-914 doors
@@ -1977,6 +1947,88 @@ Function FillRoom%(r.Rooms)
 			de.Decals = CreateDecal(DECAL_BLOOD_6, r\x + 1083.0 * RoomScale, r\y - 5632.0 * RoomScale + 0.005, r\z + 890.0 * RoomScale, 90.0, 180.0, 0.0, 0.5)
 			EntityParent(de\OBJ, r\OBJ)
 			;[End Block]
+		Case r_cont3_372
+			;[Block]
+			; ~ SCP-372 Chamber door
+			d.Doors = CreateDoor(r, r\x + 576.0 * RoomScale, r\y, r\z + 176.0 * RoomScale, 90.0, False, BIG_DOOR, KEY_CARD_2)
+			PositionEntity(d\Buttons[0], r\x + 486.0 * RoomScale, EntityY(d\Buttons[0], True), r\z - 296.0 * RoomScale, True)
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.025, True)
+			TurnEntity(d\Buttons[0], 0.0, 90.0, 0.0)
+			r\RoomDoors.Doors[0] = d
+			
+			; ~ Observation Room door
+			d.Doors = CreateDoor(r, r\x + 101.0 * RoomScale, r\y, r\z + 380.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_2)
+			d\MTFClose = False : d\AutoClose = False
+			
+			; ~ Maintenance Room 4D door
+			d.Doors = CreateDoor(r, r\x - 840.0 * RoomScale, r\y, r\z + 258.0 * RoomScale, 180.0, False, DEFAULT_DOOR, KEY_CARD_2)
+			d\Locked = 1 : d\DisableWaypoint = True
+			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) - 0.08, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
+			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
+			FreeEntity(d\OBJ2) : d\OBJ2 = 0
+			
+			it.Items = CreateItem("Document SCP-372", it_paper, r\x + 350.0 * RoomScale, r\y + 176.0 * RoomScale, r\z + 564.0 * RoomScale)
+			RotateEntity(it\Collider, 0.0, 0.0, 0.0)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Radio Transceiver", it_radio, r\x + 186.0 * RoomScale, r\y + 112.0 * RoomScale, r\z - 427.0 * RoomScale)
+			it\State = Rnd(100.0)
+			EntityParent(it\Collider, r\OBJ)
+			
+			CreateCustomCenter(r, r\x + 704.0 * RoomScale, r\z)
+			;[End Block]
+		Case r_cont3_513
+			;[Block]
+			d.Doors = CreateDoor(r, r\x - 704.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_3)
+			
+			d.Doors = CreateDoor(r, r\x - 512.0 * RoomScale, r\y, r\z + 622.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_3)
+			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.031, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
+			
+			; ~ Dust decals
+			For i = 0 To 2
+				Select i
+					Case 0
+						;[Block]
+						xTemp = -87.0
+						zTemp = 466.0
+						Scale = Rnd(0.1, 0.2)
+						;[End Block]
+					Case 1
+						;[Block]
+						xTemp = -177.0
+						zTemp = 467.0
+						Scale = Rnd(0.2, 0.3)
+						;[End Block]
+				End Select
+				de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x + xTemp * RoomScale, r\y + yTemp * RoomScale + 0.005, r\z + zTemp * RoomScale, 90.0, Rnd(360.0), 0.0, Scale, Rnd(0.6, 0.8), 1)
+				EntityParent(de\OBJ, r\OBJ)
+			Next
+			
+			sc.SecurityCams = CreateSecurityCam(r, r\x - 450.0 * RoomScale, r\y + 448.0 * RoomScale, r\z + 250.0 * RoomScale, 20.0)
+			sc\Angle = 135.0 : sc\Turn = 0.0
+			
+			it.Items = CreateItem("SCP-513", it_scp513, r\x, r\y + 196.0 * RoomScale, r\z + 640.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Blood-stained Note", it_paper, r\x + 392.0 * RoomScale, r\y + 130.0 * RoomScale, r\z - 280.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Document SCP-513", it_paper, r\x - 318.0 * RoomScale, r\y + 104.0 * RoomScale, r\z - 360.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Wallet", it_wallet, r\x - 928.0 * RoomScale, r\y + 150.0 * RoomScale, r\z + 422.0 * RoomScale)
+			; ~ A hacky fix for wallet's model and icon
+			it\InvImg = it\ItemTemplate\InvImg
+			SetAnimTime(it\OBJ, 4.0)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it2.Items = CreateItem("Mastercard", it_mastercard, 0.0, 0.0, 0.0)
+			it2\Picked = True : it2\Dropped = -1 : it2\State = Rand(0, 6)
+			it\SecondInv[0] = it2
+			HideEntity(it2\Collider)
+			
+			CreateCustomCenter(r, r\x, r\z - 640.0 * RoomScale)
+			;[End Block]
 		Case r_room4_ic
 			;[Block]
 			; ~ Information Center door
@@ -2986,56 +3038,6 @@ Function FillRoom%(r.Rooms)
 			EntityParent(it\Collider, r\OBJ)
 			
 			CreateCustomCenter(r, r\x, r\z - 832.0 * RoomScale)
-			;[End Block]
-		Case r_cont3_513
-			;[Block]
-			d.Doors = CreateDoor(r, r\x - 704.0 * RoomScale, r\y, r\z + 256.0 * RoomScale, 0.0, False, DEFAULT_DOOR, KEY_CARD_3)
-			
-			d.Doors = CreateDoor(r, r\x - 512.0 * RoomScale, r\y, r\z + 622.0 * RoomScale, 90.0, True, DEFAULT_DOOR, KEY_CARD_3)
-			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) + 0.031, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
-			
-			; ~ Dust decals
-			For i = 0 To 2
-				Select i
-					Case 0
-						;[Block]
-						xTemp = -87.0
-						zTemp = 466.0
-						Scale = Rnd(0.1, 0.2)
-						;[End Block]
-					Case 1
-						;[Block]
-						xTemp = -177.0
-						zTemp = 467.0
-						Scale = Rnd(0.2, 0.3)
-						;[End Block]
-				End Select
-				de.Decals = CreateDecal(DECAL_CORROSIVE_1, r\x + xTemp * RoomScale, r\y + yTemp * RoomScale + 0.005, r\z + zTemp * RoomScale, 90.0, Rnd(360.0), 0.0, Scale, Rnd(0.6, 0.8), 1)
-				EntityParent(de\OBJ, r\OBJ)
-			Next
-			
-			sc.SecurityCams = CreateSecurityCam(r, r\x - 450.0 * RoomScale, r\y + 448.0 * RoomScale, r\z + 250.0 * RoomScale, 20.0)
-			sc\Angle = 135.0 : sc\Turn = 0.0
-			
-			it.Items = CreateItem("SCP-513", it_scp513, r\x, r\y + 196.0 * RoomScale, r\z + 640.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Blood-stained Note", it_paper, r\x + 392.0 * RoomScale, r\y + 130.0 * RoomScale, r\z - 280.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Document SCP-513", it_paper, r\x - 318.0 * RoomScale, r\y + 104.0 * RoomScale, r\z - 360.0 * RoomScale)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it.Items = CreateItem("Wallet", it_wallet, r\x - 928.0 * RoomScale, r\y + 150.0 * RoomScale, r\z + 422.0 * RoomScale)
-			; ~ A hacky fix for wallet's model and icon
-			it\InvImg = it\ItemTemplate\InvImg
-			SetAnimTime(it\OBJ, 4.0)
-			EntityParent(it\Collider, r\OBJ)
-			
-			it2.Items = CreateItem("Mastercard", it_mastercard, 0.0, 0.0, 0.0)
-			it2\Picked = True : it2\Dropped = -1 : it2\State = Rand(0, 6)
-			it\SecondInv[0] = it2
-			HideEntity(it2\Collider)
 			;[End Block]
 		Case r_cont3_966
 			;[Block]
