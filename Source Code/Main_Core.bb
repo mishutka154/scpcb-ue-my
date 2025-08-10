@@ -2989,7 +2989,7 @@ Function UpdateMoving%()
 					If me\ForceMove > 0.0 Then Speed = Speed * me\ForceMove
 					
 					If SelectedItem <> Null
-						If (SelectedItem\ItemTemplate\ID = it_firstaid Lor SelectedItem\ItemTemplate\ID = it_finefirstaid Lor SelectedItem\ItemTemplate\ID = it_firstaid2) And wi\HazmatSuit = 0 Then Sprint = 0.0
+						If (SelectedItem\ItemTemplate\ID = it_firstaid Lor SelectedItem\ItemTemplate\ID = it_finefirstaid Lor SelectedItem\ItemTemplate\ID = it_firstaid2) And (Not InvOpen) And wi\HazmatSuit = 0 Then Sprint = 0.0
 					EndIf
 					
 					Temp = (me\Shake Mod 360.0)
@@ -5555,7 +5555,6 @@ Function UpdateGUI%()
 							SelectedItem = Null
 							Return
 						Else
-							me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
 							If (Not me\Crouch) Then SetCrouch(True)
 							
 							SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / (4.0 + (SelectedItem\ItemTemplate\ID = it_firstaid))), 100.0)
