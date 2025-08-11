@@ -33,6 +33,10 @@
 - Increased spawnrate of SCP-106 in «DisableDecals» = 2 type rooms.
 - Fixed all MTF shooting at player simultaniously.
 
+[Bug Fixes]
+- Fixed First Aid Kits halting all momentum when clicked without actually being selected in the inventory.
+- Fixed inventory speed reduction in pocket dimension not being consistently halved.
+
 {1.5.6}
 
 [Global]
