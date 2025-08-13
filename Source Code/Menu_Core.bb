@@ -2076,7 +2076,6 @@ Function RenderLoading%(Percent%, Assets$ = "")
 			ResetInput()
 			ResetTimingAccumulator()
 			SetFontEx(fo\FontID[Font_Default])
-			Close = True
 			DeleteMenuGadgets()
 			FreeImage(LoadingImage) : LoadingImage = 0
 			FreeImage(LoadingBack) : LoadingBack = 0
@@ -2084,6 +2083,7 @@ Function RenderLoading%(Percent%, Assets$ = "")
 			SelectedLoadingScreens = 0
 			Descriptions = 0 : DescriptionIndex = 0
 			ImageAlignX = "" : ImageAlignY = ""
+			Close = True
 		EndIf
 	Until Close
 	If (InitializeIntroMovie And IsCWM) And opt\IntroEnabled And Percent = 100
