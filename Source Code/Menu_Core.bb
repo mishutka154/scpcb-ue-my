@@ -1856,6 +1856,7 @@ Global ImageAlignX$, ImageAlignY$
 Global CWMText$
 
 Global InitializeIntroMovie% = False
+Global DescTimer#
 
 Function RenderLoading%(Percent%, Assets$ = "")
 	CatchErrors("RenderLoading(" + Percent + ", " + Assets + ")")
@@ -1901,7 +1902,15 @@ Function RenderLoading%(Percent%, Assets$ = "")
 		Cls()
 		
 		If Percent > 20 Then UpdateMusic()
-		If Percent > (100.0 / DescrArraySize) * (DescriptionIndex + 1) Then DescriptionIndex = DescriptionIndex + 1
+		DescTimer = DescTimer + TICK_DURATION
+		If DescTimer > 700.0
+			If DescriptionIndex < DescrArraySize - 1
+				DescriptionIndex = DescriptionIndex + 1
+			Else
+				DescriptionIndex = 0
+			EndIf
+			DescTimer = 0.0
+		EndIf
 		
 		If LoadingBack <> 0 Then DrawBlock(LoadingBack, mo\Viewport_Center_X - LoadingBackWidth, mo\Viewport_Center_Y - LoadingBackHeight)
 		
