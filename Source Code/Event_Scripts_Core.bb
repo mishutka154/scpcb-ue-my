@@ -1106,6 +1106,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 							ShowEntity(e\room\RoomDoors[6]\OBJ2)
 							ShowEntity(e\room\RoomDoors[6]\FrameOBJ)
 							
+							e\EventState2 = 0.0
 							e\EventState3 = 0.0
 							e\EventState = INTRO_IN_CHAMBER
 						EndIf
@@ -1113,11 +1114,11 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 					;[End Block]
 				Case INTRO_IN_CHAMBER
 					;[Block]
-					If snd_I\IntroSFX[3] <> 0
+					If snd_I\IntroSFX[3] <> 0 And e\EventState2 <> 1.0
 						If EntityVisible(Camera, n_I\Curr173\OBJ) And EntityInView(n_I\Curr173\OBJ, Camera)
 							CreateHintMsg(Format(GetLocalString("msg", "blink"), key\Name[key\BLINK]))
 							PlaySound_Strict(snd_I\IntroSFX[3])
-							FreeSound_Strict(snd_I\IntroSFX[3]) : snd_I\IntroSFX[3] = 0
+							e\EventState2 = 1.0
 						EndIf
 					EndIf
 					
