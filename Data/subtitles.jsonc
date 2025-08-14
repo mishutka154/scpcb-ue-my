@@ -3776,12 +3776,12 @@
 	/* ENDINGS - GATE B */
 	"SFX\\Ending\\GateB\\682Battle.ogg": [
 		{
-			"text": "SCP-682 just broke out at Gate B. I want all avaliable helicopters and MTF units at Gate B now!",
+			"text": "SCP-682 just broke out at Gate B. I want all available helicopters and MTF units at Gate B now!",
 			"delay": 5.65,
 			"color": "announcement"
 		},
 		{
-			"text": "I repeat, SCP-682 is out of the facility! All avaliable helicopters and MTF units to Gate B now!",
+			"text": "I repeat, SCP-682 is out of the facility! All available helicopters and MTF units to Gate B now!",
 			"delay": 13.8,
 			"color": "announcement"
 		}
