@@ -4478,4 +4478,4 @@ Function FillRoom%(r.Rooms)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
+;~C#Blitz3D_TSS

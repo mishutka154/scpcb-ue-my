@@ -471,18 +471,27 @@ Function UpdateEvent_Cont1_173%(e.Events)
 		If (e\EventState Mod 600.0 > 300.0) And ((e\EventState + fps\Factor[0]) Mod 600.0 < 300.0)
 			i = Floor((e\EventState - 5000.0) / 600.0) + 1.0
 			
-			If i = 0
-				If Reachable Then PlaySound_Strict(LoadTempSound("SFX\Room\Intro\IA\Scripted\Scripted5.ogg"))
-				CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
-			ElseIf i = 2
-				CreateHintMsg(GetLocalString("msg", "item.combine.swap"), 6.0, True)
-			ElseIf i = 3
-				CreateHintMsg(GetLocalString("msg", "right.click"), 6.0, True)
-			EndIf
-			If Reachable And (i > 0 And i < 26)
+			Select i
+				Case 0
+					;[Block]
+					If Reachable Then PlaySound_Strict(LoadTempSound("SFX\Room\Intro\IA\Scripted\Scripted5.ogg"))
+					CreateHintMsg(Format(GetLocalString("msg", "crouch"), key\Name[key\CROUCH]), 6.0, True)
+					;[End Block]
+				Case 2
+					;[Block]
+					CreateHintMsg(GetLocalString("msg", "item.combine.swap"), 6.0, True)
+					;[End Block]
+				Case 3
+					;[Block]
+					CreateHintMsg(GetLocalString("msg", "right.click"), 6.0, True)
+					;[End Block]
+			End Select
+			If i > 0 And i < 26
 				If (Not CommotionState[i]) ; ~ Prevents the same commotion file from playing more then once
-					PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Commotion\Commotion" + (i - 1) + ".ogg"))
-					CommotionState[i] = True
+					If Reachable
+						PlaySound_Strict(LoadTempSound("SFX\Room\Intro\Commotion\Commotion" + (i - 1) + ".ogg"))
+						CommotionState[i] = True
+					EndIf
 				EndIf
 			EndIf
 			If i > 26 Then RemoveEvent(e)
