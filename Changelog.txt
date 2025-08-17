@@ -36,6 +36,7 @@
 [Bug Fixes]
 - Fixed First Aid Kits halting all momentum when clicked without actually being selected in the inventory.
 - Fixed inventory speed reduction in pocket dimension not being consistently halved.
+- Fixed flying Class-D model in SCP-106's containment box.
 
 {1.5.6}
 

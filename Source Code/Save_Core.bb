@@ -1333,6 +1333,10 @@ Function LoadGame%(File$)
 			Case e_cont1_106
 				;[Block]
 				If e\EventState2 = 0.0 Then PositionEntity(e\room\Objects[1], EntityX(e\room\Objects[1], True), (-1280.0) * RoomScale, EntityZ(e\room\Objects[1], True), True)
+				If e\room\NPC[1] <> Null
+					HideEntity(e\room\NPC[1]\Collider)
+					HideEntity(e\room\NPC[1]\OBJ)
+				EndIf
 				;[End Block]
 			Case e_cont2_008
 				;[Block]
@@ -2283,6 +2287,10 @@ Function LoadGameQuick%(File$)
 			Case e_cont1_106
 				;[Block]
 				SetAnimTime(e\room\Objects[5], 1.0 + 119.0 * (e\EventState <> 0.0))
+				If e\room\NPC[1] <> Null
+					HideEntity(e\room\NPC[1]\Collider)
+					HideEntity(e\room\NPC[1]\OBJ)
+				EndIf
 				;[End Block]
 			Case e_toilets_789_j
 				;[Block]
