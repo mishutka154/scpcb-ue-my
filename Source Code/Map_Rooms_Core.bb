@@ -2637,7 +2637,7 @@ Function FillRoom%(r.Rooms)
 			r\RoomDoors.Doors[0] = d
 			
 			; ~ Door to the center
-			d.Doors = CreateDoor(r, r\x - 624.0 * RoomScale, r\y - 1280.0 * RoomScale, r\z, 90.0, True)
+			d.Doors = CreateDoor(r, r\x - 624.0 * RoomScale, r\y - 1280.0 * RoomScale, r\z, 90.0, True, HEAVY_DOOR)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True) - 0.031, EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True), True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True) + 0.031, EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True), True)
 			r\RoomDoors.Doors[1] = d
@@ -4478,4 +4478,4 @@ Function FillRoom%(r.Rooms)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS
