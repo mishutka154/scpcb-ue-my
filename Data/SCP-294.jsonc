@@ -26,7 +26,7 @@
 		"refuse_message": "\"Hmm... There should be more cuprite.\""
 	},
 	{
-		"name": ["Antimatter", "Anti-matter", "Anti Matter", "Annighilation", "Void", "Atoms As-synthesized In The Sun", "Antiwater", "Anti-water", "Anti Water", "God"],
+		"name": ["Antimatter", "Anti-matter", "Anti Matter", "Annighilation", "Void", "Atoms As-synthesized In The Sun", "God"],
 		"color": [0, 0, 0],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense3.ogg",
@@ -1803,7 +1803,7 @@
 		"damage": 2.0
 	},
 	{
-		"name": ["Red Ice", "SCP-009", "009"],
+		"name": ["Red Ice", "SCP-009", "009", "Antiwater", "Anti-water", "Anti Water"],
 		"color": [255, 100, 100],
 		"alpha": 0.6,
 		"dispense_sound": "SFX\\SCP\\294\\dispense2.ogg",
