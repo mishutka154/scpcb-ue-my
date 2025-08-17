@@ -596,7 +596,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense3.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Burn.ogg",
 		"drink_message": "You didn't think Biotic powers were real? Right?",
-		"death_message": "A body emitting large levels of radiation was discovered at Sector [DATA REDACTED]. The subject appears to have consumed an unknown substance via SCP-294. Analysis of the radioactive substance via use of and chemical and nuclear testing shows that it has 0 charge, is composed purely of Neutrons, and appears to lack any Electrons or Protons. This indicates that the substance may be the theoretical Element known as Netronium.",
+		"death_message": "A body emitting large levels of radiation was discovered at Sector [DATA REDACTED]. The subject appears to have consumed an unknown substance via SCP-294. Analysis of the radioactive substance via use of and chemical and nuclear testing shows that it has 0 charge, is composed purely of Neutrons, and appears to lack any Electrons or Protons. This indicates that the substance may be the theoretical Element known as Neutronium.",
 		"death_timer": 0.0
 	},
 	{
@@ -847,7 +847,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Burn.ogg",
 		"blur": 15.0,
-		"death_message": "Subject D-9341 was found dead with the victim's organs and mouth cavity suffering numerous 4th degree burns and traces of molten metal in the stomach. A polystyrene cup was also located next to the subject's body. Cause of death is most likely linked to [DATA REDACTED].",
+		"death_message": "Subject D-9341 was found dead with the victim's organs and mouth cavity suffering numerous 4th degree burns and traces of molten metal in the stomach. A polystyrene cup was also located next to the subject's body. Cause of death is most likely linked to SCP-294.",
 		"death_timer": 0.0
 	},
 	{
