@@ -1132,7 +1132,7 @@
 		"blur": 1.0
 	},
 	{
-		"name": ["420", "Weed", "Dope", "Green Dragon", "Yolo420mlg", "MLG", "Random", "Drugs", "Anti Blur", "Anti-Blur", "SCP-420-J", "420-J"],
+		"name": ["Weed", "Dope", "Green Dragon", "Yolo420mlg", "MLG", "Random", "Drugs", "Anti Blur", "Anti-Blur", "SCP-420-J", "420-J"],
 		"color": [54, 177, 30],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
@@ -2448,6 +2448,7 @@
 		"drink_sound": "SFX\\SCP\\008\\KillScientist1.ogg",
 		"drink_message": "\"Very tasty choco... Oh shit! Who's eating me?!...\"",
 		"blur": 500.0,
+		"death_message": "Subject D-9341 is found in the [DATA EXPUNGED]. His corpse is covered by a chocolate substance, identified as SCP-643. Death came from eating by SCP-372.",
 		"death_timer": 0.0
 	},
 	{
@@ -2718,6 +2719,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Burn.ogg",
 		"blur": 10.0,
+		"death_message": "Subject D-9341 was found on the floor of [DATA REDACTED] with heavily deteriorated skin and exposed muscles and bones. Appears to be linked with SCP-420.",
 		"death_timer": 0.0
 	},
 	{
@@ -3114,12 +3116,13 @@
 		"death_timer": 0.0
 	},
 	{
-		"name": ["Bronze", "Liquid Bronze", "Melt Bronse"],
+		"name": ["Bronze", "Liquid Bronze", "Melt Bronse", "Copper", "Liquid Copper", "Brass", "Liquid Brass"],
 		"color": [255, 200, 15],
 		"alpha": 1.0,
 		"glow": true,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Burn.ogg",
+		"death_message": "Subject D-9341 was found dead with the victim's organs and mouth cavity suffering numerous 4th degree burns and traces of molten copper in the stomach. A polystyrene cup was also located next to the subject's body. Cause of death is most likely linked to SCP-294.",
 		"death_timer": 0.0
 	},
 	{
