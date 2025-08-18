@@ -482,7 +482,7 @@
 		"drink_sound": "SFX\\SCP\\294\\Spit.ogg"
 	},
 	{
-		"name": ["Cola With Orange", "Coke Cola", "Coke-cola", "Coca Cola", "Coca-Cola", "Pepsi-Cola", "Pepsi Cola", "Soda", "Root Beer", "Dr. Pepper", "Doctor Pepper Cherry", "Cherry Vanilla Dr. Pepper", "Cherry Chocolate Diet Dr. Pepper"],
+		"name": ["Cola With Orange", "Coke", "Coca Cola", "Coca-Cola", "Pepsi-Cola", "Pepsi Cola", "Diet Pepsi" "Soda", "Root Beer", "Dr. Pepper", "Doctor Pepper Cherry", "Cherry Vanilla Dr. Pepper", "Cherry Chocolate Diet Dr. Pepper", "Diet Dr. Pepper"],
 		"color": [58, 29, 20],
 		"alpha": 0.8,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -859,7 +859,7 @@
 		"drink_message": "\"The warm liquid has a salty after-taste, almost like tears.\""
 	},
 	{
-		"name": ["Ice Tea", "Cold Tea", "Tea"],
+		"name": ["Ice Tea", "Cold Tea", "Tea", "Sweet Tea"],
 		"color": [137, 139, 65],
 		"alpha": 0.8,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -1105,7 +1105,7 @@
 		"refuse_message": "Through a complex series of thoughts and inside events, you feel that this belongs to someone else."
 	},
 	{
-		"name": ["Galaga", "Old Game", "Good Game", "Nostalgia", "Oldfag"],
+		"name": ["Galaga", "Old Game", "Good Game", "Nostalgia"],
 		"color": [0, 0, 0],
 		"alpha": 1.0,
 		"glow": true,
@@ -1187,7 +1187,7 @@
 		"drink_message": "\"It's nice and cold.\""
 	},
 	{
-		"name": ["Mucus", "Slime"],
+		"name": ["Mucus", "Slime", "Sludge"],
 		"color": [102, 204, 0],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -1210,7 +1210,7 @@
 		"drink_sound": "SFX\\SCP\\294\\Cough.ogg"
 	},
 	{
-		"name": ["Nausea"],
+		"name": ["Nausea", "Dizziness"],
 		"color": [59, 92, 32],
 		"alpha": 0.6,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense3.ogg",
@@ -1436,7 +1436,7 @@
 		"blur": 4.0
 	},
 	{
-		"name": ["SCP-008", "008"],
+		"name": ["SCP-008", "008", "Zombie", "Zombie Plague"],
 		"color": [255, 100, 100],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
@@ -1463,7 +1463,7 @@
 		"death_timer": 0.0
 	},
 	{
-		"name": ["Baileys", "Licker With Milk", "Milk With Licker", "Chocolate Licker With Milk", "Milk With Chocolate Licker", "Licker And Milk", "Milk And Licker", "Chocolate Licker And Milk", "Milk And Chocolate Licker"],
+		"name": ["Baileys", "Liquor With Milk", "Milk With Liquor", "Chocolate Liquor With Milk", "Milk With Chocolate Liquor", "Liquor And Milk", "Milk And Liquor", "Chocolate Liquor And Milk", "Milk And Chocolate Liquor"],
 		"color": [236, 165, 0],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -1576,7 +1576,7 @@
 		"blur": 7.0
 	},
 	{
-		"name": ["SCP-791", "791"],
+		"name": ["SCP-791", "791", "Water Orb"],
 		"color": [200, 200, 200],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -2245,7 +2245,7 @@
 		"drink_sound": "SFX\\Horror\\Horror6.ogg",
 		"drink_message": "Sometimes, it's comforting to close your eyes and block out all of the scary things around you. This is not one of those times.",
 		"blink_effect": 2.0,
-		"blink_timer": 120,
+		"blink_timer": 120.0,
 		"blur": 115.0
 	},
 	{
@@ -2470,7 +2470,7 @@
 		"death_timer": 0.0
 	},
 	{
-		"name": ["Licker"],
+		"name": ["Liquor"],
 		"color": [255, 255, 255],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense1.ogg",
@@ -2713,7 +2713,7 @@
 		"blur": 10.0
 	},
 	{
-		"name": ["SCP-420", "420"],
+		"name": ["SCP-420", "420", "Aggressive Skin Condition"],
 		"color": [0, 0, 0],
 		"alpha": 1.0,
 		"dispense_sound": "SFX\\SCP\\294\\Dispense2.ogg",
@@ -2729,7 +2729,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense3.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Slurp.ogg",
 		"blink_effect": 0.0,
-		"blink_timer": 300
+		"blink_timer": 300.0
 	},
 	{
 		"name": ["Appendicitis", "Stomach Ache"],
@@ -3097,7 +3097,7 @@
 		"dispense_sound": "SFX\\SCP\\294\\Dispense3.ogg",
 		"drink_sound": "SFX\\SCP\\294\\Slurp.ogg",
 		"blink_effect": 3.0,
-		"blink_timer": 120
+		"blink_timer": 120.0
 	},
 	{
 		"name": ["Watermelon Juice", "Watermelon Jam"],
@@ -3438,7 +3438,7 @@
 		"stamina_effect": 2.0,
 		"stamina_timer": 180.0,
 		"blink_effect": 1.5,
-		"blink_timer": 180
+		"blink_timer": 180.0
 	},
 	{
 		"name": ["Mixed Vegetables", "Mix Of Vegetables", "Fitness Juice", "Fitness Drink", "Fitness Cocktail", "Vegetable Cocktail"],
