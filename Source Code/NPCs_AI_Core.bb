@@ -2069,7 +2069,7 @@ Function UpdateNPCType106%(n.NPCs)
 	If forest_event <> Null And forest_event\room = PlayerRoom
 		If forest_event\EventState = 1.0 Then Spawn106 = False
 	EndIf
-	If skull_event <> Null
+	If skull_event <> Null And skull_event\room = PlayerRoom
 		If skull_event\EventState > 0.0 Then Spawn106 = False
 	EndIf
 	; ~ Gate A event has been triggered. Don't make SCP-106 disappear!
