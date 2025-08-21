@@ -5721,19 +5721,28 @@ Function UpdateEvent_Room2_MT%(e.Events)
 End Function
 
 Function UpdateEvent_Room2_Nuke%(e.Events)
+	Local i%
+	
 	If e\room\Dist < 6.0
 		If e\room\NPC[0] = Null
-			TFormPoint(1110.0, 51.2, -208.0, e\room\OBJ, 0)
+			Local de.Decals
+			
+			TFormPoint(477.0, 51.2, 208.0, e\room\OBJ, 0)
 			e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 			e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
 			ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_BODY_1_TEXTURE)
 			SetNPCFrame(e\room\NPC[0], 40.0)
 			RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 90.0, 0.0, True)
+			
+			For i = 0 To 4
+				TFormPoint(543.5, 120.0 + Rnd(-50.0, 50.0), 208.0 + Rnd(-50.0, 50.0), e\room\OBJ, 0)
+				CreateDecal(Rand(DECAL_BULLET_HOLE_1, DECAL_BULLET_HOLE_2), TFormedX(), TFormedY(), TFormedZ(), 0.0, e\room\Angle + 270.0, 0.0, Rnd(0.028, 0.034), 1.0, 1, 2)
+			Next
 		EndIf
 	EndIf
 	
 	If PlayerRoom = e\room
-		Local i%, x1#, y1#, z1#
+		Local x1#, y1#, z1#
 		
 		If EntityY(me\Collider, True) < -5508.0 * RoomScale
 			e\EventState = UpdateLever(e\room\RoomLevers[0]\OBJ)
@@ -5794,6 +5803,40 @@ Function UpdateEvent_Room2_Nuke%(e.Events)
 					If e\room\RoomEmitters[i] <> Null Then FreeEmitter(e\room\RoomEmitters[i])
 				Next
 			EndIf
+		Else
+			If e\EventState3 = 0.0
+				If e\room\RoomDoors[2]\Open Then e\EventState3 = Rand(2.0, 3.0)
+			Else
+				e\EventState4 = Min(e\EventState4 + fps\Factor[0], 70.0 * 13.1)
+				
+				If e\EventState4 > 70.0 * 7.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 7.0
+					TFormPoint(889.0, 120.0, 379.0 - (758.0 * (e\EventState3 = 3.0)), e\room\OBJ, 0)
+					e\room\NPC[1] = CreateNPC(NPCType1048_A, TFormedX(), TFormedY(), TFormedZ())
+					e\room\NPC[1]\State = -1.0
+					RotateEntity(e\room\NPC[1]\Collider, 0.0, e\room\Angle + 90.0 + (180.0 * (e\EventState3 = 3.0)), 0.0, True)
+					
+					me\BigCameraShake = Max(1.0, me\BigCameraShake)
+					PlaySoundEx(LoadTempSound("SFX\Room\Room2Nuke\Vent" + Rand(0, 2) + ".ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 2.0)
+					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
+				ElseIf e\EventState4 > 70.0 * 10.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 10.0
+					me\BigCameraShake = Max(1.0, me\BigCameraShake)
+					PlaySoundEx(LoadTempSound("SFX\Room\Room2Nuke\Vent" + Rand(0, 2) + ".ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 2.0)
+					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
+				ElseIf e\EventState4 > 70.0 * 13.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 13.0
+					e\room\NPC[1]\State = 1.0 : e\room\NPC[1]\State2 = 70.0 * 2.0
+					
+					me\BigCameraShake = Max(1.5, me\BigCameraShake)
+					PlaySoundEx(LoadTempSound("SFX\Door\DoorOpenFast.ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 1.0)
+					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
+				ElseIf e\EventState4 >= 70.0 * 13.1
+					RotateEntity(e\room\Objects[e\EventState3], CurveAngle(-15.0, EntityPitch(e\room\Objects[e\EventState3], True), 15.0), e\room\Angle + (180.0 * (e\EventState3 = 3.0)), 0.0, True)
+				EndIf
+			EndIf
+			
+			Local Volume# = (e\EventState4 >= 70.0 * 13.1)
+			
+			e\SoundCHN = LoopSoundEx(RoomAmbience[3], e\SoundCHN, Camera, e\room\Objects[2], 2.0 + ((e\EventState3 = 2.0) * Volume), 0.8 + ((e\EventState3 = 2.0) * Volume))
+			e\SoundCHN2 = LoopSoundEx(RoomAmbience[3], e\SoundCHN2, Camera, e\room\Objects[3], 2.0 + ((e\EventState3 = 3.0) * Volume), 0.8 + ((e\EventState3 = 3.0) * Volume))
 		EndIf
 		x1 = EntityX(me\Collider, True) : y1 = EntityY(me\Collider, True) : z1 = EntityZ(me\Collider, True)
 		me\InsideElevator = (IsInsideElevator(x1, y1, z1, e\room\Objects[0]) Lor IsInsideElevator(x1, y1, z1, e\room\Objects[1]))
@@ -10442,4 +10485,4 @@ Function UpdateEvent_Trick_Item%(e.Events)
 End Function
 
 ;~IDEal Editor Parameters:
-;~C#Blitz3D_TSS
+;~C#Blitz3D TSS

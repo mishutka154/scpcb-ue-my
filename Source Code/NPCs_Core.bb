@@ -421,7 +421,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			
 			n\Collider = CreatePivot()
 			n\CollRadius = 0.07
-			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.13)
+			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.1)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1048_A_MODEL])

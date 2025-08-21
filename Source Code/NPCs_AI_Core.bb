@@ -4182,7 +4182,7 @@ Function UpdateNPCType1048_A%(n.NPCs)
 	End Select
 	UpdateSoundOrigin(n\SoundCHN, Camera, n\Collider, 8.0, 1.0, True)
 	
-	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - (n\CollRadius + 0.13), EntityZ(n\Collider))
+	PositionEntity(n\OBJ, EntityX(n\Collider), EntityY(n\Collider) - (n\CollRadius + 0.1), EntityZ(n\Collider))
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0)
 	
 	If n\HP =< 0

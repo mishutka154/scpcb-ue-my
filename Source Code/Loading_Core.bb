@@ -138,7 +138,7 @@ Const PARTICLE_FIRE% = 13
 Const PARTICLE_SNOW_SHINE% = 14
 ;[End Block]
 
-Global ParticleEffect%[35]
+Global ParticleEffect%[36]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -321,7 +321,7 @@ Function LoadParticles%()
 	SetTemplateTexture(ParticleEffect[11], PARTICLE_DUST)
 	SetTemplateOffset(ParticleEffect[11], -0.2, 0.2, 0.0, 1.2, -0.2, 0.2)
 	SetTemplateVelocity(ParticleEffect[11], -0.004, 0.004, -0.0001, 0.0001, -0.004, 0.004)
-	SetTemplateSize(ParticleEffect[11], 0.01, 0.01, 1.0, 1.2)
+	SetTemplateSize(ParticleEffect[11], 0.005, 0.005, 1.0, 1.2)
 	SetTemplateAlphaVel(ParticleEffect[11], True)
 	
 	; ~ A simple dust particle
@@ -333,7 +333,7 @@ Function LoadParticles%()
 	SetTemplateTexture(ParticleEffect[12], PARTICLE_DUST)
 	SetTemplateOffset(ParticleEffect[12], -0.55, 0.55, -0.1, 0.3, -0.55, 0.55)
 	SetTemplateVelocity(ParticleEffect[12], -0.001, 0.001, -0.001, 0.001, -0.001, 0.001)
-	SetTemplateSize(ParticleEffect[12], 0.0018, 0.0018, 1.0, 1.25)
+	SetTemplateSize(ParticleEffect[12], 0.0016, 0.0016, 1.0, 1.25)
 	SetTemplateAlphaVel(ParticleEffect[12], True)
 	
 	; ~ A simple flash particle
@@ -586,6 +586,18 @@ Function LoadParticles%()
 	SetTemplateAlphaVel(ParticleEffect[34], True)
 	SetTemplateSize(ParticleEffect[34], 1.0, 1.0, 0.5, 1.0)
 	SetTemplateSizeVel(ParticleEffect[34], 0.01, 2.5)
+	
+	; ~ Dust particles from vent
+	ParticleEffect[35] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[35], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[35], 1)
+	SetTemplateParticlesPerInterval(ParticleEffect[35], 10)
+	SetTemplateParticleLifeTime(ParticleEffect[35], 70, 80)
+	SetTemplateTexture(ParticleEffect[35], PARTICLE_DUST)
+	SetTemplateOffset(ParticleEffect[35], -0.2, 0.2, -0.05, 0.05, -0.2, 0.2)
+	SetTemplateVelocity(ParticleEffect[35], -0.004, 0.004, -0.0001, 0.0001, -0.004, 0.004)
+	SetTemplateSize(ParticleEffect[35], 0.005, 0.005, 0.9, 1.1)
+	SetTemplateAlphaVel(ParticleEffect[35], True)
 End Function
 
 Function RemoveParticleInstances%()

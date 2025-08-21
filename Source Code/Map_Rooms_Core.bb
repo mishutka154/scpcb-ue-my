@@ -2526,20 +2526,20 @@ Function FillRoom%(r.Rooms)
 			r\RoomLevers.Levers[1] = CreateLever(r, r\x - 497.0 * RoomScale, r\y - 5984.0 * RoomScale, r\z - 421.0 * RoomScale, -270.0, True)
 			
 			; ~ Omega Warhead entrance door
-			d.Doors = CreateDoor(r, r\x + 576.0 * RoomScale, r\y, r\z + 152.0 * RoomScale, 90.0, False, ONE_SIDED_DOOR, KEY_CARD_5)
+			d.Doors = CreateDoor(r, r\x + 576.0 * RoomScale, r\y, r\z, 90.0, False, HEAVY_DOOR, KEY_CARD_5)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.09, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.09, True)
+			r\RoomDoors.Doors[2] = d
 			
 			; ~ Omega Warhead remote controls door
-			d.Doors = CreateDoor(r, r\x - 32.0 * RoomScale, r\y - 6192.0 * RoomScale, r\z + 692.0 * RoomScale, 90.0, False, DEFAULT_DOOR, KEY_CARD_5)
+			d.Doors = CreateDoor(r, r\x - 32.0 * RoomScale, r\y - 6192.0 * RoomScale, r\z + 692.0 * RoomScale, 90.0, False, HEAVY_DOOR, KEY_CARD_5)
 			PositionEntity(d\Buttons[0], EntityX(d\Buttons[0], True), EntityY(d\Buttons[0], True), EntityZ(d\Buttons[0], True) - 0.075, True)
 			PositionEntity(d\Buttons[1], EntityX(d\Buttons[1], True), EntityY(d\Buttons[1], True), EntityZ(d\Buttons[1], True) + 0.075, True)
 			
 			; ~ Misc. door
-			d.Doors = CreateDoor(r, r\x - 288.0 * RoomScale, r\y - 6192.0 * RoomScale, r\z + 896.0 * RoomScale, 180.0, False, DEFAULT_DOOR, KEY_CARD_5)
+			d.Doors = CreateDoor(r, r\x - 288.0 * RoomScale, r\y - 6192.0 * RoomScale, r\z + 896.0 * RoomScale, 180.0, False, HEAVY_DOOR, KEY_CARD_5)
 			d\Locked = 1 : d\DisableWaypoint = True : d\MTFClose = False
 			FreeEntity(d\Buttons[0]) : d\Buttons[0] = 0
-			FreeEntity(d\OBJ2) : d\OBJ2 = 0
 			
 			; ~ Elevators pivots
 			r\Objects[0] = CreatePivot()
@@ -2549,6 +2549,18 @@ Function FillRoom%(r.Rooms)
 			r\Objects[1] = CreatePivot()
 			PositionEntity(r\Objects[1], r\x + 1504.0 * RoomScale, r\y - 5952.0 * RoomScale, r\z)
 			EntityParent(r\Objects[1], r\OBJ)
+			
+			r\Objects[2] = LoadRMesh("GFX\Map\room2_nuke_vent.rmesh", Null)
+			ScaleEntity(r\Objects[2], RoomScale, RoomScale, RoomScale)
+			RotateEntity(r\Objects[2], 90.0, 0.0, 0.0, True)
+			PositionEntity(r\Objects[2], r\x + 888.0 * RoomScale, r\y + 26.0 * RoomScale, r\z + 320.0 * RoomScale)
+			EntityParent(r\Objects[2], r\OBJ)
+			
+			r\Objects[3] = CopyEntity(r\Objects[2])
+			ScaleEntity(r\Objects[3], RoomScale, RoomScale, RoomScale)
+			RotateEntity(r\Objects[3], 90.0, 180.0, 0.0, True)
+			PositionEntity(r\Objects[3], r\x + 888.0 * RoomScale, r\y + 26.0 * RoomScale, r\z - 320.0 * RoomScale)
+			EntityParent(r\Objects[3], r\OBJ)
 			
 			it.Items = CreateItem("Nuclear Device Document", it_paper, r\x - 464.0 * RoomScale, r\y - 6042.0 * RoomScale, r\z - 710.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
