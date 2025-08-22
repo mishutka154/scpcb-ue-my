@@ -5807,9 +5807,9 @@ Function UpdateEvent_Room2_Nuke%(e.Events)
 			If e\EventState3 = 0.0
 				If e\room\RoomDoors[2]\Open Then e\EventState3 = Rand(2.0, 3.0)
 			Else
-				e\EventState4 = Min(e\EventState4 + fps\Factor[0], 70.0 * 11.1)
+				e\EventState4 = Min(e\EventState4 + fps\Factor[0], 70.0 * 9.6)
 				
-				If e\EventState4 > 70.0 * 5.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 5.0
+				If e\EventState4 > 70.0 * 2.5 And e\EventState4 - fps\Factor[0] =< 70.0 * 2.5
 					TFormPoint(889.0, 120.0, 379.0 - (758.0 * (e\EventState3 = 3.0)), e\room\OBJ, 0)
 					e\room\NPC[1] = CreateNPC(NPCType1048_A, TFormedX(), TFormedY(), TFormedZ())
 					e\room\NPC[1]\State = -1.0
@@ -5818,23 +5818,23 @@ Function UpdateEvent_Room2_Nuke%(e.Events)
 					me\BigCameraShake = Max(1.0, me\BigCameraShake)
 					PlaySoundEx(LoadTempSound("SFX\Room\Room2Nuke\Vent" + Rand(0, 2) + ".ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 2.0)
 					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
-				ElseIf e\EventState4 > 70.0 * 8.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 8.0
+				ElseIf e\EventState4 > 70.0 * 6.5 And e\EventState4 - fps\Factor[0] =< 70.0 * 6.5
 					me\BigCameraShake = Max(1.0, me\BigCameraShake)
 					PlaySoundEx(LoadTempSound("SFX\Room\Room2Nuke\Vent" + Rand(0, 2) + ".ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 2.0)
 					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
-				ElseIf e\EventState4 > 70.0 * 11.0 And e\EventState4 - fps\Factor[0] =< 70.0 * 11.0
+				ElseIf e\EventState4 > 70.0 * 9.5 And e\EventState4 - fps\Factor[0] =< 70.0 * 9.5
 					e\room\NPC[1]\State = 1.0 : e\room\NPC[1]\State2 = 70.0 * 2.0
 					
 					me\BigCameraShake = Max(1.5, me\BigCameraShake)
 					PlaySoundEx(LoadTempSound("SFX\Door\DoorOpenFast.ogg"), Camera, e\room\Objects[e\EventState3], 5.0, 1.0)
 					SetEmitter(Null, EntityX(e\room\Objects[e\EventState3], True), EntityY(e\room\Objects[e\EventState3], True), EntityZ(e\room\Objects[e\EventState3], True), 35)
-				ElseIf e\EventState4 >= 70.0 * 11.1
+				ElseIf e\EventState4 >= 70.0 * 9.6
 					RotateEntity(e\room\Objects[e\EventState3], CurveAngle(-15.0, EntityPitch(e\room\Objects[e\EventState3], True), 15.0), e\room\Angle + (180.0 * (e\EventState3 = 3.0)), 0.0, True)
 				EndIf
 			EndIf
 			
-			Local SoundRange# = 2.0 + ((e\EventState3 = 2.0) * (e\EventState4 >= 70.0 * 11.1))
-			Local SoundVol# = 0.8 + ((e\EventState3 = 2.0) * (e\EventState4 >= 70.0 * 11.1))
+			Local SoundRange# = 2.0 + ((e\EventState3 = 2.0) * (e\EventState4 >= 70.0 * 9.6))
+			Local SoundVol# = 0.8 + ((e\EventState3 = 2.0) * (e\EventState4 >= 70.0 * 9.6))
 			
 			e\SoundCHN = LoopSoundEx(RoomAmbience[3], e\SoundCHN, Camera, e\room\Objects[2], SoundRange, SoundVol)
 			e\SoundCHN2 = LoopSoundEx(RoomAmbience[3], e\SoundCHN2, Camera, e\room\Objects[3], SoundRange, SoundVol)
