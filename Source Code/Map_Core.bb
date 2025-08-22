@@ -3175,17 +3175,16 @@ Function UpdateDoors%()
 			EndIf
 		EndIf
 	EndIf
+	
+	Local AnimShift#
+	
 	If d_I\AnimDoor <> Null
-		Local AnimShift# = 22.0 * (d_I\AnimDoor\Locked > 0)
-		
+		AnimShift = 22.0 * (d_I\AnimDoor\Locked > 0)
 		If AnimTime(d_I\AnimDoor\OBJ) > 0.99 Then AnimateEx(d_I\AnimDoor\OBJ, AnimTime(d_I\AnimDoor\OBJ), 1.0 + AnimShift, 22.0 + AnimShift, 0.6, False)
 	EndIf
 	If d_I\AnimButton <> 0
-		If ButtonDirection
-			If AnimTime(d_I\AnimButton) > 0.99 Then AnimateEx(d_I\AnimButton, AnimTime(d_I\AnimButton), 1.0, 20.0, 2.0, False)
-		Else
-			If AnimTime(d_I\AnimButton) > 20.99 Then AnimateEx(d_I\AnimButton, AnimTime(d_I\AnimButton), 21.0, 40.0, 2.0, False)
-		EndIf
+		AnimShift = 20.0 * (Not ButtonDirection)
+		If AnimTime(d_I\AnimButton) > 0.99 + AnimShift Then AnimateEx(d_I\AnimButton, AnimTime(d_I\AnimButton), 1.0 + AnimShift, 20.0 + AnimShift, 2.0, False)
 	EndIf
 End Function
 
@@ -3844,7 +3843,7 @@ Function UseDoor%(PlaySFX% = True)
 					CreateMsg(GetLocalString("msg", "elev.broken"))
 					PlaySound_Strict(ButtonSFX[1])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
-					SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
+					If d_I\AnimButton <> 0 Then SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 					Return
 				Else
 					If d_I\ClosestDoor\IsElevatorDoor = 1
@@ -3875,13 +3874,13 @@ Function UseDoor%(PlaySFX% = True)
 					EndIf
 					PlaySound_Strict(ButtonSFX[0])
 					SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
-					SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
+					If d_I\AnimButton <> 0 Then SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 					Return
 				EndIf
 			Else
 				PlaySound_Strict(ButtonSFX[0])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
-				SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
+				If d_I\AnimButton <> 0 Then SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 			EndIf
 			;[End Block]
 		Default ; ~ Default Door
@@ -3894,12 +3893,12 @@ Function UseDoor%(PlaySFX% = True)
 				EndIf
 				PlaySound_Strict(ButtonSFX[1])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
-				SetAnimTime(d_I\AnimButton, 1.0)
+				If d_I\AnimButton <> 0 Then SetAnimTime(d_I\AnimButton, 1.0)
 				Return
 			Else
 				PlaySound_Strict(ButtonSFX[0])
 				SetPlayerModelAnimation(PLAYER_ANIM_LEFT_INTERACT + me\Crouch, d_I\ClosestButton)
-				SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
+				If d_I\AnimButton <> 0 Then SetAnimTime(d_I\AnimButton, 1.0 + (20.0 * (Not ButtonDirection)))
 			EndIf
 			;[End Block]
 	End Select
