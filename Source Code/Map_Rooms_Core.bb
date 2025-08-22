@@ -2221,7 +2221,6 @@ Function FillRoom%(r.Rooms)
 			ScaleSprite(r\Objects[1], 0.09, 0.0725)
 			TurnEntity(r\Objects[1], 0.0, 13.0, 0.0)
 			MoveEntity(r\Objects[1], 0.0, 0.0, -0.022)
-			EntityTexture(r\Objects[1], mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1])
 			HideEntity(r\Objects[1])
 			
 			; ~ Elevators' pivots

@@ -4368,7 +4368,8 @@ Function UpdateEvent_Cont1_079%(e.Events)
 					EndIf
 				ElseIf e\EventState > 1.0
 					If EntityHidden(e\room\Objects[1]) Then ShowEntity(e\room\Objects[1])
-					EntityTexture(e\room\Objects[1], mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1])
+					If Rand(4) = 1 Then e\EventState3 = Int((e\EventState3 + 1.0) Mod 12)
+					EntityTexture(e\room\Objects[1], mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1], e\EventState3)
 				EndIf
 			EndIf
 		Else

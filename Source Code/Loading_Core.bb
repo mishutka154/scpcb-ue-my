@@ -922,7 +922,8 @@ Function LoadMonitors%()
 	Cls()
 	SetBuffer(BackBuffer())
 	
-	For i = MONITOR_079_OVERLAY_1 To MONITOR_079_OVERLAY_7
+	mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1] = LoadAnimTexture_Strict("GFX\Overlays\scp_079_overlay(1).png", 1, 256, 256, 0, 12, DeleteAllTextures)
+	For i = MONITOR_079_OVERLAY_2 To MONITOR_079_OVERLAY_7
 		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Overlays\scp_079_overlay(" + (i - 4) + ").png", 1, DeleteAllTextures, False)
 	Next
 	
