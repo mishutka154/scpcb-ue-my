@@ -6490,20 +6490,20 @@ Function UpdateEvent_Cont2_409%(e.Events)
 			me\Zone = 1
 			
 			If e\EventState = 0.0
+				TFormPoint(-4843.8, -4440.8, 1729.0, e\room\OBJ, 0)
+				
+				Local x2# = TFormedX(), y2# = TFormedY(), z2# = TFormedZ()
+				
+				e\room\NPC[0] = CreateNPC(NPCTypeD, x2, y2, z2)
+				e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
+				ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_409_TEXTURE)
+				SetNPCFrame(e\room\NPC[0], 19.0)
+				RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle, 0.0, True)
+				
+				de.Decals = CreateDecal(DECAL_409, x2, y2 - (56.2 * RoomScale) + 0.005, z2, 90.0, Rnd(360.0), 0.0, 0.85, 0.8)
+				EntityParent(de\OBJ, e\room\OBJ)
+				
 				If I_005\ChanceToSpawn = 2
-					TFormPoint(-4843.8, -4440.8, 1729.0, e\room\OBJ, 0)
-					
-					Local x2# = TFormedX(), y2# = TFormedY(), z2# = TFormedZ()
-					
-					e\room\NPC[0] = CreateNPC(NPCTypeD, x2, y2, z2)
-					e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
-					ChangeNPCTextureID(e\room\NPC[0], NPC_CLASS_D_VICTIM_409_TEXTURE)
-					SetNPCFrame(e\room\NPC[0], 19.0)
-					RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle, 0.0, True)
-					
-					de.Decals = CreateDecal(DECAL_409, x2, y2 - (56.2 * RoomScale) + 0.005, z2, 90.0, Rnd(360.0), 0.0, 0.85, 0.8)
-					EntityParent(de\OBJ, e\room\OBJ)
-					
 					TFormPoint(-5000.0, -4409.0, 1520.0, e\room\OBJ, 0)
 					it.Items = CreateItem("Crystallized SCP-005", it_crystal005, TFormedX(), TFormedY(), TFormedZ())
 				EndIf
@@ -6515,13 +6515,11 @@ Function UpdateEvent_Cont2_409%(e.Events)
 				e\EventState = 1.0
 			Else
 				If I_409\Timer = 0.0
-					If I_005\ChanceToSpawn = 2
-						If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.81
-							GiveAchievement("409")
-							If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0
-								me\BlurTimer = 1000.0
-								I_409\Timer = 0.001
-							EndIf
+					If EntityDistanceSquared(me\Collider, e\room\NPC[0]\Collider) < 0.81
+						GiveAchievement("409")
+						If (Not I_427\Using) And I_427\Timer < 70.0 * 360.0
+							me\BlurTimer = 1000.0
+							I_409\Timer = 0.001
 						EndIf
 					EndIf
 					
@@ -6539,11 +6537,18 @@ Function UpdateEvent_Cont2_409%(e.Events)
 				EndIf
 			EndIf
 			
+			
 			If EntityDistanceSquared(me\Collider, e\room\Objects[3]) < 25.0
 				If Rand(50) = 1
 					SetTemplateVelocity(ParticleEffect[19], -0.007, 0.008, -0.001, 0.0012, 0.007, 0.008)
 					SetEmitter(e\room, EntityX(e\room\Objects[3], True), EntityY(e\room\Objects[3], True), EntityZ(e\room\Objects[3], True), 19)
 					PlaySoundEx(snd_I\SparkShortSFX, Camera, e\room\Objects[3], 3.0, 0.4)
+				EndIf
+			EndIf
+			If EntityDistanceSquared(me\Collider, e\room\Objects[2]) < 25.0
+				If Rand(8) = 1
+					TFormPoint(-4837.0 + Rnd(-80.0, 80.0), -4326.0, 1666.0 + Rnd(-80.0, 80.0), e\room\OBJ, 0)
+					If LinePick(TFormedX(), TFormedY(), TFormedZ(), 0.0, -2.0, 0.0) Then SetEmitter(Null, PickedX(), PickedY(), PickedZ(), 32)
 				EndIf
 			EndIf
 		EndIf

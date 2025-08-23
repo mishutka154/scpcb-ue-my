@@ -558,14 +558,14 @@ Function LoadParticles%()
 	SetTemplateSize(ParticleEffect[31], 0.04, 0.04, 0.5, 1.0)
 	SetTemplateSizeVel(ParticleEffect[31], 0.01, 1.01)
 	
-	; ~ Snow shining
+	; ~ SCP-409/Snow shining
 	ParticleEffect[32] = CreateTemplate()
 	SetTemplateEmitterBlend(ParticleEffect[32], 3)
 	SetTemplateEmitterLifeTime(ParticleEffect[32], 1)
 	SetTemplateParticleLifeTime(ParticleEffect[32], 6, 10)
 	SetTemplateTexture(ParticleEffect[32], PARTICLE_SNOW_SHINE)
 	SetTemplateAlphaVel(ParticleEffect[32], True)
-	SetTemplateSize(ParticleEffect[32], 0.06, 0.06, 0.5, 1.0)
+	SetTemplateSize(ParticleEffect[32], 0.04, 0.04, 0.5, 1.0)
 	
 	; ~ Explosion
 	ParticleEffect[33] = CreateTemplate()
