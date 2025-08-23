@@ -4224,6 +4224,7 @@ Type SecurityCams
 	Field Dir%
 	Field ScriptedMonitor% = False
 	Field ScriptedCamera% = False
+	Field FaceTimer%
 End Type
 
 Function CreateSecurityCam.SecurityCams(room.Rooms, x1#, y1#, z1#, Pitch1#, Screen% = False, x2# = 0.0, y2# = 0.0, z2# = 0.0, Pitch2# = 0.0, Yaw2# = 0.0, Roll2# = 0.0)
@@ -4460,7 +4461,10 @@ Function UpdateSecurityCams%()
 								
 								Local Temp% = (MilliSec Mod sc\PlayerState)
 								
-								If Rand(500 - (480 * (Temp < 700))) = 1 Then EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
+								If Rand(500 - (480 * (Temp < 700))) = 1
+									sc\FaceTimer = (sc\FaceTimer + 1) Mod 6
+									EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_079_OVERLAYS_3], sc\FaceTimer)
+								EndIf
 								If Temp >= Rand(700)
 									EntityTexture(sc\ScrOverlay, mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY])
 								ElseIf (Not ChannelPlaying(sc\SoundCHN))
@@ -4674,6 +4678,7 @@ Type Screens
 	Field Img%, Texture%
 	Field State#
 	Field Display096%
+	Field FaceTimer%
 	Field room.Rooms
 End Type
 
@@ -4759,7 +4764,8 @@ Function UpdateScreens%()
 				ElseIf Rand(20) < 3
 					EntityTexture(s\OBJ, s\Texture)
 				Else
-					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[Rand(MONITOR_079_OVERLAY_2, MONITOR_079_OVERLAY_7)])
+					s\FaceTimer = (s\FaceTimer + 1) Mod 6
+					EntityTexture(s\OBJ, mon_I\MonitorOverlayID[MONITOR_079_OVERLAYS_3], s\FaceTimer)
 				EndIf
 				Return
 			Else

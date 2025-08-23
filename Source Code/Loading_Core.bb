@@ -862,7 +862,7 @@ Function RemoveSecurityCamInstances%()
 End Function
 
 Const MaxMonitorModelIDAmount% = 2
-Const MaxMonitorOverlayIDAmount% = 24
+Const MaxMonitorOverlayIDAmount% = 20
 
 Type MonitorInstance
 	Field MonitorModelID%[MaxMonitorModelIDAmount]
@@ -886,25 +886,21 @@ Const MONITOR_LOCKDOWN_1_OVERLAY% = 1
 Const MONITOR_LOCKDOWN_2_OVERLAY% = 2
 Const MONITOR_LOCKDOWN_3_OVERLAY% = 3
 Const MONITOR_LOCKDOWN_4_OVERLAY% = 4
-Const MONITOR_079_OVERLAY_1% = 5
-Const MONITOR_079_OVERLAY_2% = 6
-Const MONITOR_079_OVERLAY_3% = 7
-Const MONITOR_079_OVERLAY_4% = 8
-Const MONITOR_079_OVERLAY_5% = 9
-Const MONITOR_079_OVERLAY_6% = 10
-Const MONITOR_079_OVERLAY_7% = 11
-Const MONITOR_895_OVERLAY_1% = 12
-Const MONITOR_895_OVERLAY_2% = 13
-Const MONITOR_895_OVERLAY_3% = 14
-Const MONITOR_895_OVERLAY_4% = 15
-Const MONITOR_895_OVERLAY_5% = 16
-Const MONITOR_895_OVERLAY_6% = 17
-Const MONITOR_895_OVERLAY_7% = 18
-Const MONITOR_895_OVERLAY_8% = 19
-Const MONITOR_895_OVERLAY_9% = 20
-Const MONITOR_895_OVERLAY_10% = 21
-Const MONITOR_895_OVERLAY_11% = 22
-Const MONITOR_096_OVERLAY% = 23
+Const MONITOR_079_OVERLAYS_1% = 5
+Const MONITOR_079_OVERLAYS_2% = 6
+Const MONITOR_079_OVERLAYS_3% = 7
+Const MONITOR_895_OVERLAY_1% = 8
+Const MONITOR_895_OVERLAY_2% = 9
+Const MONITOR_895_OVERLAY_3% = 10
+Const MONITOR_895_OVERLAY_4% = 11
+Const MONITOR_895_OVERLAY_5% = 12
+Const MONITOR_895_OVERLAY_6% = 13
+Const MONITOR_895_OVERLAY_7% = 14
+Const MONITOR_895_OVERLAY_8% = 15
+Const MONITOR_895_OVERLAY_9% = 16
+Const MONITOR_895_OVERLAY_10% = 17
+Const MONITOR_895_OVERLAY_11% = 18
+Const MONITOR_096_OVERLAY% = 19
 ;[End Block]
 
 Function LoadMonitors%()
@@ -922,13 +918,12 @@ Function LoadMonitors%()
 	Cls()
 	SetBuffer(BackBuffer())
 	
-	mon_I\MonitorOverlayID[MONITOR_079_OVERLAY_1] = LoadAnimTexture_Strict("GFX\Overlays\scp_079_overlay(1).png", 1, 256, 256, 0, 12, DeleteAllTextures)
-	For i = MONITOR_079_OVERLAY_2 To MONITOR_079_OVERLAY_7
-		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Overlays\scp_079_overlay(" + (i - 4) + ").png", 1, DeleteAllTextures, False)
-	Next
+	mon_I\MonitorOverlayID[MONITOR_079_OVERLAYS_1] = LoadAnimTexture_Strict("GFX\Overlays\scp_079_overlays_X.png", 1, 256, 256, 0, 12, DeleteAllTextures)
+	mon_I\MonitorOverlayID[MONITOR_079_OVERLAYS_2] = LoadAnimTexture_Strict("GFX\Overlays\scp_079_overlays_ASCII.png", 1, 256, 256, 0, 6, DeleteAllTextures)
+	mon_I\MonitorOverlayID[MONITOR_079_OVERLAYS_3] = LoadAnimTexture_Strict("GFX\Overlays\scp_079_overlays.png", 1, 256, 256, 0, 6, DeleteAllTextures)
 	
 	For i = MONITOR_895_OVERLAY_1 To MONITOR_895_OVERLAY_11
-		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Overlays\scp_895_overlay(" + (i - 11) + ").png", 1, DeleteAllTextures, False)
+		mon_I\MonitorOverlayID[i] = LoadTexture_Strict("GFX\Overlays\scp_895_overlay(" + (i - MONITOR_895_OVERLAY_1) + ").png", 1, DeleteAllTextures, False)
 	Next
 	
 	mon_I\MonitorOverlayID[MONITOR_096_OVERLAY] = LoadTexture_Strict("GFX\Overlays\scp_096_overlay.png", 1, DeleteAllTextures, False)
@@ -947,14 +942,7 @@ Function RemoveMonitorInstances%()
 	For i = 0 To MaxMonitorModelIDAmount - 1
 		FreeEntity(mon_I\MonitorModelID[i]) : mon_I\MonitorModelID[i] = 0
 	Next
-	mon_I\MonitorOverlayID[MONITOR_DEFAULT_OVERLAY] = 0
-	For i = MONITOR_LOCKDOWN_1_OVERLAY To MONITOR_LOCKDOWN_3_OVERLAY
-		mon_I\MonitorOverlayID[i] = 0
-	Next
-	For i = MONITOR_079_OVERLAY_1 To MONITOR_079_OVERLAY_7
-		mon_I\MonitorOverlayID[i] = 0
-	Next
-	For i = MONITOR_895_OVERLAY_1 To MONITOR_895_OVERLAY_11
+	For i = MONITOR_DEFAULT_OVERLAY To MONITOR_096_OVERLAY
 		mon_I\MonitorOverlayID[i] = 0
 	Next
 	Delete(mon_I) : mon_I = Null
