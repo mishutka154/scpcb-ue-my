@@ -4935,1871 +4935,7 @@ Function UpdateGUI%()
 		If (Not InvOpen) Then StopMouseMovement()
 	Else
 		If SelectedItem <> Null
-			Select SelectedItem\ItemTemplate\ID
-				Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148
-					;[Block]
-					If (Not PreventItemOverlapping(True, False, False, True, False, False, True))
-						Select SelectedItem\ItemTemplate\ID
-							Case it_gasmask
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 1) Then Return
-								;[End Block]
-							Case it_finegasmask
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 2) Then Return
-								;[End Block]
-							Case it_veryfinegasmask
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 3) Then Return
-								;[End Block]
-							Case it_gasmask148
-								;[Block]
-								If IsDoubleItem(wi\GasMask, 4) Then Return
-								;[End Block]
-						End Select
-						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + fps\Factor[0] / (1.0 + 0.6 * (SelectedItem\ItemTemplate\ID = it_gasmask148)) , 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If wi\GasMask > 0
-								CreateMsg(GetLocalString("msg", "mask.off"))
-								wi\GasMask = 0
-							Else
-								Select SelectedItem\ItemTemplate\ID
-									Case it_gasmask
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on"))
-										wi\GasMask = 1
-										;[End Block]
-									Case it_finegasmask
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on.dry"))
-										wi\GasMask = 2
-										;[End Block]
-									Case it_veryfinegasmask
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on.easy"))
-										wi\GasMask = 3
-										;[End Block]
-									Case it_gasmask148
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on.easy"))
-										wi\GasMask = 4
-										;[End Block]
-								End Select
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_headphones
-					;[Block]
-					Select SelectedItem\ItemTemplate\ID
-						Case it_headphones
-							;[Block]
-							If IsDoubleItem(wi\Headphones, 1) Then Return
-							;[End Block]
-					End Select
-					
-					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-					
-					SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-					If SelectedItem\UsageTimer = 100.0
-						If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-						
-						If wi\Headphones > 0
-							CreateMsg(GetLocalString("msg", "headphones.off"))
-						Else
-							CreateMsg(GetLocalString("msg", "headphones.on"))
-						EndIf
-						wi\Headphones = (Not wi\Headphones)
-						SelectedItem\UsageTimer = 0.0
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_scp1499, it_fine1499
-					;[Block]
-					If (Not PreventItemOverlapping(False, False, True, True, False, False, True))
-						Select SelectedItem\ItemTemplate\ID
-							Case it_scp1499
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 1) Then Return
-								;[End Block]
-							Case it_fine1499
-								;[Block]
-								If IsDoubleItem(I_1499\Using, 2) Then Return
-								;[End Block]
-						End Select
-						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 1.5), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If I_1499\Using > 0
-								CreateMsg(GetLocalString("msg", "mask.off"))
-								I_1499\Using = 0
-							Else
-								GiveAchievement("1499")
-								For r.Rooms = Each Rooms
-									If r\RoomTemplate\RoomID = r_dimension_1499
-										me\BlinkTimer = -10.0
-										I_1499\PrevRoom = PlayerRoom
-										I_1499\PrevX = EntityX(me\Collider)
-										I_1499\PrevY = EntityY(me\Collider)
-										I_1499\PrevZ = EntityZ(me\Collider)
-										
-										If I_1499\x = 0.0 And I_1499\y = 0.0 And I_1499\z = 0.0
-											PositionEntity(me\Collider, r\x + 6086.0 * RoomScale, r\y + 304.0 * RoomScale, r\z + 2292.5 * RoomScale)
-											RotateEntity(me\Collider, 0.0, 90.0, 0.0, True)
-										Else
-											PositionEntity(me\Collider, I_1499\x, I_1499\y + 0.05, I_1499\z)
-										EndIf
-										ResetEntity(me\Collider)
-										TeleportToRoom(r)
-										PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Enter.ogg"))
-										I_1499\x = 0.0
-										I_1499\y = 0.0
-										I_1499\z = 0.0
-										If n_I\Curr096 <> Null
-											If n_I\Curr096\SoundCHN <> 0 Then SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
-										EndIf
-										For e.Events = Each Events
-											If e\EventID = e_dimension_1499
-												If EntityDistanceSquared(e\room\OBJ, me\Collider) > PowTwo(8300.0 * RoomScale)
-													If e\EventState2 < 5.0 Then e\EventState2 = e\EventState2 + 1.0
-												EndIf
-												Exit
-											EndIf
-										Next
-										Exit
-									EndIf
-								Next
-								Select SelectedItem\ItemTemplate\ID
-									Case it_scp1499
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on"))
-										I_1499\Using = 1
-										;[End Block]
-									Case it_fine1499
-										;[Block]
-										CreateMsg(GetLocalString("msg", "mask.on.easy"))
-										I_1499\Using = 2
-										;[End Block]
-								End Select
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_nvg, it_veryfinenvg, it_finenvg
-					;[Block]
-					If (Not PreventItemOverlapping(False, True, False, True, False, False, True))
-						Select SelectedItem\ItemTemplate\ID
-							Case it_nvg
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 1) Then Return
-								;[End Block]
-							Case it_veryfinenvg
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 2) Then Return
-								;[End Block]
-							Case it_finenvg
-								;[Block]
-								If IsDoubleItem(wi\NightVision, 3) Then Return
-								;[End Block]
-						End Select
-						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + fps\Factor[0], 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If wi\NightVision > 0
-								CreateMsg(GetLocalString("msg", "nvg.off"))
-								fog\FarDist = 6.0
-								wi\NightVision = 0
-								If SelectedItem\State > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\Interact\NVGOff.ogg"))
-							Else
-								CreateMsg(GetLocalString("msg", "nvg.on"))
-								fog\FarDist = 16.0
-								Select SelectedItem\ItemTemplate\ID
-									Case it_nvg
-										;[Block]
-										wi\NightVision = 1
-										;[End Block]
-									Case it_veryfinenvg
-										;[Block]
-										wi\NightVision = 2
-										;[End Block]
-									Case it_finenvg
-										;[Block]
-										wi\NightVision = 3
-										;[End Block]
-								End Select
-								If SelectedItem\State > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\Interact\NVGOn.ogg"))
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_scramble, it_finescramble
-					;[Block]
-					If (Not PreventItemOverlapping(False, False, False, True, True, False, True))
-						Select SelectedItem\ItemTemplate\ID
-							Case it_scramble
-								;[Block]
-								If IsDoubleItem(wi\SCRAMBLE, 1) Then Return
-								;[End Block]
-							Case it_finescramble
-								;[Block]
-								If IsDoubleItem(wi\SCRAMBLE, 2) Then Return
-								;[End Block]
-						End Select
-						
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + fps\Factor[0], 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If wi\SCRAMBLE > 0
-								CreateMsg(GetLocalString("msg", "gear.off"))
-								fog\FarDist = 6.0
-								wi\SCRAMBLE = 0
-							Else
-								CreateMsg(GetLocalString("msg", "gear.on"))
-								fog\FarDist = 9.0
-								Select SelectedItem\ItemTemplate\ID
-									Case it_scramble
-										;[Block]
-										wi\SCRAMBLE = 1
-										;[End Block]
-									Case it_finescramble
-										;[Block]
-										wi\SCRAMBLE = 2
-										;[End Block]
-								End Select
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_helmet
-					;[Block]
-					If (Not PreventItemOverlapping(True, True, True, True, True))
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If wi\BallisticHelmet
-								CreateMsg(GetLocalString("msg", "helmet.off"))
-								wi\BallisticHelmet = False
-							Else
-								CreateMsg(GetLocalString("msg", "helmet.on"))
-								wi\BallisticHelmet = True
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_cap, it_scp268, it_fine268
-					;[Block]
-					If (Not PreventItemOverlapping(True, True, True, False, True, False, True))
-						Select SelectedItem\ItemTemplate\ID
-							Case it_cap
-								;[Block]
-								If IsDoubleItem(I_268\Using, 1) Then Return
-								;[End Block]
-							Case it_scp268
-								;[Block]
-								If IsDoubleItem(I_268\Using, 2) Then Return
-								;[End Block]
-							Case it_fine268
-								;[Block]
-								If IsDoubleItem(I_268\Using, 3) Then Return
-								;[End Block]
-						End Select
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							
-							If I_268\Using > 0
-								If I_268\Using > 1 And I_268\Timer > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
-								CreateMsg(GetLocalString("msg", "cap.off"))
-								I_268\Using = 0
-							Else
-								GiveAchievement("268")
-								CreateMsg(GetLocalString("msg", "cap.on"))
-								Select SelectedItem\ItemTemplate\ID
-									Case it_cap
-										;[Block]
-										I_268\Using = 1
-										;[End Block]
-									Case it_scp268
-										;[Block]
-										I_268\Using = 2
-										;[End Block]
-									Case it_fine268
-										;[Block]
-										I_268\Using = 3
-										;[End Block]
-								End Select
-								If I_268\Using > 1 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOn.ogg"))
-							EndIf
-							SelectedItem\UsageTimer = 0.0
-							SelectedItem = Null
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_vest, it_finevest
-					;[Block]
-					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-					
-					SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / (2.0 + (0.5 * (SelectedItem\ItemTemplate\ID = it_finevest)))), 100.0)
-					If SelectedItem\UsageTimer = 100.0
-						If wi\BallisticVest > 0
-							CreateMsg(GetLocalString("msg", "vest.off"))
-							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
-							wi\BallisticVest = 0
-							DropItem(SelectedItem)
-						Else
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							ChangePlayerBodyTexture(PLAYER_BODY_VEST_TEX)
-							Select SelectedItem\ItemTemplate\ID
-								Case it_vest
-									;[Block]
-									CreateMsg(GetLocalString("msg", "vest.on.slight"))
-									wi\BallisticVest = 1
-									;[End Block]
-								Case it_finevest
-									;[Block]
-									CreateMsg(GetLocalString("msg", "vest.on.heavy"))
-									wi\BallisticVest = 2
-									;[End Block]
-							End Select
-						EndIf
-						SelectedItem\UsageTimer = 0.0
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
-					;[Block]
-					me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
-					
-					SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / (3.0 + (SelectedItem\ItemTemplate\ID = it_hazmatsuit148))), 100.0)
-					If SelectedItem\UsageTimer = 100.0
-						If wi\HazmatSuit > 0
-							CreateMsg(GetLocalString("msg", "suit.off"))
-							ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
-							wi\HazmatSuit = 0
-							DropItem(SelectedItem)
-						Else
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							If wi\NightVision > 0 Then fog\FarDist = 6.0 : wi\NightVision = 0
-							If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 : wi\SCRAMBLE = 0
-							wi\GasMask = 0 : wi\BallisticHelmet = False : wi\Headphones = 0
-							I_427\Using = False : I_1499\Using = 0
-							I_268\Using = 0
-							Select SelectedItem\ItemTemplate\ID
-								Case it_hazmatsuit
-									;[Block]
-									CreateMsg(GetLocalString("msg", "suit.on"))
-									wi\HazmatSuit = 1
-									;[End Block]
-								Case it_finehazmatsuit
-									;[Block]
-									CreateMsg(GetLocalString("msg", "suit.dry"))
-									wi\HazmatSuit = 2
-									;[End Block]
-								Case it_veryfinehazmatsuit
-									;[Block]
-									CreateMsg(GetLocalString("msg", "suit.on.easy"))
-									wi\HazmatSuit = 3
-									;[End Block]
-								Case it_hazmatsuit148
-									;[Block]
-									CreateMsg(GetLocalString("msg", "suit.on.easy"))
-									wi\HazmatSuit = 4
-									;[End Block]
-							End Select
-							ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX + (wi\HazmatSuit = 4)) ; ~ NOTICE: Const PLAYER_BODY_HAZMAT_TEX% = 1, Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
-						EndIf
-						SelectedItem\UsageTimer = 0.0
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_scp513
-					;[Block]
-					GiveAchievement("513")
-					PlaySound_Strict(LoadTempSound("SFX\SCP\513\Bell.ogg"))
-					
-					me\SndVolume = Max(4.0, me\SndVolume)
-					
-					If n_I\Curr513_1 = Null And (Not wi\Headphones) And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
-					
-					SelectedItem = Null
-					;[End Block]
-				Case it_fine513
-					;[Block]
-					GiveAchievement("513")
-					PlaySound_Strict(LoadTempSound("SFX\SCP\513\BellLoud.ogg"))
-					
-					me\SndVolume = Max(6.0, me\SndVolume)
-					
-					If n_I\Curr513_1 = Null And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
-					
-					If me\Deaf
-						msg\DeathMsg = GetLocalString("death", "513")
-						Kill(True)
-					EndIf
-					me\BlurTimer = Max(400.0, me\BlurTimer)
-					SetDeafState(70.0 * (45.0 + (15.0 * SelectedDifficulty\OtherFactors)))
-					me\BigCameraShake = 8.0
-					SetEmitter(Null, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 29)
-					
-					For np.NPCs = Each NPCs
-						If EntityDistanceSquared(np\Collider, me\Collider) < 64.0 And (Not np\IsDead)
-							Select np\NPCType
-								Case NPCType008_1, NPCType008_1_Surgeon
-									;[Block]
-									If np\State > 0.0 And np\State < 5.0 
-										SetNPCFrame(np, 62.0 - (3.0 * (np\NPCType = NPCType008_1_Surgeon)))
-										np\LastSeen = 0.0
-										np\State = 5.0
-									EndIf
-									;[End Block]
-								Case NPCType049
-									;[Block]
-									If np\State <> 6.0
-										SetNPCFrame(np, 474.0)
-										np\State = 6.0
-									EndIf
-									;[End Block]
-								Case NPCType049_2
-									;[Block]
-									If np\State > 0.0 And np\State < 5.0 
-										SetNPCFrame(np, 944.0)
-										np\LastSeen = 0.0
-										np\State = 5.0
-									EndIf
-									;[End Block]
-								Case NPCType860_2
-									;[Block]
-									If np\State = 3.0
-										np\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\860_2\Cancer" + Rand(3, 5) + ".ogg"), Camera, np\Collider, 10.0, 1.0, True)
-										np\LastSeen = 70.0 * 5.0
-									EndIf
-									;[End Block]
-								Case NPCType939
-									;[Block]
-									If np\State <> 6.0
-										LoadNPCSound(np, "SFX\SCP\939\" + (np\ID Mod 3) + "Attack" + Rand(0, 2) + ".ogg")
-										np\SoundCHN = PlaySoundEx(np\Sound, Camera, np\Collider, 10.0, 1.0, True)
-										SetNPCFrame(np, 474.0)
-										np\State = 6.0
-									EndIf
-									;[End Block]
-								Case NPCType1048_A, NPCTypeCockroach
-									;[Block]
-									np\HP = 0
-									;[End Block]
-								Case NPCTypeMTF
-									;[Block]
-									If np\State <> MTF_STATE_STUNNED
-										If np = n_I\MTFLeader Then PlayMTFSound(LoadTempSound("SFX\Character\MTF\OMFG.ogg"), np)
-										SetNPCFrame(np, 1050.0)
-										np\PrevState = np\State
-										np\LastSeen = 0.0
-										np\State = MTF_STATE_STUNNED
-									EndIf
-									;[End Block]
-							End Select
-						EndIf
-					Next
-					SelectedItem = Null
-					;[End Block]
-				Case it_scp500pill
-					;[Block]
-					If CanUseItem(True)
-						GiveAchievement("500")
-						
-						CreateMsg(GetLocalString("msg", "pill"))
-						If I_008\Timer > 0.0
-							CreateMsg(GetLocalString("msg", "pill.nausea"))
-							I_008\Revert = True
-						EndIf
-						If I_409\Timer > 0.0
-							CreateMsg(GetLocalString("msg", "pill.crystals"))
-							I_409\Revert = True
-						EndIf
-						If I_1048A\EarGrowTimer > 0.0
-							I_1048A\Revert = True
-							StopChannel(I_1048A\SoundCHN) : I_1048A\SoundCHN = 0
-							CreateMsg(GetLocalString("msg", "pill.ears"))
-						EndIf
-						I_009\Revert = True
-						
-						I_966\HasInsomnia = 0.0
-						I_966\InsomniaEffectTimer = 0.0
-						
-						me\DeathTimer = 0.0
-						me\Stamina = 100.0
-						
-						For i = 0 To 6
-							I_1025\State[i] = 0.0
-						Next
-						If I_1025\FineState[0] > 0.0
-							; ~ Drop two latest items
-							For i = MaxItemAmount - 2 To MaxItemAmount - 1
-								If Inventory(i) <> Null Then DropItem(Inventory(i))
-							Next
-							MaxItemAmount = MaxItemAmount - 2
-							I_1025\FineState[0] = 0.0
-						EndIf
-						For i = 1 To 4
-							I_1025\FineState[i] = 0.0
-						Next
-						
-						If me\StaminaEffect > 1.0
-							me\StaminaEffect = 1.0
-							me\StaminaEffectTimer = 0.0
-						EndIf
-						
-						If me\BlinkEffect > 1.0
-							me\BlinkEffect = 1.0
-							me\BlinkEffectTimer = 0.0
-						EndIf
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_veryfinefirstaid
-					;[Block]
-					If CanUseItem(True)
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							Select Rand(7)
-								Case 1
-									;[Block]
-									me\Injuries = 3.5
-									CreateMsg(GetLocalString("msg", "bleed"))
-									;[End Block]
-								Case 2
-									;[Block]
-									ResetNegativeStats()
-									CreateMsg(GetLocalString("msg", "rapidly"))
-									;[End Block]
-								Case 3
-									;[Block]
-									me\BlurTimer = 10000.0
-									CreateMsg(GetLocalString("msg", "nausea"))
-									;[End Block]
-								Case 4
-									;[Block]
-									me\BlinkTimer = -10.0
-									
-									If (Not PlayerInReachableRoom(True))
-										me\Injuries = 2.5
-										CreateMsg(GetLocalString("msg", "bleed"))
-									Else
-										MoveToPocketDimension()
-										CreateMsg(GetLocalString("msg", "aid.106"))
-									EndIf
-									;[End Block]
-								Case 5
-									;[Block]
-									chs\SuperMan = True
-									CreateMsg(GetLocalString("msg", "aid.super"))
-									;[End Block]
-								Case 6
-									;[Block]
-									Kill()
-									msg\DeathMsg = GetLocalString("death", "kill_1")
-									;[End Block]
-								Case 7
-									;[Block]
-									me\BlurTimer = 1000.0
-									If Rand(2) = 1
-										If I_008\Timer = 0.0 Then I_008\Timer = 15.0
-									Else
-										If I_409\Timer = 0.0 Then I_409\Timer = 25.0
-									EndIf
-									;[End Block]
-							End Select
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_firstaid, it_finefirstaid, it_firstaid2
-					;[Block]
-					If CanUseItem(True, True)
-						If me\Bloodloss = 0.0 And me\Injuries = 0.0
-							CreateMsg(GetLocalString("msg", "aid.no"))
-							SelectedItem = Null
-							Return
-						Else
-							If (Not me\Crouch) Then SetCrouch(True)
-							
-							SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / (4.0 + (SelectedItem\ItemTemplate\ID = it_firstaid))), 100.0)
-							If SelectedItem\UsageTimer = 100.0
-								If SelectedItem\ItemTemplate\ID = it_finefirstaid
-									me\Bloodloss = Max(0.0, me\Bloodloss - 50.0)
-									me\Injuries = Max(0.0, me\Injuries - 1.5)
-									If me\Injuries = 0.0
-										CreateMsg(GetLocalString("msg", "aid.fine"))
-									ElseIf me\Injuries > 1.0
-										CreateMsg(GetLocalString("msg", "aid.bleed"))
-									Else
-										CreateMsg(GetLocalString("msg", "aid.sore"))
-									EndIf
-								Else
-									me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 20.0))
-									If me\Injuries >= 2.5
-										CreateMsg(GetLocalString("msg", "aid.toobad_1"))
-										me\Injuries = Max(2.5, me\Injuries - Rnd(0.3, 0.6))
-									ElseIf me\Injuries > 1.0
-										me\Injuries = Max(0.5, me\Injuries - Rnd(0.4, 0.9))
-										If me\Injuries > 1.0
-											CreateMsg(GetLocalString("msg", "aid.toobad_2"))
-										Else
-											CreateMsg(GetLocalString("msg", "aid.stop"))
-										EndIf
-									Else
-										If me\Injuries > 0.5
-											me\Injuries = 0.5
-											CreateMsg(GetLocalString("msg", "aid.slight"))
-										Else
-											me\Injuries = me\Injuries / 2.0
-											CreateMsg(GetLocalString("msg", "aid.nowalk"))
-										EndIf
-									EndIf
-									
-									If SelectedItem\ItemTemplate\ID = it_firstaid2
-										Select Rand(8)
-											Case 1
-												;[Block]
-												chs\SuperMan = True
-												CreateMsg(GetLocalString("msg", "aid.super"))
-												;[End Block]
-											Case 2
-												;[Block]
-												opt\InvertMouseX = (Not opt\InvertMouseX)
-												opt\InvertMouseY = (Not opt\InvertMouseY)
-												CreateMsg(GetLocalString("msg", "aid.invert"))
-												;[End Block]
-											Case 3
-												;[Block]
-												me\BlurTimer = 5000.0
-												CreateMsg(GetLocalString("msg", "nausea"))
-												;[End Block]
-											Case 4
-												;[Block]
-												me\BlinkEffect = 0.5
-												me\BlinkEffectTimer = Rnd(20.0, 30.0)
-												;[End Block]
-											Case 5
-												;[Block]
-												me\StaminaEffect = 0.3
-												me\StaminaEffectTimer = Rnd(25.0, 35.0)
-												;[End Block]
-											Case 6
-												;[Block]
-												me\Bloodloss = 0.0
-												me\Injuries = 0.0
-												CreateMsg(GetLocalString("msg", "aid.stopall"))
-												;[End Block]
-											Case 7
-												;[Block]
-												me\Injuries = Max(0.0, me\Injuries - Rnd(0.5, 3.5))
-												me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 100.0))
-												CreateMsg(GetLocalString("msg", "better_1"))
-												;[End Block]
-											Case 8
-												;[Block]
-												CreateMsg(GetLocalString("msg", "aid.through"))
-												me\Injuries = 3.5
-												;[End Block]
-										End Select
-									EndIf
-								EndIf
-								If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-								RemoveItem(SelectedItem)
-							EndIf
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_eyedrops, it_eyedrops2
-					;[Block]
-					If CanUseItem()
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\BlinkEffect = 0.6
-							me\BlinkEffectTimer = Rnd(25.0, 35.0)
-							me\BlurTimer = 200.0
-							me\BlinkTimer = Min(me\BlinkTimer + (me\BLINKFREQ / 2.0), me\BLINKFREQ)
-							
-							If SelectedItem\ItemTemplate\ID = it_eyedrops2 Then me\Bloodloss = Max(me\Bloodloss - Rnd(5.0, 10.0), 0.0)
-							
-							CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_fineeyedrops
-					;[Block]
-					If CanUseItem()
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\BlinkEffect = 0.4
-							me\BlinkEffectTimer = Rnd(35.0, 45.0)
-							me\BlurTimer = 200.0
-							me\BlinkTimer = me\BLINKFREQ
-							
-							CreateMsg(GetLocalString("msg", "eyedrop.moisturized.very"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_veryfineeyedrops
-					;[Block]
-					If CanUseItem()
-						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-						
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\BlinkEffect = 0.0
-							me\BlinkEffectTimer = 60.0
-							me\EyeStuck = 8400.0
-							me\BlurTimer = 1000.0
-							
-							CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_scp1025
-					;[Block]
-					GiveAchievement("1025")
-					If SelectedItem\State3 = 0.0
-						SelectedItem\State = Rand(0, 6)
-						If I_714\Using = 0 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then I_1025\State[SelectedItem\State] = Max(1.0, I_1025\State[SelectedItem\State])
-						SelectedItem\State3 = 1.0
-					EndIf
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						AdaptScreenGamma()
-					EndIf
-					;[End Block]
-				Case it_fine1025
-					;[Block]
-					GiveAchievement("1025")
-					If SelectedItem\State3 = 0.0
-						SelectedItem\State = Rand(0, 5)
-						If I_714\Using = 0 And wi\GasMask <> 4 And wi\HazmatSuit <> 4
-							Select SelectedItem\State
-								Case 0.0
-									;[Block]
-									If I_1025\FineState[0] = 0.0
-										MaxItemAmount = MaxItemAmount + 2
-										InjurePlayer(1.5, 0.0, 1000.0)
-										PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\BodyHorrorExchange" + Rand(0, 3) + ".ogg"))
-										CreateMsg(GetLocalString("msg", "extraparts"))
-										I_1025\FineState[0] = 1.0
-									EndIf
-									;[End Block]
-								Case 5.0
-									;[Block]
-									If I_008\Timer = 0.0 Then I_008\Timer = I_008\Timer + 0.001
-									;[End Block]
-								Default
-									;[Block]
-									I_1025\FineState[SelectedItem\State] = Max(1.0, I_1025\FineState[SelectedItem\State])
-									;[End Block]
-							End Select
-						EndIf
-						SelectedItem\State3 = 1.0
-					EndIf
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_fine_1025(" + (Int(SelectedItem\State) + 1) + ").png"), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						AdaptScreenGamma()
-					EndIf
-					;[End Block]
-				Case it_book
-					;[Block]
-					CreateMsg(GetLocalString("msg", "redbook"))
-					SelectedItem = Null
-					;[End Block]
-				Case it_cup
-					;[Block]
-					If CanUseItem(True)
-						If S2IMapContains(I_294\DrinksMap, SelectedItem\Name)
-							Local Drink% = JsonGetArrayValue(I_294\Drinks, S2IMapGet(I_294\DrinksMap, SelectedItem\Name))
-							
-							If JsonIsNull(JsonGetValue(Drink, "refuse_message"))
-								me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-								
-								SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.6), 100.0)
-								If SelectedItem\UsageTimer = 100.0
-									Temp = JsonGetValue(Drink, "drink_message")
-									If (Not JsonIsNull(Temp)) Then CreateMsg(JsonGetString(Temp))
-									
-									Temp = JsonGetValue(Drink, "vomit")
-									If (Not JsonIsNull(Temp))
-										If me\VomitTimer = 0.0
-											me\VomitTimer = JsonGetFloat(Temp)
-										Else
-											me\VomitTimer = Min(me\VomitTimer, JsonGetFloat(Temp))
-										EndIf
-									EndIf
-									Temp = JsonGetValue(Drink, "blur")
-									If (Not JsonIsNull(Temp)) Then me\BlurTimer = Max(me\BlurTimer + (JsonGetFloat(Temp) * 70.0), 0.0)
-									Temp = JsonGetValue(Drink, "camera_shake")
-									If (Not JsonIsNull(Temp)) Then me\CameraShakeTimer = Max(me\CameraShakeTimer + JsonGetFloat(Temp), 0.0)
-									Temp = JsonGetValue(Drink, "deaf_timer")
-									If (Not JsonIsNull(Temp)) Then SetDeafState(Max(me\DeafTimer + JsonGetFloat(Temp), 0.0))
-									Temp = JsonGetValue(Drink, "damage")
-									If (Not JsonIsNull(Temp)) Then me\Injuries = Max(me\Injuries + JsonGetFloat(Temp), 0.0)
-									Temp = JsonGetValue(Drink, "bloodloss")
-									If (Not JsonIsNull(Temp)) Then me\Bloodloss = Max(me\Bloodloss + JsonGetFloat(Temp), 0.0)
-									Temp = JsonGetValue(Drink, "energy")
-									If (Not JsonIsNull(Temp)) Then me\Stamina = Min(me\Stamina + Rand(JsonGetFloat(Temp) / 2.0, JsonGetFloat(Temp)) * SelectedItem\State, 100.0)
-									
-									Temp = JsonGetValue(Drink, "drink_sound")
-									If (Not JsonIsNull(Temp))
-										StrTemp = JsonGetString(Temp)
-										If (Not (StrTemp = "SFX\SCP\294\Burn.ogg" And I_1025\FineState[3] > 0.0))
-											PlaySound_Strict(LoadTempSound(StrTemp), True)
-										Else
-											me\Injuries = me\Injuries + 0.5
-											PlaySound_Strict(LoadTempSound("SFX\SCP\294\Slurp.ogg"), True)
-										EndIf
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "stomachache")
-									If (Not JsonIsNull(Temp))
-										If JsonGetBool(Temp) Then I_1025\State[3] = 1.0
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "infection")
-									If (Not JsonIsNull(Temp))
-										If JsonGetBool(Temp) Then I_008\Timer = I_008\Timer + 0.001
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "crystallization")
-									If (Not JsonIsNull(Temp))
-										If JsonGetBool(Temp) Then I_409\Timer = I_409\Timer + 0.001
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "mutation")
-									If (Not JsonIsNull(Temp))
-										If JsonGetBool(Temp)
-											If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
-										EndIf
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "revitalize")
-									If (Not JsonIsNull(Temp))
-										If JsonGetBool(Temp)
-											For i = 0 To 6
-												I_1025\State[i] = 0.0
-											Next
-										EndIf
-									EndIf
-									
-									Temp = JsonGetValue(Drink, "death_timer")
-									If (Not JsonIsNull(Temp))
-										Local DeathTimer1% = JsonGetFloat(Temp)
-										
-										Temp = JsonGetValue(Drink, "death_message")
-										If (Not JsonIsNull(Temp)) Then msg\DeathMsg = JsonGetString(Temp)
-										
-										If DeathTimer1 = 0.0
-											Kill()
-										ElseIf me\DeathTimer = 0.0
-											me\DeathTimer = DeathTimer1 * 70.0
-										EndIf
-									EndIf
-									
-									; ~ The state of refined items is more than 1.0 (fine setting increases it by 1, very fine doubles it)
-									Temp = JsonGetValue(Drink, "blink_effect")
-									If (Not JsonIsNull(Temp)) Then me\BlinkEffect = JsonGetFloat(Temp) ^ SelectedItem\State
-									Temp = JsonGetValue(Drink, "blink_timer")
-									If (Not JsonIsNull(Temp)) Then me\BlinkEffectTimer = JsonGetFloat(Temp) * SelectedItem\State
-									Temp = JsonGetValue(Drink, "stamina_effect")
-									If (Not JsonIsNull(Temp)) Then me\StaminaEffect = JsonGetFloat(Temp) ^ SelectedItem\State
-									Temp = JsonGetValue(Drink, "stamina_timer")
-									If (Not JsonIsNull(Temp)) Then me\StaminaEffectTimer = JsonGetFloat(Temp) * SelectedItem\State
-									
-									it.Items = CreateItem("Empty Cup", it_emptycup, 0.0, 0.0, 0.0)
-									it\Picked = True
-									For i = 0 To MaxItemAmount - 1
-										If Inventory(i) = SelectedItem
-											Inventory(i) = it
-											Exit
-										EndIf
-									Next
-									RemoveItem(SelectedItem)
-								EndIf
-							Else
-								CreateMsg(JsonGetString(JsonGetValue(Drink, "refuse_message")))
-								SelectedItem = Null
-							EndIf
-						Else
-							CreateMsg(GetLocalString("msg", "cup.unknown"))
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_pizza
-					;[Block]
-					If CanUseItem(True)
-						CreateMsg(GetLocalString("msg", "pizza"))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\458\Eating.ogg"))
-						
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_syringe
-					;[Block]
-					If CanUseItem(True, True)
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\HealTimer = Rnd(20.0, 30.0)
-							me\StaminaEffect = 0.7
-							me\StaminaEffectTimer = Rand(40.0, 60.0)
-							me\Stamina = Min(me\Stamina + 25.0, 100.0)
-							
-							CreateMsg(GetLocalString("msg", "syringe_1"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_finesyringe
-					;[Block]
-					If CanUseItem(True, True)
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\HealTimer = Rnd(30.0, 40.0)
-							me\StaminaEffect = 0.5
-							me\StaminaEffectTimer = Rnd(60.0, 80.0)
-							me\Stamina = Min(me\Stamina + 50.0, 100.0)
-							
-							CreateMsg(GetLocalString("msg", "syringe_2"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_veryfinesyringe
-					;[Block]
-					If CanUseItem(True, True)
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							Select Rand(3)
-								Case 1
-									;[Block]
-									me\HealTimer = 60.0
-									me\StaminaEffect = 0.1
-									me\StaminaEffectTimer = 120.0
-									me\Stamina = 100.0
-									CreateMsg(GetLocalString("msg", "syringe_3"))
-									;[End Block]
-								Case 2
-									;[Block]
-									chs\SuperMan = True
-									CreateMsg(GetLocalString("msg", "syringe_4"))
-									;[End Block]
-								Case 3
-									;[Block]
-									me\VomitTimer = 30.0
-									CreateMsg(GetLocalString("msg", "syringe_5"))
-									;[End Block]
-							End Select
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_syringeinf
-					;[Block]
-					If CanUseItem(True, True)
-						SelectedItem\UsageTimer = Min(SelectedItem\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
-						If SelectedItem\UsageTimer = 100.0
-							me\HealTimer = Rnd(10.0, 20.0)
-							me\StaminaEffect = 0.8
-							me\StaminaEffectTimer = Rand(15.0, 30.0)
-							me\Stamina = Min(me\Stamina + 10.0, 100.0)
-							me\VomitTimer = 70.0
-							I_008\Timer = I_008\Timer + 1.0
-							CreateMsg(GetLocalString("msg", "syringe_6"))
-							If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-							RemoveItem(SelectedItem)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_radio, it_18vradio, it_fineradio, it_veryfineradio
-					;[Block]
-					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
-					
-					; ~ RadioState[6] = A timer for the "code channel"
-					
-					; ~ RadioState[7] = Another timer for the "code channel"
-					
-					Temp = (SelectedItem\ItemTemplate\ID = it_fineradio Lor SelectedItem\ItemTemplate\ID = it_veryfineradio)
-					If SelectedItem\ItemTemplate\Img = 0
-						StrTemp = "_off"
-						If SelectedItem\State > 0.0 Lor Temp Then StrTemp = "_on"
-						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio" + StrTemp + ".png"
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img)
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img)
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						CreateHintMsg(GetLocalString("msg", "radio"), 6.0, True)
-					EndIf
-					
-					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.002 + (0.002 * (SelectedItem\ItemTemplate\ID = it_radio))))
-					If SelectedItem\State > 0.0 Lor Temp
-						SelectedItem\State3 = 0.0
-						IsUsingRadio = True
-						If RadioState[5] = 0.0
-							RadioState[5] = 1.0
-							RadioState[0] = -1.0
-						EndIf
-						
-						If PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_1499
-							For i = 0 To 5
-								If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
-							Next
-							RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
-						ElseIf CoffinDistance < 8.0
-							For i = 0 To 5
-								If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
-							Next
-							RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic895, RadioCHN[6])
-						Else
-							If SelectedItem\ItemTemplate\ID = it_veryfineradio
-								SelectedItem\State2 = -1.0
-								RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
-								RadioState[6] = RadioState[6] + fps\Factor[0]
-								x = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
-								If RadioState[6] - fps\Factor[0] <= RadioState[7] * 50.0 And RadioState[6] > RadioState[7] * 50.0
-									PlaySound_Strict(snd_I\RadioBuzz)
-									RadioState[7] = RadioState[7] + 1.0
-									If RadioState[7] >= x
-										RadioState[7] = 0.0
-										RadioState[6] = -100.0
-										RadioState[8] = RadioState[8] + 1.0
-										If RadioState[8] = 4.0
-											RadioState[8] = 0.0
-											RadioState[6] = -200.0
-										EndIf
-									EndIf
-								EndIf
-							Else
-								Select Int(SelectedItem\State2)
-									Case 0
-										;[Block]
-										If opt\UserTrackMode = 0 Lor UserTrackMusicAmount < 1
-											RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
-										Else
-											If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-											
-											If (Not ChannelPlaying(RadioCHN[0]))
-												If (Not UserTrackFlag)
-													If opt\UserTrackMode = 1
-														If RadioState[0] < (UserTrackMusicAmount - 1)
-															RadioState[0] = RadioState[0] + 1.0
-														Else
-															RadioState[0] = 0.0
-														EndIf
-														UserTrackFlag = True
-													ElseIf opt\UserTrackMode = 2
-														RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
-													EndIf
-												EndIf
-												If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
-												CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
-												RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
-											Else
-												UserTrackFlag = False
-											EndIf
-											
-											If KeyHit(2)
-												PlaySound_Strict(snd_I\RadioSquelch)
-												If (Not UserTrackFlag)
-													If opt\UserTrackMode = 1
-														If RadioState[0] < (UserTrackMusicAmount - 1)
-															RadioState[0] = RadioState[0] + 1.0
-														Else
-															RadioState[0] = 0.0
-														EndIf
-														UserTrackFlag = True
-													ElseIf opt\UserTrackMode = 2
-														RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
-													EndIf
-												EndIf
-												If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
-												CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
-												RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
-											EndIf
-										EndIf
-										;[End Block]
-									Case 1
-										;[Block]
-										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-										
-										If (Not ChannelPlaying(RadioCHN[1]))
-											If RadioState[1] >= 5.0
-												RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 1))
-												RadioState[1] = 0.0
-											Else
-												RadioState[1] = RadioState[1] + 1.0
-												RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 0))
-											EndIf
-										EndIf
-										;[End Block]
-									Case 2
-										;[Block]
-										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-										
-										If (Not ChannelPlaying(RadioCHN[2]))
-											RadioState[2] = RadioState[2] + 1.0
-											If RadioState[2] = 17.0 Then RadioState[2] = 1.0
-											If Floor(RadioState[2] / 2.0) = Ceil(RadioState[2] / 2.0)
-												RadioCHN[2] = PlaySound_Strict(RadioSFX(1, Int(RadioState[2] / 2.0)))
-											Else
-												RadioCHN[2] = PlaySound_Strict(RadioSFX(1, 0))
-											EndIf
-										EndIf
-										;[End Block]
-									Case 3
-										;[Block]
-										If (Not ChannelPlaying(RadioCHN[6])) And (Not ChannelPlaying(RadioCHN[3])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
-										
-										If MTFTimer > 0.0
-											If (Not RadioState2[6]) Then RadioState[3] = RadioState[3] + Max(Rand(-10, 1), 0)
-											Select RadioState[3]
-												Case 40
-													;[Block]
-													If (Not RadioState2[0])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random0.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[0] = True
-													EndIf
-													;[End Block]
-												Case 400
-													;[Block]
-													If (Not RadioState2[1])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[1] = True
-													EndIf
-													;[End Block]
-												Case 800
-													;[Block]
-													If (Not RadioState2[2])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[2] = True
-													EndIf
-													;[End Block]
-												Case 1200
-													;[Block]
-													If (Not RadioState2[3])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[3] = True
-													EndIf
-													;[End Block]
-												Case 1600
-													;[Block]
-													If (Not RadioState2[4])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[4] = True
-													EndIf
-													;[End Block]
-												Case 2000
-													;[Block]
-													If (Not RadioState2[5])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[5] = True
-													EndIf
-													;[End Block]
-												Case 2400
-													;[Block]
-													If (Not RadioState2[6])
-														RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"), True)
-														RadioState[3] = RadioState[3] + 1.0
-														RadioState2[6] = True
-													EndIf
-													;[End Block]
-											End Select
-										EndIf
-										;[End Block]
-									Case 4
-										;[Block]
-										RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
-										If (Not ChannelPlaying(RadioCHN[4]))
-											If (Not RemoteDoorOn) And RadioState[8] = 0
-												RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
-												RadioState[8] = 1
-											Else
-												RadioState[4] = RadioState[4] + Max(Rand(-10, 1), 0)
-												
-												Select RadioState[4]
-													Case 10
-														;[Block]
-														If (Not n_I\Curr106\Contained)
-															If (Not RadioState3[0])
-																RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"), True)
-																RadioState[4] = RadioState[4] + 1.0
-																RadioState3[0] = True
-															EndIf
-														EndIf
-														;[End Block]
-													Case 100
-														;[Block]
-														If (Not RadioState3[1])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[1] = True
-														EndIf
-														;[End Block]
-													Case 158
-														;[Block]
-														If MTFTimer = 0.0 And (Not RadioState3[2])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin0.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState[2] = True
-														EndIf
-														;[End Block]
-													Case 200
-														;[Block]
-														If (Not RadioState3[3])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[3] = True
-														EndIf
-														;[End Block]
-													Case 260
-														;[Block]
-														If (Not RadioState3[4])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help0.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[4] = True
-														EndIf
-														;[End Block]
-													Case 300
-														;[Block]
-														If (Not RadioState3[5])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter0.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[5] = True
-														EndIf
-														;[End Block]
-													Case 350
-														;[Block]
-														If (Not RadioState3[6])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[6] = True
-														EndIf
-														;[End Block]
-													Case 400
-														;[Block]
-														If (Not RadioState3[7])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help1.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[7] = True
-														EndIf
-														;[End Block]
-													Case 450
-														;[Block]
-														If (Not RadioState3[8])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[8] = True
-														EndIf
-														;[End Block]
-													Case 600
-														;[Block]
-														If (Not RadioState3[9])
-															RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"), True)
-															RadioState[4] = RadioState[4] + 1.0
-															RadioState3[9] = True
-														EndIf
-														;[End Block]
-												End Select
-											EndIf
-										EndIf
-										;[End Block]
-									Case 5
-										;[Block]
-										If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
-										RadioCHN[5] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[5])
-										;[End Block]
-								End Select
-								
-								If (Not MenuOpen) And (Not ConsoleOpen)
-									For i = 2 To 6
-										If KeyHit(i)
-											If SelectedItem\State2 <> i - 2
-												PlaySound_Strict(snd_I\RadioSquelch)
-												PauseChannel(RadioCHN[Int(SelectedItem\State2)])
-											EndIf
-											SelectedItem\State2 = i - 2
-											ResumeChannel(RadioCHN[SelectedItem\State2])
-											Exit
-										EndIf
-									Next
-								EndIf
-							EndIf
-						EndIf
-						
-						If (Not Temp)
-							If SelectedItem\State < 40.0
-								If BatMsgTimer >= 70.0
-									me\SndVolume = Max(3.0, me\SndVolume)
-									LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
-								EndIf
-							EndIf
-						EndIf
-					Else
-						; ~ Instantly reload the image 
-						If SelectedItem\State3 = 0.0
-							FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
-							SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio_off.png"
-							SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-							MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-							
-							For i = 0 To 6
-								If ChannelPlaying(RadioCHN[i]) Then StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
-							Next
-							SelectedItem\State3 = 1.0
-						EndIf
-						CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
-					EndIf
-					;[End Block]
-				Case it_nav, it_nav310, it_navulti, it_nav300
-					;[Block]
-					Temp = (SelectedItem\ItemTemplate\ID = it_nav310 Lor SelectedItem\ItemTemplate\ID = it_nav)
-					If SelectedItem\ItemTemplate\Img = 0
-						StrTemp = "_off"
-						If SelectedItem\State > 0.0 Lor (Not Temp) Then StrTemp = "_on"
-						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator" + StrTemp + ".png"
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-					EndIf
-					If Temp
-						SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * (0.0025 + (0.0025 * (SelectedItem\ItemTemplate\ID = it_nav))))
-						If SelectedItem\State > 0.0
-							SelectedItem\State3 = 0.0
-							If SelectedItem\State < 20.0
-								If BatMsgTimer >= 70.0
-									me\SndVolume = Max(3.0, me\SndVolume)
-									LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
-								EndIf
-							EndIf
-						Else
-							; ~ Instantly reload the image 
-							If SelectedItem\State3 = 0.0
-								FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
-								SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator_off.png"
-								SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-								MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-								SelectedItem\State3 = 1.0
-							EndIf
-							CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_cigarette
-					;[Block]
-					If CanUseItem(True)
-						Select Rand(6)
-							Case 1
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_1"))
-								;[End Block]
-							Case 2
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_2"))
-								;[End Block]
-							Case 3
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_3"))
-								;[End Block]
-							Case 4
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_4"))
-								;[End Block]
-							Case 5
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_5"))
-								;[End Block]
-							Case 6
-								;[Block]
-								CreateMsg(GetLocalString("msg", "cigarette_6"))
-								;[End Block]
-						End Select
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_scp420j
-					;[Block]
-					If CanUseItem(True)
-						If I_714\Using > 0
-							CreateMsg(GetLocalString("msg", "420j.no"))
-						Else
-							CreateMsg(GetLocalString("msg", "420j.yeah"))
-							me\Injuries = Max(me\Injuries - 0.5, 0.0)
-							me\BlurTimer = 500.0
-							GiveAchievement("420j")
-							PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
-						EndIf
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_joint, it_joint_smelly
-					;[Block]
-					If CanUseItem(True)
-						If I_714\Using > 0
-							CreateMsg(GetLocalString("msg", "420j.no"))
-						Else
-							CreateMsg(GetLocalString("msg", "420j.dead"))
-							msg\DeathMsg = Format(GetLocalString("death", "joint"), SubjectName)
-							Kill()
-						EndIf
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_scp714, it_coarse714
-					;[Block]
-					If CanUseItem(True, True)
-						Select SelectedItem\ItemTemplate\ID
-							Case it_coarse714
-								;[Block]
-								If IsDoubleItem(I_714\Using, 1) Then Return
-								;[End Block]
-							Case it_scp714
-								;[Block]
-								If IsDoubleItem(I_714\Using, 2) Then Return
-								;[End Block]
-						End Select
-						
-						If I_714\Using > 0
-							CreateMsg(GetLocalString("msg", "714.off"))
-							I_714\Using = 0
-						Else
-							GiveAchievement("714")
-							CreateMsg(GetLocalString("msg", "714.on"))
-							Select SelectedItem\ItemTemplate\ID
-								Case it_coarse714
-									;[Block]
-									I_714\Using = 1
-									;[End Block]
-								Case it_scp714
-									;[Block]
-									I_714\Using = 2
-									;[End Block]
-							End Select
-						EndIf
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_fine714, it_ring
-					;[Block]
-					If CanUseItem(True, True)
-						If SelectedItem\ItemTemplate\ID = it_fine714
-							CreateMsg(GetLocalString("msg", "714.sleep"))
-							msg\DeathMsg = Format(GetLocalString("death", "ringsleep"), SubjectName)
-							Kill()
-						Else
-							CreateMsg(GetLocalString("msg", "714.small"))
-						EndIf
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_ticket
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						AdaptScreenGamma()
-					EndIf
-					
-					If SelectedItem\State = 0.0
-						CreateMsg(GetLocalString("msg", "ticket"))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(0, 4) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_badge
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						AdaptScreenGamma()
-					EndIf
-					
-					If SelectedItem\State = 0.0
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_oldbadge
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						AdaptScreenGamma()
-					EndIf
-					
-					If SelectedItem\State = 0.0
-						CreateMsg(GetLocalString("msg", "oldbadge"))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_oldpaper
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						AdaptScreenGamma()
-					EndIf
-					
-					If SelectedItem\State = 0.0
-						me\BlurTimer = 1000.0
-						CreateMsg(GetLocalString("msg", "oldpaper"))
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_lostkey
-					;[Block]
-					If SelectedItem\State = 0.0
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
-						CreateMsg(GetLocalString("msg", "lostkey"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_coin
-					;[Block]
-					If SelectedItem\State = 0.0
-						PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(0, 4) + ".ogg"))
-						SelectedItem\State = 1.0
-					EndIf
-					;[End Block]
-				Case it_scp427
-					;[Block]
-					If CanUseItem(True, True)
-						If I_427\Using
-							CreateMsg(GetLocalString("msg", "427.off"))
-							SelectedItem\InvImg = SelectedItem\ItemTemplate\InvImg
-							I_427\Using = False
-						Else
-							GiveAchievement("427")
-							CreateMsg(GetLocalString("msg", "427.on"))
-							SelectedItem\InvImg = SelectedItem\ItemTemplate\InvImg2
-							I_427\Using = True
-						EndIf
-						SelectedItem = Null
-					EndIf
-					;[End Block]
-				Case it_pill, it_scp2022pill
-					;[Block]
-					If CanUseItem(True)
-						If SelectedItem\ItemTemplate\ID = it_scp2022pill
-							If I_2022\Used < 2.0
-								I_2022\HealTimer = I_2022\HealTimer + 20.0
-								me\Bloodloss = 0.0
-								CreateMsg(GetLocalString("msg", "pill.2022"))
-							Else
-								I_2022\HealTimer = 0.0
-								me\Injuries = me\Injuries + 1.2
-								me\Bloodloss = me\Bloodloss + 30.0
-								CreateMsg(GetLocalString("msg", "pill.2022.burn"))
-								I_1025\State[2] = 1.0
-								PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
-								me\VomitTimer = 30.0
-								SetPlayerModelFX(1)
-							EndIf
-							I_2022\Used = I_2022\Used + 1.0
-						Else
-							CreateMsg(GetLocalString("msg", "pill"))
-						EndIf
-						I_1025\State[0] = 0.0
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_scp500pilldeath
-					;[Block]
-					If CanUseItem(True)
-						CreateMsg(GetLocalString("msg", "pill"))
-						
-						If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
-						
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_scp2022
-					;[Block]
-					If SelectedItem\State > 0.0
-						If ItemAmount < MaxItemAmount
-							it.Items = CreateItem("SCP-2022-01", it_scp2022pill, 0.0, 0.0, 0.0)
-							PickItem(it, False)
-							SelectedItem\State = SelectedItem\State - 1.0
-							CreateMsg(GetLocalString("msg", "2022.take"))
-						Else
-							CreateMsg(GetLocalString("msg", "cantcarry"))
-						EndIf
-						SelectedItem = Null
-					Else
-						CreateMsg(GetLocalString("msg", "2022.empty"))
-						RemoveItem(SelectedItem)
-					EndIf
-					;[End Block]
-				Case it_scp1123
-					;[Block]
-					Use1123()
-					SelectedItem = Null
-					;[End Block]
-				Case it_paper
-					;[Block]
-					If SelectedItem\ItemTemplate\Img = 0
-						SelectedItem\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						Select SelectedItem\ItemTemplate\Name
-							Case "Burnt Note" 
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(0, 0, 0)
-								SetFontEx(fo\FontID[Font_Default])
-								TextEx(277 * MenuScale, 469 * MenuScale, CODE_DR_MAYNARD, True, True)
-								SetBuffer(BackBuffer())
-								;[End Block]
-							Case "Unknown Note"
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(85, 85, 140)
-								SetFontEx(fo\FontID[Font_Journal])
-								TextEx(300 * MenuScale, 275 * MenuScale, CODE_CMR, True, True)
-								SetFontEx(fo\FontID[Font_Default])
-								SetBuffer(BackBuffer())
-								;[End Block]
-							Case "Document SCP-372"
-								;[Block]
-								SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img))
-								Color(37, 45, 137)
-								SetFontEx(fo\FontID[Font_Journal])
-								TextEx(383 * MenuScale, 734 * MenuScale, CODE_MAINTENANCE_TUNNELS, True, True)
-								SetFontEx(fo\FontID[Font_Default])
-								SetBuffer(BackBuffer())
-								;[End Block]
-						End Select
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						AdaptScreenGamma()
-					EndIf
-					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden
-					;[Block]
-					; ~ Skip this line
-					;[End Block]
-				Case it_e_reader, it_e_reader20, it_e_readerulti
-					;[Block]
-					Temp = (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_e_readerulti)
-					If SelectedItem\ItemTemplate\Img = 0
-						StrTemp = "_off"
-						If SelectedItem\State > 0.0 Lor Temp Then StrTemp = "_on"
-						SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader" + StrTemp + ".png"
-						SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-						SelectedItem\ItemTemplate\ImgWidth = ImageWidth(SelectedItem\ItemTemplate\Img) / 2
-						SelectedItem\ItemTemplate\ImgHeight = ImageHeight(SelectedItem\ItemTemplate\Img) / 2
-						MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-						CreateHintMsg(GetLocalString("msg", "e.reader"))
-					EndIf
-					
-					SelectedItem\State = Max(0.0, SelectedItem\State - fps\Factor[0] * 0.005)
-					
-					i = GetKey()
-					Select i
-						Case 49 ; ~ 1, Left
-							;[Block]
-							SelectedItem\State2 = Max(0.0, SelectedItem\State2 - 1.0)
-							CurrEReaderPage = SelectedItem\EReaderPage[SelectedItem\State2]
-							PlaySound_Strict(ButtonSFX[0])
-							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
-							;[End Block]
-						Case 50 ; ~ 2, Right
-							;[Block]
-							SelectedItem\State2 = Min(SelectedItem\EReaderPageAmount, SelectedItem\State2 + 1.0)
-							CurrEReaderPage = SelectedItem\EReaderPage[SelectedItem\State2]
-							PlaySound_Strict(ButtonSFX[0])
-							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
-							;[End Block]
-						Case 51 ; ~ 3, Home
-							;[Block]
-							CurrEReaderPage = Null
-							SelectedItem\State2 = 0.0
-							PlaySound_Strict(ButtonSFX[0])
-							If SelectedItem\ItemTemplate\Img2 <> 0 Then FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
-							;[End Block]
-					End Select
-					If Temp
-						SelectedItem\State3 = 0.0
-						If CurrEReaderPage <> Null
-							If SelectedItem\ItemTemplate\Img2 = 0
-								Scale = 0.748 * MenuScale
-								SelectedItem\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict(CurrEReaderPage\ImgPath), Scale, Scale)
-								Select StripPath(CurrEReaderPage\ImgPath)
-									Case "note_Maynard.png"
-										;[Block]
-										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
-										Color(0, 0, 0)
-										SetFontEx(fo\FontID[Font_Default])
-										TextEx(277 * Scale, 469 * Scale, CODE_DR_MAYNARD, True, True)
-										SetBuffer(BackBuffer())
-										;[End Block]
-									Case "note_unknown.png"
-										;[Block]
-										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
-										Color(85, 85, 140)
-										SetFontEx(fo\FontID[Font_Journal])
-										TextEx(300 * Scale, 275 * Scale, CODE_CMR, True, True)
-										SetFontEx(fo\FontID[Font_Default])
-										SetBuffer(BackBuffer())
-										;[End Block]
-									Case "doc_372.png"
-										;[Block]
-										SetBuffer(ImageBuffer(SelectedItem\ItemTemplate\Img2))
-										Color(37, 45, 137)
-										SetFontEx(fo\FontID[Font_Journal])
-										TextEx(383 * Scale, 734 * Scale, CODE_MAINTENANCE_TUNNELS, True, True)
-										SetFontEx(fo\FontID[Font_Default])
-										SetBuffer(BackBuffer())
-										;[End Block]
-								End Select
-								SelectedItem\ItemTemplate\Img2Width = ImageWidth(SelectedItem\ItemTemplate\Img2) / 2
-								SelectedItem\ItemTemplate\Img2Height = ImageHeight(SelectedItem\ItemTemplate\Img2) / 2
-								AdaptScreenGamma()
-							EndIf
-						EndIf
-						
-						If SelectedItem\State < 20.0 And SelectedItem\ItemTemplate\ID <> it_e_readerulti
-							If BatMsgTimer >= 70.0
-								me\SndVolume = Max(3.0, me\SndVolume)
-								LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
-							EndIf
-						EndIf
-					Else
-						; ~ Instantly reload the image 
-						If SelectedItem\State3 = 0.0
-							FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
-							SelectedItem\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader_off.png"
-							SelectedItem\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(SelectedItem\ItemTemplate\ImgPath), MenuScale, MenuScale)
-							MaskImage(SelectedItem\ItemTemplate\Img, 255, 0, 255)
-							SelectedItem\State3 = 1.0
-						EndIf
-						CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
-					EndIf
-					;[End Block]
-				Default
-					;[Block]
-					; ~ Check if the item is an inventory-type object
-					If SelectedItem\InvSlots > 0 Then OtherOpen = SelectedItem
-					If SelectedItem\ItemTemplate\ID = it_scp500 Then PlaySound_Strict(LoadTempSound("SFX\Interact\OpenBottle.ogg"))
-					SelectedItem = Null
-					;[End Block]
-			End Select
-			
-			If (Not (MenuOpen Lor ConsoleOpen)) And (mo\MouseHit2 Lor KeyHit(key\INVENTORY)) Lor me\Terminated Lor me\FallTimer < 0.0 Lor me\Playable < 2 Lor me\Zombie
-				Select SelectedItem\ItemTemplate\ID
-					Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_scp1025, it_fine1025, it_cup, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
-						;[Block]
-						SelectedItem\UsageTimer = 0.0
-						;[End Block]
-					Case it_vest, it_finevest
-						;[Block]
-						SelectedItem\UsageTimer = 0.0
-						If wi\BallisticVest = 0 Then DropItem(SelectedItem, False)
-						;[End Block]
-					Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
-						;[Block]
-						SelectedItem\UsageTimer = 0.0
-						If wi\HazmatSuit = 0 Then DropItem(SelectedItem, False)
-						;[End Block]
-					Case it_e_reader, it_e_reader20, it_e_readerulti
-						;[Block]
-						SelectedItem\State2 = 0.0
-						CurrEReaderPage = Null
-						;[End Block]
-				End Select
-				If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
-				If SelectedItem\ItemTemplate\Img <> 0
-					If opt\PrevScreenGamma <> 1.0
-						opt\ScreenGamma = opt\PrevScreenGamma
-						opt\PrevScreenGamma = 1.0
-					EndIf
-					SelectedItem\ItemTemplate\ImgWidth = 0 : SelectedItem\ItemTemplate\ImgHeight = 0
-					FreeImage(SelectedItem\ItemTemplate\Img) : SelectedItem\ItemTemplate\Img = 0
-				EndIf
-				If SelectedItem\ItemTemplate\Img2 <> 0
-					If opt\PrevScreenGamma <> 1.0
-						opt\ScreenGamma = opt\PrevScreenGamma
-						opt\PrevScreenGamma = 1.0
-					EndIf
-					SelectedItem\ItemTemplate\Img2Width = 0 : SelectedItem\ItemTemplate\Img2Height = 0
-					FreeImage(SelectedItem\ItemTemplate\Img2) : SelectedItem\ItemTemplate\Img2 = 0
-				EndIf
-				For i = 0 To 6
-					If ChannelPlaying(RadioCHN[i]) Then StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
-				Next
-				IsUsingRadio = False
-				
-				SelectedItem = Null
-			EndIf
+			UpdateUseItem(SelectedItem)
 		Else
 			If ChannelPlaying(LowBatteryCHN[0]) Then StopChannel(LowBatteryCHN[0]) : LowBatteryCHN[0] = 0
 		EndIf
@@ -6808,6 +4944,1879 @@ Function UpdateGUI%()
 	If PrevInvOpen And (Not InvOpen) Then MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 	
 	CatchErrors("Uncaught: UpdateGUI()")
+End Function
+
+Function UpdateUseItem%(item.Items)
+	Local Scale#, StrTemp$, Temp%, i%, j%
+	Local it.Items, r.Rooms, e.Events, n.NPCs
+	
+	Select item\ItemTemplate\ID
+		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148
+			;[Block]
+			If (Not PreventItemOverlapping(True, False, False, True, False, False, True))
+				Select item\ItemTemplate\ID
+					Case it_gasmask
+						;[Block]
+						If IsDoubleItem(wi\GasMask, 1) Then Return
+						;[End Block]
+					Case it_finegasmask
+						;[Block]
+						If IsDoubleItem(wi\GasMask, 2) Then Return
+						;[End Block]
+					Case it_veryfinegasmask
+						;[Block]
+						If IsDoubleItem(wi\GasMask, 3) Then Return
+						;[End Block]
+					Case it_gasmask148
+						;[Block]
+						If IsDoubleItem(wi\GasMask, 4) Then Return
+						;[End Block]
+				End Select
+				
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + fps\Factor[0] / (1.0 + 0.6 * (item\ItemTemplate\ID = it_gasmask148)) , 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If wi\GasMask > 0
+						CreateMsg(GetLocalString("msg", "mask.off"))
+						wi\GasMask = 0
+					Else
+						Select item\ItemTemplate\ID
+							Case it_gasmask
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on"))
+								wi\GasMask = 1
+								;[End Block]
+							Case it_finegasmask
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on.dry"))
+								wi\GasMask = 2
+								;[End Block]
+							Case it_veryfinegasmask
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on.easy"))
+								wi\GasMask = 3
+								;[End Block]
+							Case it_gasmask148
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on.easy"))
+								wi\GasMask = 4
+								;[End Block]
+						End Select
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_headphones
+			;[Block]
+			Select item\ItemTemplate\ID
+				Case it_headphones
+					;[Block]
+					If IsDoubleItem(wi\Headphones, 1) Then Return
+					;[End Block]
+			End Select
+			
+			me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+			
+			item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+			If item\UsageTimer = 100.0
+				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+				
+				If wi\Headphones > 0
+					CreateMsg(GetLocalString("msg", "headphones.off"))
+				Else
+					CreateMsg(GetLocalString("msg", "headphones.on"))
+				EndIf
+				wi\Headphones = (Not wi\Headphones)
+				item\UsageTimer = 0.0
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_scp1499, it_fine1499
+			;[Block]
+			If (Not PreventItemOverlapping(False, False, True, True, False, False, True))
+				Select item\ItemTemplate\ID
+					Case it_scp1499
+						;[Block]
+						If IsDoubleItem(I_1499\Using, 1) Then Return
+						;[End Block]
+					Case it_fine1499
+						;[Block]
+						If IsDoubleItem(I_1499\Using, 2) Then Return
+						;[End Block]
+				End Select
+				
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 1.5), 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If I_1499\Using > 0
+						CreateMsg(GetLocalString("msg", "mask.off"))
+						I_1499\Using = 0
+					Else
+						GiveAchievement("1499")
+						For r.Rooms = Each Rooms
+							If r\RoomTemplate\RoomID = r_dimension_1499
+								me\BlinkTimer = -10.0
+								I_1499\PrevRoom = PlayerRoom
+								I_1499\PrevX = EntityX(me\Collider)
+								I_1499\PrevY = EntityY(me\Collider)
+								I_1499\PrevZ = EntityZ(me\Collider)
+								
+								If I_1499\x = 0.0 And I_1499\y = 0.0 And I_1499\z = 0.0
+									PositionEntity(me\Collider, r\x + 6086.0 * RoomScale, r\y + 304.0 * RoomScale, r\z + 2292.5 * RoomScale)
+									RotateEntity(me\Collider, 0.0, 90.0, 0.0, True)
+								Else
+									PositionEntity(me\Collider, I_1499\x, I_1499\y + 0.05, I_1499\z)
+								EndIf
+								ResetEntity(me\Collider)
+								TeleportToRoom(r)
+								PlaySound_Strict(LoadTempSound("SFX\SCP\1499\Enter.ogg"))
+								I_1499\x = 0.0
+								I_1499\y = 0.0
+								I_1499\z = 0.0
+								If n_I\Curr096 <> Null
+									If n_I\Curr096\SoundCHN <> 0 Then SetStreamVolume_Strict(n_I\Curr096\SoundCHN, 0.0)
+								EndIf
+								For e.Events = Each Events
+									If e\EventID = e_dimension_1499
+										If EntityDistanceSquared(e\room\OBJ, me\Collider) > PowTwo(8300.0 * RoomScale)
+											If e\EventState2 < 5.0 Then e\EventState2 = e\EventState2 + 1.0
+										EndIf
+										Exit
+									EndIf
+								Next
+								Exit
+							EndIf
+						Next
+						Select item\ItemTemplate\ID
+							Case it_scp1499
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on"))
+								I_1499\Using = 1
+								;[End Block]
+							Case it_fine1499
+								;[Block]
+								CreateMsg(GetLocalString("msg", "mask.on.easy"))
+								I_1499\Using = 2
+								;[End Block]
+						End Select
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_nvg, it_veryfinenvg, it_finenvg
+			;[Block]
+			If (Not PreventItemOverlapping(False, True, False, True, False, False, True))
+				Select item\ItemTemplate\ID
+					Case it_nvg
+						;[Block]
+						If IsDoubleItem(wi\NightVision, 1) Then Return
+						;[End Block]
+					Case it_veryfinenvg
+						;[Block]
+						If IsDoubleItem(wi\NightVision, 2) Then Return
+						;[End Block]
+					Case it_finenvg
+						;[Block]
+						If IsDoubleItem(wi\NightVision, 3) Then Return
+						;[End Block]
+				End Select
+				
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + fps\Factor[0], 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If wi\NightVision > 0
+						CreateMsg(GetLocalString("msg", "nvg.off"))
+						fog\FarDist = 6.0
+						wi\NightVision = 0
+						If item\State > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\Interact\NVGOff.ogg"))
+					Else
+						CreateMsg(GetLocalString("msg", "nvg.on"))
+						fog\FarDist = 16.0
+						Select item\ItemTemplate\ID
+							Case it_nvg
+								;[Block]
+								wi\NightVision = 1
+								;[End Block]
+							Case it_veryfinenvg
+								;[Block]
+								wi\NightVision = 2
+								;[End Block]
+							Case it_finenvg
+								;[Block]
+								wi\NightVision = 3
+								;[End Block]
+						End Select
+						If item\State > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\Interact\NVGOn.ogg"))
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_scramble, it_finescramble
+			;[Block]
+			If (Not PreventItemOverlapping(False, False, False, True, True, False, True))
+				Select item\ItemTemplate\ID
+					Case it_scramble
+						;[Block]
+						If IsDoubleItem(wi\SCRAMBLE, 1) Then Return
+						;[End Block]
+					Case it_finescramble
+						;[Block]
+						If IsDoubleItem(wi\SCRAMBLE, 2) Then Return
+						;[End Block]
+				End Select
+				
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + fps\Factor[0], 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If wi\SCRAMBLE > 0
+						CreateMsg(GetLocalString("msg", "gear.off"))
+						fog\FarDist = 6.0
+						wi\SCRAMBLE = 0
+					Else
+						CreateMsg(GetLocalString("msg", "gear.on"))
+						fog\FarDist = 9.0
+						Select item\ItemTemplate\ID
+							Case it_scramble
+								;[Block]
+								wi\SCRAMBLE = 1
+								;[End Block]
+							Case it_finescramble
+								;[Block]
+								wi\SCRAMBLE = 2
+								;[End Block]
+						End Select
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_helmet
+			;[Block]
+			If (Not PreventItemOverlapping(True, True, True, True, True))
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If wi\BallisticHelmet
+						CreateMsg(GetLocalString("msg", "helmet.off"))
+						wi\BallisticHelmet = False
+					Else
+						CreateMsg(GetLocalString("msg", "helmet.on"))
+						wi\BallisticHelmet = True
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_cap, it_scp268, it_fine268
+			;[Block]
+			If (Not PreventItemOverlapping(True, True, True, False, True, False, True))
+				Select item\ItemTemplate\ID
+					Case it_cap
+						;[Block]
+						If IsDoubleItem(I_268\Using, 1) Then Return
+						;[End Block]
+					Case it_scp268
+						;[Block]
+						If IsDoubleItem(I_268\Using, 2) Then Return
+						;[End Block]
+					Case it_fine268
+						;[Block]
+						If IsDoubleItem(I_268\Using, 3) Then Return
+						;[End Block]
+				End Select
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					
+					If I_268\Using > 0
+						If I_268\Using > 1 And I_268\Timer > 0.0 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOff.ogg"))
+						CreateMsg(GetLocalString("msg", "cap.off"))
+						I_268\Using = 0
+					Else
+						GiveAchievement("268")
+						CreateMsg(GetLocalString("msg", "cap.on"))
+						Select item\ItemTemplate\ID
+							Case it_cap
+								;[Block]
+								I_268\Using = 1
+								;[End Block]
+							Case it_scp268
+								;[Block]
+								I_268\Using = 2
+								;[End Block]
+							Case it_fine268
+								;[Block]
+								I_268\Using = 3
+								;[End Block]
+						End Select
+						If I_268\Using > 1 Then PlaySound_Strict(LoadTempSound("SFX\SCP\268\InvisibilityOn.ogg"))
+					EndIf
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_vest, it_finevest
+			;[Block]
+			me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+			
+			item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (2.0 + (0.5 * (item\ItemTemplate\ID = it_finevest)))), 100.0)
+			If item\UsageTimer = 100.0
+				If wi\BallisticVest > 0
+					CreateMsg(GetLocalString("msg", "vest.off"))
+					ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
+					wi\BallisticVest = 0
+					DropItem(SelectedItem)
+				Else
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					ChangePlayerBodyTexture(PLAYER_BODY_VEST_TEX)
+					Select item\ItemTemplate\ID
+						Case it_vest
+							;[Block]
+							CreateMsg(GetLocalString("msg", "vest.on.slight"))
+							wi\BallisticVest = 1
+							;[End Block]
+						Case it_finevest
+							;[Block]
+							CreateMsg(GetLocalString("msg", "vest.on.heavy"))
+							wi\BallisticVest = 2
+							;[End Block]
+					End Select
+				EndIf
+				item\UsageTimer = 0.0
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
+			;[Block]
+			me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 5.0)
+			
+			item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (3.0 + (item\ItemTemplate\ID = it_hazmatsuit148))), 100.0)
+			If item\UsageTimer = 100.0
+				If wi\HazmatSuit > 0
+					CreateMsg(GetLocalString("msg", "suit.off"))
+					ChangePlayerBodyTexture(PLAYER_BODY_NORMAL_TEX)
+					wi\HazmatSuit = 0
+					DropItem(SelectedItem)
+				Else
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					If wi\NightVision > 0 Then fog\FarDist = 6.0 : wi\NightVision = 0
+					If wi\SCRAMBLE > 0 Then fog\FarDist = 6.0 : wi\SCRAMBLE = 0
+					wi\GasMask = 0 : wi\BallisticHelmet = False : wi\Headphones = 0
+					I_427\Using = False : I_1499\Using = 0
+					I_268\Using = 0
+					Select item\ItemTemplate\ID
+						Case it_hazmatsuit
+							;[Block]
+							CreateMsg(GetLocalString("msg", "suit.on"))
+							wi\HazmatSuit = 1
+							;[End Block]
+						Case it_finehazmatsuit
+							;[Block]
+							CreateMsg(GetLocalString("msg", "suit.dry"))
+							wi\HazmatSuit = 2
+							;[End Block]
+						Case it_veryfinehazmatsuit
+							;[Block]
+							CreateMsg(GetLocalString("msg", "suit.on.easy"))
+							wi\HazmatSuit = 3
+							;[End Block]
+						Case it_hazmatsuit148
+							;[Block]
+							CreateMsg(GetLocalString("msg", "suit.on.easy"))
+							wi\HazmatSuit = 4
+							;[End Block]
+					End Select
+					ChangePlayerBodyTexture(PLAYER_BODY_HAZMAT_TEX + (wi\HazmatSuit = 4)) ; ~ NOTICE: Const PLAYER_BODY_HAZMAT_TEX% = 1, Const PLAYER_BODY_HAZMAT_HEAVY_TEX% = 2
+				EndIf
+				item\UsageTimer = 0.0
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_scp513
+			;[Block]
+			GiveAchievement("513")
+			PlaySound_Strict(LoadTempSound("SFX\SCP\513\Bell.ogg"))
+			
+			me\SndVolume = Max(4.0, me\SndVolume)
+			
+			If n_I\Curr513_1 = Null And (Not wi\Headphones) And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
+			
+			SelectedItem = Null
+			;[End Block]
+		Case it_fine513
+			;[Block]
+			GiveAchievement("513")
+			PlaySound_Strict(LoadTempSound("SFX\SCP\513\BellLoud.ogg"))
+			
+			me\SndVolume = Max(6.0, me\SndVolume)
+			
+			If n_I\Curr513_1 = Null And (Not me\Deaf) Then n_I\Curr513_1 = CreateNPC(NPCType513_1, 0.0, 0.0, 0.0)
+			
+			If me\Deaf
+				msg\DeathMsg = GetLocalString("death", "513")
+				Kill(True)
+			EndIf
+			me\BlurTimer = Max(400.0, me\BlurTimer)
+			SetDeafState(70.0 * (45.0 + (15.0 * SelectedDifficulty\OtherFactors)))
+			me\BigCameraShake = 8.0
+			SetEmitter(Null, EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 29)
+			
+			For n.NPCs = Each NPCs
+				If EntityDistanceSquared(n\Collider, me\Collider) < 64.0 And (Not n\IsDead)
+					Select n\NPCType
+						Case NPCType008_1, NPCType008_1_Surgeon
+							;[Block]
+							If n\State > 0.0 And n\State < 5.0 
+								SetNPCFrame(n, 62.0 - (3.0 * (n\NPCType = NPCType008_1_Surgeon)))
+								n\LastSeen = 0.0
+								n\State = 5.0
+							EndIf
+							;[End Block]
+						Case NPCType049
+							;[Block]
+							If n\State <> 6.0
+								SetNPCFrame(n, 474.0)
+								n\State = 6.0
+							EndIf
+							;[End Block]
+						Case NPCType049_2
+							;[Block]
+							If n\State > 0.0 And n\State < 5.0 
+								SetNPCFrame(n, 944.0)
+								n\LastSeen = 0.0
+								n\State = 5.0
+							EndIf
+							;[End Block]
+						Case NPCType860_2
+							;[Block]
+							If n\State = 3.0
+								n\SoundCHN = PlaySoundEx(LoadTempSound("SFX\SCP\860_2\Cancer" + Rand(3, 5) + ".ogg"), Camera, n\Collider, 10.0, 1.0, True)
+								n\LastSeen = 70.0 * 5.0
+							EndIf
+							;[End Block]
+						Case NPCType939
+							;[Block]
+							If n\State <> 6.0
+								LoadNPCSound(n, "SFX\SCP\939\" + (n\ID Mod 3) + "Attack" + Rand(0, 2) + ".ogg")
+								n\SoundCHN = PlaySoundEx(n\Sound, Camera, n\Collider, 10.0, 1.0, True)
+								SetNPCFrame(n, 474.0)
+								n\State = 6.0
+							EndIf
+							;[End Block]
+						Case NPCType1048_A, NPCTypeCockroach
+							;[Block]
+							n\HP = 0
+							;[End Block]
+						Case NPCTypeMTF
+							;[Block]
+							If n\State <> MTF_STATE_STUNNED
+								If n = n_I\MTFLeader Then PlayMTFSound(LoadTempSound("SFX\Character\MTF\OMFG.ogg"), n)
+								SetNPCFrame(n, 1050.0)
+								n\PrevState = n\State
+								n\LastSeen = 0.0
+								n\State = MTF_STATE_STUNNED
+							EndIf
+							;[End Block]
+					End Select
+				EndIf
+			Next
+			SelectedItem = Null
+			;[End Block]
+		Case it_scp500pill
+			;[Block]
+			If CanUseItem(True)
+				GiveAchievement("500")
+				
+				CreateMsg(GetLocalString("msg", "pill"))
+				If I_008\Timer > 0.0
+					CreateMsg(GetLocalString("msg", "pill.nausea"))
+					I_008\Revert = True
+				EndIf
+				If I_409\Timer > 0.0
+					CreateMsg(GetLocalString("msg", "pill.crystals"))
+					I_409\Revert = True
+				EndIf
+				If I_1048A\EarGrowTimer > 0.0
+					I_1048A\Revert = True
+					StopChannel(I_1048A\SoundCHN) : I_1048A\SoundCHN = 0
+					CreateMsg(GetLocalString("msg", "pill.ears"))
+				EndIf
+				I_009\Revert = True
+				
+				I_966\HasInsomnia = 0.0
+				I_966\InsomniaEffectTimer = 0.0
+				
+				me\DeathTimer = 0.0
+				me\Stamina = 100.0
+				
+				For i = 0 To 6
+					I_1025\State[i] = 0.0
+				Next
+				If I_1025\FineState[0] > 0.0
+					; ~ Drop two latest items
+					For i = MaxItemAmount - 2 To MaxItemAmount - 1
+						If Inventory(i) <> Null Then DropItem(Inventory(i))
+					Next
+					MaxItemAmount = MaxItemAmount - 2
+					I_1025\FineState[0] = 0.0
+				EndIf
+				For i = 1 To 4
+					I_1025\FineState[i] = 0.0
+				Next
+				
+				If me\StaminaEffect > 1.0
+					me\StaminaEffect = 1.0
+					me\StaminaEffectTimer = 0.0
+				EndIf
+				
+				If me\BlinkEffect > 1.0
+					me\BlinkEffect = 1.0
+					me\BlinkEffectTimer = 0.0
+				EndIf
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_veryfinefirstaid
+			;[Block]
+			If CanUseItem(True)
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					Select Rand(7)
+						Case 1
+							;[Block]
+							me\Injuries = 3.5
+							CreateMsg(GetLocalString("msg", "bleed"))
+							;[End Block]
+						Case 2
+							;[Block]
+							ResetNegativeStats()
+							CreateMsg(GetLocalString("msg", "rapidly"))
+							;[End Block]
+						Case 3
+							;[Block]
+							me\BlurTimer = 10000.0
+							CreateMsg(GetLocalString("msg", "nausea"))
+							;[End Block]
+						Case 4
+							;[Block]
+							me\BlinkTimer = -10.0
+							
+							If (Not PlayerInReachableRoom(True))
+								me\Injuries = 2.5
+								CreateMsg(GetLocalString("msg", "bleed"))
+							Else
+								MoveToPocketDimension()
+								CreateMsg(GetLocalString("msg", "aid.106"))
+							EndIf
+							;[End Block]
+						Case 5
+							;[Block]
+							chs\SuperMan = True
+							CreateMsg(GetLocalString("msg", "aid.super"))
+							;[End Block]
+						Case 6
+							;[Block]
+							Kill()
+							msg\DeathMsg = GetLocalString("death", "kill_1")
+							;[End Block]
+						Case 7
+							;[Block]
+							me\BlurTimer = 1000.0
+							If Rand(2) = 1
+								If I_008\Timer = 0.0 Then I_008\Timer = 15.0
+							Else
+								If I_409\Timer = 0.0 Then I_409\Timer = 25.0
+							EndIf
+							;[End Block]
+					End Select
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_firstaid, it_finefirstaid, it_firstaid2
+			;[Block]
+			If CanUseItem(True, True)
+				If me\Bloodloss = 0.0 And me\Injuries = 0.0
+					CreateMsg(GetLocalString("msg", "aid.no"))
+					SelectedItem = Null
+					Return
+				Else
+					If (Not me\Crouch) Then SetCrouch(True)
+					
+					item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (4.0 + (item\ItemTemplate\ID = it_firstaid))), 100.0)
+					If item\UsageTimer = 100.0
+						If item\ItemTemplate\ID = it_finefirstaid
+							me\Bloodloss = Max(0.0, me\Bloodloss - 50.0)
+							me\Injuries = Max(0.0, me\Injuries - 1.5)
+							If me\Injuries = 0.0
+								CreateMsg(GetLocalString("msg", "aid.fine"))
+							ElseIf me\Injuries > 1.0
+								CreateMsg(GetLocalString("msg", "aid.bleed"))
+							Else
+								CreateMsg(GetLocalString("msg", "aid.sore"))
+							EndIf
+						Else
+							me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 20.0))
+							If me\Injuries >= 2.5
+								CreateMsg(GetLocalString("msg", "aid.toobad_1"))
+								me\Injuries = Max(2.5, me\Injuries - Rnd(0.3, 0.6))
+							ElseIf me\Injuries > 1.0
+								me\Injuries = Max(0.5, me\Injuries - Rnd(0.4, 0.9))
+								If me\Injuries > 1.0
+									CreateMsg(GetLocalString("msg", "aid.toobad_2"))
+								Else
+									CreateMsg(GetLocalString("msg", "aid.stop"))
+								EndIf
+							Else
+								If me\Injuries > 0.5
+									me\Injuries = 0.5
+									CreateMsg(GetLocalString("msg", "aid.slight"))
+								Else
+									me\Injuries = me\Injuries / 2.0
+									CreateMsg(GetLocalString("msg", "aid.nowalk"))
+								EndIf
+							EndIf
+							
+							If item\ItemTemplate\ID = it_firstaid2
+								Select Rand(8)
+									Case 1
+										;[Block]
+										chs\SuperMan = True
+										CreateMsg(GetLocalString("msg", "aid.super"))
+										;[End Block]
+									Case 2
+										;[Block]
+										opt\InvertMouseX = (Not opt\InvertMouseX)
+										opt\InvertMouseY = (Not opt\InvertMouseY)
+										CreateMsg(GetLocalString("msg", "aid.invert"))
+										;[End Block]
+									Case 3
+										;[Block]
+										me\BlurTimer = 5000.0
+										CreateMsg(GetLocalString("msg", "nausea"))
+										;[End Block]
+									Case 4
+										;[Block]
+										me\BlinkEffect = 0.5
+										me\BlinkEffectTimer = Rnd(20.0, 30.0)
+										;[End Block]
+									Case 5
+										;[Block]
+										me\StaminaEffect = 0.3
+										me\StaminaEffectTimer = Rnd(25.0, 35.0)
+										;[End Block]
+									Case 6
+										;[Block]
+										me\Bloodloss = 0.0
+										me\Injuries = 0.0
+										CreateMsg(GetLocalString("msg", "aid.stopall"))
+										;[End Block]
+									Case 7
+										;[Block]
+										me\Injuries = Max(0.0, me\Injuries - Rnd(0.5, 3.5))
+										me\Bloodloss = Max(0.0, me\Bloodloss - Rnd(10.0, 100.0))
+										CreateMsg(GetLocalString("msg", "better_1"))
+										;[End Block]
+									Case 8
+										;[Block]
+										CreateMsg(GetLocalString("msg", "aid.through"))
+										me\Injuries = 3.5
+										;[End Block]
+								End Select
+							EndIf
+						EndIf
+						If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+						RemoveItem(SelectedItem)
+					EndIf
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_eyedrops, it_eyedrops2
+			;[Block]
+			If CanUseItem()
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\BlinkEffect = 0.6
+					me\BlinkEffectTimer = Rnd(25.0, 35.0)
+					me\BlurTimer = 200.0
+					me\BlinkTimer = Min(me\BlinkTimer + (me\BLINKFREQ / 2.0), me\BLINKFREQ)
+					
+					If item\ItemTemplate\ID = it_eyedrops2 Then me\Bloodloss = Max(me\Bloodloss - Rnd(5.0, 10.0), 0.0)
+					
+					CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_fineeyedrops
+			;[Block]
+			If CanUseItem()
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\BlinkEffect = 0.4
+					me\BlinkEffectTimer = Rnd(35.0, 45.0)
+					me\BlurTimer = 200.0
+					me\BlinkTimer = me\BLINKFREQ
+					
+					CreateMsg(GetLocalString("msg", "eyedrop.moisturized.very"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_veryfineeyedrops
+			;[Block]
+			If CanUseItem()
+				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\BlinkEffect = 0.0
+					me\BlinkEffectTimer = 60.0
+					me\EyeStuck = 8400.0
+					me\BlurTimer = 1000.0
+					
+					CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_scp1025
+			;[Block]
+			GiveAchievement("1025")
+			If item\State3 = 0.0
+				item\State = Rand(0, 6)
+				If I_714\Using = 0 And wi\GasMask <> 4 And wi\HazmatSuit <> 4 Then I_1025\State[item\State] = Max(1.0, I_1025\State[item\State])
+				item\State3 = 1.0
+			EndIf
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_1025(" + (Int(item\State) + 1) + ").png"), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				AdaptScreenGamma()
+			EndIf
+			;[End Block]
+		Case it_fine1025
+			;[Block]
+			GiveAchievement("1025")
+			If item\State3 = 0.0
+				item\State = Rand(0, 5)
+				If I_714\Using = 0 And wi\GasMask <> 4 And wi\HazmatSuit <> 4
+					Select item\State
+						Case 0.0
+							;[Block]
+							If I_1025\FineState[0] = 0.0
+								MaxItemAmount = MaxItemAmount + 2
+								InjurePlayer(1.5, 0.0, 1000.0)
+								PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\BodyHorrorExchange" + Rand(0, 3) + ".ogg"))
+								CreateMsg(GetLocalString("msg", "extraparts"))
+								I_1025\FineState[0] = 1.0
+							EndIf
+							;[End Block]
+						Case 5.0
+							;[Block]
+							If I_008\Timer = 0.0 Then I_008\Timer = I_008\Timer + 0.001
+							;[End Block]
+						Default
+							;[Block]
+							I_1025\FineState[item\State] = Max(1.0, I_1025\FineState[item\State])
+							;[End Block]
+					End Select
+				EndIf
+				item\State3 = 1.0
+			EndIf
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(ItemHUDTexturePath + "page_fine_1025(" + (Int(item\State) + 1) + ").png"), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				AdaptScreenGamma()
+			EndIf
+			;[End Block]
+		Case it_book
+			;[Block]
+			CreateMsg(GetLocalString("msg", "redbook"))
+			SelectedItem = Null
+			;[End Block]
+		Case it_cup
+			;[Block]
+			If CanUseItem(True)
+				If S2IMapContains(I_294\DrinksMap, item\Name)
+					Local Drink% = JsonGetArrayValue(I_294\Drinks, S2IMapGet(I_294\DrinksMap, item\Name))
+					
+					If JsonIsNull(JsonGetValue(Drink, "refuse_message"))
+						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+						
+						item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.6), 100.0)
+						If item\UsageTimer = 100.0
+							Temp = JsonGetValue(Drink, "drink_message")
+							If (Not JsonIsNull(Temp)) Then CreateMsg(JsonGetString(Temp))
+							
+							Temp = JsonGetValue(Drink, "vomit")
+							If (Not JsonIsNull(Temp))
+								If me\VomitTimer = 0.0
+									me\VomitTimer = JsonGetFloat(Temp)
+								Else
+									me\VomitTimer = Min(me\VomitTimer, JsonGetFloat(Temp))
+								EndIf
+							EndIf
+							Temp = JsonGetValue(Drink, "blur")
+							If (Not JsonIsNull(Temp)) Then me\BlurTimer = Max(me\BlurTimer + (JsonGetFloat(Temp) * 70.0), 0.0)
+							Temp = JsonGetValue(Drink, "camera_shake")
+							If (Not JsonIsNull(Temp)) Then me\CameraShakeTimer = Max(me\CameraShakeTimer + JsonGetFloat(Temp), 0.0)
+							Temp = JsonGetValue(Drink, "deaf_timer")
+							If (Not JsonIsNull(Temp)) Then SetDeafState(Max(me\DeafTimer + JsonGetFloat(Temp), 0.0))
+							Temp = JsonGetValue(Drink, "damage")
+							If (Not JsonIsNull(Temp)) Then me\Injuries = Max(me\Injuries + JsonGetFloat(Temp), 0.0)
+							Temp = JsonGetValue(Drink, "bloodloss")
+							If (Not JsonIsNull(Temp)) Then me\Bloodloss = Max(me\Bloodloss + JsonGetFloat(Temp), 0.0)
+							Temp = JsonGetValue(Drink, "energy")
+							If (Not JsonIsNull(Temp)) Then me\Stamina = Min(me\Stamina + Rand(JsonGetFloat(Temp) / 2.0, JsonGetFloat(Temp)) * item\State, 100.0)
+							
+							Temp = JsonGetValue(Drink, "drink_sound")
+							If (Not JsonIsNull(Temp))
+								StrTemp = JsonGetString(Temp)
+								If (Not (StrTemp = "SFX\SCP\294\Burn.ogg" And I_1025\FineState[3] > 0.0))
+									PlaySound_Strict(LoadTempSound(StrTemp), True)
+								Else
+									me\Injuries = me\Injuries + 0.5
+									PlaySound_Strict(LoadTempSound("SFX\SCP\294\Slurp.ogg"), True)
+								EndIf
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "stomachache")
+							If (Not JsonIsNull(Temp))
+								If JsonGetBool(Temp) Then I_1025\State[3] = 1.0
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "infection")
+							If (Not JsonIsNull(Temp))
+								If JsonGetBool(Temp) Then I_008\Timer = I_008\Timer + 0.001
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "crystallization")
+							If (Not JsonIsNull(Temp))
+								If JsonGetBool(Temp) Then I_409\Timer = I_409\Timer + 0.001
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "mutation")
+							If (Not JsonIsNull(Temp))
+								If JsonGetBool(Temp)
+									If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
+								EndIf
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "revitalize")
+							If (Not JsonIsNull(Temp))
+								If JsonGetBool(Temp)
+									For i = 0 To 6
+										I_1025\State[i] = 0.0
+									Next
+								EndIf
+							EndIf
+							
+							Temp = JsonGetValue(Drink, "death_timer")
+							If (Not JsonIsNull(Temp))
+								Local DeathTimer1% = JsonGetFloat(Temp)
+								
+								Temp = JsonGetValue(Drink, "death_message")
+								If (Not JsonIsNull(Temp)) Then msg\DeathMsg = JsonGetString(Temp)
+								
+								If DeathTimer1 = 0.0
+									Kill()
+								ElseIf me\DeathTimer = 0.0
+									me\DeathTimer = DeathTimer1 * 70.0
+								EndIf
+							EndIf
+							
+							; ~ The state of refined items is more than 1.0 (fine setting increases it by 1, very fine doubles it)
+							Temp = JsonGetValue(Drink, "blink_effect")
+							If (Not JsonIsNull(Temp)) Then me\BlinkEffect = JsonGetFloat(Temp) ^ item\State
+							Temp = JsonGetValue(Drink, "blink_timer")
+							If (Not JsonIsNull(Temp)) Then me\BlinkEffectTimer = JsonGetFloat(Temp) * item\State
+							Temp = JsonGetValue(Drink, "stamina_effect")
+							If (Not JsonIsNull(Temp)) Then me\StaminaEffect = JsonGetFloat(Temp) ^ item\State
+							Temp = JsonGetValue(Drink, "stamina_timer")
+							If (Not JsonIsNull(Temp)) Then me\StaminaEffectTimer = JsonGetFloat(Temp) * item\State
+							
+							it.Items = CreateItem("Empty Cup", it_emptycup, 0.0, 0.0, 0.0)
+							it\Picked = True
+							For i = 0 To MaxItemAmount - 1
+								If Inventory(i) = SelectedItem
+									Inventory(i) = it
+									Exit
+								EndIf
+							Next
+							RemoveItem(SelectedItem)
+						EndIf
+					Else
+						CreateMsg(JsonGetString(JsonGetValue(Drink, "refuse_message")))
+						SelectedItem = Null
+					EndIf
+				Else
+					CreateMsg(GetLocalString("msg", "cup.unknown"))
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_pizza
+			;[Block]
+			If CanUseItem(True)
+				CreateMsg(GetLocalString("msg", "pizza"))
+				PlaySound_Strict(LoadTempSound("SFX\SCP\458\Eating.ogg"))
+				
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_syringe
+			;[Block]
+			If CanUseItem(True, True)
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\HealTimer = Rnd(20.0, 30.0)
+					me\StaminaEffect = 0.7
+					me\StaminaEffectTimer = Rand(40.0, 60.0)
+					me\Stamina = Min(me\Stamina + 25.0, 100.0)
+					
+					CreateMsg(GetLocalString("msg", "syringe_1"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_finesyringe
+			;[Block]
+			If CanUseItem(True, True)
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\HealTimer = Rnd(30.0, 40.0)
+					me\StaminaEffect = 0.5
+					me\StaminaEffectTimer = Rnd(60.0, 80.0)
+					me\Stamina = Min(me\Stamina + 50.0, 100.0)
+					
+					CreateMsg(GetLocalString("msg", "syringe_2"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_veryfinesyringe
+			;[Block]
+			If CanUseItem(True, True)
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					Select Rand(3)
+						Case 1
+							;[Block]
+							me\HealTimer = 60.0
+							me\StaminaEffect = 0.1
+							me\StaminaEffectTimer = 120.0
+							me\Stamina = 100.0
+							CreateMsg(GetLocalString("msg", "syringe_3"))
+							;[End Block]
+						Case 2
+							;[Block]
+							chs\SuperMan = True
+							CreateMsg(GetLocalString("msg", "syringe_4"))
+							;[End Block]
+						Case 3
+							;[Block]
+							me\VomitTimer = 30.0
+							CreateMsg(GetLocalString("msg", "syringe_5"))
+							;[End Block]
+					End Select
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_syringeinf
+			;[Block]
+			If CanUseItem(True, True)
+				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.7), 100.0)
+				If item\UsageTimer = 100.0
+					me\HealTimer = Rnd(10.0, 20.0)
+					me\StaminaEffect = 0.8
+					me\StaminaEffectTimer = Rand(15.0, 30.0)
+					me\Stamina = Min(me\Stamina + 10.0, 100.0)
+					me\VomitTimer = 70.0
+					I_008\Timer = I_008\Timer + 1.0
+					CreateMsg(GetLocalString("msg", "syringe_6"))
+					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_radio, it_18vradio, it_fineradio, it_veryfineradio
+			;[Block]
+			; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
+			
+			; ~ RadioState[6] = A timer for the "code channel"
+			
+			; ~ RadioState[7] = Another timer for the "code channel"
+			
+			Temp = (item\ItemTemplate\ID = it_fineradio Lor item\ItemTemplate\ID = it_veryfineradio)
+			If item\ItemTemplate\Img = 0
+				StrTemp = "_off"
+				If item\State > 0.0 Lor Temp Then StrTemp = "_on"
+				item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio" + StrTemp + ".png"
+				item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img)
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img)
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				CreateHintMsg(GetLocalString("msg", "radio"), 6.0, True)
+			EndIf
+			
+			item\State = Max(0.0, item\State - fps\Factor[0] * (0.002 + (0.002 * (item\ItemTemplate\ID = it_radio))))
+			If item\State > 0.0 Lor Temp
+				item\State3 = 0.0
+				IsUsingRadio = True
+				If RadioState[5] = 0.0
+					RadioState[5] = 1.0
+					RadioState[0] = -1.0
+				EndIf
+				
+				If PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_1499
+					For i = 0 To 5
+						If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
+					Next
+					RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
+				ElseIf CoffinDistance < 8.0
+					For i = 0 To 5
+						If ChannelPlaying(RadioCHN[i]) Then PauseChannel(RadioCHN[i])
+					Next
+					RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic895, RadioCHN[6])
+				Else
+					If item\ItemTemplate\ID = it_veryfineradio
+						item\State2 = -1.0
+						RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
+						RadioState[6] = RadioState[6] + fps\Factor[0]
+						j = Mid(CODE_DR_GEARS, RadioState[8] + 1.0, 1)
+						If RadioState[6] - fps\Factor[0] <= RadioState[7] * 50.0 And RadioState[6] > RadioState[7] * 50.0
+							PlaySound_Strict(snd_I\RadioBuzz)
+							RadioState[7] = RadioState[7] + 1.0
+							If RadioState[7] >= j
+								RadioState[7] = 0.0
+								RadioState[6] = -100.0
+								RadioState[8] = RadioState[8] + 1.0
+								If RadioState[8] = 4.0
+									RadioState[8] = 0.0
+									RadioState[6] = -200.0
+								EndIf
+							EndIf
+						EndIf
+					Else
+						Select Int(item\State2)
+							Case 0
+								;[Block]
+								If opt\UserTrackMode = 0 Lor UserTrackMusicAmount < 1
+									RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
+								Else
+									If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+									
+									If (Not ChannelPlaying(RadioCHN[0]))
+										If (Not UserTrackFlag)
+											If opt\UserTrackMode = 1
+												If RadioState[0] < (UserTrackMusicAmount - 1)
+													RadioState[0] = RadioState[0] + 1.0
+												Else
+													RadioState[0] = 0.0
+												EndIf
+												UserTrackFlag = True
+											ElseIf opt\UserTrackMode = 2
+												RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
+											EndIf
+										EndIf
+										If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+										CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
+										RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
+									Else
+										UserTrackFlag = False
+									EndIf
+									
+									If KeyHit(2)
+										PlaySound_Strict(snd_I\RadioSquelch)
+										If (Not UserTrackFlag)
+											If opt\UserTrackMode = 1
+												If RadioState[0] < (UserTrackMusicAmount - 1)
+													RadioState[0] = RadioState[0] + 1.0
+												Else
+													RadioState[0] = 0.0
+												EndIf
+												UserTrackFlag = True
+											ElseIf opt\UserTrackMode = 2
+												RadioState[0] = Rand(0.0, UserTrackMusicAmount - 1)
+											EndIf
+										EndIf
+										If CurrUserTrack <> 0 Then FreeSound_Strict(CurrUserTrack) : CurrUserTrack = 0
+										CurrUserTrack = LoadSound_Strict("SFX\Radio\UserTracks\" + UserTrackName[RadioState[0]])
+										RadioCHN[0] = PlaySound_Strict(CurrUserTrack)
+									EndIf
+								EndIf
+								;[End Block]
+							Case 1
+								;[Block]
+								If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+								
+								If (Not ChannelPlaying(RadioCHN[1]))
+									If RadioState[1] >= 5.0
+										RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 1))
+										RadioState[1] = 0.0
+									Else
+										RadioState[1] = RadioState[1] + 1.0
+										RadioCHN[1] = PlaySound_Strict(RadioSFX(0, 0))
+									EndIf
+								EndIf
+								;[End Block]
+							Case 2
+								;[Block]
+								If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+								
+								If (Not ChannelPlaying(RadioCHN[2]))
+									RadioState[2] = RadioState[2] + 1.0
+									If RadioState[2] = 17.0 Then RadioState[2] = 1.0
+									If Floor(RadioState[2] / 2.0) = Ceil(RadioState[2] / 2.0)
+										RadioCHN[2] = PlaySound_Strict(RadioSFX(1, Int(RadioState[2] / 2.0)))
+									Else
+										RadioCHN[2] = PlaySound_Strict(RadioSFX(1, 0))
+									EndIf
+								EndIf
+								;[End Block]
+							Case 3
+								;[Block]
+								If (Not ChannelPlaying(RadioCHN[6])) And (Not ChannelPlaying(RadioCHN[3])) Then RadioCHN[6] = PlaySound_Strict(snd_I\RadioStatic)
+								
+								If MTFTimer > 0.0
+									If (Not RadioState2[6]) Then RadioState[3] = RadioState[3] + Max(Rand(-10, 1), 0)
+									Select RadioState[3]
+										Case 40
+											;[Block]
+											If (Not RadioState2[0])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random0.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[0] = True
+											EndIf
+											;[End Block]
+										Case 400
+											;[Block]
+											If (Not RadioState2[1])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random1.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[1] = True
+											EndIf
+											;[End Block]
+										Case 800
+											;[Block]
+											If (Not RadioState2[2])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random2.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[2] = True
+											EndIf
+											;[End Block]
+										Case 1200
+											;[Block]
+											If (Not RadioState2[3])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random3.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[3] = True
+											EndIf
+											;[End Block]
+										Case 1600
+											;[Block]
+											If (Not RadioState2[4])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random4.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[4] = True
+											EndIf
+											;[End Block]
+										Case 2000
+											;[Block]
+											If (Not RadioState2[5])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random5.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[5] = True
+											EndIf
+											;[End Block]
+										Case 2400
+											;[Block]
+											If (Not RadioState2[6])
+												RadioCHN[3] = PlaySound_Strict(LoadTempSound("SFX\Character\MTF\Random6.ogg"), True)
+												RadioState[3] = RadioState[3] + 1.0
+												RadioState2[6] = True
+											EndIf
+											;[End Block]
+									End Select
+								EndIf
+								;[End Block]
+							Case 4
+								;[Block]
+								RadioCHN[6] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[6])
+								If (Not ChannelPlaying(RadioCHN[4]))
+									If (Not RemoteDoorOn) And RadioState[8] = 0
+										RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter2.ogg"), True)
+										RadioState[8] = 1
+									Else
+										RadioState[4] = RadioState[4] + Max(Rand(-10, 1), 0)
+										
+										Select RadioState[4]
+											Case 10
+												;[Block]
+												If (Not n_I\Curr106\Contained)
+													If (Not RadioState3[0])
+														RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\OhGod.ogg"), True)
+														RadioState[4] = RadioState[4] + 1.0
+														RadioState3[0] = True
+													EndIf
+												EndIf
+												;[End Block]
+											Case 100
+												;[Block]
+												If (Not RadioState3[1])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter1.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[1] = True
+												EndIf
+												;[End Block]
+											Case 158
+												;[Block]
+												If MTFTimer = 0.0 And (Not RadioState3[2])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin0.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState[2] = True
+												EndIf
+												;[End Block]
+											Case 200
+												;[Block]
+												If (Not RadioState3[3])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter3.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[3] = True
+												EndIf
+												;[End Block]
+											Case 260
+												;[Block]
+												If (Not RadioState3[4])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help0.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[4] = True
+												EndIf
+												;[End Block]
+											Case 300
+												;[Block]
+												If (Not RadioState3[5])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Chatter0.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[5] = True
+												EndIf
+												;[End Block]
+											Case 350
+												;[Block]
+												If (Not RadioState3[6])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin1.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[6] = True
+												EndIf
+												;[End Block]
+											Case 400
+												;[Block]
+												If (Not RadioState3[7])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\035Help1.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[7] = True
+												EndIf
+												;[End Block]
+											Case 450
+												;[Block]
+												If (Not RadioState3[8])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin2.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[8] = True
+												EndIf
+												;[End Block]
+											Case 600
+												;[Block]
+												If (Not RadioState3[9])
+													RadioCHN[4] = PlaySound_Strict(LoadTempSound("SFX\Radio\Franklin3.ogg"), True)
+													RadioState[4] = RadioState[4] + 1.0
+													RadioState3[9] = True
+												EndIf
+												;[End Block]
+										End Select
+									EndIf
+								EndIf
+								;[End Block]
+							Case 5
+								;[Block]
+								If ChannelPlaying(RadioCHN[6]) Then StopChannel(RadioCHN[6]) : RadioCHN[6] = 0
+								RadioCHN[5] = LoopSoundLocal(snd_I\RadioStatic, RadioCHN[5])
+								;[End Block]
+						End Select
+						
+						If (Not MenuOpen) And (Not ConsoleOpen)
+							For i = 2 To 6
+								If KeyHit(i)
+									If item\State2 <> i - 2
+										PlaySound_Strict(snd_I\RadioSquelch)
+										PauseChannel(RadioCHN[Int(item\State2)])
+									EndIf
+									item\State2 = i - 2
+									ResumeChannel(RadioCHN[item\State2])
+									Exit
+								EndIf
+							Next
+						EndIf
+					EndIf
+				EndIf
+				
+				If (Not Temp)
+					If item\State < 40.0
+						If BatMsgTimer >= 70.0
+							me\SndVolume = Max(3.0, me\SndVolume)
+							LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
+						EndIf
+					EndIf
+				EndIf
+			Else
+				; ~ Instantly reload the image 
+				If item\State3 = 0.0
+					FreeImage(item\ItemTemplate\Img) : item\ItemTemplate\Img = 0
+					item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\radio_off.png"
+					item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+					MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+					
+					For i = 0 To 6
+						If ChannelPlaying(RadioCHN[i]) Then StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
+					Next
+					item\State3 = 1.0
+				EndIf
+				CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
+			EndIf
+			;[End Block]
+		Case it_nav, it_nav310, it_navulti, it_nav300
+			;[Block]
+			Temp = (item\ItemTemplate\ID = it_nav310 Lor item\ItemTemplate\ID = it_nav)
+			If item\ItemTemplate\Img = 0
+				StrTemp = "_off"
+				If item\State > 0.0 Lor (Not Temp) Then StrTemp = "_on"
+				item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator" + StrTemp + ".png"
+				item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+			EndIf
+			If Temp
+				item\State = Max(0.0, item\State - fps\Factor[0] * (0.0025 + (0.0025 * (item\ItemTemplate\ID = it_nav))))
+				If item\State > 0.0
+					item\State3 = 0.0
+					If item\State < 20.0
+						If BatMsgTimer >= 70.0
+							me\SndVolume = Max(3.0, me\SndVolume)
+							LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
+						EndIf
+					EndIf
+				Else
+					; ~ Instantly reload the image 
+					If item\State3 = 0.0
+						FreeImage(item\ItemTemplate\Img) : item\ItemTemplate\Img = 0
+						item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\navigator_off.png"
+						item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+						MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+						item\State3 = 1.0
+					EndIf
+					CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_cigarette
+			;[Block]
+			If CanUseItem(True)
+				Select Rand(6)
+					Case 1
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_1"))
+						;[End Block]
+					Case 2
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_2"))
+						;[End Block]
+					Case 3
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_3"))
+						;[End Block]
+					Case 4
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_4"))
+						;[End Block]
+					Case 5
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_5"))
+						;[End Block]
+					Case 6
+						;[Block]
+						CreateMsg(GetLocalString("msg", "cigarette_6"))
+						;[End Block]
+				End Select
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_scp420j
+			;[Block]
+			If CanUseItem(True)
+				If I_714\Using > 0
+					CreateMsg(GetLocalString("msg", "420j.no"))
+				Else
+					CreateMsg(GetLocalString("msg", "420j.yeah"))
+					me\Injuries = Max(me\Injuries - 0.5, 0.0)
+					me\BlurTimer = 500.0
+					GiveAchievement("420j")
+					PlaySound_Strict(LoadTempSound("SFX\Music\Using420J.ogg"))
+				EndIf
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_joint, it_joint_smelly
+			;[Block]
+			If CanUseItem(True)
+				If I_714\Using > 0
+					CreateMsg(GetLocalString("msg", "420j.no"))
+				Else
+					CreateMsg(GetLocalString("msg", "420j.dead"))
+					msg\DeathMsg = Format(GetLocalString("death", "joint"), SubjectName)
+					Kill()
+				EndIf
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_scp714, it_coarse714
+			;[Block]
+			If CanUseItem(True, True)
+				Select item\ItemTemplate\ID
+					Case it_coarse714
+						;[Block]
+						If IsDoubleItem(I_714\Using, 1) Then Return
+						;[End Block]
+					Case it_scp714
+						;[Block]
+						If IsDoubleItem(I_714\Using, 2) Then Return
+						;[End Block]
+				End Select
+				
+				If I_714\Using > 0
+					CreateMsg(GetLocalString("msg", "714.off"))
+					I_714\Using = 0
+				Else
+					GiveAchievement("714")
+					CreateMsg(GetLocalString("msg", "714.on"))
+					Select item\ItemTemplate\ID
+						Case it_coarse714
+							;[Block]
+							I_714\Using = 1
+							;[End Block]
+						Case it_scp714
+							;[Block]
+							I_714\Using = 2
+							;[End Block]
+					End Select
+				EndIf
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_fine714, it_ring
+			;[Block]
+			If CanUseItem(True, True)
+				If item\ItemTemplate\ID = it_fine714
+					CreateMsg(GetLocalString("msg", "714.sleep"))
+					msg\DeathMsg = Format(GetLocalString("death", "ringsleep"), SubjectName)
+					Kill()
+				Else
+					CreateMsg(GetLocalString("msg", "714.small"))
+				EndIf
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_ticket
+			;[Block]
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				AdaptScreenGamma()
+			EndIf
+			
+			If item\State = 0.0
+				CreateMsg(GetLocalString("msg", "ticket"))
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(0, 4) + ".ogg"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_badge
+			;[Block]
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				AdaptScreenGamma()
+			EndIf
+			
+			If item\State = 0.0
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_oldbadge
+			;[Block]
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				AdaptScreenGamma()
+			EndIf
+			
+			If item\State = 0.0
+				CreateMsg(GetLocalString("msg", "oldbadge"))
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_oldpaper
+			;[Block]
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				AdaptScreenGamma()
+			EndIf
+			
+			If item\State = 0.0
+				me\BlurTimer = 1000.0
+				CreateMsg(GetLocalString("msg", "oldpaper"))
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_lostkey
+			;[Block]
+			If item\State = 0.0
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(5, 9) + ".ogg"))
+				CreateMsg(GetLocalString("msg", "lostkey"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_coin
+			;[Block]
+			If item\State = 0.0
+				PlaySound_Strict(LoadTempSound("SFX\SCP\1162_ARC\NostalgiaCancer" + Rand(0, 4) + ".ogg"))
+				item\State = 1.0
+			EndIf
+			;[End Block]
+		Case it_scp427
+			;[Block]
+			If CanUseItem(True, True)
+				If I_427\Using
+					CreateMsg(GetLocalString("msg", "427.off"))
+					item\InvImg = item\ItemTemplate\InvImg
+					I_427\Using = False
+				Else
+					GiveAchievement("427")
+					CreateMsg(GetLocalString("msg", "427.on"))
+					item\InvImg = item\ItemTemplate\InvImg2
+					I_427\Using = True
+				EndIf
+				SelectedItem = Null
+			EndIf
+			;[End Block]
+		Case it_pill, it_scp2022pill
+			;[Block]
+			If CanUseItem(True)
+				If item\ItemTemplate\ID = it_scp2022pill
+					If I_2022\Used < 2.0
+						I_2022\HealTimer = I_2022\HealTimer + 20.0
+						me\Bloodloss = 0.0
+						CreateMsg(GetLocalString("msg", "pill.2022"))
+					Else
+						I_2022\HealTimer = 0.0
+						me\Injuries = me\Injuries + 1.2
+						me\Bloodloss = me\Bloodloss + 30.0
+						CreateMsg(GetLocalString("msg", "pill.2022.burn"))
+						I_1025\State[2] = 1.0
+						PlaySound_Strict(LoadTempSound("SFX\SCP\294\Burn.ogg"))
+						me\VomitTimer = 30.0
+						SetPlayerModelFX(1)
+					EndIf
+					I_2022\Used = I_2022\Used + 1.0
+				Else
+					CreateMsg(GetLocalString("msg", "pill"))
+				EndIf
+				I_1025\State[0] = 0.0
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_scp500pilldeath
+			;[Block]
+			If CanUseItem(True)
+				CreateMsg(GetLocalString("msg", "pill"))
+				
+				If I_427\Timer < 70.0 * 360.0 Then I_427\Timer = 70.0 * 360.0
+				
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_scp2022
+			;[Block]
+			If item\State > 0.0
+				If ItemAmount < MaxItemAmount
+					it.Items = CreateItem("SCP-2022-01", it_scp2022pill, 0.0, 0.0, 0.0)
+					PickItem(it, False)
+					item\State = item\State - 1.0
+					CreateMsg(GetLocalString("msg", "2022.take"))
+				Else
+					CreateMsg(GetLocalString("msg", "cantcarry"))
+				EndIf
+				SelectedItem = Null
+			Else
+				CreateMsg(GetLocalString("msg", "2022.empty"))
+				RemoveItem(SelectedItem)
+			EndIf
+			;[End Block]
+		Case it_scp1123
+			;[Block]
+			Use1123()
+			SelectedItem = Null
+			;[End Block]
+		Case it_paper
+			;[Block]
+			If item\ItemTemplate\Img = 0
+				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				Select item\ItemTemplate\Name
+					Case "Burnt Note" 
+						;[Block]
+						SetBuffer(ImageBuffer(item\ItemTemplate\Img))
+						Color(0, 0, 0)
+						SetFontEx(fo\FontID[Font_Default])
+						TextEx(277 * MenuScale, 469 * MenuScale, CODE_DR_MAYNARD, True, True)
+						SetBuffer(BackBuffer())
+						;[End Block]
+					Case "Unknown Note"
+						;[Block]
+						SetBuffer(ImageBuffer(item\ItemTemplate\Img))
+						Color(85, 85, 140)
+						SetFontEx(fo\FontID[Font_Journal])
+						TextEx(300 * MenuScale, 275 * MenuScale, CODE_CMR, True, True)
+						SetFontEx(fo\FontID[Font_Default])
+						SetBuffer(BackBuffer())
+						;[End Block]
+					Case "Document SCP-372"
+						;[Block]
+						SetBuffer(ImageBuffer(item\ItemTemplate\Img))
+						Color(37, 45, 137)
+						SetFontEx(fo\FontID[Font_Journal])
+						TextEx(383 * MenuScale, 734 * MenuScale, CODE_MAINTENANCE_TUNNELS, True, True)
+						SetFontEx(fo\FontID[Font_Default])
+						SetBuffer(BackBuffer())
+						;[End Block]
+				End Select
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				AdaptScreenGamma()
+			EndIf
+			;[End Block]
+		Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_coin, it_mastercard, it_mastercard_golden
+			;[Block]
+			; ~ Skip this line
+			;[End Block]
+		Case it_e_reader, it_e_reader20, it_e_readerulti
+			;[Block]
+			Temp = (item\State > 0.0 Lor item\ItemTemplate\ID = it_e_readerulti)
+			If item\ItemTemplate\Img = 0
+				StrTemp = "_off"
+				If item\State > 0.0 Lor Temp Then StrTemp = "_on"
+				item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader" + StrTemp + ".png"
+				item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
+				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+				CreateHintMsg(GetLocalString("msg", "e.reader"))
+			EndIf
+			
+			item\State = Max(0.0, item\State - fps\Factor[0] * 0.005)
+			
+			i = GetKey()
+			Select i
+				Case 49 ; ~ 1, Left
+					;[Block]
+					item\State2 = Max(0.0, item\State2 - 1.0)
+					CurrEReaderPage = item\EReaderPage[item\State2]
+					PlaySound_Strict(ButtonSFX[0])
+					If item\ItemTemplate\Img2 <> 0 Then FreeImage(item\ItemTemplate\Img2) : item\ItemTemplate\Img2 = 0
+					;[End Block]
+				Case 50 ; ~ 2, Right
+					;[Block]
+					item\State2 = Min(item\EReaderPageAmount, item\State2 + 1.0)
+					CurrEReaderPage = item\EReaderPage[item\State2]
+					PlaySound_Strict(ButtonSFX[0])
+					If item\ItemTemplate\Img2 <> 0 Then FreeImage(item\ItemTemplate\Img2) : item\ItemTemplate\Img2 = 0
+					;[End Block]
+				Case 51 ; ~ 3, Home
+					;[Block]
+					CurrEReaderPage = Null
+					item\State2 = 0.0
+					PlaySound_Strict(ButtonSFX[0])
+					If item\ItemTemplate\Img2 <> 0 Then FreeImage(item\ItemTemplate\Img2) : item\ItemTemplate\Img2 = 0
+					;[End Block]
+			End Select
+			If Temp
+				item\State3 = 0.0
+				If CurrEReaderPage <> Null
+					If item\ItemTemplate\Img2 = 0
+						Scale = 0.748 * MenuScale
+						item\ItemTemplate\Img2 = ResizeImageEx(LoadImage_Strict(CurrEReaderPage\ImgPath), Scale, Scale)
+						Select StripPath(CurrEReaderPage\ImgPath)
+							Case "note_Maynard.png"
+								;[Block]
+								SetBuffer(ImageBuffer(item\ItemTemplate\Img2))
+								Color(0, 0, 0)
+								SetFontEx(fo\FontID[Font_Default])
+								TextEx(277 * Scale, 469 * Scale, CODE_DR_MAYNARD, True, True)
+								SetBuffer(BackBuffer())
+								;[End Block]
+							Case "note_unknown.png"
+								;[Block]
+								SetBuffer(ImageBuffer(item\ItemTemplate\Img2))
+								Color(85, 85, 140)
+								SetFontEx(fo\FontID[Font_Journal])
+								TextEx(300 * Scale, 275 * Scale, CODE_CMR, True, True)
+								SetFontEx(fo\FontID[Font_Default])
+								SetBuffer(BackBuffer())
+								;[End Block]
+							Case "doc_372.png"
+								;[Block]
+								SetBuffer(ImageBuffer(item\ItemTemplate\Img2))
+								Color(37, 45, 137)
+								SetFontEx(fo\FontID[Font_Journal])
+								TextEx(383 * Scale, 734 * Scale, CODE_MAINTENANCE_TUNNELS, True, True)
+								SetFontEx(fo\FontID[Font_Default])
+								SetBuffer(BackBuffer())
+								;[End Block]
+						End Select
+						item\ItemTemplate\Img2Width = ImageWidth(item\ItemTemplate\Img2) / 2
+						item\ItemTemplate\Img2Height = ImageHeight(item\ItemTemplate\Img2) / 2
+						AdaptScreenGamma()
+					EndIf
+				EndIf
+				
+				If item\State < 20.0 And item\ItemTemplate\ID <> it_e_readerulti
+					If BatMsgTimer >= 70.0
+						me\SndVolume = Max(3.0, me\SndVolume)
+						LowBatteryCHN[0] = LoopSoundLocal(snd_I\LowBatterySFX[0], LowBatteryCHN[0])
+					EndIf
+				EndIf
+			Else
+				; ~ Instantly reload the image 
+				If item\State3 = 0.0
+					FreeImage(item\ItemTemplate\Img) : item\ItemTemplate\Img = 0
+					item\ItemTemplate\ImgPath = "GFX\Items\HUD Textures\e_reader_off.png"
+					item\ItemTemplate\Img = ScaleImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
+					MaskImage(item\ItemTemplate\Img, 255, 0, 255)
+					item\State3 = 1.0
+				EndIf
+				CreateHintMsg(GetLocalString("msg", "bat.combine"), 1.0, True)
+			EndIf
+			;[End Block]
+		Default
+			;[Block]
+			; ~ Check if the item is an inventory-type object
+			If item\InvSlots > 0 Then OtherOpen = SelectedItem
+			If item\ItemTemplate\ID = it_scp500 Then PlaySound_Strict(LoadTempSound("SFX\Interact\OpenBottle.ogg"))
+			item = Null
+			SelectedItem = Null
+			;[End Block]
+	End Select
+	
+	If (Not (MenuOpen Lor ConsoleOpen)) And (mo\MouseHit2 Lor KeyHit(key\INVENTORY)) Lor me\Terminated Lor me\FallTimer < 0.0 Lor me\Playable < 2 Lor me\Zombie
+		Select item\ItemTemplate\ID
+			Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_scp1025, it_fine1025, it_cup, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
+				;[Block]
+				item\UsageTimer = 0.0
+				;[End Block]
+			Case it_vest, it_finevest
+				;[Block]
+				item\UsageTimer = 0.0
+				If wi\BallisticVest = 0 Then DropItem(item, False)
+				;[End Block]
+			Case it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
+				;[Block]
+				item\UsageTimer = 0.0
+				If wi\HazmatSuit = 0 Then DropItem(item, False)
+				;[End Block]
+			Case it_e_reader, it_e_reader20, it_e_readerulti
+				;[Block]
+				item\State2 = 0.0
+				CurrEReaderPage = Null
+				;[End Block]
+		End Select
+		If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+		If item\ItemTemplate\Img <> 0
+			If opt\PrevScreenGamma <> 1.0
+				opt\ScreenGamma = opt\PrevScreenGamma
+				opt\PrevScreenGamma = 1.0
+			EndIf
+			item\ItemTemplate\ImgWidth = 0 : item\ItemTemplate\ImgHeight = 0
+			FreeImage(item\ItemTemplate\Img) : item\ItemTemplate\Img = 0
+		EndIf
+		If item\ItemTemplate\Img2 <> 0
+			If opt\PrevScreenGamma <> 1.0
+				opt\ScreenGamma = opt\PrevScreenGamma
+				opt\PrevScreenGamma = 1.0
+			EndIf
+			item\ItemTemplate\Img2Width = 0 : item\ItemTemplate\Img2Height = 0
+			FreeImage(item\ItemTemplate\Img2) : item\ItemTemplate\Img2 = 0
+		EndIf
+		For i = 0 To 6
+			If ChannelPlaying(RadioCHN[i]) Then StopChannel(RadioCHN[i]) : RadioCHN[i] = 0
+		Next
+		IsUsingRadio = False
+		
+		item = Null
+		SelectedItem = Null
+	EndIf
 End Function
 
 Function RenderHUD%()
@@ -7280,7 +7289,7 @@ Function RenderGUI%()
 	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
 	Local INVENTORY_GFX_SPACING% = 35 * MenuScale
-	Local InvImgSize% = (64 * MenuScale) / 2
+	Local InvImgSizeHalf% = (64 * MenuScale) / 2
 	Local MaxItemAmountHalf% = MaxItemAmount / 2
 	
 	If OtherOpen <> Null
@@ -7325,7 +7334,7 @@ Function RenderGUI%()
 		
 		If SelectedItem <> Null
 			If mo\MouseDown1
-				If MouseSlot = 66 Lor SelectedItem <> OtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
+				If MouseSlot = 66 Lor SelectedItem <> OtherOpen\SecondInv[MouseSlot] Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSizeHalf, MousePosY - InvImgSizeHalf)
 			EndIf
 		EndIf
 		
@@ -7495,314 +7504,320 @@ Function RenderGUI%()
 		
 		If SelectedItem <> Null
 			If mo\MouseDown1
-				If MouseSlot = 66 Lor SelectedItem <> Inventory(MouseSlot) Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSize, MousePosY - InvImgSize)
+				If MouseSlot = 66 Lor SelectedItem <> Inventory(MouseSlot) Then DrawBlock(SelectedItem\InvImg, MousePosX - InvImgSizeHalf, MousePosY - InvImgSizeHalf)
 			EndIf
 		EndIf
 		
 		RenderCursor()
 	Else
-		If SelectedItem <> Null
-			Local Width% = 300 * MenuScale, Height% = 20 * MenuScale
-			
-			Select SelectedItem\ItemTemplate\ID
-				Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
-					;[Block]
-					If SelectedItem\UsageTimer > 0.0
-						DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-						
-						x = mo\Viewport_Center_X - (Width / 2)
-						y = mo\Viewport_Center_Y + (80 * MenuScale)
-						
-						RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\UsageTimer)
-					EndIf
-					;[End Block]
-				Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
-					;[Block]
-					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-					
-					x = mo\Viewport_Center_X - (Width / 2)
-					y = mo\Viewport_Center_Y + (80 * MenuScale)
-					
-					RenderBar(BlinkMeterIMG, x, y, Width, Height, SelectedItem\UsageTimer)
-					;[End Block]
-				Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
-					;[Block]
-					DrawBlock(SelectedItem\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSize, mo\Viewport_Center_Y - InvImgSize)
-					;[End Block]
-				Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
-					;[Block]
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
-					;[End Block]
-				Case it_ticket, it_oldbadge
-					;[Block]
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawImage(SelectedItem\ItemTemplate\Img, mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight)
-					;[End Block]
-				Case it_radio, it_18vradio, it_fineradio, it_veryfineradio
-					;[Block]
-					; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
-					; ~ RadioState[6] = A timer for the "code channel"
-					; ~ RadioState[7] = Another timer for the "code channel"
-					
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
-						StrTemp = ""
-						
-						x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth
-						y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight
-						
-						DrawImage(SelectedItem\ItemTemplate\Img, x, y)
-						
-						If (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_fineradio Lor SelectedItem\ItemTemplate\ID = it_veryfineradio) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
-							If PlayerRoom\RoomTemplate\RoomID <> r_dimension_106 And CoffinDistance >= 8.0
-								Select Int(SelectedItem\State2)
-									Case 0
-										;[Block]
-										If opt\UserTrackMode = 0
-											StrTemp = Format(GetLocalString("radio", "usertrack"), GetLocalString("radio", "notenable"))
-										ElseIf UserTrackMusicAmount < 1
-											StrTemp = Format(GetLocalString("radio", "usertrack"), GetLocalString("radio", "nofound"))
-										Else
-											If ChannelPlaying(RadioCHN[0]) Then StrTemp = Format(GetLocalString("radio", "usertrack"), Upper(UserTrackName[RadioState[0]]))
-										EndIf
-										;[End Block]
-									Case 1
-										;[Block]
-										StrTemp = GetLocalString("radio", "warn")
-										;[End Block]
-									Case 2
-										;[Block]
-										StrTemp = GetLocalString("radio", "onsite")
-										;[End Block]
-									Case 3
-										;[Block]
-										StrTemp = GetLocalString("radio", "emergency")
-										;[End Block]
-								End Select
-								
-								x = x + (66 * MenuScale)
-								y = y + (419 * MenuScale)
-								
-								; ~ Battery
-								If SelectedItem\ItemTemplate\ID = it_radio Lor SelectedItem\ItemTemplate\ID = it_18vradio
-									n = Ceil(SelectedItem\State / 20.0)
-									Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
-									For i = 0 To 4
-										Rect(x, y + ((8 * i) * MenuScale), (43 * MenuScale) - ((i * 6) * MenuScale), 4 * MenuScale, n > (4 - i))
-									Next
-								EndIf
-								
-								SetFontEx(fo\FontID[Font_Digital])
-								Color(30, 30, 30)
-								TextEx(x + (50 * MenuScale), y, GetLocalString("radio", "chn"))
-								
-								If SelectedItem\ItemTemplate\ID = it_veryfineradio
-									StrTemp = ""
-									For i = 0 To Rand(5, 30)
-										StrTemp = StrTemp + Chr(Rand(100))
-									Next
-									
-									SetFontEx(fo\FontID[Font_Digital_Big])
-									TextEx(x + (97 * MenuScale), y + (16 * MenuScale), Rand(0, 9), True, True)
-								Else
-									SetFontEx(fo\FontID[Font_Digital_Big])
-									TextEx(x + (97 * MenuScale), y + (16 * MenuScale), Int(SelectedItem\State2 + 1.0), True, True)
-								EndIf
-								
-								SetFontEx(fo\FontID[Font_Digital])
-								If StrTemp <> ""
-									StrTemp = Right(Left(StrTemp, (Int(MilliSec / 300) Mod Len(StrTemp))), 10)
-									TextEx(x - (28 * MenuScale), y + (33 * MenuScale), "          " + StrTemp + "          ")
-								EndIf
-								SetFontEx(fo\FontID[Font_Default])
-							EndIf
-						EndIf
-					EndIf
-					;[End Block]
-				Case it_nav, it_nav300, it_nav310, it_navulti
-					;[Block]
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
-						x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
-						y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
-						
-						DrawImage(SelectedItem\ItemTemplate\Img, x - SelectedItem\ItemTemplate\ImgWidth, y - SelectedItem\ItemTemplate\ImgHeight + (85 * MenuScale))
-						
-						SetFontEx(fo\FontID[Font_Digital])
-						
-						Local Offline% = (SelectedItem\ItemTemplate\ID = it_nav300 Lor SelectedItem\ItemTemplate\ID = it_nav)
-						Local NAV_WIDTH% = 287 * MenuScale
-						Local NAV_HEIGHT% = 256 * MenuScale
-						Local RectSize% = 24 * MenuScale
-						Local RectSizeHalf% = RectSize / 2
-						Local NAV_WIDTH_HALF% = NAV_WIDTH / 2
-						Local NAV_HEIGHT_HALF% = NAV_HEIGHT / 2
-						
-						If (Not PlayerInReachableRoom(True)) Lor InFacility <> NullFloor
-							If (MilliSec Mod 800) < 200
-								Color(200, 0, 0)
-								TextEx(x, y + NAV_HEIGHT_HALF - (80 * MenuScale), GetLocalString("msg", "nav.error"), True)
-								TextEx(x, y + NAV_HEIGHT_HALF - (60 * MenuScale), GetLocalString("msg", "nav.locunknown"), True)
-							EndIf
-						Else
-							If (SelectedItem\State > 0.0 Lor SelectedItem\ItemTemplate\ID = it_nav300 Lor SelectedItem\ItemTemplate\ID = it_navulti) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
-								Local xx% = x - SelectedItem\ItemTemplate\ImgWidth
-								Local yy% = y - SelectedItem\ItemTemplate\ImgHeight + (85 * MenuScale)
-								
-								If SelectedItem\State2 = 0.0
-									Local ColliderX# = EntityX(me\Collider)
-									Local ColliderZ# = EntityZ(me\Collider)
-									Local PlayerX% = Floor(ColliderX / RoomSpacing + 0.5)
-									Local PlayerZ% = Floor(ColliderZ / RoomSpacing + 0.5)
-									
-									SetBuffer(ImageBuffer(t\ImageID[7]))
-									DrawImage(SelectedItem\ItemTemplate\Img, xx, yy)
-									
-									x = x - (12 * MenuScale) + ((ColliderX - 4.0) Mod RoomSpacing) * (3 * MenuScale)
-									y = y + (12 * MenuScale) - ((ColliderZ - 4.0) Mod RoomSpacing) * (3 * MenuScale)
-									
-									Local FromX% = Max(1, PlayerX - 6), ToX% = Min(MapGridSize - 1, PlayerX + 6)
-									Local FromZ% = Max(1, PlayerZ - 6), ToZ% = Min(MapGridSize - 1, PlayerZ + 6)
-									
-									For x2 = FromX To ToX
-										For z2 = FromZ To ToZ
-											Local Index% = x2 + (z2 * MapGridSize)
-											
-											If CurrMapGrid\Grid[Index] > MapGrid_NoTile And (CurrMapGrid\Found[Index] > MapGrid_NoTile Lor (Not Offline))
-												Local DrawX% = x + (PlayerX - x2) * RectSize, DrawY% = y - (PlayerZ - z2) * RectSize
-												
-												Color(30 + (170 * (SelectedItem\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[Index] <= MapGrid_NoTile Lor CurrMapGrid\Found[Index] <= MapGrid_NoTile))), 30, 30)
-												If CurrMapGrid\Grid[(x2 + 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
-												If CurrMapGrid\Grid[(x2 - 1) + (z2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX + RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
-												
-												If CurrMapGrid\Grid[x2 + ((z2 - 1) * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, RectSize, 1)
-												If CurrMapGrid\Grid[x2 + ((z2 + 1) * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY + RectSizeHalf, RectSize, 1)
-											EndIf
-										Next
-									Next
-									
-									SetBuffer(BackBuffer())
-									SelectedItem\State2 = 8.0
-								Else
-									SelectedItem\State2 = Max(0.0, SelectedItem\State2 - fps\Factor[0])
-								EndIf
-								DrawBlockRect(t\ImageID[7], xx + (80 * MenuScale), yy + (70 * MenuScale), xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale)
-								Color(170 * Offline + 30, 30 * Offline, 30 * Offline)
-								Rect(xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale, False)
-								
-								x = opt\GraphicWidth - SelectedItem\ItemTemplate\ImgWidth + (20 * MenuScale)
-								y = opt\GraphicHeight - SelectedItem\ItemTemplate\ImgHeight - (85 * MenuScale)
-								
-								If (MilliSec Mod 800) < 200
-									If Offline Then TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), GetLocalString("msg", "nav.data"))
-									
-									YawValue = EntityYaw(me\Collider) - 90.0
-									
-									Local OffsetX# = 6.0 * MenuScale
-									Local OffsetY# = 5.0 * MenuScale
-									
-									x1 = x + Cos(YawValue) * OffsetX : y1 = y - Sin(YawValue) * OffsetX
-									x2 = x + Cos(YawValue - 140.0) * OffsetY : y2 = y - Sin(YawValue - 140.0) * OffsetY
-									x3 = x + Cos(YawValue + 140.0) * OffsetY : y3 = y - Sin(YawValue + 140.0) * OffsetY
-									
-									Line(x1, y1, x2, y2)
-									Line(x1, y1, x3, y3)
-									Line(x2, y2, x3, y3)
-								EndIf
-								
-								Local SCPs_Found% = 0, Dist#
-								
-								If SelectedItem\ItemTemplate\ID = it_navulti
-									Local np.NPCs, r.Rooms
-									Local RoomsAmount% = 0, RoomsFound% = 0
-									
-									For r.Rooms = Each Rooms
-										Local RID% = r\RoomTemplate\RoomID
-										
-										If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
-											RoomsAmount = RoomsAmount + 1
-											RoomsFound = RoomsFound + r\Found
-										EndIf
-									Next
-									
-									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomsAmount)
-									If (MilliSec Mod 600) < 400
-										Color(200, 0, 0)
-										For np.NPCs = Each NPCs
-											Select np\NPCType
-												Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType066
-													;[Block]
-													If np\HideFromNVG Then Continue
-													Dist = EntityDistanceSquared(Camera, np\Collider)
-													If Dist < 900.0
-														SqrValue = Sqr(Dist)
-														Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
-														TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
-														SCPs_Found = SCPs_Found + 1
-													EndIf
-													;[End Block]
-											End Select
-										Next
-										
-										If PlayerRoom\RoomTemplate\RoomID = r_cont1_895 And CoffinDistance < 8.0
-											Dist = Rnd(4.0, 8.0)
-											Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
-											TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
-										EndIf
-									EndIf
-								EndIf
-							EndIf
-						EndIf
-						; ~ Battery
-						If SelectedItem\State > 0.0 And (SelectedItem\ItemTemplate\ID = it_nav Lor SelectedItem\ItemTemplate\ID = it_nav310)
-							xTemp = x - NAV_WIDTH_HALF + (196 * MenuScale)
-							yTemp = y - NAV_HEIGHT_HALF + (10 * MenuScale)
-							
-							n = Min(Ceil(SelectedItem\State / 10.0), 10)
-							Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
-							Rect(xTemp, yTemp, 80 * MenuScale, 20 * MenuScale, False)
-							For i = 1 To n
-								Rect(xTemp + ((i * 8) * MenuScale) - (6 * MenuScale), yTemp + (4 * MenuScale), 4 * MenuScale, 12 * MenuScale)
-							Next
-						EndIf
-						SetFontEx(fo\FontID[Font_Default])
-					EndIf
-					;[End Block]
-				Case it_e_reader, it_e_reader20, it_e_readerulti
-					;[Block]
-					If SelectedItem\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
-						x = mo\Viewport_Center_X - SelectedItem\ItemTemplate\ImgWidth
-						y = mo\Viewport_Center_Y - SelectedItem\ItemTemplate\ImgHeight
-						DrawImage(SelectedItem\ItemTemplate\Img, x, y)
-						Temp = (SelectedItem\State > 0.0)
-						If (Temp Lor SelectedItem\ItemTemplate\ID = it_e_readerulti) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
-							; ~ Battery
-							If Temp
-								n = Min(Ceil(SelectedItem\State / 10.0), 10)
-								Color(170 * (n < 3) + 30, 30 * (n < 3), 30 * (n < 3))
-								Rect(x + (406 * MenuScale), y + (90 * MenuScale), 80 * MenuScale, 20 * MenuScale, False)
-								For i = 1 To n
-									Rect(x + ((i * 8) * MenuScale) + (400 * MenuScale), y + (94 * MenuScale), 4 * MenuScale, 12 * MenuScale)
-								Next
-							EndIf
-							
-							Color(30, 30, 30)
-							Rect(x + (58 * MenuScale), y + (114 * MenuScale), 434 * MenuScale, MenuScale, False)
-							If SelectedItem\State2 = 0.0
-								If (MilliSec Mod 800) < 200
-									SetFont(fo\FontID[Font_Digital])
-									TextEx(mo\Viewport_Center_X, mo\Viewport_Center_Y - (100 * MenuScale), GetLocalString("msg", "e.reader.welcome"), True, True)
-									SetFont(fo\FontID[Font_Default])
-								EndIf
-							Else
-								TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(SelectedItem\State2)) + "/" + SelectedItem\EReaderPageAmount)
-								If SelectedItem\ItemTemplate\Img2 <> 0 Then DrawBlock(SelectedItem\ItemTemplate\Img2, mo\Viewport_Center_X - SelectedItem\ItemTemplate\Img2Width, mo\Viewport_Center_Y - SelectedItem\ItemTemplate\Img2Height - 12 * MenuScale)
-							EndIf
-						EndIf
-					EndIf
-					;[End Block]
-			End Select
-		EndIf
+		If SelectedItem <> Null Then RenderUseItem(SelectedItem)
 	EndIf
 	
 	CatchErrors("Uncaught: RenderGUI()")
+End Function
+
+Function RenderUseItem%(item.Items)
+	Local Width% = 300 * MenuScale, Height% = 20 * MenuScale
+	Local InvImgSizeHalf% = (64 * MenuScale) / 2
+	Local x%, y%, Temp%, StrTemp$, i%, j%
+	
+	Select item\ItemTemplate\ID
+		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
+			;[Block]
+			If item\UsageTimer > 0.0
+				DrawBlock(item\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+				
+				x = mo\Viewport_Center_X - (Width / 2)
+				y = mo\Viewport_Center_Y + (80 * MenuScale)
+				
+				RenderBar(BlinkMeterIMG, x, y, Width, Height, item\UsageTimer)
+			EndIf
+			;[End Block]
+		Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
+			;[Block]
+			DrawBlock(item\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+			
+			x = mo\Viewport_Center_X - (Width / 2)
+			y = mo\Viewport_Center_Y + (80 * MenuScale)
+			
+			RenderBar(BlinkMeterIMG, x, y, Width, Height, item\UsageTimer)
+			;[End Block]
+		Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
+			;[Block]
+			DrawBlock(item\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+			;[End Block]
+		Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
+			;[Block]
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(item\ItemTemplate\Img, mo\Viewport_Center_X - item\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight)
+			;[End Block]
+		Case it_ticket, it_oldbadge
+			;[Block]
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawImage(item\ItemTemplate\Img, mo\Viewport_Center_X - item\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight)
+			;[End Block]
+		Case it_radio, it_18vradio, it_fineradio, it_veryfineradio
+			;[Block]
+			; ~ RadioState[5] = Has the "use the number keys" -message been shown yet (True / False)
+			; ~ RadioState[6] = A timer for the "code channel"
+			; ~ RadioState[7] = Another timer for the "code channel"
+			
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
+				StrTemp = ""
+				
+				x = opt\GraphicWidth - item\ItemTemplate\ImgWidth
+				y = opt\GraphicHeight - item\ItemTemplate\ImgHeight
+				
+				DrawImage(item\ItemTemplate\Img, x, y)
+				
+				If (item\State > 0.0 Lor item\ItemTemplate\ID = it_fineradio Lor item\ItemTemplate\ID = it_veryfineradio) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
+					If PlayerRoom\RoomTemplate\RoomID <> r_dimension_106 And CoffinDistance >= 8.0
+						Select Int(item\State2)
+							Case 0
+								;[Block]
+								If opt\UserTrackMode = 0
+									StrTemp = Format(GetLocalString("radio", "usertrack"), GetLocalString("radio", "notenable"))
+								ElseIf UserTrackMusicAmount < 1
+									StrTemp = Format(GetLocalString("radio", "usertrack"), GetLocalString("radio", "nofound"))
+								Else
+									If ChannelPlaying(RadioCHN[0]) Then StrTemp = Format(GetLocalString("radio", "usertrack"), Upper(UserTrackName[RadioState[0]]))
+								EndIf
+								;[End Block]
+							Case 1
+								;[Block]
+								StrTemp = GetLocalString("radio", "warn")
+								;[End Block]
+							Case 2
+								;[Block]
+								StrTemp = GetLocalString("radio", "onsite")
+								;[End Block]
+							Case 3
+								;[Block]
+								StrTemp = GetLocalString("radio", "emergency")
+								;[End Block]
+						End Select
+						
+						x = x + (66 * MenuScale)
+						y = y + (419 * MenuScale)
+						
+						; ~ Battery
+						If item\ItemTemplate\ID = it_radio Lor item\ItemTemplate\ID = it_18vradio
+							j = Ceil(item\State / 20.0)
+							Color(170 * (j < 3) + 30, 30 * (j < 3), 30 * (j < 3))
+							For i = 0 To 4
+								Rect(x, y + ((8 * i) * MenuScale), (43 * MenuScale) - ((i * 6) * MenuScale), 4 * MenuScale, j > (4 - i))
+							Next
+						EndIf
+						
+						SetFontEx(fo\FontID[Font_Digital])
+						Color(30, 30, 30)
+						TextEx(x + (50 * MenuScale), y, GetLocalString("radio", "chn"))
+						
+						If item\ItemTemplate\ID = it_veryfineradio
+							StrTemp = ""
+							For i = 0 To Rand(5, 30)
+								StrTemp = StrTemp + Chr(Rand(100))
+							Next
+							
+							SetFontEx(fo\FontID[Font_Digital_Big])
+							TextEx(x + (97 * MenuScale), y + (16 * MenuScale), Rand(0, 9), True, True)
+						Else
+							SetFontEx(fo\FontID[Font_Digital_Big])
+							TextEx(x + (97 * MenuScale), y + (16 * MenuScale), Int(item\State2 + 1.0), True, True)
+						EndIf
+						
+						SetFontEx(fo\FontID[Font_Digital])
+						If StrTemp <> ""
+							StrTemp = Right(Left(StrTemp, (Int(MilliSec / 300) Mod Len(StrTemp))), 10)
+							TextEx(x - (28 * MenuScale), y + (33 * MenuScale), "          " + StrTemp + "          ")
+						EndIf
+						SetFontEx(fo\FontID[Font_Default])
+					EndIf
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_nav, it_nav300, it_nav310, it_navulti
+			;[Block]
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
+				x = opt\GraphicWidth - item\ItemTemplate\ImgWidth + (20 * MenuScale)
+				y = opt\GraphicHeight - item\ItemTemplate\ImgHeight - (85 * MenuScale)
+				
+				DrawImage(item\ItemTemplate\Img, x - item\ItemTemplate\ImgWidth, y - item\ItemTemplate\ImgHeight + (85 * MenuScale))
+				
+				SetFontEx(fo\FontID[Font_Digital])
+				
+				Local Offline% = (item\ItemTemplate\ID = it_nav300 Lor item\ItemTemplate\ID = it_nav)
+				Local NAV_WIDTH% = 287 * MenuScale
+				Local NAV_HEIGHT% = 256 * MenuScale
+				Local RectSize% = 24 * MenuScale
+				Local RectSizeHalf% = RectSize / 2
+				Local NAV_WIDTH_HALF% = NAV_WIDTH / 2
+				Local NAV_HEIGHT_HALF% = NAV_HEIGHT / 2
+				Local x1%, x2%, x3%
+				Local y1%, y2%, y3%
+				
+				If (Not PlayerInReachableRoom(True)) Lor InFacility <> NullFloor
+					If (MilliSec Mod 800) < 200
+						Color(200, 0, 0)
+						TextEx(x, y + NAV_HEIGHT_HALF - (80 * MenuScale), GetLocalString("msg", "nav.error"), True)
+						TextEx(x, y + NAV_HEIGHT_HALF - (60 * MenuScale), GetLocalString("msg", "nav.locunknown"), True)
+					EndIf
+				Else
+					If (item\State > 0.0 Lor item\ItemTemplate\ID = it_nav300 Lor item\ItemTemplate\ID = it_navulti) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
+						Local xx% = x - item\ItemTemplate\ImgWidth
+						Local yy% = y - item\ItemTemplate\ImgHeight + (85 * MenuScale)
+						
+						If item\State2 = 0.0
+							Local ColliderX# = EntityX(me\Collider)
+							Local ColliderZ# = EntityZ(me\Collider)
+							Local PlayerX% = Floor(ColliderX / RoomSpacing + 0.5)
+							Local PlayerZ% = Floor(ColliderZ / RoomSpacing + 0.5)
+							
+							SetBuffer(ImageBuffer(t\ImageID[7]))
+							DrawImage(item\ItemTemplate\Img, xx, yy)
+							
+							x = x - (12 * MenuScale) + ((ColliderX - 4.0) Mod RoomSpacing) * (3 * MenuScale)
+							y = y + (12 * MenuScale) - ((ColliderZ - 4.0) Mod RoomSpacing) * (3 * MenuScale)
+							
+							Local FromX% = Max(1, PlayerX - 6), ToX% = Min(MapGridSize - 1, PlayerX + 6)
+							Local FromY% = Max(1, PlayerZ - 6), ToY% = Min(MapGridSize - 1, PlayerZ + 6)
+							
+							For x2 = FromX To ToX
+								For y2 = FromY To ToY
+									Local Index% = x2 + (y2 * MapGridSize)
+									
+									If CurrMapGrid\Grid[Index] > MapGrid_NoTile And (CurrMapGrid\Found[Index] > MapGrid_NoTile Lor (Not Offline))
+										Local DrawX% = x + (PlayerX - x2) * RectSize, DrawY% = y - (PlayerZ - y2) * RectSize
+										
+										Color(30 + (170 * (item\ItemTemplate\ID = it_navulti And (CurrMapGrid\Grid[Index] <= MapGrid_NoTile Lor CurrMapGrid\Found[Index] <= MapGrid_NoTile))), 30, 30)
+										If CurrMapGrid\Grid[(x2 + 1) + (y2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
+										If CurrMapGrid\Grid[(x2 - 1) + (y2 * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX + RectSizeHalf, DrawY - RectSizeHalf, 1, RectSize)
+										
+										If CurrMapGrid\Grid[x2 + ((y2 - 1) * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY - RectSizeHalf, RectSize, 1)
+										If CurrMapGrid\Grid[x2 + ((y2 + 1) * MapGridSize)] = MapGrid_NoTile Then Rect(DrawX - RectSizeHalf, DrawY + RectSizeHalf, RectSize, 1)
+									EndIf
+								Next
+							Next
+							
+							SetBuffer(BackBuffer())
+							item\State2 = 8.0
+						Else
+							item\State2 = Max(0.0, item\State2 - fps\Factor[0])
+						EndIf
+						DrawBlockRect(t\ImageID[7], xx + (80 * MenuScale), yy + (70 * MenuScale), xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale)
+						Color(170 * Offline + 30, 30 * Offline, 30 * Offline)
+						Rect(xx + (80 * MenuScale), yy + (70 * MenuScale), 270 * MenuScale, 230 * MenuScale, False)
+						
+						x = opt\GraphicWidth - item\ItemTemplate\ImgWidth + (20 * MenuScale)
+						y = opt\GraphicHeight - item\ItemTemplate\ImgHeight - (85 * MenuScale)
+						
+						If (MilliSec Mod 800) < 200
+							If Offline Then TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), GetLocalString("msg", "nav.data"))
+							
+							Local YawValue = EntityYaw(me\Collider) - 90.0
+							Local OffsetX# = 6.0 * MenuScale
+							Local OffsetY# = 5.0 * MenuScale
+							
+							x1 = x + Cos(YawValue) * OffsetX : y1 = y - Sin(YawValue) * OffsetX
+							x2 = x + Cos(YawValue - 140.0) * OffsetY : y2 = y - Sin(YawValue - 140.0) * OffsetY
+							x3 = x + Cos(YawValue + 140.0) * OffsetY : y3 = y - Sin(YawValue + 140.0) * OffsetY
+							
+							Line(x1, y1, x2, y2)
+							Line(x1, y1, x3, y3)
+							Line(x2, y2, x3, y3)
+						EndIf
+						
+						Local SCPs_Found% = 0, Dist#
+						
+						If item\ItemTemplate\ID = it_navulti
+							Local np.NPCs, r.Rooms
+							Local RoomsAmount% = 0, RoomsFound% = 0
+							
+							For r.Rooms = Each Rooms
+								Local RID% = r\RoomTemplate\RoomID
+								
+								If RID <> r_cont1_173_intro And RID <> r_gate_a And RID <> r_gate_b And RID <> r_dimension_106 And RID <> r_dimension_1499
+									RoomsAmount = RoomsAmount + 1
+									RoomsFound = RoomsFound + r\Found
+								EndIf
+							Next
+							
+							TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (10 * MenuScale), RoomsFound + "/" + RoomsAmount)
+							If (MilliSec Mod 600) < 400
+								Color(200, 0, 0)
+								For np.NPCs = Each NPCs
+									Select np\NPCType
+										Case NPCType173, NPCType106, NPCType096, NPCType049, NPCType066
+											;[Block]
+											If np\HideFromNVG Then Continue
+											Dist = EntityDistanceSquared(Camera, np\Collider)
+											If Dist < 900.0
+												Local SqrValue# = Sqr(Dist)
+												
+												Oval(x - (SqrValue * (1.5 * MenuScale)), y - (SqrValue * (1.5 * MenuScale)), SqrValue * (3 * MenuScale), SqrValue * (3 * MenuScale), False)
+												TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), np\NVGName)
+												SCPs_Found = SCPs_Found + 1
+											EndIf
+											;[End Block]
+									End Select
+								Next
+								
+								If PlayerRoom\RoomTemplate\RoomID = r_cont1_895 And CoffinDistance < 8.0
+									Dist = Rnd(4.0, 8.0)
+									Oval(x - (Dist * (1.5 * MenuScale)), y - (Dist * (1.5 * MenuScale)), Dist * (3 * MenuScale), Dist * (3 * MenuScale), False)
+									TextEx(x - NAV_WIDTH_HALF + (10 * MenuScale), y - NAV_HEIGHT_HALF + (30 * MenuScale) + ((20 * SCPs_Found) * MenuScale), "SCP-895")
+								EndIf
+							EndIf
+						EndIf
+					EndIf
+				EndIf
+				; ~ Battery
+				If item\State > 0.0 And (item\ItemTemplate\ID = it_nav Lor item\ItemTemplate\ID = it_nav310)
+					Local xTemp% = x - NAV_WIDTH_HALF + (196 * MenuScale)
+					Local yTemp% = y - NAV_HEIGHT_HALF + (10 * MenuScale)
+					
+					j = Min(Ceil(item\State / 10.0), 10)
+					Color(170 * (j < 3) + 30, 30 * (j < 3), 30 * (j < 3))
+					Rect(xTemp, yTemp, 80 * MenuScale, 20 * MenuScale, False)
+					For i = 1 To j
+						Rect(xTemp + ((i * 8) * MenuScale) - (6 * MenuScale), yTemp + (4 * MenuScale), 4 * MenuScale, 12 * MenuScale)
+					Next
+				EndIf
+				SetFontEx(fo\FontID[Font_Default])
+			EndIf
+			;[End Block]
+		Case it_e_reader, it_e_reader20, it_e_readerulti
+			;[Block]
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
+				x = mo\Viewport_Center_X - item\ItemTemplate\ImgWidth
+				y = mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight
+				DrawImage(item\ItemTemplate\Img, x, y)
+				Temp = (item\State > 0.0)
+				If (Temp Lor item\ItemTemplate\ID = it_e_readerulti) And (CoffinDistance > 16.0 Lor Rnd(16.0) < CoffinDistance)
+					; ~ Battery
+					If Temp
+						j = Min(Ceil(item\State / 10.0), 10)
+						Color(170 * (j < 3) + 30, 30 * (j < 3), 30 * (j < 3))
+						Rect(x + (406 * MenuScale), y + (90 * MenuScale), 80 * MenuScale, 20 * MenuScale, False)
+						For i = 1 To j
+							Rect(x + ((i * 8) * MenuScale) + (400 * MenuScale), y + (94 * MenuScale), 4 * MenuScale, 12 * MenuScale)
+						Next
+					EndIf
+					
+					Color(30, 30, 30)
+					Rect(x + (58 * MenuScale), y + (114 * MenuScale), 434 * MenuScale, MenuScale, False)
+					If item\State2 = 0.0
+						If (MilliSec Mod 800) < 200
+							SetFont(fo\FontID[Font_Digital])
+							TextEx(mo\Viewport_Center_X, mo\Viewport_Center_Y - (100 * MenuScale), GetLocalString("msg", "e.reader.welcome"), True, True)
+							SetFont(fo\FontID[Font_Default])
+						EndIf
+					Else
+						TextEx(x + (70 * MenuScale), y + (94 * MenuScale), Str(Int(item\State2)) + "/" + item\EReaderPageAmount)
+						If item\ItemTemplate\Img2 <> 0 Then DrawBlock(item\ItemTemplate\Img2, mo\Viewport_Center_X - item\ItemTemplate\Img2Width, mo\Viewport_Center_Y - item\ItemTemplate\Img2Height - 12 * MenuScale)
+					EndIf
+				EndIf
+			EndIf
+			;[End Block]
+	End Select
 End Function
 
 Type InGameMenu
