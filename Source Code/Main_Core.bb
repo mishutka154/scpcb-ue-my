@@ -516,7 +516,7 @@ Function UpdateGame%()
 					me\KillAnimTimer = me\KillAnimTimer + fps\Factor[0]
 					If me\KillAnimTimer >= 400.0 Then MenuOpen = True
 				EndIf
-				DarkAlpha = Max(DarkAlpha, Min(Abs(me\Terminated / 400.0), 1.0))
+				DarkAlpha = Min(me\KillAnimTimer / 300.0, 1.0)
 			Else
 				If me\Playable = 2
 					If KeyHit(key\BLINK) Then me\BlinkTimer = 0.0
