@@ -6492,6 +6492,7 @@ Function UpdateUseItem%(item.Items)
 				item\ItemTemplate\Img = ResizeImageEx(LoadImage_Strict(item\ItemTemplate\ImgPath), MenuScale, MenuScale)
 				item\ItemTemplate\ImgWidth = ImageWidth(item\ItemTemplate\Img) / 2
 				item\ItemTemplate\ImgHeight = ImageHeight(item\ItemTemplate\Img) / 2
+				If item\ItemTemplate\Name = "Victor Rosewood's Badge" Then MaskImage(item\ItemTemplate\Img, 255, 0, 255)
 				AdaptScreenGamma()
 			EndIf
 			
@@ -7548,7 +7549,13 @@ Function RenderUseItem%(item.Items)
 			;[End Block]
 		Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
 			;[Block]
-			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0 Then DrawBlock(item\ItemTemplate\Img, mo\Viewport_Center_X - item\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight)
+			If item\ItemTemplate\Img <> 0 And me\BlinkTimer > -6.0
+				If item\ItemTemplate\Name = "Victor Rosewood's Badge"
+					DrawImage(item\ItemTemplate\Img, mo\Viewport_Center_X - item\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight)
+				Else
+					DrawBlock(item\ItemTemplate\Img, mo\Viewport_Center_X - item\ItemTemplate\ImgWidth, mo\Viewport_Center_Y - item\ItemTemplate\ImgHeight)
+				EndIf
+			EndIf
 			;[End Block]
 		Case it_ticket, it_oldbadge
 			;[Block]
