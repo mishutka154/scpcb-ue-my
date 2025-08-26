@@ -28,7 +28,7 @@ Const it_oldpaper% = 1
 Const it_origami% = 2
 
 Const it_badge% = 3
-Const it_oldbadge% = 4
+Const it_badge2% = 4
 
 Const it_ticket% = 5
 ;[End Block]
@@ -1011,7 +1011,7 @@ End Function
 
 Function IsItemInFocus%()
 	Select SelectedItem\ItemTemplate\ID
-		Case it_nav, it_nav300, it_nav310, it_navulti, it_paper, it_oldpaper, it_badge, it_oldbadge, it_scp1025, it_fine1025, it_e_reader, it_e_reader20, it_e_readerulti
+		Case it_nav, it_nav300, it_nav310, it_navulti, it_paper, it_oldpaper, it_badge, it_badge2, it_scp1025, it_fine1025, it_e_reader, it_e_reader20, it_e_readerulti
 			;[Block]
 			Return(True)
 			;[End Block]
@@ -2726,7 +2726,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 			End Select
 			;[End Block]
-		Case it_badge, it_oldbadge
+		Case it_badge, it_badge2
 			;[Block]
 			Select Setting
 				Case ROUGH
