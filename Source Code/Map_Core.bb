@@ -4851,11 +4851,9 @@ Function UpdateLever%(OBJ%, Locked% = False, MaxValue = 80.0, MinValue# = -80.0)
 			GrabbedEntity = 0
 		EndIf
 		If GrabbedEntity = 0 Lor Dist > 0.64
-			If EntityPitch(OBJ, True) > ((MaxValue + MinValue) / 2.0)
-				RotateEntity(OBJ, CurveValue(MaxValue, EntityPitch(OBJ), 10.0), EntityYaw(OBJ), 0.0)
-			Else
-				RotateEntity(OBJ, CurveValue(MinValue, EntityPitch(OBJ), 10.0), EntityYaw(OBJ), 0.0)
-			EndIf
+			Local Temp% = (EntityPitch(OBJ, True) > ((MaxValue + MinValue) / 2.0))
+			
+			RotateEntity(OBJ, CurveValue(MaxValue * Temp + MinValue * (Not Temp), EntityPitch(OBJ), 10.0), EntityYaw(OBJ), 0.0)
 		EndIf
 		RefValue = EntityPitch(OBJ, True)
 		If RefValue > (MaxValue - 5.0)
