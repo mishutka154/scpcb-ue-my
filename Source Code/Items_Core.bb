@@ -2743,7 +2743,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					If Rand(8) = 1
+					If Rand(4) = 1
 						Select item\ItemTemplate\Name
 							Case "Jim Gonazales' Badge"
 								;[Block]
@@ -2756,6 +2756,10 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Case "Asav Harn's Badge"
 								;[Block]
 								CreateItem("Level 3 Key Card", it_key3, x, y, z)
+								;[End Block]
+							Case "Victor Rosewood's Badge"
+								;[Block]
+								CreateItem("Level 5 Key Card", it_key5, x, y, z)
 								;[End Block]
 							Default
 								;[Block]
