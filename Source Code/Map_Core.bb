@@ -4602,20 +4602,16 @@ Function UpdateCheckpointMonitors%(LCZ% = True)
 			t1 = GetBrushTexture(b, 0)
 			If t1 <> 0
 				If Lower(StripPath(TextureName(t1))) <> "monitortexture.jpg"
-					If LCZ
-						If mon_I\MonitorTimer[0] < 50.0
-							BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_2_OVERLAY], 0, 0)
-						Else
-							BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_3_OVERLAY], 0, 0)
-						EndIf
+					If mon_I\MonitorTimer[1 - LCZ] < 50.0
+						BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_2_OVERLAY])
 					Else
-						If mon_I\MonitorTimer[1] < 50.0
-							BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_2_OVERLAY], 0, 0)
-						Else
-							BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_1_OVERLAY], 0, 0)
-						EndIf
+						BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_1_OVERLAY + (2 * LCZ)])
 					EndIf
 					PaintSurface(SF, b)
+					
+					FreeTexture(t1) : t1 = 0
+					FreeBrush(b) : b = 0
+					Exit
 				EndIf
 				FreeTexture(t1) : t1 = 0
 			EndIf
@@ -4641,8 +4637,12 @@ Function TurnCheckpointMonitorsOff%(LCZ% = True)
 				t1 = GetBrushTexture(b, 0)
 				If t1 <> 0
 					If Lower(StripPath(TextureName(t1))) <> "monitortexture.jpg"
-						BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY], 0, 0)
+						BrushTexture(b, mon_I\MonitorOverlayID[MONITOR_LOCKDOWN_4_OVERLAY])
 						PaintSurface(SF, b)
+						
+						FreeTexture(t1) : t1 = 0
+						FreeBrush(b) : b = 0
+						Exit
 					EndIf
 					FreeTexture(t1) : t1 = 0
 				EndIf
