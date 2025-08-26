@@ -1107,7 +1107,7 @@ Const VERYFINE% = 2
 Function Use914%(item.Items, Setting%, x#, y#, z#)
 	me\RefinedItems = me\RefinedItems + 1
 	
-	Local it.Items, it2.Items, it3.Items, de.Decals, n.NPCs, r.Rooms
+	Local it.Items, it2.Items, de.Decals, n.NPCs, r.Rooms
 	Local Remove% = True, i%, j%
 	Local MakeDecal% = False
 	
@@ -1122,25 +1122,25 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If Rand(4) = 1
-						it2.Items = CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
+						CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
 					Else
-						it2.Items = CreateItem("Gas Mask", it_gasmask, x, y, z)
+						CreateItem("Gas Mask", it_gasmask, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(75) = 1
-						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
+						CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
-						it2.Items = CreateItem("Fine Gas Mask", it_finegasmask, x, y, z)
+						CreateItem("Fine Gas Mask", it_finegasmask, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(150) = 1
-						it2.Items = CreateItem("SCP-1499", it_scp1499, x, y, z)
+						CreateItem("SCP-1499", it_scp1499, x, y, z)
 					Else
-						it2.Items = CreateItem("Very Fine Gas Mask", it_veryfinegasmask, x, y, z)
+						CreateItem("Very Fine Gas Mask", it_veryfinegasmask, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -1154,11 +1154,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Gas Mask", it_gasmask, x, y, z)
+					CreateItem("Gas Mask", it_gasmask, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-1499", it_fine1499, x, y, z)
+					CreateItem("Fine SCP-1499", it_fine1499, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
@@ -1177,7 +1177,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", it_electronics, x, y, z)
+					CreateItem("Electronical Components", it_electronics, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -1186,7 +1186,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
+					CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
@@ -1204,7 +1204,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", it_electronics, x, y, z)
+					CreateItem("Electronical Components", it_electronics, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -1227,11 +1227,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Ballistic Vest", it_vest, x, y, z)
+					CreateItem("Ballistic Vest", it_vest, x, y, z)
 					;[End Block]	
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Heavy Ballistic Vest", it_finevest, x, y, z)
+					CreateItem("Heavy Ballistic Vest", it_finevest, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1244,7 +1244,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Newsboy Cap", it_cap, x, y, z)
+					CreateItem("Newsboy Cap", it_cap, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -1252,7 +1252,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-268", it_fine268, x, y, z)
+					CreateItem("Fine SCP-268", it_fine268, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1265,19 +1265,19 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Corrosive Ballistic Vest", it_corrvest, x, y, z)
+					CreateItem("Corrosive Ballistic Vest", it_corrvest, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Ballistic Helmet", it_helmet, x, y, z)
+					CreateItem("Ballistic Helmet", it_helmet, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Heavy Ballistic Vest", it_finevest, x, y, z)
+					CreateItem("Heavy Ballistic Vest", it_finevest, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Bulky Ballistic Vest", it_veryfinevest, x, y, z)
+					CreateItem("Bulky Ballistic Vest", it_veryfinevest, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1290,15 +1290,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
+					CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine Hazmat Suit", it_finehazmatsuit, x, y, z)
+					CreateItem("Fine Hazmat Suit", it_finehazmatsuit, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Very Fine Hazmat Suit", it_veryfinehazmatsuit, x, y, z)
+					CreateItem("Very Fine Hazmat Suit", it_veryfinehazmatsuit, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1311,11 +1311,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
+					CreateItem("Hazmat Suit", it_hazmatsuit, x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
+					CreateItem("Infected Syringe", it_syringeinf, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1401,7 +1401,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Case 2
 								;[Block]
 								If Rand(3) = 1
-									it2.Items = CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
+									CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
 								Else
 									it2.Items = CreateItem("S-NAV Navigator", it_nav, x, y, z)
 									it2\State = Rnd(0.0, 100.0)
@@ -1435,15 +1435,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Case 1
 								;[Block]
 								If Rand(3) = 1
-									it2.Items = CreateItem("Fine Radio Transceiver", it_fineradio, x, y, z)
+									CreateItem("Fine Radio Transceiver", it_fineradio, x, y, z)
 								Else
-									it2.Items = CreateItem("Very Fine Radio Transceiver", it_veryfineradio, x, y, z)
+									CreateItem("Very Fine Radio Transceiver", it_veryfineradio, x, y, z)
 								EndIf
 								;[End Block]
 							Case 2
 								;[Block]
 								If Rand(2) = 1
-									it2.Items = CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
+									CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
 								Else
 									it2.Items = CreateItem("S-NAV 310 Navigator", it_nav310, x, y, z)
 									it2\State = Rnd(0.0, 100.0)
@@ -1454,7 +1454,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								Select Rand(4)
 									Case 1
 										;[Block]
-										it2.Items = CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
+										CreateItem("Fine Night Vision Goggles", it_finenvg, x, y, z)
 										;[End Block]
 									Case 2
 										;[Block]
@@ -1468,7 +1468,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										;[End Block]
 									Case 4
 										;[Block]
-										it2.Items = CreateItem("Fine SCRAMBLE Gear", it_finescramble, x, y, z)
+										CreateItem("Fine SCRAMBLE Gear", it_finescramble, x, y, z)
 										;[End Block]
 								End Select
 								;[End Block]
@@ -1486,7 +1486,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("SCP-148 Ingot", it_scp148ingot, x, y, z)
+					CreateItem("SCP-148 Ingot", it_scp148ingot, x, y, z)
 					;[End Block]
 				Case ONETOONE, FINE, VERYFINE
 					;[Block]
@@ -1499,7 +1499,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH, COARSE
 					;[Block]
-					it2.Items = CreateItem("SCP-148 Ingot", it_scp148ingot, x, y, z)
+					CreateItem("SCP-148 Ingot", it_scp148ingot, x, y, z)
 					;[End Block]
 				Case ONETOONE, FINE, VERYFINE
 					;[Block]
@@ -1538,9 +1538,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID = it_hand2
-						it2.Items = CreateItem("White Severed Hand", it_hand, x, y, z)
+						CreateItem("White Severed Hand", it_hand, x, y, z)
 					Else
-						it2.Items = CreateItem("Black Severed Hand", it_hand2, x, y, z)
+						CreateItem("Black Severed Hand", it_hand2, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE, VERYFINE
@@ -1560,9 +1560,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID = it_firstaid
-						it2.Items = CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
+						CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
 					Else
-						it2.Items = CreateItem("First Aid Kit", it_firstaid, x, y, z)
+						CreateItem("First Aid Kit", it_firstaid, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
@@ -1590,7 +1590,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					If Level = it_key0
 						MakeDecal = True
 					ElseIf Level = it_key6
-						it2.Items = CreateItem("Level 0 Key Card", it_key0, x, y, z)
+						CreateItem("Level 0 Key Card", it_key0, x, y, z)
 					Else
 						Select Level
 							Case it_key1
@@ -1614,12 +1614,12 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 								LevelName = 5
 								;[End Block]
 						End Select
-						it2.Items = CreateItem("Level " + (LevelName - 1) + " Key Card", Level - 1, x, y, z)
+						CreateItem("Level " + (LevelName - 1) + " Key Card", Level - 1, x, y, z)
 					EndIf
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Playing Card", it_playcard, x, y, z)
+					CreateItem("Playing Card", it_playcard, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
@@ -1629,7 +1629,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
 									;[Block]
-									it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+									CreateItem("Level 1 Key Card", it_key1, x, y, z)
 									;[End Block]
 								Case NORMAL
 									;[Block]
@@ -1637,7 +1637,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+										CreateItem("Level 1 Key Card", it_key1, x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
@@ -1646,7 +1646,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+										CreateItem("Level 1 Key Card", it_key1, x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
@@ -1655,7 +1655,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+										CreateItem("Level 1 Key Card", it_key1, x, y, z)
 									EndIf
 									;[End Block]
 							End Select
@@ -1665,7 +1665,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
 									;[Block]
-									it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+									CreateItem("Level 2 Key Card", it_key2, x, y, z)
 									;[End Block]
 								Case NORMAL
 									;[Block]
@@ -1673,7 +1673,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+										CreateItem("Level 2 Key Card", it_key2, x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
@@ -1682,7 +1682,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+										CreateItem("Level 2 Key Card", it_key2, x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
@@ -1691,7 +1691,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+										CreateItem("Level 2 Key Card", it_key2, x, y, z)
 									EndIf
 									;[End Block]
 							End Select
@@ -1701,7 +1701,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
 									;[Block]
-									it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+									CreateItem("Level 3 Key Card", it_key3, x, y, z)
 									;[End Block]
 								Case NORMAL
 									;[Block]
@@ -1709,7 +1709,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+										CreateItem("Level 3 Key Card", it_key3, x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
@@ -1718,7 +1718,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+										CreateItem("Level 3 Key Card", it_key3, x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
@@ -1727,7 +1727,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+										CreateItem("Level 3 Key Card", it_key3, x, y, z)
 									EndIf
 									;[End Block]
 							End Select
@@ -1735,9 +1735,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case it_key3
 							;[Block]
 							If Rand(16 + (8 * SelectedDifficulty\OtherFactors)) = 1
-								it2.Items = CreateItem("Level 4 Key Card", it_key4, x, y, z)
+								CreateItem("Level 4 Key Card", it_key4, x, y, z)
 							Else
-								it2.Items = CreateItem("Playing Card", it_playcard, x, y, z)
+								CreateItem("Playing Card", it_playcard, x, y, z)
 							EndIf
 							;[End Block]
 						Case it_key4
@@ -1745,7 +1745,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Select SelectedDifficulty\OtherFactors
 								Case EASY
 									;[Block]
-									it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+									CreateItem("Level 5 Key Card", it_key5, x, y, z)
 									;[End Block]
 								Case NORMAL
 									;[Block]
@@ -1753,7 +1753,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+										CreateItem("Level 5 Key Card", it_key5, x, y, z)
 									EndIf
 									;[End Block]
 								Case HARD
@@ -1762,7 +1762,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+										CreateItem("Level 5 Key Card", it_key5, x, y, z)
 									EndIf
 									;[End Block]
 								Case EXTREME
@@ -1771,7 +1771,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 										it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 										it2\State = Rand(0, 6)
 									Else
-										it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+										CreateItem("Level 5 Key Card", it_key5, x, y, z)
 									EndIf
 									;[End Block]
 							End Select
@@ -1781,9 +1781,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 							Local CurrAchvAmount% = Max(((S2IMapSize(AchievementsIndex) - 3) - (S2IMapSize(UnlockedAchievements) - 1) - S2IMapContains(UnlockedAchievements, "apollyon")) * (2 + SelectedDifficulty\OtherFactors), 0)
 							
 							If Rand(0, CurrAchvAmount) = 0
-								it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
+								CreateItem("Key Card Omni", it_keyomni, x, y, z)
 							ElseIf Rand(16 + (8 * SelectedDifficulty\OtherFactors)) = 1
-								it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
+								CreateItem("Level 6 Key Card", it_key6, x, y, z)
 							Else
 								If Rand(15) = 1
 									it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
@@ -1797,7 +1797,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Case it_key6
 							;[Block]
 							If Rand(8 + (4 * SelectedDifficulty\OtherFactors)) = 1
-								it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
+								CreateItem("Key Card Omni", it_keyomni, x, y, z)
 							Else
 								If Rand(5) = 1
 									it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
@@ -1814,9 +1814,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					CurrAchvAmount = Max(((S2IMapSize(AchievementsIndex) - 3) - (S2IMapSize(UnlockedAchievements) - 1) - S2IMapContains(UnlockedAchievements, "apollyon")) * (4 + SelectedDifficulty\OtherFactors), 0)
 					If Rand(0, CurrAchvAmount) = 0
-						it2.Items = CreateItem("Key Card Omni", it_keyomni, x, y, z)
+						CreateItem("Key Card Omni", it_keyomni, x, y, z)
 					ElseIf Rand(32 + (8 * SelectedDifficulty\OtherFactors)) = 1
-						it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
+						CreateItem("Level 6 Key Card", it_key6, x, y, z)
 					Else
 						it2.Items = CreateItem("Mastercard", it_mastercard, x, y, z)
 						it2\State = Rand(0, 6)
@@ -1837,13 +1837,13 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
 						it2\State = 1000
 					Else
-						it2.Items = CreateItem("Playing Card", it_playcard, x, y, z)
+						CreateItem("Playing Card", it_playcard, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
 					If Rand(6 + (3 * SelectedDifficulty\OtherFactors)) = 1
-						it2.Items = CreateItem("Level 6 Key Card", it_key6, x, y, z)
+						CreateItem("Level 6 Key Card", it_key6, x, y, z)
 					Else
 						it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
 						it2\State = 1000
@@ -1860,15 +1860,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Level 0 Key Card", it_key0, x, y, z)
+					CreateItem("Level 0 Key Card", it_key0, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+					CreateItem("Level 1 Key Card", it_key1, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+					CreateItem("Level 2 Key Card", it_key2, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -1881,17 +1881,17 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Quarter", it_25ct, x, y, z)
+					CreateItem("Quarter", it_25ct, x, y, z)
 					
-					If Rand(2) = 1 Then it3.Items = CreateItem("Quarter", it_25ct, x, y, z)
+					If Rand(2) = 1 Then CreateItem("Quarter", it_25ct, x, y, z)
 					
-					If Rand(3) = 1 Then it3.Items = CreateItem("Quarter", it_25ct, x, y, z)
+					If Rand(3) = 1 Then CreateItem("Quarter", it_25ct, x, y, z)
 					
-					If Rand(4) = 1 Then it3.Items = CreateItem("Quarter", it_25ct, x, y, z)
+					If Rand(4) = 1 Then CreateItem("Quarter", it_25ct, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Level 0 Key Card", it_key0, x, y, z)
+					CreateItem("Level 0 Key Card", it_key0, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
@@ -1899,7 +1899,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
 						it2\State = 1000
 					Else
-						it2.Items = CreateItem("Level 1 Key Card", it_key1, x, y, z)
+						CreateItem("Level 1 Key Card", it_key1, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
@@ -1908,7 +1908,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2.Items = CreateItem("Mastercard", it_mastercard_golden, x, y, z)
 						it2\State = 1000
 					Else
-						it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+						CreateItem("Level 2 Key Card", it_key2, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -1923,27 +1923,27 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case COARSE
 					;[Block]
 					For i = 0 To 20
-						it2.Items = CreateItem("Quarter", it_25ct, x, y, z)
+						CreateItem("Quarter", it_25ct, x, y, z)
 					Next
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+					CreateItem("Level 2 Key Card", it_key2, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(35) = 1
-						it2.Items = CreateItem("Level 4 Key Card", it_key4, x, y, z)
+						CreateItem("Level 4 Key Card", it_key4, x, y, z)
 					Else
-						it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+						CreateItem("Level 3 Key Card", it_key3, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(45) = 1
-						it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+						CreateItem("Level 5 Key Card", it_key5, x, y, z)
 					Else
-						it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+						CreateItem("Level 3 Key Card", it_key3, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -1957,30 +1957,30 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Coarse SCP-005", it_coarse005, x, y, z)
+					CreateItem("Coarse SCP-005", it_coarse005, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
 					If Rand(8) = 1
-						it2.Items = CreateItem("Level 5 Key Card", it_key5, x, y, z)
+						CreateItem("Level 5 Key Card", it_key5, x, y, z)
 						
-						it3.Items = CreateItem("White Severed Hand", it_hand, x, y, z)
+						CreateItem("White Severed Hand", it_hand, x, y, z)
 						
-						it3.Items = CreateItem("Black Severed Hand", it_hand2, x, y, z)
+						CreateItem("Black Severed Hand", it_hand2, x, y, z)
 						
-						it3.Items = CreateItem("Yellow Severed Hand", it_hand3, x, y, z)
+						CreateItem("Yellow Severed Hand", it_hand3, x, y, z)
 						
-						it3.Items = CreateItem("White Key", it_key_white, x, y, z)
+						CreateItem("White Key", it_key_white, x, y, z)
 						
-						it3.Items = CreateItem("Yellow Key", it_key_yellow, x, y, z)
+						CreateItem("Yellow Key", it_key_yellow, x, y, z)
 					Else
-						it2.Items = CreateItem("SCP-005", it_scp005, x, y, z)
+						CreateItem("SCP-005", it_scp005, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
 					If item\ItemTemplate\ID = it_crystal005
-						it2.Items = CreateItem("SCP-005", it_scp005, x, y, z)
+						CreateItem("SCP-005", it_scp005, x, y, z)
 					Else
 						Remove = False
 					EndIf
@@ -1997,15 +1997,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID <> it_scp860
-						it2.Items = CreateItem("SCP-860", it_scp860, x, y, z)
+						CreateItem("SCP-860", it_scp860, x, y, z)
 					Else
-						it2.Items = CreateItem("White Key", it_key_white, x, y, z)
+						CreateItem("White Key", it_key_white, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(8 + (4 * SelectedDifficulty\OtherFactors)) = 1
-						it2.Items = CreateItem("Fine SCP-860", it_fine860, x, y, z)
+						CreateItem("Fine SCP-860", it_fine860, x, y, z)
 					Else
 						Remove = False
 					EndIf
@@ -2013,7 +2013,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(12 + (6 * SelectedDifficulty\OtherFactors)) = 1
-						it2.Items = CreateItem("Fine SCP-860", it_fine860, x, y, z)
+						CreateItem("Fine SCP-860", it_fine860, x, y, z)
 					Else
 						Remove = False
 					EndIf
@@ -2030,32 +2030,32 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID = it_key_white
-						it2.Items = CreateItem("Yellow Key", it_key_yellow, x, y, z)
+						CreateItem("Yellow Key", it_key_yellow, x, y, z)
 					Else
-						it2.Items = CreateItem("White Key", it_key_white, x, y, z)
+						CreateItem("White Key", it_key_white, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+						CreateItem("Level 2 Key Card", it_key2, x, y, z)
 					Else
 						If item\ItemTemplate\ID = it_key_white
-							it2.Items = CreateItem("Yellow Key", it_key_yellow, x, y, z)
+							CreateItem("Yellow Key", it_key_yellow, x, y, z)
 						Else
-							it2.Items = CreateItem("White Key", it_key_white, x, y, z)
+							CreateItem("White Key", it_key_white, x, y, z)
 						EndIf
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(6) = 1
-						it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+						CreateItem("Level 3 Key Card", it_key3, x, y, z)
 					Else
 						If item\ItemTemplate\ID = it_key_white
-							it2.Items = CreateItem("Yellow Key", it_key_yellow, x, y, z)
+							CreateItem("Yellow Key", it_key_yellow, x, y, z)
 						Else
-							it2.Items = CreateItem("White Key", it_key_white, x, y, z)
+							CreateItem("White Key", it_key_white, x, y, z)
 						EndIf
 					EndIf
 					;[End Block]
@@ -2070,7 +2070,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", it_electronics, x, y, z)
+					CreateItem("Electronical Components", it_electronics, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -2079,11 +2079,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine Radio Transceiver", it_fineradio, x, y, z)
+					CreateItem("Fine Radio Transceiver", it_fineradio, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Very Fine Radio Transceiver", it_veryfineradio, x, y, z)
+					CreateItem("Very Fine Radio Transceiver", it_veryfineradio, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2096,7 +2096,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", it_electronics, x, y, z)
+					CreateItem("Electronical Components", it_electronics, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -2121,9 +2121,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						EndIf
 					Next
 					If Rand(Max((RoomsAmount - (RoomsFound * 2)) * (1 + SelectedDifficulty\OtherFactors), 1)) = 1
-						it2.Items = CreateItem("S-NAV Navigator Ultimate", it_navulti, x, y, z)
+						CreateItem("S-NAV Navigator Ultimate", it_navulti, x, y, z)
 					Else
-						it2.Items = CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
+						CreateItem("S-NAV 300 Navigator", it_nav300, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2145,7 +2145,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-513", it_fine513, x, y, z)
+					CreateItem("Fine SCP-513", it_fine513, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2158,15 +2158,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Cigarette", it_cigarette, x, y, z)
+					CreateItem("Cigarette", it_cigarette, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Joint", it_joint, x, y, z)
+					CreateItem("Joint", it_joint, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Smelly Joint", it_joint_smelly, x, y, z)
+					CreateItem("Smelly Joint", it_joint_smelly, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2179,19 +2179,19 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Coarse SCP-714", it_coarse714, x, y, z)
+					CreateItem("Coarse SCP-714", it_coarse714, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID = it_scp714
-						it2.Items = CreateItem("Green Jade Ring", it_ring, x, y, z)
+						CreateItem("Green Jade Ring", it_ring, x, y, z)
 					Else
-						it2.Items = CreateItem("SCP-714", it_scp714, x, y, z)
+						CreateItem("SCP-714", it_scp714, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-714", it_fine714, x, y, z)
+					CreateItem("Fine SCP-714", it_fine714, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2208,11 +2208,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("9V Battery", it_bat, x, y, z)
+					CreateItem("9V Battery", it_bat, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("18V Battery", it_finebat, x, y, z)
+					CreateItem("18V Battery", it_finebat, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2225,7 +2225,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", it_coarsebat, x, y, z)
+					CreateItem("4.5V Battery", it_coarsebat, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -2233,14 +2233,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("18V Battery", it_finebat, x, y, z)
+					CreateItem("18V Battery", it_finebat, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(5) = 1
-						it2.Items = CreateItem("999V Battery", it_veryfinebat, x, y, z)
+						CreateItem("999V Battery", it_veryfinebat, x, y, z)
 					Else
-						it2.Items = CreateItem("Strange Battery", it_killbat, x, y, z)
+						CreateItem("Strange Battery", it_killbat, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2250,11 +2250,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", it_coarsebat, x, y, z)
+					CreateItem("4.5V Battery", it_coarsebat, x, y, z)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("9V Battery", it_bat, x, y, z)
+					CreateItem("9V Battery", it_bat, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -2263,9 +2263,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case FINE, VERYFINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("999V Battery", it_veryfinebat, x, y, z)
+						CreateItem("999V Battery", it_veryfinebat, x, y, z)
 					Else
-						it2.Items = CreateItem("Strange Battery", it_killbat, x, y, z)
+						CreateItem("Strange Battery", it_killbat, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2275,15 +2275,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH
 					;[Block]
-					it2.Items = CreateItem("4.5V Battery", it_coarsebat, x, y, z)
+					CreateItem("4.5V Battery", it_coarsebat, x, y, z)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("9V Battery", it_bat, x, y, z)
+					CreateItem("9V Battery", it_bat, x, y, z)
 					;[End Block]
 				Case ONETOONE, FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Strange Battery", it_killbat, x, y, z)
+					CreateItem("Strange Battery", it_killbat, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2297,18 +2297,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case ONETOONE
 					;[Block]
 					If Rand(2) = 1
-						it2.Items = CreateItem("ReVision Eyedrops", it_eyedrops, x, y, z)
+						CreateItem("ReVision Eyedrops", it_eyedrops, x, y, z)
 					Else
-						it2.Items = CreateItem("RedVision Eyedrops", it_eyedrops2, x, y, z)
+						CreateItem("RedVision Eyedrops", it_eyedrops2, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine Eyedrops", it_fineeyedrops, x, y, z)
+					CreateItem("Fine Eyedrops", it_fineeyedrops, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Very Fine Eyedrops", it_veryfineeyedrops, x, y, z)
+					CreateItem("Very Fine Eyedrops", it_veryfineeyedrops, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2321,18 +2321,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Compact First Aid Kit", it_finefirstaid, x, y, z)
+					CreateItem("Compact First Aid Kit", it_finefirstaid, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Fine Syringe", it_finesyringe, x, y, z)
+					CreateItem("Fine Syringe", it_finesyringe, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("Very Fine Syringe", it_veryfinesyringe, x, y, z)
+						CreateItem("Very Fine Syringe", it_veryfinesyringe, x, y, z)
 					Else
-						it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
+						CreateItem("Infected Syringe", it_syringeinf, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2346,18 +2346,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("First Aid Kit", it_firstaid, x, y, z)
+					CreateItem("First Aid Kit", it_firstaid, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
+					CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("Very Fine Syringe", it_veryfinesyringe, x, y, z)
+						CreateItem("Very Fine Syringe", it_veryfinesyringe, x, y, z)
 					Else
-						it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
+						CreateItem("Infected Syringe", it_syringeinf, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2367,11 +2367,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 			Select Setting
 				Case ROUGH, COARSE, ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Electronical Components", it_electronics, x, y, z)
+					CreateItem("Electronical Components", it_electronics, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
+					CreateItem("Infected Syringe", it_syringeinf, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
@@ -2379,7 +2379,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						n.NPCs = CreateNPC(NPCType008_1_Surgeon, x, y, z)
 						n\State = 2.0
 					Else
-						it2.Items = CreateItem("Infected Syringe", it_syringeinf, x, y, z)
+						CreateItem("Infected Syringe", it_syringeinf, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2398,14 +2398,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]	
 				Case FINE
 					;[Block]
-					it2.Items = CreateItem("Syringe", it_syringe, x, y, z)
+					CreateItem("Syringe", it_syringe, x, y, z)
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(4) = 1
-						it2.Items = CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
+						CreateItem("Blue First Aid Kit", it_firstaid2, x, y, z)
 					Else
-						it2.Items = CreateItem("Fine Syringe", it_finesyringe, x, y, z)
+						CreateItem("Fine Syringe", it_finesyringe, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2419,30 +2419,30 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Pill", it_pill, x, y, z)
+					CreateItem("Pill", it_pill, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
 					Local NO427Spawn% = False
 					
-					For it3.Items = Each Items
-						If it3\ItemTemplate\ID = it_scp427
+					For it.Items = Each Items
+						If it\ItemTemplate\ID = it_scp427
 							NO427Spawn = True
 							Exit
 						EndIf
 					Next
 					If NO427Spawn
-						it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					Else
-						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
+						CreateItem("SCP-427", it_scp427, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+						CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					Else
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2458,37 +2458,37 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[Block]
 					it2.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 					
-					If Rand(2) = 1 Then it3.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+					If Rand(2) = 1 Then CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 					
-					If Rand(3) = 1 Then it3.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+					If Rand(3) = 1 Then CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 					
-					If Rand(4) = 1 Then it3.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+					If Rand(4) = 1 Then CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
 					NO427Spawn = False
 					
-					For it3.Items = Each Items
-						If it3\ItemTemplate\ID = it_scp427
+					For it.Items = Each Items
+						If it\ItemTemplate\ID = it_scp427
 							NO427Spawn = True
 							Exit
 						EndIf
 					Next
 					If NO427Spawn
 						If Rand(2) = 1
-							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 							
-							If Rand(2) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							If Rand(2) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 							
-							If Rand(3) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							If Rand(3) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 							
-							If Rand(4) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							If Rand(4) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						Else
 							it2.Items = CreateItem("SCP-2022", it_scp2022, x, y, z)
 							it2\State = Rand(6)
 						EndIf
 					Else
-						it2.Items = CreateItem("SCP-427", it_scp427, x, y, z)
+						CreateItem("SCP-427", it_scp427, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
@@ -2497,13 +2497,13 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2.Items = CreateItem("SCP-2022", it_scp2022, x, y, z)
 						it2\State = Rand(6)
 					Else
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(2) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(2) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(3) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(3) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(4) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(4) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2517,31 +2517,31 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+					CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					
-					If Rand(2) = 1 Then it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+					If Rand(2) = 1 Then CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					
-					If Rand(3) = 1 Then it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+					If Rand(3) = 1 Then CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					
-					If Rand(4) = 1 Then it3.Items = CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
+					If Rand(4) = 1 Then CreateItem("SCP-2022-01", it_scp2022pill, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(2) = 1
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(2) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(2) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(3) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(3) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(4) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(4) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					Else
 						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
 						j = Rand(9)
 						For i = 0 To it2\InvSlots - 1
-							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
-							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
-							HideEntity(it3\Collider)
+							it.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+							it\Picked = True : it\Dropped = -1 : it2\SecondInv[i] = it
+							HideEntity(it\Collider)
 							If i = j Then Exit
 						Next
 						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
@@ -2553,20 +2553,20 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2.Items = CreateItem("SCP-500", it_scp500, x, y, z)
 						j = Rand(9)
 						For i = 0 To it2\InvSlots - 1
-							it3.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
-							it3\Picked = True : it3\Dropped = -1 : it2\SecondInv[i] = it3
-							HideEntity(it3\Collider)
+							it.Items = CreateItem("SCP-500-01", it_scp500pill, 0.0, 0.0, 0.0)
+							it\Picked = True : it\Dropped = -1 : it2\SecondInv[i] = it
+							HideEntity(it\Collider)
 							If i = j Then Exit
 						Next
 						SetAnimTime(it2\OBJ, Max(0.0, 11.0 - j))
 					Else
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(2) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(2) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(3) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(3) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						
-						If Rand(4) = 1 Then it3.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						If Rand(4) = 1 Then CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2580,14 +2580,14 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Pill", it_pill, x, y, z)
+					CreateItem("Pill", it_pill, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
 					If Rand(3) = 1
-						it2.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+						CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 					Else
-						it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+						CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
@@ -2597,9 +2597,9 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						it2\State = Rand(6)
 					Else
 						If Rand(3) = 1
-							it2.Items = CreateItem("SCP-500-01", it_scp500pill, x, y, z)
+							CreateItem("SCP-500-01", it_scp500pill, x, y, z)
 						Else
-							it2.Items = CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
+							CreateItem("Upgraded Pill", it_scp500pilldeath, x, y, z)
 						EndIf
 					EndIf
 					;[End Block]
@@ -2645,18 +2645,18 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Blank Paper", it_paper, x, y, z)
+					CreateItem("Blank Paper", it_paper, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
+					CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
 					If Rand(10) = 1
-						it2.Items = CreateItem("SCP-085", it_paper, x, y, z)
+						CreateItem("SCP-085", it_paper, x, y, z)
 					Else
-						it2.Items = CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
+						CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
 					EndIf
 					;[End Block]
 			End Select
@@ -2670,15 +2670,15 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Blank Paper", it_paper, x, y, z)
+					CreateItem("Blank Paper", it_paper, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
+					CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Origami", it_origami, x, y, z)
+					CreateItem("Origami", it_origami, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2691,19 +2691,19 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Blank Paper", it_paper, x, y, z)
+					CreateItem("Blank Paper", it_paper, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
 					If item\ItemTemplate\ID <> it_scp1025
-						it2.Items = CreateItem("SCP-1025", it_scp1025, x, y, z)
+						CreateItem("SCP-1025", it_scp1025, x, y, z)
 					Else
-						it2.Items = CreateItem("Book", it_book, x, y, z)
+						CreateItem("Book", it_book, x, y, z)
 					EndIf
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Fine SCP-1025", it_fine1025, x, y, z)
+					CreateItem("Fine SCP-1025", it_fine1025, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2722,7 +2722,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case FINE, VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Yellow Severed Hand", it_hand3, x, y, z)
+					CreateItem("Yellow Severed Hand", it_hand3, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2735,11 +2735,11 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Blank Paper", it_paper, x, y, z)
+					CreateItem("Blank Paper", it_paper, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
-					it2.Items = CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
+					CreateItem("Document SCP-" + GetRandDocument(), it_paper, x, y, z)
 					;[End Block]
 				Case FINE
 					;[Block]
@@ -2747,28 +2747,28 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 						Select item\ItemTemplate\Name
 							Case "Jim Gonazales' Badge"
 								;[Block]
-								it2.Items = CreateItem("Level 0 Key Card", it_key0, x, y, z)
+								CreateItem("Level 0 Key Card", it_key0, x, y, z)
 								;[End Block]
 							Case "Emily Ross' Badge"
 								;[Block]
-								it2.Items = CreateItem("Level 2 Key Card", it_key2, x, y, z)
+								CreateItem("Level 2 Key Card", it_key2, x, y, z)
 								;[End Block]
 							Case "Asav Harn's Badge"
 								;[Block]
-								it2.Items = CreateItem("Level 3 Key Card", it_key3, x, y, z)
+								CreateItem("Level 3 Key Card", it_key3, x, y, z)
 								;[End Block]
 							Default
 								;[Block]
-								it2.Items = CreateItem("Level 4 Key Card", it_key4, x, y, z)
+								CreateItem("Level 4 Key Card", it_key4, x, y, z)
 								;[End Block]
 						End Select
 					Else
-						it2.Items = CreateItem("Wallet", it_wallet, x, y, z)
+						CreateItem("Wallet", it_wallet, x, y, z)
 					EndIf
 					;[End Block]
 				Case VERYFINE
 					;[Block]
-					it2.Items = CreateItem("Clipboard", it_clipboard, x, y, z)
+					CreateItem("Clipboard", it_clipboard, x, y, z)
 					;[End Block]
 			End Select
 			;[End Block]
@@ -2781,7 +2781,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 					;[End Block]
 				Case COARSE
 					;[Block]
-					it2.Items = CreateItem("Clipboard", it_clipboard, x, y, z)
+					CreateItem("Clipboard", it_clipboard, x, y, z)
 					;[End Block]
 				Case ONETOONE
 					;[Block]
@@ -2790,7 +2790,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case FINE
 					;[Block]
 					If Rand(5) = 1
-						it2.Items = CreateItem("E-Reader 20", it_e_reader20, x, y, z)
+						CreateItem("E-Reader 20", it_e_reader20, x, y, z)
 					Else
 						it2.Items = CreateItem("Clipboard", it_clipboard, x, y, z)
 						it2\InvSlots = 15
@@ -2799,7 +2799,7 @@ Function Use914%(item.Items, Setting%, x#, y#, z#)
 				Case VERYFINE
 					;[Block]
 					If Rand(15) = 1
-						it2.Items = CreateItem("E-Reader Ultimate", it_e_readerulti, x, y, z)
+						CreateItem("E-Reader Ultimate", it_e_readerulti, x, y, z)
 					Else
 						it2.Items = CreateItem("Clipboard", it_clipboard, x, y, z)
 						it2\InvSlots = 20
