@@ -9452,46 +9452,43 @@ Function UpdateEvent_096_Spawn%(e.Events)
 					Select Place
 						Case 0
 							;[Block]
-							x = -208.0
+							x = -108.0
 							z = 0.0
 							;[End Block]
 						Case 1
 							;[Block]
 							x = 0.0
-							z = -208.0
+							z = -108.0
 							;[End Block]
 						Case 2
 							;[Block]
-							x = 208.0
+							x = 108.0
 							z = 0.0
 							;[End Block]
 						Case 3
 							;[Block]
 							x = 0.0
-							z = 208.0
+							z = 108.0
 							;[End Block]
 					End Select
 					;[End Block]
 				Default
 					;[Block]
-					x = Rnd(-20.0, 20.0)
-					z = Rnd(-20.0, 20.0)
+					x = 0.0
+					z = 0.0
 					;[End Block]
 			End Select
 			
-			Local Pvt% = CreatePivot(e\room\OBJ)
-			
-			PositionEntity(Pvt, x, 0.0, z)
+			TFormPoint(x, 200.0, z, e\room\OBJ, 0)
 			If n_I\Curr096 <> Null
-				TeleportEntity(n_I\Curr096\Collider, EntityX(Pvt, True), e\room\y + 0.5, EntityZ(Pvt, True), n_I\Curr096\CollRadius, True)
+				TeleportEntity(n_I\Curr096\Collider, TFormedX(), TFormedY(), TFormedZ(), n_I\Curr096\CollRadius, True)
 				n_I\Curr096\CurrentRoom = e\room
 			Else
-				n_I\Curr096 = CreateNPC(NPCType096, EntityX(Pvt, True), e\room\y + 0.5, EntityZ(Pvt, True))
+				n_I\Curr096 = CreateNPC(NPCType096, TFormedX(), TFormedY(), TFormedZ())
 			EndIf
 			n_I\Curr096\State = 1.0
 			PointEntity(n_I\Curr096\Collider, me\Collider)
 			RotateEntity(n_I\Curr096\Collider, 0.0, EntityYaw(n_I\Curr096\Collider) + 180.0, 0.0)
-			FreeEntity(Pvt) : Pvt = 0
 			
 			e\EventState = 1.0
 		ElseIf e\EventState = 1.0
