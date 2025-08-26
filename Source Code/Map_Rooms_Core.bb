@@ -2427,6 +2427,22 @@ Function FillRoom%(r.Rooms)
 				Next
 			Next
 			;[End Block]
+		Case r_room2_6_hcz
+			;[Block]
+			For r2.Rooms = Each Rooms
+				If r2 <> r
+					If r2\RoomTemplate\RoomID = r_room2_6_hcz
+						r\Objects[0] = CopyEntity(r2\Objects[0]) ; ~ Don't load the mesh again
+						Exit
+					EndIf
+				EndIf
+			Next
+			If r\Objects[0] = 0 Then r\Objects[0] = LoadMesh_Strict("GFX\Map\Props\ventilation_grate.b3d")
+			ScaleEntity(r\Objects[0], RoomScale, RoomScale, RoomScale)
+			PositionEntity(r\Objects[0], r\x, r\y + 440.0 * RoomScale, r\z)
+			EntityType(r\Objects[0], HIT_MAP)
+			EntityParent(r\Objects[0], r\OBJ)
+			;[End Block]
 		Case r_room2_7_hcz
 			;[Block]
 			For r2.Rooms = Each Rooms

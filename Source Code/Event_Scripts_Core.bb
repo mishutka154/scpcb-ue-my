@@ -4937,6 +4937,8 @@ Function UpdateEvent_Room2_6_HCZ_173%(e.Events)
 	EndIf
 	
 	If e\EventState > 0.0 And e\EventState < 200.0
+		e\EventState = e\EventState + fps\Factor[0]
+		
 		If e\EventState > 30.0 And e\EventState - fps\Factor[0] <= 30.0 Then PlaySound_Strict(LoadTempSound("SFX\Ambient\General\Ambient2.ogg"))
 		If e\EventState - fps\Factor[0] <= 100.0 And e\EventState > 100.0
 			PlaySound_Strict(LoadTempSound("SFX\Ambient\General\Ambient5.ogg"))
@@ -4945,7 +4947,12 @@ Function UpdateEvent_Room2_6_HCZ_173%(e.Events)
 			n_I\Curr173\Idle = 1
 			If wi\NightVision > 0 Lor wi\SCRAMBLE > 0 Then me\BlinkTimer = -10.0
 		EndIf
-		e\EventState = e\EventState + fps\Factor[0]
+		If e\EventState > 30.0
+			If EntityY(e\room\Objects[0], True) > e\room\y + 4.0 * RoomScale
+				PositionEntity(e\room\Objects[0], EntityX(e\room\Objects[0], True), Max(e\room\y + 4.0 * RoomScale, (e\room\y + 440.0 * RoomScale) - e\EventState / 30.0), EntityZ(e\room\Objects[0], True), True)
+				RotateEntity(e\room\Objects[0], EntityPitch(e\room\Objects[0], True), CurveValue(30.0, EntityYaw(e\room\Objects[0], True), 200.0), EntityRoll(e\room\Objects[0], True), True)
+			EndIf
+		EndIf
 	ElseIf e\EventState > 0.0 And me\LightBlink < 0.25
 		n_I\Curr173\Idle = 0
 		RemoveEvent(e)
@@ -9679,7 +9686,7 @@ Function UpdateEvent_173_Spawn%(e.Events)
 		ElseIf n_I\Curr173\Idle = 0
 			If EntityDistanceSquared(me\Collider, n_I\Curr173\Collider) > 16.0 And (Not PlayerSees173(n_I\Curr173))
 				Select e\room\RoomTemplate\RoomID
-						Case r_room2_4_lcz, r_room2_4_hcz
+					Case r_room2_4_lcz, r_room2_4_hcz
 						;[Block]
 						TFormPoint(640.0, 100.0, -896.0, e\room\OBJ, 0)
 						;[End Block]
