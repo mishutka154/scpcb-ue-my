@@ -9757,10 +9757,21 @@ End Function
 Function UpdateEvent_Brownout%(e.Events)
 	Local Temp% = False
 	
+	If e\EventState3 = 0.0
+		If Rand(3) <> 1
+			RotateEntity(e\room\RoomLevers[0]\OBJ, -80.0, EntityYaw(e\room\RoomLevers[0]\OBJ), 0.0)
+			RotateEntity(e\room\RoomLevers[1]\OBJ, -80.0, EntityYaw(e\room\RoomLevers[1]\OBJ), 0.0)
+			e\EventState = 1.0
+			e\EventState2 = 1.0
+			e\EventState3 = 1.0
+		Else
+			e\EventState3 = 2.0
+		EndIf
+	EndIf
+	
 	If Rand(70) = 1
 		If (IsRoomAdjacent(PlayerRoom, e\room) Lor PlayerRoom = e\room) And InFacility = NullFloor
-			If e\EventState2 < 0.5 Then me\LightBlink = Max(1.0, me\LightBlink)
-			Temp = True
+			If e\EventState < 0.5 Then me\LightBlink = Max(1.0, me\LightBlink)
 		EndIf
 	EndIf
 	If PlayerRoom = e\room
@@ -9773,7 +9784,7 @@ Function UpdateEvent_Brownout%(e.Events)
 			e\room\Objects[0] = CreatePivot()
 			PositionEntity(e\room\Objects[0], TFormedX(), TFormedY(), TFormedZ(), True)
 		Else
-			If Temp
+			If e\EventState3 = 2.0
 				Local i%
 				
 				SetTemplateVelocity(ParticleEffect[19], -0.007, -0.008, -0.001, 0.0012, -0.007, 0.008)
