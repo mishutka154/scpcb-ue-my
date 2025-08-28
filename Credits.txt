@@ -273,6 +273,7 @@
 		metalLdimic
 		scp-963-2?
 		Aiko
+		xstallm
 
 *Mod Testers
 		
