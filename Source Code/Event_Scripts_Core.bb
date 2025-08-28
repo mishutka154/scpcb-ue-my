@@ -1024,7 +1024,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 					EndIf
 					
 					; ~ Randomly rotate the scientist sitting on chair
-					e\room\NPC[7]\GravityMult = 0.0
+					;e\room\NPC[7]\GravityMult = 0.0
 					RotateEntity(e\room\NPC[7]\Collider, 0.0, 180.0 + Sin(MilliSec / 20.0) * 3.0, 0.0, True)
 					UpdateSoundOrigin(e\room\NPC[7]\SoundCHN, Camera, e\room\NPC[7]\Collider, 7.0, 1.0, True)
 					
