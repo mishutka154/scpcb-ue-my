@@ -2295,7 +2295,7 @@ Function UpdateEvent_Room2_SL%(e.Events)
 	
 	If PlayerRoom = e\room
 		If e\EventState = 0.0
-			If e\EventState2 = 0.0 Then e\EventState2 = (-70.0) * 1.0
+			If e\EventState2 = 0.0 Then e\EventState2 = (-70.0) * 1.5
 			e\EventState = 1.0
 		EndIf
 	EndIf
